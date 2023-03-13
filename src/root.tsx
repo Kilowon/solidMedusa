@@ -27,8 +27,15 @@ export default function Root() {
 			</Head>
 			<Body>
 				<GlobalContextProvider>
-					<Suspense>
-						<ErrorBoundary>
+					<Suspense fallback={<>Loading...</>}>
+						<ErrorBoundary
+							fallback={(error: Error) => (
+								<div>
+									<h1>Something went wrong</h1>
+									<A href="/">Go Back Now!!!!</A>
+								</div>
+							)}
+						>
 							<Routes>
 								<FileRoutes />
 							</Routes>

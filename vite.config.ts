@@ -1,6 +1,47 @@
-import solid from "solid-start/vite";
-import { defineConfig } from "vite";
+import unocssPlugin from 'unocss/vite'
+import solid from 'solid-start/vite'
+import { defineConfig } from 'vite'
+import presetIcons from '@unocss/preset-icons'
+import presetWebFonts from '@unocss/preset-web-fonts'
+import presetUno from '@unocss/preset-uno'
 
 export default defineConfig({
-  plugins: [solid()],
-});
+	plugins: [
+		solid(),
+		unocssPlugin({
+			presets: [
+				presetIcons({
+					// options
+					prefix: 'i-',
+					extraProperties: {
+						display: 'inline-block',
+						'vertical-align': 'middle'
+					}
+				}),
+				presetUno(),
+				presetWebFonts({
+					provider: 'google', // default provider
+					fonts: {
+						// these will extend the default theme
+						/* sans: 'Roboto', */
+						/* mono: ['Fira Code', 'Fira Mono:400,700'], */
+						// custom ones
+						poppins: 'Poppins:400'
+						/* poppins: [
+							{
+								name: 'Poppins',
+								weights: ['400', '700'],
+								italic: true
+							},
+							{
+								name: 'sans-serif',
+								provider: 'none'
+							}
+						] */
+					}
+				})
+			]
+			/* options */
+		})
+	]
+})

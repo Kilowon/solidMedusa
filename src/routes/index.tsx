@@ -7,7 +7,6 @@ export default function Home() {
 		<main>
 			<Navigation />
 			<Hero />
-			Hello
 		</main>
 	)
 }
@@ -129,6 +128,9 @@ export function DropdownMenu() {
 	const data = useRouteData<typeof routeData>()
 	data()
 	const { cart } = useGlobalContext()
+	createEffect(() => {
+		console.log('CLIENTSTATE', cart.result)
+	})
 	//const cart = inject(cartStateProvider)
 	//console.log('CARTSTATE INDEX', cart.cartState())
 	const [open, setOpen] = createSignal(false)

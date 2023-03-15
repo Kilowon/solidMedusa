@@ -2,7 +2,6 @@ import { A } from 'solid-start'
 import { Hero } from '~/Components/layout/Hero'
 
 export default function Home() {
-	console.log('HOME')
 	return (
 		<main>
 			<Navigation />
@@ -129,7 +128,7 @@ export function DropdownMenu() {
 	data()
 	const { cart } = useGlobalContext()
 	createEffect(() => {
-		console.log('CLIENTSTATE', cart.result)
+		console.log('CLIENTSTATE', cart?.result)
 	})
 	//const cart = inject(cartStateProvider)
 	//console.log('CARTSTATE INDEX', cart.cartState())

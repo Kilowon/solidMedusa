@@ -1,5 +1,5 @@
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { createSignal, createEffect, Switch, Match } from 'solid-js'
+import { createSignal, createEffect, Switch, Match, Show } from 'solid-js'
 import { A } from 'solid-start'
 import { isServer } from 'solid-js/web'
 
@@ -7,15 +7,13 @@ const [size, setSize] = createSignal(getWindowSize())
 
 export function Hero() {
 	createEffect(() => {
-		if (!isServer) {
-			setSize(getWindowSize())
-			size()
-		}
+		setSize(getWindowSize())
+		size()
 	})
 
 	return (
 		<div
-			class="h-[90vh] w-full relative 
+			class="h-[100vh] w-full relative 
 		"
 		>
 			<div class="text-white absolute inset-0 z-10 flex flex-col justify-center items-center text-center sm:text-left md:justify-end md:items-start md:p-32">
@@ -34,18 +32,17 @@ export function Hero() {
 					<div class="i-material-symbols-arrow-right-alt-rounded"></div>
 				</div>
 			</div>
-			<Switch fallback={<div>Loading...</div>}>
-				{' '}
-				TODO: Fix weird loading issue with images
-				<Match when={size()?.width > 400}>
+			{/* //TODO: Fix weird loading issue with images */}
+			<Switch>
+				<Match when={size()?.width > 400 && size()?.width != 0}>
 					<img
 						src="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_1440,z_1/v1677462156/hero_b4p7fs.webp"
-						class="object-cover h-full w-full z-0 absolute inset-0 opacity-90 filter brightness-65 
+						class="object-cover h-full w-full z-0 absolute inset-0  filter brightness-65 opacity-100
 				"
 						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 					/>
 				</Match>
-				<Match when={size()?.width < 400}>
+				<Match when={size()?.width < 400 && size()?.width != 0}>
 					<img
 						src="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_600,z_1/v1677462156/hero_b4p7fs.webp"
 						class="object-cover h-full w-full z-0 absolute inset-0 opacity-90 filter brightness-65 

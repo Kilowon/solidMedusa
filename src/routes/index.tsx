@@ -3,7 +3,7 @@ import { Hero } from '~/Components/layout/Hero'
 
 export default function Home() {
 	return (
-		<main>
+		<main class="bg-[#35393b]">
 			<Navigation />
 			<Hero />
 		</main>

@@ -57,8 +57,6 @@ async function getRequiredCart() {
 	} else {
 		return fetchMedusaCart()
 	}
-
-	/* return fetchMedusaCart() */
 }
 
 export function GlobalContextProvider(props: any) {

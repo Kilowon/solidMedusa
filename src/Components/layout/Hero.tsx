@@ -32,12 +32,12 @@ export function Hero() {
 					<div class="i-material-symbols-arrow-right-alt-rounded"></div>
 				</div>
 			</div>
-			{/* //TODO: Fix weird loading issue with images */}
+
 			<Switch>
 				<Match when={size()?.width > 400 && size()?.width != 0}>
 					<img
 						src="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_1440,z_1/v1677462156/hero_b4p7fs.webp"
-						class="object-cover h-full w-full z-0 absolute inset-0  filter brightness-65 animate-fade-in
+						class="object-cover h-full w-full z-0 absolute inset-0 filter brightness-65 animate-fade-in
 				"
 						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 					/>
@@ -45,7 +45,7 @@ export function Hero() {
 				<Match when={size()?.width < 400 && size()?.width != 0}>
 					<img
 						src="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_600,z_1/v1677462156/hero_b4p7fs.webp"
-						class="object-cover h-full w-full z-0 absolute inset-0 opacity-90 filter brightness-65 
+						class="object-cover h-full w-full z-0 absolute inset-0 opacity-90 filter brightness-65  animate-fade-in
 				"
 						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 					/>

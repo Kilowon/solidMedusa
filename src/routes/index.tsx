@@ -82,13 +82,14 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import clsx from 'clsx'
 import { CalculatedVariant } from '~/types/medusa'
 import { useGlobalContext } from '~/Context/Providers'
+import { isServer } from 'solid-js/web'
 
 export function routeData() {
-	const { medusa } = useGlobalContext()
+	const { medusa, cart } = useGlobalContext()
 
 	return createRouteData(async () => {
 		const responceProduct = await medusa!.products
-			.list({ limit: 3 })
+			.list({ is_giftcard: false, limit: 3, cart_id: cart.result?.cart.id })
 			.then(({ products: newProducts }: any) => {
 				return newProducts
 					.filter((p: any) => !!p.variants)
@@ -101,7 +102,7 @@ export function routeData() {
 							}
 							return acc
 						}, variants[0])
-
+						console.log('CHEAPEST VARIANT', cheapestVariant)
 						return {
 							id: p.id,
 							title: p.title,
@@ -128,10 +129,10 @@ export function DropdownMenu() {
 	data()
 	const { cart } = useGlobalContext()
 	createEffect(() => {
-		console.log('CLIENTSTATE', cart?.result)
+		if (isServer) return
+		console.log('CLIENTSTATE', cart.result?.cart.id)
 	})
-	//const cart = inject(cartStateProvider)
-	//console.log('CARTSTATE INDEX', cart.cartState())
+
 	const [open, setOpen] = createSignal(false)
 
 	createEffect(() => {
@@ -146,7 +147,7 @@ export function DropdownMenu() {
 			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
-				<div class="mr-2 text-sm">Store - {cart!.id}</div>
+				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>
 			</div>
 			<Show when={open()}>
 				<div class="bg-[#cccccc] absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">

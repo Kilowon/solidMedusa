@@ -12,6 +12,7 @@ import { createRouteAction } from 'solid-start'
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
 import Medusa from '@medusajs/medusa-js'
 import { Cart } from '~/types/types'
+
 import { redirect } from 'solid-start'
 import { createMachine } from 'xstate'
 import { useMachine } from '@xstate/solid'
@@ -36,8 +37,23 @@ function newMedusa() {
 }
 const medusa = useMedusa()
 
-async function fetchMedusaCart(): Promise<Cart> {
-	const cart = await medusa.carts.create()
+//TODO: The region is set to the US region this should be changed to a region that is chosen by the user and then saved to local storage
+async function fetchRegion(): Promise<any> {
+	const region = await medusa.regions.list().then(({ regions }: any) => {
+		return regions[1]
+	})
+	if (!isServer) {
+		localStorage.setItem('cart_reg_id', region.id)
+	}
+
+	console.log('REGION', region)
+	return region
+}
+
+async function fetchNewCart(): Promise<Cart> {
+	const region = await fetchRegion()
+	console.log('CARTREGION', region)
+	const cart = await medusa.carts.create({ region_id: region.id })
 	console.log('CART', cart)
 	return cart
 }
@@ -55,22 +71,22 @@ async function getRequiredCart() {
 	if (cartId !== undefined && cartId !== null) {
 		return fetchSavedCart()
 	} else {
-		return fetchMedusaCart()
+		return fetchNewCart()
 	}
 }
 
 export function GlobalContextProvider(props: any) {
 	const [cart, cartState] = createRouteAction(getRequiredCart)
-
 	createEffect(() => {
 		if (!isServer) {
 			cartState()
+			fetchRegion()
 		}
 	})
 
 	createEffect(() => {
 		if (!isServer && cart?.result?.cart?.id !== undefined) {
-			console.log('CART SAVED', cart?.result.cart.id)
+			fetchRegion()
 			localStorage.setItem('cart_id', cart?.result.cart.id)
 		}
 	})

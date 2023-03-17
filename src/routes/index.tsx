@@ -1,6 +1,6 @@
 import { A } from 'solid-start'
 import { Hero } from '~/Components/layout/Hero'
-
+import { hydrate } from 'solid-js/web'
 export default function Home() {
 	return (
 		<main class="bg-[#35393b]">
@@ -83,34 +83,96 @@ import clsx from 'clsx'
 import { CalculatedVariant } from '~/types/medusa'
 import { useGlobalContext } from '~/Context/Providers'
 import { isServer } from 'solid-js/web'
+import { Cart } from '~/types/types'
+import { refetchRouteData } from 'solid-start'
+import { getPercentageDiff } from '~/lib/helpers/helpers'
+
+export type ProductPreviewType = {
+	id: string
+	title: string
+	handle: string | null
+	thumbnail: string | null
+	price?: {
+		calculated_price: string
+		original_price: string
+		difference: string
+		price_type: 'default' | 'sale'
+	}
+}
+
+async function getProductList(
+	medusa: any,
+	id: any,
+	limit: any,
+	region: any
+): Promise<ProductPreviewType> {
+	const query = {
+		is_giftcard: false,
+		limit: limit,
+		cart_id: null
+	}
+	if (!isServer) {
+		query.cart_id = id
+	}
+
+	return medusa!.products.list(query).then(({ products: newProducts }: any) => {
+		return newProducts
+			.filter((p: any) => !!p.variants)
+			.map((p: any) => {
+				const variants = p.variants as CalculatedVariant[]
+				const cheapestVariant = variants.reduce((acc, curr) => {
+					if (acc.calculated_price > curr.calculated_price) {
+						return curr
+					}
+					return acc
+				}, variants[0])
+				return {
+					id: p.id,
+					title: p.title,
+					handle: p.handle,
+					thumbnail: p.thumbnail,
+					price: cheapestVariant
+						? {
+								calculated_price: cheapestVariant.calculated_price,
+
+								original_price: cheapestVariant.original_price,
+
+								difference: getPercentageDiff(
+									cheapestVariant.original_price,
+									cheapestVariant.calculated_price
+								),
+								price_type: cheapestVariant.calculated_price_type
+						  }
+						: {
+								calculated_price: 'N/A',
+								original_price: 'N/A',
+								difference: 'N/A',
+								price_type: 'default'
+						  }
+				}
+			})
+	})
+}
+
+function IsServerCheck(fnc: any) {
+	if (!isServer) return fnc
+	return null
+}
 
 export function routeData() {
-	const { medusa, cart } = useGlobalContext()
-
+	const { medusa } = useGlobalContext()
+	const { cart }: Cart = useGlobalContext()
+	console.log('Region', cart.result?.cart.region)
 	return createRouteData(async () => {
-		const responceProduct = await medusa!.products
-			.list({ is_giftcard: false, limit: 3, cart_id: cart.result?.cart.id })
-			.then(({ products: newProducts }: any) => {
-				return newProducts
-					.filter((p: any) => !!p.variants)
-					.map((p: any) => {
-						const variants = p.variants as CalculatedVariant[]
+		const responceProduct: any = IsServerCheck(
+			await getProductList(
+				medusa,
+				cart.result?.cart.id,
+				3,
+				cart.result?.cart.region
+			)
+		)
 
-						const cheapestVariant = variants.reduce((acc, curr) => {
-							if (acc.calculated_price > curr.calculated_price) {
-								return curr
-							}
-							return acc
-						}, variants[0])
-						console.log('CHEAPEST VARIANT', cheapestVariant)
-						return {
-							id: p.id,
-							title: p.title,
-							handle: p.handle,
-							thumbnail: p.thumbnail
-						}
-					})
-			})
 		const responceCollection = await medusa!.collections
 			.list({ limit: 4 })
 			.then(({ collections: newCollections }: any) => {
@@ -125,18 +187,27 @@ export function routeData() {
 }
 
 export function DropdownMenu() {
+	const { cart } = useGlobalContext()
+
+	createEffect(() => {
+		if (!isServer) {
+			console.log('CLIENTSTATE', cart.result?.cart.id)
+		}
+	})
 	const data = useRouteData<typeof routeData>()
 	data()
-	const { cart } = useGlobalContext()
-	createEffect(() => {
-		if (isServer) return
-		console.log('CLIENTSTATE', cart.result?.cart.id)
-	})
-
 	const [open, setOpen] = createSignal(false)
 
 	createEffect(() => {
-		open()
+		if (
+			data()?.responceProduct?.map((p: any) => p.price.original_price) !== null
+		) {
+			refetchRouteData()
+			console.log(
+				'PRICE',
+				data()?.responceProduct?.map((p: any) => p.price.calculated_price)
+			)
+		}
 	})
 
 	return (

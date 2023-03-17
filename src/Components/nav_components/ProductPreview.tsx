@@ -7,32 +7,13 @@ const ProductPreview = (props: ProductPreviewType) => {
 	return (
 		<A href={`/products/${props.handle}`}>
 			<div class="overflow-hidden ">
-				<Thumbnail
-					thumbnail={props.thumbnail}
-					title={props.title}
-					size="full"
-				/>
+				<Thumbnail thumbnail={props.thumbnail} title={props.title} size="full" />
 				<div class="text-base mt-6">
 					<span>{props.title}</span>
 					<div class="flex items-center gap-x-2 mt-1">
-						{props.price ? (
-							<>
-								{props.price.price_type === 'sale' && (
-									<span class="line-through text-gray-500">
-										{props.price.original_price}
-									</span>
-								)}
-								<span
-									class={clsx('font-semibold', {
-										'text-rose-500': props.price.price_type === 'sale'
-									})}
-								>
-									{props.price.calculated_price}
-								</span>
-							</>
-						) : (
-							<div class="w-20 h-6 animate-pulse bg-gray-100"></div>
-						)}
+						{props.price?.original_price
+							? `$${(props.price?.original_price / 100).toFixed(2)}`
+							: ''}
 					</div>
 				</div>
 			</div>

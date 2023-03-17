@@ -13,7 +13,9 @@ import {
 	useContext,
 	createSignal,
 	Component,
-	createEffect
+	createEffect,
+	createResource,
+	lazy
 } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
@@ -89,3 +91,21 @@ setMyObject({ name: 'Jane', age: 30 })
 const [myStore, setMyStore] = createStore({ name: 'John', age: 30 })
 myStore.name
 setMyStore('name', 'Jane')
+////////////////////////////////////////////////////////////////////////////
+const fetchUser = async (id: any) =>
+	(await fetch(`https://swapi.dev/api/people/${id}/`)).json()
+
+const [userId, setUserId] = createSignal()
+const [user, { mutate, refetch }] = createResource(userId, fetchUser)
+
+function refetchUser() {
+	refetch()
+}
+const newUser = { ...user(), name: 'Luke Skywalker' }
+mutate(newUser)
+
+user().name
+
+////////////////////////////////////////////////////////////////////////////
+
+const Greeting = lazy(() => import('./greeting'))

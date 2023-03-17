@@ -37,7 +37,7 @@ function newMedusa() {
 }
 const medusa = useMedusa()
 
-//TODO: The region is set to the US region this should be changed to a region that is chosen by the user and then saved to local storage
+//TODO: The region is set to the US region this should be changed to a region that is chosen by the user or by IP address location
 async function fetchRegion(): Promise<any> {
 	const region = await medusa.regions.list().then(({ regions }: any) => {
 		return regions[1]
@@ -46,23 +46,20 @@ async function fetchRegion(): Promise<any> {
 		localStorage.setItem('cart_reg_id', region.id)
 	}
 
-	console.log('REGION', region)
 	return region
 }
 
+//const [useCart, setCart] = createSignal<Cart>(newCart())
+
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
-	console.log('CARTREGION', region)
 	const cart = await medusa.carts.create({ region_id: region.id })
-	console.log('CART', cart)
 	return cart
 }
 
 async function fetchSavedCart(): Promise<Cart> {
 	const cartId = localStorage.getItem('cart_id')!
-	console.log('CARTID', cartId)
 	const cart = await medusa.carts.retrieve(cartId)
-	console.log('CART', cart)
 	return cart
 }
 
@@ -76,7 +73,7 @@ async function getRequiredCart() {
 }
 
 export function GlobalContextProvider(props: any) {
-	const [cart, cartState] = createRouteAction(getRequiredCart)
+	const [cart, cartState]: Cart = createRouteAction(getRequiredCart)
 	createEffect(() => {
 		if (!isServer) {
 			cartState()

@@ -80,95 +80,32 @@ import { createEffect, createSignal, For, Switch, Match, Show } from 'solid-js'
 import { useRouteData, createRouteData } from 'solid-start'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import clsx from 'clsx'
-import { CalculatedVariant } from '~/types/medusa'
 import { useGlobalContext } from '~/Context/Providers'
 import { isServer } from 'solid-js/web'
 import { Cart } from '~/types/types'
 import { refetchRouteData } from 'solid-start'
-import { getPercentageDiff } from '~/lib/helpers/helpers'
 
-export type ProductPreviewType = {
-	id: string
-	title: string
-	handle: string | null
-	thumbnail: string | null
-	price?: {
-		calculated_price: string
-		original_price: string
-		difference: string
-		price_type: 'default' | 'sale'
-	}
-}
-
-async function getProductList(
-	medusa: any,
-	id: any,
-	limit: any,
-	region: any
-): Promise<ProductPreviewType> {
-	const query = {
-		is_giftcard: false,
-		limit: limit,
-		cart_id: null
-	}
-	if (!isServer) {
-		query.cart_id = id
-	}
-
-	return medusa!.products.list(query).then(({ products: newProducts }: any) => {
-		return newProducts
-			.filter((p: any) => !!p.variants)
-			.map((p: any) => {
-				const variants = p.variants as CalculatedVariant[]
-				const cheapestVariant = variants.reduce((acc, curr) => {
-					if (acc.calculated_price > curr.calculated_price) {
-						return curr
-					}
-					return acc
-				}, variants[0])
-				return {
-					id: p.id,
-					title: p.title,
-					handle: p.handle,
-					thumbnail: p.thumbnail,
-					price: cheapestVariant
-						? {
-								calculated_price: cheapestVariant.calculated_price,
-
-								original_price: cheapestVariant.original_price,
-
-								difference: getPercentageDiff(
-									cheapestVariant.original_price,
-									cheapestVariant.calculated_price
-								),
-								price_type: cheapestVariant.calculated_price_type
-						  }
-						: {
-								calculated_price: 'N/A',
-								original_price: 'N/A',
-								difference: 'N/A',
-								price_type: 'default'
-						  }
-				}
-			})
-	})
-}
-
-function IsServerCheck(fnc: any) {
-	if (!isServer) return fnc
-	return null
-}
+import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
 
 export function routeData() {
 	const { medusa } = useGlobalContext()
 	const { cart }: Cart = useGlobalContext()
-	console.log('Region', cart.result?.cart.region)
+
 	return createRouteData(async () => {
-		const responceProduct: any = IsServerCheck(
+		const responceProduct: any = IsClientCheck(
 			await getProductList(
 				medusa,
 				cart.result?.cart.id,
 				3,
+				cart.result?.cart.region
+			)
+		)
+
+		const featuredProducts: any = IsClientCheck(
+			await getProductList(
+				medusa,
+				cart.result?.cart.id,
+				4,
 				cart.result?.cart.region
 			)
 		)
@@ -182,7 +119,7 @@ export function routeData() {
 				}))
 			})
 
-		return { responceProduct, responceCollection }
+		return { responceProduct, responceCollection, featuredProducts }
 	})
 }
 
@@ -222,7 +159,7 @@ export function DropdownMenu() {
 			</div>
 			<Show when={open()}>
 				<div class="bg-[#cccccc] absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
-					<div class="relative py-8">
+					<div class="relative py-8 ">
 						<div class="flex items-start  mx-auto px-8">
 							<div class="flex flex-col flex-1 max-w-[30%]">
 								<div class="text-base text-gray-900 mb-4 font-4">Collections</div>
@@ -245,7 +182,7 @@ export function DropdownMenu() {
 									</Show>
 								</div>
 							</div>
-							<div class="flex-1">
+							<div class="flex-1 ">
 								<div class="grid grid-cols-3 gap-4">
 									<Switch>
 										<Match when={data.loading}>

@@ -115,7 +115,7 @@ export function routeData() {
 		)
 
 		const responceCollection = await medusa!.collections
-			.list({ limit: 4 })
+			.list({ limit: 8 })
 			.then(({ collections: newCollections }: any) => {
 				return newCollections.map((c: any) => ({
 					id: c.id,
@@ -137,7 +137,7 @@ export function DropdownMenu() {
 	})
 	const data = useRouteData<typeof routeData>()
 	data()
-	const [open, setOpen] = createSignal(false)
+	const [open, setOpen] = createSignal(true)
 
 	createEffect(() => {
 		if (
@@ -156,7 +156,7 @@ export function DropdownMenu() {
 			class=" flex items-center justify-center h-full w-full  text-2xl hover:text-gray-5 hover:transition-colors hover:duration-400 hover:cursor-pointer px-3
 			"
 			onMouseOver={() => setOpen(true)}
-			onMouseLeave={() => setOpen(false)}
+			onMouseLeave={() => setOpen(true)}
 		>
 			<div>
 				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>
@@ -164,9 +164,11 @@ export function DropdownMenu() {
 			<Show when={open()}>
 				<div class="bg-[#cccccc] absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
 					<div class="relative py-8 ">
-						<div class="flex items-start  mx-auto px-8 w-[90%]">
-							<div class="flex flex-col flex-1 max-w-[30%]">
-								<div class="text-base text-gray-900 mb-4 font-4">Collections</div>
+						<div class="flex items-start  mx-auto px-8 w-[75vw]">
+							<div class="flex flex-col flex-1 max-w-[15vw]">
+								<div class="text-base text-gray-900 mb-4 font-semibold ">
+									Collections
+								</div>
 								<div class="flex items-start">
 									<Show when={data()}>
 										<ul class="min-w-[152px] max-w-[200px] pr-4">

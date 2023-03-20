@@ -24,9 +24,18 @@ export default function Root() {
 			<Head>
 				<Title>SolidStart - Bare</Title>
 				<Meta charset="utf-8" />
-				<Meta name="viewport" content="width=device-width, initial-scale=1" />
-				<Meta name="description" content="SolidJs-MedusaJs-Starter" />
-				<Link rel="icon" href="/favicon.ico" />
+				<Meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
+				<Meta
+					name="description"
+					content="SolidJs-MedusaJs-Starter"
+				/>
+				<Link
+					rel="icon"
+					href="/favicon.ico"
+				/>
 				<Link
 					rel="preload"
 					as="image"
@@ -40,14 +49,14 @@ export default function Root() {
 			</Head>
 			<Body>
 				<GlobalContextProvider>
-					<Suspense fallback={<>Loading...</>}>
-						<ErrorBoundary>
+					<ErrorBoundary>
+						<Suspense fallback={<>Loading...</>}>
 							<Routes>
 								<FileRoutes />
 							</Routes>
 							<Footer />
-						</ErrorBoundary>
-					</Suspense>
+						</Suspense>
+					</ErrorBoundary>
 				</GlobalContextProvider>
 				<Scripts />
 			</Body>

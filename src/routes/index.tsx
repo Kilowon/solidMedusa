@@ -26,7 +26,10 @@ export function Navigation() {
 					</div>
 
 					<div class="flex items-center h-full">
-						<A href="/" class="text-3xl font-semibold uppercase">
+						<A
+							href="/"
+							class="text-3xl font-semibold uppercase"
+						>
 							Acme
 						</A>
 					</div>
@@ -161,7 +164,7 @@ export function DropdownMenu() {
 			<Show when={open()}>
 				<div class="bg-[#cccccc] absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
 					<div class="relative py-8 ">
-						<div class="flex items-start  mx-auto px-8">
+						<div class="flex items-start  mx-auto px-8 w-[90%]">
 							<div class="flex flex-col flex-1 max-w-[30%]">
 								<div class="text-base text-gray-900 mb-4 font-4">Collections</div>
 								<div class="flex items-start">
@@ -184,7 +187,7 @@ export function DropdownMenu() {
 								</div>
 							</div>
 							<div class="flex-1 ">
-								<div class="grid grid-cols-3 gap-4">
+								<div class="grid grid-cols-3 gap-1">
 									<Switch>
 										<Match when={data.loading}>
 											<div>Loading...</div>

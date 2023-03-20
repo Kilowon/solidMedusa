@@ -137,7 +137,7 @@ export function DropdownMenu() {
 	})
 	const data = useRouteData<typeof routeData>()
 	data()
-	const [open, setOpen] = createSignal(true)
+	const [open, setOpen] = createSignal(false)
 
 	createEffect(() => {
 		if (
@@ -156,7 +156,7 @@ export function DropdownMenu() {
 			class=" flex items-center justify-center h-full w-full  text-2xl hover:text-gray-5 hover:transition-colors hover:duration-400 hover:cursor-pointer px-3
 			"
 			onMouseOver={() => setOpen(true)}
-			onMouseLeave={() => setOpen(true)}
+			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
 				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>

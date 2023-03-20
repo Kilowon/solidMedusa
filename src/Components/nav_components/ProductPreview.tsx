@@ -6,17 +6,17 @@ import Thumbnail from '~/Components/common/Thumbnail'
 const ProductPreview = (props: ProductPreviewType) => {
 	return (
 		<A href={`/products/${props.handle}`}>
-			<div class="overflow-hidden w-[17vw]">
+			<div class="overflow-hidden">
 				<Thumbnail
 					thumbnail={props.thumbnail}
 					title={props.title}
 					size="full"
 				/>
-				<div class="text-base mt-6">
+				<div class="text-base mt-2">
 					<span>{props.title}</span>
 					<div class="flex items-center gap-x-2 mt-1">
 						{props.price?.original_price
-							? `$${(props.price?.original_price / 100).toFixed(2)}`
+							? `$${(Number(props.price?.original_price) / 100).toFixed(2)}`
 							: ''}
 					</div>
 				</div>

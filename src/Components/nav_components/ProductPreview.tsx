@@ -16,7 +16,7 @@ const ProductPreview = (props: ProductPreviewType) => {
 					<span>{props.title}</span>
 					<div class="flex items-center gap-x-2 mt-1">
 						{props.price?.original_price
-							? `$${(props.price?.original_price / 100).toFixed(2)}`
+							? `$${(Number(props.price?.original_price) / 100).toFixed(2)}`
 							: ''}
 					</div>
 				</div>

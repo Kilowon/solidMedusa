@@ -20,25 +20,7 @@ export function routeData() {
 			)
 		)
 
-		const responceProduct: any = IsClientCheck(
-			await getProductList(
-				medusa,
-				cart.result?.cart.id,
-				3,
-				cart.result?.cart.region
-			)
-		)
-
-		const responceCollection = await medusa!.collections
-			.list({ limit: 8 })
-			.then(({ collections: newCollections }: any) => {
-				return newCollections.map((c: any) => ({
-					id: c.id,
-					title: c.title
-				}))
-			})
-
-		return { responceProduct, responceCollection, featuredProducts }
+		return { featuredProducts }
 	})
 }
 
@@ -46,7 +28,7 @@ export default function App() {
 	const data = useRouteData<typeof routeData>()
 	data()
 	return (
-		<main class="bg-[#35393b]">
+		<main class="bg-[#35393b] ">
 			<Hero />
 			<FeaturedProducts featuredProducts={data()?.featuredProducts} />
 		</main>

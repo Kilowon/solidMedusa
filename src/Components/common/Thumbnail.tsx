@@ -1,6 +1,10 @@
-import { Image as MedusaImage } from '@medusajs/medusa'
 import { PlaceholderImage } from '~/Components/common/PlaceholderImage'
 import clsx from 'clsx'
+
+interface MedusaImage {
+	url: string
+	metadata: Record<string, unknown>
+}
 
 export type ThumbnailProps = {
 	thumbnail?: string | null
@@ -26,7 +30,11 @@ export function Thumbnail({
 				'w-full': size === 'full'
 			})}
 		>
-			<ImageOrPlaceholder title={title} image={initialImage} size={size} />
+			<ImageOrPlaceholder
+				title={title}
+				image={initialImage}
+				size={size}
+			/>
 		</div>
 	)
 }
@@ -41,7 +49,10 @@ const ImageOrPlaceholder = ({
 	>) => {
 	return image ? (
 		<div class="w-full h-full absolute inset-0 bg-gray-100 flex items-center justify-center overflow-hidden ">
-			<img src={image} alt="Thumbnail" />
+			<img
+				src={image}
+				alt="Thumbnail"
+			/>
 		</div>
 	) : (
 		<div class="w-full h-full absolute inset-0 bg-gray-100 flex items-center justify-center ">

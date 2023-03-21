@@ -6,7 +6,7 @@ import Thumbnail from '~/Components/common/Thumbnail'
 const ProductPreview = (props: ProductPreviewType) => {
 	return (
 		<A href={`/products/${props.handle}`}>
-			<div class="overflow-hidden w-[17vw]">
+			<div>
 				<Thumbnail
 					thumbnail={props.thumbnail}
 					title={props.title}

@@ -40,6 +40,12 @@ export default defineConfig({
 						] */
 					}
 				})
+			],
+
+			shortcuts: [
+				{
+					'content-container': 'max-w-[1440px] w-full mx-auto px-8'
+				}
 			]
 			/* options */
 		})

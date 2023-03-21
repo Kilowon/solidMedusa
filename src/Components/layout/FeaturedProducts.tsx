@@ -4,8 +4,8 @@ import UnderlineLink from '~/Components/common/Underline-link'
 
 export function FeaturedProducts(props: any) {
 	return (
-		<div class="py-12">
-			<div class="z-30 mx-auto px-8 py-12 ">
+		<div class="py-12 ">
+			<div class="content-container py-12 ">
 				<div class="flex flex-col items-center text-center mb-16 ">
 					<span class="text-base text-gray-600 mb-6">Latest products</span>
 					<p class="text-2xl text-gray-900 max-w-lg mb-4">

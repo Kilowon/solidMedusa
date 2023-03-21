@@ -1,6 +1,4 @@
-import { Hero } from '~/Components/layout/Hero'
 import { useRouteData, createRouteData } from 'solid-start'
-import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
 import { Navigation } from '~/Components/layout/Navigation'
 import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
@@ -11,15 +9,6 @@ export function routeData() {
 	const { cart }: Cart = useGlobalContext()
 
 	return createRouteData(async () => {
-		const featuredProducts: any = IsClientCheck(
-			await getProductList(
-				medusa,
-				cart.result?.cart.id,
-				4,
-				cart.result?.cart.region
-			)
-		)
-
 		const responceProduct: any = IsClientCheck(
 			await getProductList(
 				medusa,
@@ -38,7 +27,7 @@ export function routeData() {
 				}))
 			})
 
-		return { responceProduct, responceCollection, featuredProducts }
+		return { responceProduct, responceCollection }
 	})
 }
 

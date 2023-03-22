@@ -1,7 +1,6 @@
 import { Hero } from '~/Components/layout/Hero'
 import { useRouteData, createRouteData } from 'solid-start'
 import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
-import { Navigation } from '~/Components/layout/Navigation'
 import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
 import { Cart } from '~/types/types'

@@ -26,7 +26,10 @@ export function Hero() {
 					elements of a world that doesn&apos;t care if you live or die.
 				</p>
 				<div>
-					<A href="/store" class="text-2xl">
+					<A
+						href="/store"
+						class="text-2xl"
+					>
 						Explore products
 					</A>
 					<div class="i-material-symbols-arrow-right-alt-rounded"></div>

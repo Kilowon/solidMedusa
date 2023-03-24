@@ -15,9 +15,7 @@ import {
 } from 'solid-start'
 import 'uno.css'
 import '@unocss/reset/tailwind.css'
-import { Footer } from '~/Components/layout/Footer'
 import { GlobalContextProvider } from '~/Context/Providers'
-import HttpStatusCode from 'solid-start'
 import NotFound from './routes/[...404]'
 
 export default function Root() {
@@ -54,15 +52,21 @@ export default function Root() {
 					<ErrorBoundary
 						fallback={(e: Error) => (
 							<>
+								{console.error(e)}
 								<NotFound />
 							</>
 						)}
 					>
-						<Suspense fallback={<>Loading...</>}>
+						<Suspense
+							fallback={
+								<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
+									<div class="i-svg-spinners:bars-scale-fade" />
+								</section>
+							}
+						>
 							<Routes>
 								<FileRoutes />
 							</Routes>
-							<Footer />
 						</Suspense>
 					</ErrorBoundary>
 				</GlobalContextProvider>

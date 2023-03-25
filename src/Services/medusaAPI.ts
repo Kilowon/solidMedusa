@@ -75,3 +75,24 @@ export async function getProductList(
 			})
 	})
 }
+
+export async function fetchProduct(
+	medusa: Medusa | null | undefined,
+	handle: string
+) {
+	return await medusa?.products.list({ handle })
+}
+
+type useProductPriceProps = {
+	medusa: Medusa | null | undefined
+	cart: Cart | null | undefined
+	id: string
+	variantId?: string
+}
+
+export async function getProductPrice({
+	medusa,
+	cart,
+	id,
+	variantId
+}: useProductPriceProps) {}

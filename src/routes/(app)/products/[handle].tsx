@@ -4,12 +4,13 @@ import { Cart } from '~/types/types'
 import {
 	createRouteData,
 	useRouteData,
-	redirect,
 	useParams,
 	Title,
-	Meta
+	Meta,
+	RouteDataArgs,
+	ServerError
 } from 'solid-start'
-import { Suspense } from 'solid-js'
+import { createEffect, Suspense, createSignal } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 
 interface ProductPage {
@@ -19,32 +20,40 @@ interface ProductPage {
 		thumbnail: string
 		images: {
 			url: string
+			id: string
 		}[]
+		id: string
 	}[]
 }
 
-export function routeData() {
+export function useProduct(params: any) {
 	const { medusa } = useGlobalContext()
-	//const { cart }: Cart = useGlobalContext()
 
-	return createRouteData(async () => {
-		const productPage: ProductPage = await fetchProduct(
-			medusa,
-			useParams().handle
-		)
+	return createRouteData(
+		async () => {
+			try {
+				const productPage: ProductPage = await fetchProduct(medusa, params.handle)
 
-		return { productPage }
-	})
+				return { productPage }
+			} catch (e: any) {
+				console.log('ERROR', e.stack)
+				throw new ServerError(e.message)
+			}
+		},
+		{ key: () => params.handle }
+	)
 }
 
 export default function Products() {
+	const { medusa } = useGlobalContext()
+
 	const params = useParams()
-	const data = useRouteData<typeof routeData>()
+
+	const data = useProduct(params)
 	data()
-	console.log('PAGE PRODUCT DATA', data()?.productPage.products[0])
 
 	return (
-		<>
+		<Suspense>
 			<Title>{data()?.productPage.products[0].title}</Title>
 			<Meta
 				itemProp="description"
@@ -59,8 +68,11 @@ export default function Products() {
 				content={data()?.productPage.products[0].thumbnail}
 			/>
 			<main>
-				<ProductTemplate images={data()?.productPage.products[0].images} />
+				<ProductTemplate
+					images={data()?.productPage.products[0].images}
+					productId={data()?.productPage.products[0].id}
+				/>
 			</main>
-		</>
+		</Suspense>
 	)
 }

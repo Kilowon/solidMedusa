@@ -1,8 +1,8 @@
 import { For } from 'solid-js'
 
-export default function ImageGallery(props: any) {
-	let ref = []
-
+export default function ImageGallery(props: {
+	images: { url: string; id: string }[] | undefined
+}) {
 	const handleScrollTo = (id: string) => {
 		const element = document.getElementById(id)
 		if (element) {
@@ -13,10 +13,10 @@ export default function ImageGallery(props: any) {
 			})
 		}
 	}
-	console.log('PROPS IMAGES', props.images)
+
 	return (
 		<div class="flex items-start relative">
-			<div class="hidden small:flex flex-col gap-y-4 sticky top-20">
+			<div class="hidden sm:flex flex-col gap-y-4 sticky top-20">
 				<For each={props.images}>
 					{(image, index) => {
 						return (
@@ -37,12 +37,11 @@ export default function ImageGallery(props: any) {
 					}}
 				</For>
 			</div>
-			<div class="flex flex-col flex-1 small:mx-16 gap-y-4">
+			<div class="flex flex-col flex-1 sm:mx-16 gap-y-4">
 				<For each={props.images}>
 					{(image, index) => {
 						return (
 							<div
-								ref={image => ref.push(image)}
 								class="relative aspect-[29/34] w-full"
 								id={image.id}
 							>

@@ -1,5 +1,9 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { IsClientCheck, fetchProduct } from '~/Services/medusaAPI'
+import {
+	IsClientCheck,
+	fetchProduct,
+	getProductInfo
+} from '~/Services/medusaAPI'
 import { Cart } from '~/types/types'
 import {
 	createRouteData,
@@ -28,13 +32,17 @@ interface ProductPage {
 
 export function useProduct(params: any) {
 	const { medusa } = useGlobalContext()
-
+	const { cart } = useGlobalContext()
 	return createRouteData(
 		async () => {
 			try {
 				const productPage: ProductPage = await fetchProduct(medusa, params.handle)
-
-				return { productPage }
+				const productInfo = await getProductInfo(
+					medusa,
+					cart,
+					productPage.products[0].id
+				)
+				return { productPage, productInfo }
 			} catch (e: any) {
 				console.log('ERROR', e.stack)
 				throw new ServerError(e.message)
@@ -45,13 +53,11 @@ export function useProduct(params: any) {
 }
 
 export default function Products() {
-	const { medusa } = useGlobalContext()
-
 	const params = useParams()
 
 	const data = useProduct(params)
 	data()
-
+	createEffect(() => {})
 	return (
 		<Suspense>
 			<Title>{data()?.productPage.products[0].title}</Title>
@@ -70,7 +76,7 @@ export default function Products() {
 			<main>
 				<ProductTemplate
 					images={data()?.productPage.products[0].images}
-					productId={data()?.productPage.products[0].id}
+					productInfo={data()?.productInfo.product}
 				/>
 			</main>
 		</Suspense>

@@ -25,7 +25,7 @@ export function routeData() {
 
 export default function App() {
 	const data = useRouteData<typeof routeData>()
-	data()
+	//data()
 	return (
 		<main class="bg-[#35393b] ">
 			<Hero />

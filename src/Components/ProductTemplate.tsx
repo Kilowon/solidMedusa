@@ -1,13 +1,17 @@
 import ImageGallery from '~/Components/prod_tp_components/ImageGallery'
-import ProductInfo from '~/Components/prod_tp_components/ProductInfo'
+import ProductActions from '~/Components/prod_tp_components/ProductActions'
+import { createRouteData, ServerError, refetchRouteData } from 'solid-start'
+import { getProductInfo, IsClientCheck } from '~/Services/medusaAPI'
+import { useGlobalContext } from '~/Context/Providers'
+import { createEffect, onMount } from 'solid-js'
 import { JSX } from 'solid-js'
-//TODO: the new slug is showing up in the URL, but the page is not updating. Maybe it needs a reactive signal
+import { Product } from '~/types/medusa'
+import { title } from 'process'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
-	productId: string | undefined
+	productInfo: Product
 }): JSX.Element {
-	console.log('props', props.productId)
 	return (
 		<main>
 			<div class="content-container flex flex-col sm:flex-row sm:items-start py-6 relative">
@@ -15,8 +19,12 @@ export default function ProductTemplate(props: {
 					<ImageGallery images={props.images} />
 				</div>
 				<div class="sm:sticky sm:top-20 w-full py-8 sm:py-0 sm:max-w-[344px] md:max-w-[400px] flex flex-col gap-y-12">
-					<ProductInfo productId={props.productId} />
-					{/*<ProductTabs productId={product} /> */}
+					<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
+						<div>
+							<ProductActions productInfo={props.productInfo} />
+						</div>
+					</div>
+					{/* <ProductTabs productId={product} /> */}
 				</div>
 			</div>
 			<div class="content-container my-16 px-6 sm:px-8 sm:my-32">

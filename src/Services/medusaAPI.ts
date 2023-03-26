@@ -1,3 +1,4 @@
+import { ServerError } from 'solid-start'
 import { isServer } from 'solid-js/web'
 import { getPercentageDiff } from '~/lib/helpers/helpers'
 import { CalculatedVariant } from '~/types/medusa'
@@ -96,3 +97,17 @@ export async function getProductPrice({
 	id,
 	variantId
 }: useProductPriceProps) {}
+
+type useProductInfoProps = {
+	medusa: Medusa | null | undefined
+	cart: Cart | null | undefined
+	id: string
+}
+
+export async function getProductInfo(
+	medusa: Medusa | null | undefined,
+	cart: Cart,
+	productId: string
+) {
+	return await medusa?.products.retrieve(productId, cart.result?.cart.id)
+}

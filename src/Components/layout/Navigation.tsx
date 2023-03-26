@@ -83,21 +83,11 @@ export function DesktopSearchModal() {
 export function DropdownMenu(props: any) {
 	const { cart } = useGlobalContext()
 
-	createEffect(() => {
-		if (!isServer) {
-			console.log('CLIENTSTATE', cart.result?.cart.id)
-		}
-	})
-
 	const [open, setOpen] = createSignal(false)
 
 	createEffect(() => {
 		if (props.product?.map((p: any) => p.price.original_price) !== null) {
 			refetchRouteData()
-			console.log(
-				'PRICE',
-				props.product?.map((p: any) => p.price.calculated_price)
-			)
 		}
 	})
 

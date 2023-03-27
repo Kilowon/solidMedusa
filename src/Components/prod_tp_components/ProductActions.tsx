@@ -26,16 +26,16 @@ export default function ProductActions(props: {
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
 				>
-					{props.productInfo?.collection.title}
+					{props.productInfo.collection?.title}
 				</A>
 
 				<h3 class="text-2xl font-semibold">{props.productInfo?.title}</h3>
 
 				<p class="text-base">{props.productInfo?.description}</p>
 
-				{props.productInfo?.variants.length > 1 && (
-					<div class="my-8 flex flex-col gap-y-6">
-						{props.productInfo?.options.map(option => {
+				<div class="my-8 flex flex-col gap-y-6">
+					<For each={props.productInfo?.options}>
+						{option => {
 							return (
 								<div>
 									<OptionSelect
@@ -44,9 +44,9 @@ export default function ProductActions(props: {
 									/>
 								</div>
 							)
-						})}
-					</div>
-				)}
+						}}
+					</For>
+				</div>
 
 				{/* <div class="mb-4">
 				{selectedPrice ? (

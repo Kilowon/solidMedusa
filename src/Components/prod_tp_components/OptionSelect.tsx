@@ -5,7 +5,7 @@ export const onlyUnique = (value: unknown, index: number, self: unknown[]) =>
 	self.indexOf(value) === index
 
 type OptionSelectProps = {
-	option: ProductOption
+	option: any
 	current: string
 	updateOption: (option: Record<string, string>) => void
 	title: string

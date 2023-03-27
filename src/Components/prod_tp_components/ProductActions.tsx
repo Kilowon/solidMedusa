@@ -23,7 +23,7 @@ export default function ProductActions(props: {
 		<Show when={props.productInfo}>
 			<div class="flex flex-col gap-y-2">
 				<A
-					href={`/collections/${props.productInfo?.collection.id}`}
+					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
 				>
 					{props.productInfo?.collection.title}

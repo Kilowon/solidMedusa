@@ -1,9 +1,9 @@
-import { JSX } from 'solid-js'
+import { JSX, For } from 'solid-js'
 import { A } from 'solid-start'
 import { Product } from '~/types/medusa'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
-
+import OptionSelect from '~/Components/prod_tp_components/OptionSelect'
 export default function ProductActions(props: {
 	productInfo: Product
 }): JSX.Element {
@@ -32,22 +32,20 @@ export default function ProductActions(props: {
 
 			<p class="text-base">{props.productInfo?.description}</p>
 
-			{props.productInfo?.variants.length > 1 && (
-				<div class="my-8 flex flex-col gap-y-6">
-					{props.productInfo?.options.map(option => {
+			<div class="my-8 flex flex-col gap-y-6">
+				<For each={props.productInfo?.options}>
+					{option => {
 						return (
 							<div>
-								{/* <OptionSelect
+								<OptionSelect
 									option={option}
-									current={options[option.id]}
-									updateOption={updateOptions}
 									title={option.title}
-								/> */}
+								/>
 							</div>
 						)
-					})}
-				</div>
-			)}
+					}}
+				</For>
+			</div>
 
 			{/* <div class="mb-4">
 				{selectedPrice ? (

@@ -1,6 +1,6 @@
 import { JSX, For, Show } from 'solid-js'
 import { A } from 'solid-start'
-import { Product } from '~/types/medusa'
+import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
 import OptionSelect from '~/Components/prod_tp_components/OptionSelect'
@@ -29,7 +29,7 @@ export default function ProductActions(props: {
 					{props.productInfo?.collection.title}
 				</A>
 
-				<h3 class="text-xl">{props.productInfo?.title}</h3>
+				<h3 class="text-2xl font-semibold">{props.productInfo?.title}</h3>
 
 				<p class="text-base">{props.productInfo?.description}</p>
 
@@ -38,10 +38,10 @@ export default function ProductActions(props: {
 						{props.productInfo?.options.map(option => {
 							return (
 								<div>
-									{/* <OptionSelect
-									option={option}
-									title={option.title}
-								/> */}
+									<OptionSelect
+										option={option}
+										title={option.title}
+									/>
 								</div>
 							)
 						})}

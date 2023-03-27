@@ -23,7 +23,7 @@ export default function OptionSelect({
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-3">
-				<span class="text-base">Select {title}</span>
+				<span class="text-base font-semibold">Select {title}</span>
 				<div class="grid grid-cols-3 lg:grid-cols-6 gap-2">
 					<For each={filteredOptions}>
 						{v => {

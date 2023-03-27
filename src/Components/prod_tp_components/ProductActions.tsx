@@ -18,7 +18,7 @@ export default function ProductActions(props: {
 
 		return variantPrice || cheapestPrice || null
 	}, [price]) */
-	console.log('ProductActions props', props.productInfo?.collection.id)
+
 	return (
 		<Show when={props.productInfo}>
 			<div class="flex flex-col gap-y-2">

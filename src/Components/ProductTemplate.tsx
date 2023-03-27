@@ -5,7 +5,7 @@ import { getProductInfo, IsClientCheck } from '~/Services/medusaAPI'
 import { useGlobalContext } from '~/Context/Providers'
 import { createEffect, onMount } from 'solid-js'
 import { JSX, Show } from 'solid-js'
-import { Product } from '~/types/medusa'
+import { Product } from '~/types/models'
 import { title } from 'process'
 
 export default function ProductTemplate(props: {

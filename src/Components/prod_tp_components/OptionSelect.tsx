@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { For } from 'solid-js'
+import { For, Show } from 'solid-js'
 
 export const onlyUnique = (value: unknown, index: number, self: unknown[]) =>
 	self.indexOf(value) === index
@@ -21,23 +21,25 @@ export default function OptionSelect({
 		.filter(onlyUnique)
 
 	return (
-		<div class="flex flex-col gap-y-3">
-			<span class="text-base-semi">Select {title}</span>
-			<div class="grid grid-cols-3 lg:grid-cols-6 gap-2">
-				<For each={filteredOptions}>
-					{v => {
-						return (
-							<button
-								//TODO: Add onClick to update the option selection
-								//onClick={() => updateOption({ [option.id]: v })}
-								class="border-gray-200 border text-xsmall-regular h-[50px] transition-all duration-200"
-							>
-								{v}
-							</button>
-						)
-					}}
-				</For>
+		<Show when={option.values.length > 0}>
+			<div class="flex flex-col gap-y-3">
+				<span class="text-base">Select {title}</span>
+				<div class="grid grid-cols-3 lg:grid-cols-6 gap-2">
+					<For each={filteredOptions}>
+						{v => {
+							return (
+								<button
+									//TODO: Add onClick to update the option selection
+									//onClick={() => updateOption({ [option.id]: v })}
+									class="border-gray-200 border text-xs h-[50px] transition-all duration-200"
+								>
+									{v}
+								</button>
+							)
+						}}
+					</For>
+				</div>
 			</div>
-		</div>
+		</Show>
 	)
 }

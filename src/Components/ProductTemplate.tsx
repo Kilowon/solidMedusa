@@ -1,4 +1,4 @@
-import ImageGallery from '~/Components/prod_tp_components/ImageGallery'
+import ImageGallerySlidy from '~/Components/prod_tp_components/ImageGallerySlidy'
 import ProductActions from '~/Components/prod_tp_components/ProductActions'
 import { createRouteData, ServerError, refetchRouteData } from 'solid-start'
 import { getProductInfo, IsClientCheck } from '~/Services/medusaAPI'
@@ -11,15 +11,20 @@ import { title } from 'process'
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
 	productInfo: Product
+	params: any
 }): JSX.Element {
 	return (
 		<Show when={props.productInfo}>
 			<main>
-				<div class="content-container flex flex-col sm:flex-row sm:items-start py-6 relative">
+				<div class="content-container flex flex-col lg:flex-row lg:items-start py-6 relative">
 					<div class="flex flex-col gap-y-8 w-full">
-						<ImageGallery images={props.images} />
+						<ImageGallerySlidy
+							images={props.images}
+							productInfo={props.productInfo}
+							params={props.params}
+						/>
 					</div>
-					<div class="sm:sticky sm:top-20 w-full py-8 sm:py-0 sm:max-w-[344px] md:max-w-[400px] flex flex-col gap-y-12">
+					<div class="lg:sticky lg:top-20 w-full py-8 sm:py-0 md:max-w-[344px] lg:max-w-[400px] flex flex-col gap-y-12">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
 								<ProductActions productInfo={props.productInfo} />

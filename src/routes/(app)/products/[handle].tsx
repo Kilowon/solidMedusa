@@ -59,7 +59,7 @@ export default function Products() {
 	data()
 	createEffect(() => {})
 	return (
-		<Suspense>
+		<div>
 			<Title>{data()?.productPage.products[0].title}</Title>
 			<Meta
 				itemProp="description"
@@ -77,8 +77,9 @@ export default function Products() {
 				<ProductTemplate
 					images={data()?.productPage.products[0].images}
 					productInfo={data()?.productInfo.product}
+					params={params?.handle}
 				/>
 			</main>
-		</Suspense>
+		</div>
 	)
 }

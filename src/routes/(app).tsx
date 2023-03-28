@@ -4,6 +4,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
 import { Cart } from '~/types/types'
 import { Footer } from '~/Components/layout/Footer'
+import { createSignal, createEffect, Show } from 'solid-js'
 
 export function routeData() {
 	const { medusa } = useGlobalContext()
@@ -39,6 +40,14 @@ import { Outlet } from 'solid-start'
 export default function Home() {
 	const data = useRouteData<typeof routeData>()
 	data()
+
+	const [isLoaded, setIsLoaded] = createSignal(false)
+
+	createEffect(() => {
+		if (data()?.responceProduct && data()?.responceCollection) {
+			setIsLoaded(true)
+		}
+	})
 	return (
 		<div>
 			<Navigation

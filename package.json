@@ -31,6 +31,7 @@
 		"clsx": "^1.2.1",
 		"solid-js": "^1.6.11",
 		"solid-start": "^0.2.23",
+		"solid-transition-group": "^0.2.2",
 		"undici": "^5.15.1",
 		"unocss": "^0.50.4",
 		"xstate": "^4.37.0"

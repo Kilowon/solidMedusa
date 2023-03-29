@@ -46,8 +46,17 @@ export default defineConfig({
 				{
 					'content-container': 'max-w-[1440px] w-full mx-auto px-8'
 				}
+			],
+			rules: [
+				[
+					'sl-arrow',
+					{
+						[`--slidy-arrow-size`]: '80px',
+						[`--slidy-arrow-color`]: 'white',
+						[`--slidy-nav-item-size`]: '4px'
+					}
+				]
 			]
-			/* options */
 		})
 	]
 })

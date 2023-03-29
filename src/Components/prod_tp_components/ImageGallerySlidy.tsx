@@ -4,24 +4,6 @@ import { blur } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
-import { AnimationFunc } from '@slidy/animation'
-
-const slidys = [
-	{
-		id: '821',
-		width: 1280,
-		height: 853,
-		alt: 'Image by Eutah Mizushima',
-		src: 'https://picsum.photos/id/821/1280/853.jpg'
-	},
-	{
-		id: '822',
-		width: 1280,
-		height: 853,
-		alt: 'Image by London Scout',
-		src: 'https://picsum.photos/id/822/1280/853.jpg'
-	}
-]
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
@@ -81,11 +63,11 @@ export default function ImageGallerySlidy(props: {
 			<div class="flex items-start relative">
 				<div
 					id="gallery"
-					class="flex flex-col flex-1 lg:mx-16 gap-y-4  h-[80vh]"
+					class="flex flex-col flex-1 lg:mx-16 gap-y-4  h-[80vh] "
 				>
 					<Slidy
 						slides={slides()}
-						snap="center"
+						snap="deck"
 						thumbnail={true}
 						easing={linear}
 						clamp={0}

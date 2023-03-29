@@ -95,6 +95,7 @@ export function DropdownMenu(props: any) {
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
+			onClick={() => setOpen(!open())}
 		>
 			<div>
 				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>
@@ -102,13 +103,13 @@ export function DropdownMenu(props: any) {
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 200
+						duration: 150
 					})
 					a.finished.then(done)
 				}}
 				onExit={(el, done) => {
 					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-						duration: 400
+						duration: 200
 					})
 					a.finished.then(done)
 				}}

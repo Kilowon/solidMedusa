@@ -111,3 +111,34 @@ export async function getProductInfo(
 ) {
 	return await medusa?.products.retrieve(productId, cart.result?.cart.id)
 }
+
+export async function deleteLineItem(
+	medusa: Medusa | null | undefined,
+	cart: Cart,
+	lineItemId: string
+) {
+	return await medusa?.carts.lineItems.delete(cart.result?.cart.id, lineItemId)
+}
+
+export async function updateLineItem(
+	medusa: Medusa | null | undefined,
+	cart: Cart,
+	lineItemId: string,
+	quantity: number
+) {
+	return await medusa?.carts.lineItems.update(cart.result?.cart.id, lineItemId, {
+		quantity
+	})
+}
+
+export async function addLineItem(
+	medusa: Medusa | null | undefined,
+	cart: Cart,
+	variantId: string,
+	quantity: number
+) {
+	return await medusa?.carts.lineItems.create(cart.result?.cart.id, {
+		variant_id: variantId,
+		quantity
+	})
+}

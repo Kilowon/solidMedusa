@@ -40,6 +40,7 @@ import { Outlet } from 'solid-start'
 export default function Home() {
 	const data = useRouteData<typeof routeData>()
 	data()
+	const { cart } = useGlobalContext()
 
 	const [isLoaded, setIsLoaded] = createSignal(false)
 
@@ -53,6 +54,7 @@ export default function Home() {
 			<Navigation
 				collection={data()?.responceCollection}
 				product={data()?.responceProduct}
+				cart={cart.result?.cart}
 			/>
 			<Outlet />
 			<Footer />

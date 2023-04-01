@@ -12,7 +12,7 @@ export default function ImageGallerySlidy(props: {
 }) {
 	const [slides, setSlides] = createSignal<never[]>([])
 	const [location, setLocation] = createSignal(useLocation().pathname)
-
+	// Slidy has a bug where it shutters the image when you have less than 3 slides so this is a workaround that just adds the first slide to the end of the array until there are 3 slides if there are less than 3 slides provided or if no images are provided we throw in a placeholder image
 	createEffect(() => {
 		const images = props.images
 		if (images && images.length > 0) {
@@ -35,7 +35,7 @@ export default function ImageGallerySlidy(props: {
 				width: 1280,
 				height: 853,
 				alt: 'Product thumbnail',
-				src: `https://fakeimg.pl/405x480/?text=${props.productInfo.collection?.title}&font=poppins`
+				src: `https://fakeimg.pl/405x480/?text=${props.productInfo?.title}&font=poppins`
 			}
 			const newSlides = [placeholderSlide, placeholderSlide, placeholderSlide]
 			setSlides(newSlides as never[])
@@ -58,21 +58,27 @@ export default function ImageGallerySlidy(props: {
 	return (
 		<Show
 			when={location() === useLocation().pathname}
-			fallback={<>Loading...</>}
+			fallback={
+				<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
+					<div class="i-svg-spinners:bars-scale-fade" />
+				</section>
+			}
 		>
 			<div class="flex items-start relative">
 				<div
 					id="gallery"
-					class="flex flex-col flex-1 lg:mx-16 gap-y-4  h-[80vh] "
+					class="flex h-[90vh] mx-8 "
 				>
 					<Slidy
 						slides={slides()}
-						snap="deck"
-						thumbnail={true}
+						snap="center"
+						thumbnail={false}
 						easing={linear}
 						clamp={0}
 						loop={true}
 						animation={blur}
+						arrows={false}
+						background={false}
 					/>
 				</div>
 			</div>

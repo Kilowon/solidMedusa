@@ -1,12 +1,7 @@
 import ImageGallerySlidy from '~/Components/prod_tp_components/ImageGallerySlidy'
 import ProductActions from '~/Components/prod_tp_components/ProductActions'
-import { createRouteData, ServerError, refetchRouteData } from 'solid-start'
-import { getProductInfo, IsClientCheck } from '~/Services/medusaAPI'
-import { useGlobalContext } from '~/Context/Providers'
-import { createEffect, onMount } from 'solid-js'
 import { JSX, Show } from 'solid-js'
 import { Product } from '~/types/models'
-import { title } from 'process'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -16,7 +11,7 @@ export default function ProductTemplate(props: {
 	return (
 		<Show when={props.productInfo}>
 			<main>
-				<div class="content-container flex flex-col lg:flex-row lg:items-start py-6 relative">
+				<div class="content-container flex flex-col lg:flex-row lg:items-start py-6 relative mt-10">
 					<div class="flex flex-col gap-y-8 w-full">
 						<ImageGallerySlidy
 							images={props.images}

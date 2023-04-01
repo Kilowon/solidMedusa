@@ -1,5 +1,5 @@
 export function currencyFormat(price: number, currency: string) {
-	let selectCurrency = currency.toLowerCase()
+	let selectCurrency = (typeof currency === 'string' && currency.toLowerCase()) || ''
 	let formatedCurency = ''
 
 	switch (selectCurrency) {
@@ -19,6 +19,9 @@ export function currencyFormat(price: number, currency: string) {
 			formatedCurency = 'EUR'
 			break
 		case 'gb':
+			formatedCurency = 'GBP'
+			break
+		case 'uk':
 			formatedCurency = 'GBP'
 			break
 		default:

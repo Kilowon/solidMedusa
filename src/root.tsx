@@ -17,6 +17,8 @@ import 'uno.css'
 import '@unocss/reset/tailwind.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import NotFound from './routes/[...404]'
+import { StoreProvider } from './Context/StoreContext'
+import { useGlobalContext } from '~/Context/Providers'
 
 export default function Root() {
 	return (
@@ -48,28 +50,33 @@ export default function Root() {
 				/>
 			</Head>
 			<Body>
-				<GlobalContextProvider>
-					<ErrorBoundary
-						fallback={(e: Error) => (
-							<>
-								{console.error(e)}
-								<NotFound />
-							</>
-						)}
-					>
-						<Suspense
-							fallback={
-								<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
-									<div class="i-svg-spinners:bars-scale-fade" />
-								</section>
-							}
+				<ErrorBoundary
+					fallback={(e: Error) => (
+						<>
+							{console.error(e)}
+							<NotFound />
+						</>
+					)}
+				>
+					<GlobalContextProvider>
+						<StoreProvider
+							medusa={useGlobalContext().medusa}
+							cart={useGlobalContext().cart}
 						>
-							<Routes>
-								<FileRoutes />
-							</Routes>
-						</Suspense>
-					</ErrorBoundary>
-				</GlobalContextProvider>
+							<Suspense
+								fallback={
+									<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
+										<div class="i-svg-spinners:bars-scale-fade" />
+									</section>
+								}
+							>
+								<Routes>
+									<FileRoutes />
+								</Routes>
+							</Suspense>
+						</StoreProvider>
+					</GlobalContextProvider>
+				</ErrorBoundary>
 				<Scripts />
 			</Body>
 		</Html>

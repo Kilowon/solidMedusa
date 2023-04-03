@@ -3,7 +3,6 @@
 ///////////////////////////////////////////////////////
 
 export default function Greeting() {
-	console.log('Greeting')
 	return (
 		<div>
 			<h1>Hello, world!</h1>

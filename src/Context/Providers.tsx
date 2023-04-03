@@ -89,7 +89,7 @@ export function GlobalContextProvider(props: any) {
 	})
 
 	return (
-		<GlobalContext.Provider value={{ medusa, cart }}>
+		<GlobalContext.Provider value={{ medusa, cart: cart as Cart }}>
 			{props.children}
 		</GlobalContext.Provider>
 	)

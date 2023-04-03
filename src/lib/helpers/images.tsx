@@ -1,4 +1,17 @@
-function ResponsiveImage({ image }) {
+import cloudinary from 'cloudinary'
+
+interface Props {
+	image: {
+		public_id: string
+		contentType?: string
+		description?: string
+		width?: number
+		height?: number
+		class?: string
+	}
+}
+
+function ResponsiveImage({ image }: Props) {
 	const { contentType } = image
 	// Inspect contentType to convert GIF to WebP and not AVIF
 	// more info: https://twitter.com/whitep4nth3r/status/1460244790059188226
@@ -18,15 +31,20 @@ function ResponsiveImage({ image }) {
 		maxContainerSize - 1
 	}px) 100vw, ${maxContainerSize}px`
 
-	function makeSrcSetArray(format) {
+	function makeSrcSetArray(format: any) {
 		const formatString = format === undefined ? '' : `&fm=${format}`
-
+		const cloudinaryUrl = cloudinary.v2.url(image.public_id, {
+			width: imageWidths,
+			quality: 75,
+			fetch_format: format,
+			type: 'fetch'
+		})
 		return imageWidths.map(
-			width => `${image.url}?q=75&w=${width}${formatString} ${width}w`
+			width => `${cloudinaryUrl}?w=${width}${formatString} ${width}w`
 		)
 	}
 
-	function makeSrcSetString(format) {
+	function makeSrcSetString(format: any) {
 		return makeSrcSetArray(format).join(', ')
 	}
 
@@ -42,17 +60,22 @@ function ResponsiveImage({ image }) {
 									'webp'
 								)}" sizes="${sizes}" />
         <img
-          srcSet="${makeSrcSetString()}"
+          srcSet="${makeSrcSetString('webp')}"
           sizes="${sizes}"
-          src="${image.url}"
+          src="${(cloudinary as any).url(image.public_id, {
+											width: imageWidths[imageWidths.length - 1],
+											quality: 75,
+											fetch_format: 'auto',
+											type: 'fetch'
+										})}"
           alt="${image.description}"
           loading="lazy"
           decoding="async"
-          width="${image.width}"
-          height="${image.height}"
-          class="post__responsiveImage"
+          width="100%"
+          height="auto"
+          class="post__responsiveImage ${image.class}"
         />
       </picture>`
 }
 
-module.exports = ResponsiveImage
+export default ResponsiveImage

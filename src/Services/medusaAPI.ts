@@ -84,26 +84,6 @@ export async function fetchProduct(
 	return await medusa?.products.list({ handle })
 }
 
-type useProductPriceProps = {
-	medusa: Medusa | null | undefined
-	cart: Cart | null | undefined
-	id: string
-	variantId?: string
-}
-
-export async function getProductPrice({
-	medusa,
-	cart,
-	id,
-	variantId
-}: useProductPriceProps) {}
-
-type useProductInfoProps = {
-	medusa: Medusa | null | undefined
-	cart: Cart | null | undefined
-	id: string
-}
-
 export async function getProductInfo(
 	medusa: Medusa | null | undefined,
 	cart: Cart,

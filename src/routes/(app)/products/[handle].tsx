@@ -16,6 +16,8 @@ import {
 } from 'solid-start'
 import { createEffect, Suspense, createSignal } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
+import { useStore } from '~/Context/StoreContext'
+import { StoreProvider } from '~/Context/StoreContext'
 
 interface ProductPage {
 	products: {
@@ -54,10 +56,12 @@ export function useProduct(params: any) {
 
 export default function Products() {
 	const params = useParams()
-
 	const data = useProduct(params)
 	data()
-	createEffect(() => {})
+
+	createEffect(() => {
+		console.log('data', data()?.productInfo.product.variants)
+	})
 	return (
 		<div>
 			<Title>{data()?.productPage.products[0].title}</Title>
@@ -74,11 +78,18 @@ export default function Products() {
 				content={data()?.productPage.products[0].thumbnail}
 			/>
 			<main>
-				<ProductTemplate
-					images={data()?.productPage.products[0].images}
-					productInfo={data()?.productInfo.product}
-					params={params?.handle}
-				/>
+				<StoreProvider product={data()?.productInfo.product}>
+					<ProductTemplate
+						images={data()?.productPage.products[0].images}
+						productInfo={data()?.productInfo.product}
+						params={params?.handle}
+						updateOptions={useStore().updateOptions}
+						options={useStore().options}
+						inStock={useStore().inStock}
+						variant={useStore().variant}
+						useStore={useStore}
+					/>
+				</StoreProvider>
 			</main>
 		</div>
 	)

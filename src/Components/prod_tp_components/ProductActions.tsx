@@ -4,13 +4,17 @@ import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
 import OptionSelect from '~/Components/prod_tp_components/OptionSelect'
+import { useStore } from '~/Context/StoreContext'
+
 export default function ProductActions(props: {
 	productInfo: Product
+	updateOptions: any
+	options: any
+	inStock: any
+	variant: any
+	useStore: any
 }): JSX.Element {
-	//const { updateOptions, addToCart, options, inStock, variant } =
-	//useProductActions()
-
-	//const price = useProductPrice({ id: product.id, variantId: variant?.id })
+	//const price = useProductPrice({ id: props.productInfo.id, variantId: variant()?.id })
 
 	//const selectedPrice =
 	/* useMemo(() => {
@@ -18,6 +22,8 @@ export default function ProductActions(props: {
 
 		return variantPrice || cheapestPrice || null
 	}, [price]) */
+
+	const { addToCart } = useStore()
 
 	return (
 		<Show when={props.productInfo}>
@@ -40,6 +46,8 @@ export default function ProductActions(props: {
 								<div>
 									<OptionSelect
 										option={option}
+										current={props.options[option.id]}
+										updateOption={props.updateOptions}
 										title={option.title}
 									/>
 								</div>
@@ -73,7 +81,13 @@ export default function ProductActions(props: {
 				)}
 			</div> */}
 
-				<button class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+				<button
+					onClick={() => {
+						console.log('ADD TO CART')
+						addToCart()
+					}}
+					class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white"
+				>
 					Add to cart
 				</button>
 			</div>

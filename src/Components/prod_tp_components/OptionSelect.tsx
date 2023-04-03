@@ -13,7 +13,8 @@ type OptionSelectProps = {
 //TODO: Need Hook to update the option selection
 export default function OptionSelect({
 	option,
-
+	current,
+	updateOption,
 	title
 }: OptionSelectProps) {
 	const filteredOptions = option.values
@@ -29,8 +30,10 @@ export default function OptionSelect({
 						{v => {
 							return (
 								<button
-									//TODO: Add onClick to update the option selection
-									//onClick={() => updateOption({ [option.id]: v })}
+									onClick={() => {
+										updateOption({ [option.id]: v })
+										console.log('OPTIONS', option.product_id)
+									}}
 									class="border-gray-200 border text-xs h-[50px] transition-all duration-200"
 								>
 									{v}

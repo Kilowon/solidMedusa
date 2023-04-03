@@ -7,6 +7,11 @@ export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
 	productInfo: Product
 	params: any
+	updateOptions: any
+	options: any
+	inStock: any
+	variant: any
+	useStore: any
 }): JSX.Element {
 	return (
 		<Show when={props.productInfo}>
@@ -22,7 +27,14 @@ export default function ProductTemplate(props: {
 					<div class="lg:sticky lg:top-20 w-full py-8 sm:py-0 md:max-w-[344px] lg:max-w-[400px] flex flex-col gap-y-12">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
-								<ProductActions productInfo={props.productInfo} />
+								<ProductActions
+									productInfo={props.productInfo}
+									updateOptions={props.updateOptions}
+									options={props.options}
+									inStock={props.inStock}
+									variant={props.variant}
+									useStore={props.useStore}
+								/>
 							</div>
 						</div>
 						{/* <ProductTabs productId={product} /> */}

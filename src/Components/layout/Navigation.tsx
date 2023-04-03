@@ -61,7 +61,6 @@ export function Hamburger() {
 		</div> */
 }
 export function CartDropdown(props: any) {
-	console.log(props.cart)
 	const [open, setOpen] = createSignal(false)
 	return (
 		<div

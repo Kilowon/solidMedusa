@@ -93,9 +93,9 @@ export function CartDropdown(props: any) {
 						<Switch fallback={<div>Empty</div>}>
 							<Match when={props.cart.items?.length > 0}>
 								<>
-									<div class="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 no-scrollbar">
+									<div class="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 scrollbar-hide">
 										<For
-											each={props.cart.items.sort((a: any, b: any) => {
+											each={props.cart.items?.sort((a: any, b: any) => {
 												return a.created_at > b.created_at ? -1 : 1
 											})}
 										>
@@ -111,13 +111,13 @@ export function CartDropdown(props: any) {
 														<div class="flex flex-col flex-1">
 															<div class="flex items-start justify-between">
 																<div>
-																	<h3 class="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
-																		<A href={`/products/${item.variant.product.handle}`}>
+																	<h3 class="text-base overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
+																		<A href={`/products/${item.variant.product?.handle}`}>
 																			{item.title}
 																		</A>
 																	</h3>
-																	<LineItemOptions variant={props.cart.item.variant} />
-																	<span>Quantity: {props.cart.item.quantity}</span>
+																	<LineItemOptions variant={props.cart.item?.variant} />
+																	<span>Quantity: {props.cart.item?.quantity}</span>
 																</div>
 																<div class="flex justify-end">
 																	<LineItemPrice
@@ -128,7 +128,7 @@ export function CartDropdown(props: any) {
 																</div>
 															</div>
 														</div>
-														<div class="flex items-end justify-between text-small-regular flex-1">
+														<div class="flex items-end justify-between text-sm flex-1">
 															<div>
 																<button
 																	class="flex items-center gap-x-1 text-gray-500"
@@ -144,7 +144,7 @@ export function CartDropdown(props: any) {
 											)}
 										</For>
 									</div>
-									<div class="p-4 flex flex-col gap-y-4 text-small-regular">
+									<div class="p-4 flex flex-col gap-y-4 text-sm">
 										<div class="flex items-center justify-between">
 											<span class="text-gray-700 font-semibold">
 												Subtotal <span class="font-normal">(incl. taxes)</span>
@@ -197,10 +197,10 @@ import { ProductVariant } from '~/types/models'
 type LineItemOptionsProps = { variant: ProductVariant }
 export function LineItemOptions(props: LineItemOptionsProps) {
 	return (
-		<div class="text-small-regular text-gray-700">
-			{props.variant.options.map(option => {
+		<div class="text-sm text-gray-700">
+			{props.variant?.options.map(option => {
 				const optionName =
-					props.variant.product.options.find(opt => opt.id === option.option_id)
+					props.variant.product?.options.find(opt => opt.id === option.option_id)
 						?.title || 'Option'
 				return (
 					<div>
@@ -226,7 +226,8 @@ type LineItemPriceProps = {
 }
 export function LineItemPrice(props: LineItemPriceProps) {
 	const originalPrice =
-		(props.item.variant as CalculatedVariant).original_price * props.item.quantity
+		(props.item.variant as CalculatedVariant).original_price *
+		props.item?.quantity
 	const hasReducedPrice = (props.item.total || 0) < originalPrice
 
 	return (
@@ -236,7 +237,7 @@ export function LineItemPrice(props: LineItemPriceProps) {
 					'text-rose-600': hasReducedPrice
 				})}
 			>
-				{currencyFormat(Number(props.item.total || 0), props.region.id)}
+				{currencyFormat(Number(props.item.total || 0), props.region?.id)}
 			</span>
 			{hasReducedPrice && (
 				<>
@@ -245,12 +246,12 @@ export function LineItemPrice(props: LineItemPriceProps) {
 							<span class="text-gray-500">Original: </span>
 						)}
 						<span class="line-through">
-							{currencyFormat(Number(originalPrice), props.region.id)}
+							{currencyFormat(Number(originalPrice), props.region?.id)}
 						</span>
 					</p>
 					{props.style === 'default' && (
 						<span class="text-rose-600">
-							-{getPercentageDiff(originalPrice, props.item.total || 0)}%
+							-{getPercentageDiff(originalPrice, props.item?.total || 0)}%
 						</span>
 					)}
 				</>

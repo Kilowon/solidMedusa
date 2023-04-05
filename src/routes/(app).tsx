@@ -49,6 +49,10 @@ export default function Home() {
 			setIsLoaded(true)
 		}
 	})
+
+	createEffect(() => {
+		console.log('cart', cart.result?.cart)
+	})
 	return (
 		<div>
 			<Navigation

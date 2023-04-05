@@ -16,6 +16,7 @@ import { isServer } from 'solid-js/web'
 import { Product } from '~/types/models'
 import { currencyFormat, findCheapestPrice } from '~/lib/helpers/currency'
 import { Accessor } from 'solid-js'
+import { useGlobalContext } from '~/Context/Providers'
 
 interface StoreContextValue {
 	deleteItem: (lineId: string) => void
@@ -41,6 +42,7 @@ export function StoreProvider(props: {
 	medusa?: Medusa | null | undefined
 	cart?: Cart
 	product?: Product
+	updateCart?: () => void
 	children: any
 }) {
 	const [options, setOptions] = createSignal({})
@@ -48,6 +50,10 @@ export function StoreProvider(props: {
 	const [quantity, setQuantity] = createSignal(1)
 	const [maxQuantityMet, setMaxQuantityMet] = createSignal(false)
 	const [product, setProduct] = createSignal(props.product)
+
+	const { updateCart } = useGlobalContext()
+	const { cart } = useGlobalContext()
+	const { medusa } = useGlobalContext()
 
 	createEffect(() => {
 		setProduct(props.product)
@@ -62,7 +68,7 @@ export function StoreProvider(props: {
 	}
 
 	function addItem(lineId: string, quantity: number) {
-		addLineItem(props.medusa, props.cart, lineId, quantity)
+		addLineItem(medusa, cart, lineId, quantity)
 	}
 
 	function deleteItem(lineId: string) {
@@ -110,7 +116,6 @@ export function StoreProvider(props: {
 
 	// memoized record of the product's variants
 	const variantRecord = createMemo(() => {
-		console.log('variantRecord', props.product?.variants)
 		const map: Record<string, Record<string, string>> = {}
 
 		for (const variant of product()?.variants || []) {
@@ -127,8 +132,6 @@ export function StoreProvider(props: {
 	}, [product()?.variants])
 
 	const variant = createMemo(() => {
-		console.log('variant', variantRecord())
-		console.log('options', options())
 		let variantId: string | undefined = undefined
 
 		for (const key of Object.keys(variantRecord())) {
@@ -137,7 +140,6 @@ export function StoreProvider(props: {
 			const optionsString = JSON.stringify(options())
 
 			if (variantOptionsString === optionsString) {
-				console.log('variantKEY', key)
 				variantId = key
 				break
 			}
@@ -148,13 +150,7 @@ export function StoreProvider(props: {
 
 	createEffect(() => {
 		if (!isServer) {
-			console.log(
-				'ISEQUAL',
-				product()?.variants.find(v => v.id === variant()?.id)
-			)
 			console.log('variant', variant())
-			console.log('options', options())
-			console.log('variantRecord', variantRecord())
 		}
 	}, [variant])
 	// if product only has one variant, then select it
@@ -191,7 +187,6 @@ export function StoreProvider(props: {
 	}, [variant])
 
 	function updateOptions(update: Record<string, string>) {
-		console.log('updateOptions', update)
 		setOptions({ ...options(), ...update })
 	}
 
@@ -199,6 +194,8 @@ export function StoreProvider(props: {
 		if (variant()) {
 			console.log('adding to cart', variant()?.id, quantity())
 			addItem(variant()?.id as string, quantity())
+			console.log('added to cart')
+			updateCart?.()
 		}
 	}
 

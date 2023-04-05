@@ -20,6 +20,7 @@ import { useMachine } from '@xstate/solid'
 interface ContextProps {
 	medusa?: Medusa | null
 	cart?: Cart | null
+	updateCart?: () => void
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -73,10 +74,12 @@ async function getRequiredCart() {
 }
 
 export function GlobalContextProvider(props: any) {
-	const [cart, cartState]: Cart = createRouteAction(getRequiredCart)
+	const [cart, cartServerState]: Cart = createRouteAction(getRequiredCart)
+	const [fetching, setFetching] = createSignal(true)
+
 	createEffect(() => {
 		if (!isServer) {
-			cartState()
+			cartServerState()
 			fetchRegion()
 		}
 	})
@@ -85,11 +88,18 @@ export function GlobalContextProvider(props: any) {
 		if (!isServer && cart?.result?.cart?.id !== undefined) {
 			fetchRegion()
 			localStorage.setItem('cart_id', cart?.result.cart.id)
+			setFetching(false)
 		}
 	})
 
+	const updateCart = () => {
+		if (!fetching) {
+			cartServerState()
+		}
+	}
+
 	return (
-		<GlobalContext.Provider value={{ medusa, cart: cart as Cart }}>
+		<GlobalContext.Provider value={{ medusa, cart: cart as Cart, updateCart }}>
 			{props.children}
 		</GlobalContext.Provider>
 	)

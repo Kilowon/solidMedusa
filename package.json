@@ -35,6 +35,7 @@
 		"solid-transition-group": "^0.2.2",
 		"undici": "^5.15.1",
 		"unocss": "^0.50.4",
+		"unocss-preset-scrollbar-hide": "^1.0.1",
 		"xstate": "^4.37.0"
 	},
 	"engines": {

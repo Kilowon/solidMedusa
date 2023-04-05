@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import presetIcons from '@unocss/preset-icons'
 import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
+import { presetScrollbarHide } from 'unocss-preset-scrollbar-hide'
 
 export default defineConfig({
 	plugins: [
@@ -19,6 +20,7 @@ export default defineConfig({
 					}
 				}),
 				presetUno(),
+				presetScrollbarHide(),
 				presetWebFonts({
 					provider: 'google', // default provider
 					fonts: {
@@ -54,6 +56,14 @@ export default defineConfig({
 						[`--slidy-arrow-size`]: '80px',
 						[`--slidy-arrow-color`]: 'white',
 						[`--slidy-nav-item-size`]: '4px'
+					}
+				],
+				[
+					'overflow-ellipsis',
+					{
+						['overflow']: 'hidden',
+						['text-overflow']: 'ellipsis',
+						['white-space']: 'nowrap'
 					}
 				]
 			]

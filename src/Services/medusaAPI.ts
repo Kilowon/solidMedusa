@@ -117,8 +117,14 @@ export async function addLineItem(
 	variantId: string,
 	quantity: number
 ) {
-	return await medusa?.carts.lineItems.create(cart.result?.cart.id, {
-		variant_id: variantId,
-		quantity
-	})
+	try {
+		console.log('CARTID', cart.result?.cart.id, variantId, quantity)
+		const data = await medusa?.carts.lineItems.create(cart.result?.cart.id, {
+			variant_id: variantId,
+			quantity
+		})
+		return data
+	} catch (error) {
+		console.log(error)
+	}
 }

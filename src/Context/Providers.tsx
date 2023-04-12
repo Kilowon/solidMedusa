@@ -7,6 +7,7 @@ import {
 	createEffect
 } from 'solid-js'
 import { createRouteAction } from 'solid-start'
+import { createQuery } from '@tanstack/solid-query'
 
 //TODO: Becareful with imports from @medusajs/medusa-js as it will break the build process with too many imports it seems some webpack issue even though vite is used for the frontend
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
@@ -21,6 +22,8 @@ interface ContextProps {
 	medusa?: Medusa | null
 	cart?: Cart | null
 	updateCart?: () => void
+	queryCart?: Cart | null
+	queryCartRefetch?: () => void
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -41,10 +44,10 @@ const medusa = useMedusa()
 //TODO: The region is set to the US region this should be changed to a region that is chosen by the user or by IP address location
 async function fetchRegion(): Promise<any> {
 	const region = await medusa.regions.list().then(({ regions }: any) => {
-		return regions[1]
+		return regions[0]
 	})
 	if (!isServer) {
-		localStorage.setItem('cart_reg_id', region.id)
+		localStorage.setItem('cart_reg_id', region?.id)
 	}
 
 	return region
@@ -54,14 +57,21 @@ async function fetchRegion(): Promise<any> {
 
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
+	console.log(region)
 	const cart = await medusa.carts.create({ region_id: region.id })
 	return cart
 }
 
 async function fetchSavedCart(): Promise<Cart> {
-	const cartId = localStorage.getItem('cart_id')!
-	const cart = await medusa.carts.retrieve(cartId)
-	return cart
+	try {
+		console.log('fetching saved cart')
+		const cartId = localStorage.getItem('cart_id')!
+		const cart = await medusa.carts.retrieve(cartId)
+		return cart
+	} catch (e) {
+		console.log(e)
+		return fetchNewCart()
+	}
 }
 
 async function getRequiredCart() {
@@ -76,6 +86,25 @@ async function getRequiredCart() {
 export function GlobalContextProvider(props: any) {
 	const [cart, cartServerState]: Cart = createRouteAction(getRequiredCart)
 	const [fetching, setFetching] = createSignal(true)
+
+	const queryCart = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			await new Promise(r => setTimeout(r, 200))
+			const cart = await fetchSavedCart()
+			return cart
+		}
+	}))
+
+	function queryCartRefetch() {
+		queryCart.refetch()
+	}
+
+	createEffect(() => {
+		if (!isServer) {
+			queryCartRefetch()
+		}
+	})
 
 	createEffect(() => {
 		if (!isServer) {
@@ -93,13 +122,22 @@ export function GlobalContextProvider(props: any) {
 	})
 
 	const updateCart = () => {
-		if (!fetching) {
+		if (!cart.pending) {
+			console.log('updating cart')
 			cartServerState()
 		}
 	}
 
 	return (
-		<GlobalContext.Provider value={{ medusa, cart: cart as Cart, updateCart }}>
+		<GlobalContext.Provider
+			value={{
+				medusa,
+				cart: cart as Cart,
+				updateCart,
+				queryCart: queryCart as Cart,
+				queryCartRefetch
+			}}
+		>
 			{props.children}
 		</GlobalContext.Provider>
 	)

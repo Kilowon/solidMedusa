@@ -90,7 +90,7 @@ export function GlobalContextProvider(props: any) {
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			await new Promise(r => setTimeout(r, 500))
+			await new Promise(r => setTimeout(r, 1000))
 			const cart = await fetchSavedCart()
 			return cart
 		}

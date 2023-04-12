@@ -96,6 +96,7 @@ export function CartDropdown(props: any) {
 	const { queryCartRefetch } = useGlobalContext()
 	const { deleteItem } = useStore()
 
+	const [cart, setCart] = createSignal(queryCart.data?.cart)
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
 
 	createEffect(() => {
@@ -109,12 +110,10 @@ export function CartDropdown(props: any) {
 	createEffect(() => {
 		items()
 		setTimeout(() => {
-			console.log('OPENING CART DROPDOWN')
 			setOpen(true)
 			props.setStayOpen(true)
 		}, 100)
 		setTimeout(() => {
-			console.log('CLOSING CART DROPDOWN')
 			setOpen(false)
 			props.setStayOpen(false)
 		}, 1500)
@@ -165,10 +164,10 @@ export function CartDropdown(props: any) {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={open()}>
+				<Show when={open() && items() && cart()}>
 					<div class="bg-[#cccccc] absolute top-[calc(100%+1px)] right-0 w-[440px]  text-sm text-gray-7 z-30 mx-auto px-8">
 						<Switch fallback={<div>Empty</div>}>
-							<Match when={props.cart.items?.length > 0}>
+							<Match when={items()?.length > 0}>
 								<>
 									<div class="overflow-y-scroll max-h-[700px] px-4 grid grid-cols-1 gap-y-8 scrollbar-hide">
 										<For
@@ -190,7 +189,7 @@ export function CartDropdown(props: any) {
 																<div>
 																	<h3 class="text-base overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
 																		<A href={`/products/${item.variant.product?.handle}`}>
-																			{item.title}
+																			{item?.title}
 																		</A>
 																	</h3>
 																	<LineItemOptions variant={props.cart.item?.variant} />
@@ -210,7 +209,7 @@ export function CartDropdown(props: any) {
 																<button
 																	class="flex items-center gap-x-1 text-gray-500"
 																	onClick={() => {
-																		deleteItem(item.id), queryCartRefetch?.()
+																		deleteItem(item?.id), queryCartRefetch?.()
 																	}}
 																>
 																	<div class="i-ph-trash-duotone text-sm" />
@@ -229,10 +228,7 @@ export function CartDropdown(props: any) {
 												Subtotal <span class="font-normal">(incl. taxes)</span>
 											</span>
 											<span class="text-large-semi">
-												{currencyFormat(
-													Number(props.cart?.subtotal || 0),
-													props.cart.region
-												)}
+												{currencyFormat(Number(cart()?.subtotal || 0), cart()?.region)}
 											</span>
 										</div>
 										<A href="/cart">
@@ -243,7 +239,7 @@ export function CartDropdown(props: any) {
 									</div>
 								</>
 							</Match>
-							<Match when={props.cart.items?.length === 0}>
+							<Match when={items()?.length === 0}>
 								<div>
 									<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
 										<div class="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">

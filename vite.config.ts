@@ -8,7 +8,9 @@ import { presetScrollbarHide } from 'unocss-preset-scrollbar-hide'
 
 export default defineConfig({
 	plugins: [
-		solid(),
+		solid({
+			ssr: false
+		}),
 		unocssPlugin({
 			presets: [
 				presetIcons({

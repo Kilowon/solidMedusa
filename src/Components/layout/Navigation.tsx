@@ -164,7 +164,7 @@ export function CartDropdown(props: any) {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={open() && items() && cart()}>
+				<Show when={open() && items() !== undefined}>
 					<div class="bg-[#cccccc] absolute top-[calc(100%+1px)] right-0 w-[440px]  text-sm text-gray-7 z-30 mx-auto px-8">
 						<Switch fallback={<div>Empty</div>}>
 							<Match when={items()?.length > 0}>

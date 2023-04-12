@@ -67,6 +67,16 @@ export default defineConfig({
 						['text-overflow']: 'ellipsis',
 						['white-space']: 'nowrap'
 					}
+				],
+				[
+					/^scrollbar-hide$/,
+					([r]) => `.scrollbar-hide{scrollbar-width:none}
+.scrollbar-hide::-webkit-scrollbar{display:none}`
+				],
+				[
+					/^scrollbar-default$/,
+					([r]) => `.scrollbar-default{scrollbar-width:auto}
+.scrollbar-default::-webkit-scrollbar{display:block}`
 				]
 			]
 		})

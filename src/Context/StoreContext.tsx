@@ -51,7 +51,7 @@ export function StoreProvider(props: {
 	const [maxQuantityMet, setMaxQuantityMet] = createSignal(false)
 	const [product, setProduct] = createSignal(props.product)
 
-	const { updateCart } = useGlobalContext()
+	const { queryCartRefetch } = useGlobalContext()
 	const { cart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
@@ -72,7 +72,10 @@ export function StoreProvider(props: {
 	}
 
 	function deleteItem(lineId: string) {
-		deleteLineItem(props.medusa, props.cart, lineId)
+		console.log('deleted from cart', lineId)
+		deleteLineItem(medusa, cart, lineId)
+		//console.log('removed from cart', lineId)
+		//updateCart?.()
 	}
 
 	function updateItem(lineId: string, quantity: number) {
@@ -194,8 +197,8 @@ export function StoreProvider(props: {
 		if (variant()) {
 			console.log('adding to cart', variant()?.id, quantity())
 			addItem(variant()?.id as string, quantity())
-			console.log('added to cart')
-			updateCart?.()
+			//console.log('added to cart')
+			queryCartRefetch?.()
 		}
 	}
 

@@ -78,10 +78,10 @@ export default function Products() {
 				content={data()?.productPage.products[0].thumbnail}
 			/>
 			<main>
-				<StoreProvider product={data()?.productInfo.product}>
+				<StoreProvider product={data()?.productInfo?.product}>
 					<ProductTemplate
 						images={data()?.productPage.products[0].images}
-						productInfo={data()?.productInfo.product}
+						productInfo={data()?.productInfo?.product}
 						params={params?.handle}
 						updateOptions={useStore().updateOptions}
 						options={useStore().options}

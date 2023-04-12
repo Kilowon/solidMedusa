@@ -11,13 +11,21 @@ import {
 	Routes,
 	Scripts,
 	Title,
-	Link
+	Link,
+	unstable_clientOnly
 } from 'solid-start'
 import 'uno.css'
 import '@unocss/reset/tailwind.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import NotFound from './routes/[...404]'
+import { StoreProvider } from '~/Context/StoreContext'
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
+const SolidQueryDevtools = unstable_clientOnly(
+	() => import('@adeora/solid-query-devtools')
+)
+
+const queryClient = new QueryClient()
 export default function Root() {
 	return (
 		<Html lang="en">
@@ -56,19 +64,24 @@ export default function Root() {
 						</>
 					)}
 				>
-					<GlobalContextProvider>
-						<Suspense
-							fallback={
-								<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
-									<div class="i-svg-spinners:bars-scale-fade" />
-								</section>
-							}
-						>
-							<Routes>
-								<FileRoutes />
-							</Routes>
-						</Suspense>
-					</GlobalContextProvider>
+					<QueryClientProvider client={queryClient}>
+						<SolidQueryDevtools />
+						<GlobalContextProvider>
+							<StoreProvider>
+								<Suspense
+									fallback={
+										<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
+											<div class="i-svg-spinners:bars-scale-fade" />
+										</section>
+									}
+								>
+									<Routes>
+										<FileRoutes />
+									</Routes>
+								</Suspense>
+							</StoreProvider>
+						</GlobalContextProvider>
+					</QueryClientProvider>
 				</ErrorBoundary>
 				<Scripts />
 			</Body>

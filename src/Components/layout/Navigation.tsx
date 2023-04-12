@@ -1,4 +1,12 @@
-import { createEffect, createSignal, For, Switch, Match, Show } from 'solid-js'
+import {
+	createEffect,
+	createSignal,
+	For,
+	Switch,
+	Match,
+	Show,
+	Suspense
+} from 'solid-js'
 import { A } from 'solid-start'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import clsx from 'clsx'
@@ -7,12 +15,27 @@ import { refetchRouteData } from 'solid-start'
 import { Transition } from 'solid-transition-group'
 import Thumbnail from '../common/Thumbnail'
 import { useStore } from '~/Context/StoreContext'
+import { createQuery } from '@tanstack/solid-query'
+import { isServer } from 'solid-js/web'
 
 export function Navigation(props: any) {
+	const [stayOpen, setStayOpen] = createSignal(false)
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed" /* : isHome */>
-			<header class="relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-transparent hover:bg-[#cccccc]">
-				<nav class="text-gray-900 flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-white group-hover:text-gray-900 relative">
+			<header
+				class={
+					stayOpen()
+						? 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#cccccc]'
+						: 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-transparent hover:bg-[#cccccc]'
+				}
+			>
+				<nav
+					class={
+						stayOpen()
+							? 'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-gray-900 relative'
+							: 'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-white group-hover:text-gray-900 relative'
+					}
+				>
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="block sm:hidden">
 							<Hamburger /* setOpen={toggle} */ />
@@ -39,7 +62,17 @@ export function Navigation(props: any) {
 							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
 							<A href="/account">Account</A>
 						</div>
-						<CartDropdown cart={props.cart} />
+						<Suspense
+							fallback={
+								<div class="h-10 w-10 flex items-center justify-center">Loading...</div>
+							}
+						>
+							<CartDropdown
+								cart={props.cart}
+								stayOpen={stayOpen}
+								setStayOpen={setStayOpen}
+							/>
+						</Suspense>
 					</div>
 				</nav>
 				<MobileMenu />
@@ -55,22 +88,66 @@ export function Hamburger() {
 		</div>
 	)
 }
-{
-	/* <div class="text-2xl px-7">
-			
-		</div> */
-}
+
 export function CartDropdown(props: any) {
 	const [open, setOpen] = createSignal(false)
+
+	const { queryCart } = useGlobalContext()
+	const { queryCartRefetch } = useGlobalContext()
+	const { deleteItem } = useStore()
+
+	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
+
+	createEffect(() => {
+		if (!isServer || queryCart.data !== undefined) {
+			setItems(queryCart?.data?.cart?.items)
+		}
+		console.log('ITEMS***', items())
+	}, [queryCart])
+
+	//effect for opening the cart dropdown on add to cart
+	createEffect(() => {
+		items()
+		setTimeout(() => {
+			console.log('OPENING CART DROPDOWN')
+			setOpen(true)
+			props.setStayOpen(true)
+		}, 100)
+		setTimeout(() => {
+			console.log('CLOSING CART DROPDOWN')
+			setOpen(false)
+			props.setStayOpen(false)
+		}, 1500)
+	})
+
+	function handleOnClick(e: Event) {
+		const target = e.target as HTMLElement
+		if (target.classList.contains('i-ion-cart-outline')) {
+			props.setStayOpen(!props.stayOpen())
+		}
+	}
+
+	function handleOnMouseOver() {
+		if (props.stayOpen()) return
+		setOpen(true)
+	}
+
+	function handleOnMouseLeave() {
+		if (props.stayOpen()) return
+		setOpen(false)
+	}
+
 	return (
 		<div
 			class=""
-			onMouseOver={() => setOpen(true)}
-			onMouseLeave={() => setOpen(false)}
-			onClick={() => setOpen(!open())}
+			onMouseOver={() => handleOnMouseOver()}
+			onMouseLeave={() => handleOnMouseLeave()}
+			onClick={e => handleOnClick(e)}
 		>
 			<div>
-				<div class="text-2xl px-7">
+				<div
+					class={props.stayOpen() ? 'text-2xl px-7 text-amber-5' : 'text-2xl px-7'}
+				>
 					<div class="i-ion-cart-outline"></div>
 				</div>
 			</div>
@@ -89,13 +166,13 @@ export function CartDropdown(props: any) {
 				}}
 			>
 				<Show when={open()}>
-					<div class="bg-[#cccccc] absolute top-[calc(100%+1px)] right-0 w-[382px]  text-sm text-gray-7 z-30 mx-auto px-8">
+					<div class="bg-[#cccccc] absolute top-[calc(100%+1px)] right-0 w-[440px]  text-sm text-gray-7 z-30 mx-auto px-8">
 						<Switch fallback={<div>Empty</div>}>
 							<Match when={props.cart.items?.length > 0}>
 								<>
-									<div class="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 scrollbar-hide">
+									<div class="overflow-y-scroll max-h-[700px] px-4 grid grid-cols-1 gap-y-8 scrollbar-hide">
 										<For
-											each={props.cart.items?.sort((a: any, b: any) => {
+											each={items()?.sort((a: any, b: any) => {
 												return a.created_at > b.created_at ? -1 : 1
 											})}
 										>
@@ -121,7 +198,7 @@ export function CartDropdown(props: any) {
 																</div>
 																<div class="flex justify-end">
 																	<LineItemPrice
-																		region={props.cart.region}
+																		region={props.cart?.region}
 																		item={item}
 																		style="tight"
 																	/>
@@ -132,7 +209,9 @@ export function CartDropdown(props: any) {
 															<div>
 																<button
 																	class="flex items-center gap-x-1 text-gray-500"
-																	onClick={() => useStore()?.deleteItem(item.id)}
+																	onClick={() => {
+																		deleteItem(item.id), queryCartRefetch?.()
+																	}}
 																>
 																	<div class="i-ph-trash-duotone text-sm" />
 																	<span>Remove</span>
@@ -151,7 +230,7 @@ export function CartDropdown(props: any) {
 											</span>
 											<span class="text-large-semi">
 												{currencyFormat(
-													Number(props.cart.subtotal || 0),
+													Number(props.cart?.subtotal || 0),
 													props.cart.region
 												)}
 											</span>

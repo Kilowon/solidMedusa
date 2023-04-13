@@ -90,14 +90,35 @@ export function GlobalContextProvider(props: any) {
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			await new Promise(r => setTimeout(r, 1000))
+			await new Promise(r => setTimeout(r, 500))
 			const cart = await fetchSavedCart()
 			return cart
 		}
 	}))
+	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
+
+	createEffect(() => {
+		if (!queryCart.isPending && queryCart.isSuccess) {
+			const next = queue()[0]
+			if (next) {
+				setQueue(queue().slice(1))
+				next()
+			}
+		}
+	})
+
+	function addToQueue(fn: () => Promise<any>) {
+		if (queue().length < 3) {
+			setQueue([...queue(), fn])
+		}
+	}
 
 	function queryCartRefetch() {
-		queryCart.refetch()
+		if (queryCart.isPending) {
+			addToQueue(queryCart.refetch)
+		} else {
+			queryCart.refetch()
+		}
 	}
 
 	createEffect(() => {

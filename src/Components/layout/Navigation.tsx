@@ -192,8 +192,8 @@ export function CartDropdown(props: any) {
 																			{item?.title}
 																		</A>
 																	</h3>
-																	<LineItemOptions variant={props.cart.item?.variant} />
-																	<span>Quantity: {props.cart.item?.quantity}</span>
+																	<LineItemOptions variant={item?.variant} />
+																	<span>Quantity: {item?.quantity}</span>
 																</div>
 																<div class="flex justify-end">
 																	<LineItemPrice
@@ -273,18 +273,20 @@ type LineItemOptionsProps = { variant: ProductVariant }
 export function LineItemOptions(props: LineItemOptionsProps) {
 	return (
 		<div class="text-sm text-gray-700">
-			{props.variant?.options.map(option => {
-				const optionName =
-					props.variant.product?.options.find(opt => opt.id === option.option_id)
-						?.title || 'Option'
-				return (
-					<div>
-						<span>
-							{optionName}: {option.value}
-						</span>
-					</div>
-				)
-			})}
+			<For each={props.variant?.options}>
+				{option => {
+					const optionName =
+						props.variant.product?.options?.find(opt => opt.id === option.option_id)
+							?.title || 'Option'
+					return (
+						<div>
+							<span>
+								{optionName}: {option.value}
+							</span>
+						</div>
+					)
+				}}
+			</For>
 		</div>
 	)
 }
@@ -353,6 +355,7 @@ export function DesktopSearchModal() {
 
 export function DropdownMenu(props: any) {
 	const { cart } = useGlobalContext()
+	const { rootCategories } = useGlobalContext()
 
 	const [open, setOpen] = createSignal(false)
 
@@ -368,7 +371,6 @@ export function DropdownMenu(props: any) {
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
-			onClick={() => setOpen(!open())}
 		>
 			<div>
 				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>
@@ -393,19 +395,19 @@ export function DropdownMenu(props: any) {
 							<div class="flex items-start  mx-auto px-8 w-[75vw]">
 								<div class="flex flex-col flex-1 max-w-[15vw]">
 									<div class="text-base text-gray-900 mb-4 font-semibold ">
-										Collections
+										Shop by category
 									</div>
 									<div class="flex items-start">
-										<Show when={props.collection}>
+										<Show when={rootCategories()}>
 											<ul class="min-w-[152px] max-w-[200px] pr-4">
-												<For each={props.collection}>
+												<For each={rootCategories()}>
 													{collection => (
 														<div class="pb-3">
 															<A
-																href={`/collections/${collection.id}`}
+																href={`/categories/${collection.handle}`}
 																onClick={() => setOpen(false)}
 															>
-																{collection.title}
+																{collection.name}
 															</A>
 														</div>
 													)}
@@ -419,7 +421,12 @@ export function DropdownMenu(props: any) {
 										<Switch>
 											<Match when={props.product}>
 												<For each={props.product}>
-													{product => <ProductPreview {...product} />}
+													{product => (
+														<ProductPreview
+															{...product}
+															handleClick={() => setOpen(false)}
+														/>
+													)}
 												</For>
 											</Match>
 										</Switch>

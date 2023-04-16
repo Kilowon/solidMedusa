@@ -35,6 +35,7 @@ interface ProductPage {
 export function useProduct(params: any) {
 	const { medusa } = useGlobalContext()
 	const { cart } = useGlobalContext()
+
 	return createRouteData(
 		async () => {
 			try {
@@ -58,10 +59,12 @@ export default function Products() {
 	const params = useParams()
 	const data = useProduct(params)
 	data()
+	const { setCurrentProductId } = useGlobalContext()
 
 	createEffect(() => {
-		console.log('data', data()?.productInfo.product.variants)
+		setCurrentProductId?.(String(data()?.productPage.products[0].id))
 	})
+
 	return (
 		<div>
 			<Title>{data()?.productPage.products[0].title}</Title>

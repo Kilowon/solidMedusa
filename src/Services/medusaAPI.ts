@@ -128,3 +128,9 @@ export async function addLineItem(
 		console.log(error)
 	}
 }
+
+export async function listProductCategories(medusa: Medusa | null | undefined) {
+	const data = await medusa?.productCategories.list()
+
+	return data
+}

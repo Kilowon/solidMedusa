@@ -4,7 +4,8 @@ import {
 	useContext,
 	createSignal,
 	createResource,
-	createEffect
+	createEffect,
+	createMemo
 } from 'solid-js'
 import { createRouteAction } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
@@ -17,6 +18,8 @@ import { Cart } from '~/types/types'
 import { redirect } from 'solid-start'
 import { createMachine } from 'xstate'
 import { useMachine } from '@xstate/solid'
+import { LineItem } from '~/types/models'
+import { listProductCategories } from '~/Services/medusaAPI'
 
 interface ContextProps {
 	medusa?: Medusa | null
@@ -24,6 +27,11 @@ interface ContextProps {
 	updateCart?: () => void
 	queryCart?: Cart | null
 	queryCartRefetch?: () => void
+	setCurrentProductId?: (id: string) => void
+	rootCategories?: any
+	categories?: any
+	setCurrentCategoryId?: (id: string) => void
+	categoryProducts?: any
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -83,10 +91,51 @@ async function getRequiredCart() {
 	}
 }
 
+function enrichLineItem(lineItems: LineItem[], products: any[]) {
+	const items = createMemo(() => {
+		const currItems = lineItems
+
+		if (!currItems?.length) {
+			return []
+		}
+
+		const enrichedItems: Omit<LineItem, 'beforeInsert'>[] = []
+
+		for (const item of currItems) {
+			const product = products.find((p: any) => p.id === item.variant.product_id)
+
+			if (!product) {
+				enrichedItems.push(item)
+				return
+			}
+
+			const variant = product.variants.find((v: any) => v.id === item.variant_id)
+
+			if (!variant) {
+				enrichedItems.push(item)
+				return
+			}
+
+			enrichedItems.push({
+				...item,
+				// @ts-ignore
+				variant: {
+					...variant,
+					// @ts-ignore
+					product: omit('variants', product)
+				}
+			})
+		}
+
+		return enrichedItems
+	}, [lineItems, products])
+}
+
 export function GlobalContextProvider(props: any) {
 	const [cart, cartServerState]: Cart = createRouteAction(getRequiredCart)
 	const [fetching, setFetching] = createSignal(true)
 
+	///////////////////////////////////////////////////////////////////////////
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
@@ -121,11 +170,16 @@ export function GlobalContextProvider(props: any) {
 		}
 	}
 
-	createEffect(() => {
-		if (!isServer) {
-			queryCartRefetch()
+	///////////////////////////////////////////////////////////////////////////
+	const [currentProductId, setCurrentProductId] = createSignal<string>('')
+
+	const queryByProductId = createQuery(() => ({
+		queryKey: ['product', currentProductId()],
+		queryFn: async function () {
+			const product = await medusa.products.retrieve(currentProductId())
+			return product
 		}
-	})
+	}))
 
 	createEffect(() => {
 		if (!isServer) {
@@ -149,6 +203,43 @@ export function GlobalContextProvider(props: any) {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	const queryCategories = createQuery(() => ({
+		queryKey: ['categories_list'],
+		queryFn: async function () {
+			const product = await medusa.productCategories.list({})
+			return product
+		}
+	}))
+
+	const [categories, categoriesServerState] = createSignal([])
+
+	const [rootCategories, setRootCategories] = createSignal([])
+	createEffect(() => {
+		categoriesServerState(queryCategories.data?.product_categories)
+		setRootCategories(
+			categories()?.filter((category: any) => category.parent_category_id === null)
+		)
+	}, [queryCategories])
+
+	const [currentCategoryId, setCurrentCategoryId] = createSignal('')
+
+	const queryCategoryProducts = createQuery(() => ({
+		queryKey: ['categories_products', currentCategoryId()],
+		queryFn: async function () {
+			const product = await medusa.products.list({
+				category_id: [currentCategoryId()]
+			})
+			return product
+		}
+	}))
+
+	const [categoryProducts, setCategoryProducts] = createSignal([])
+
+	createEffect(() => {
+		setCategoryProducts(queryCategoryProducts.data?.products)
+	}, [queryCategoryProducts, currentCategoryId])
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -156,7 +247,12 @@ export function GlobalContextProvider(props: any) {
 				cart: cart as Cart,
 				updateCart,
 				queryCart: queryCart as Cart,
-				queryCartRefetch
+				queryCartRefetch,
+				setCurrentProductId,
+				rootCategories,
+				categories,
+				setCurrentCategoryId,
+				categoryProducts
 			}}
 		>
 			{props.children}

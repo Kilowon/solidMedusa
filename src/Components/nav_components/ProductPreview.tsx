@@ -4,7 +4,11 @@ import { ProductPreviewType } from '~/types/global'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { currencyFormat } from '~/lib/helpers/currency'
 
-const ProductPreview = (props: ProductPreviewType) => {
+interface ProductPreviewProps extends ProductPreviewType {
+	handleClick: () => void
+}
+
+const ProductPreview = (props: ProductPreviewProps) => {
 	const formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'EUR'
@@ -12,7 +16,7 @@ const ProductPreview = (props: ProductPreviewType) => {
 
 	return (
 		<A href={`/products/${props.handle}`}>
-			<div>
+			<div onClick={props.handleClick}>
 				<Thumbnail
 					thumbnail={props.thumbnail}
 					title={props.title}

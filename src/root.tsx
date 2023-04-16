@@ -30,7 +30,7 @@ export default function Root() {
 	return (
 		<Html lang="en">
 			<Head>
-				<Title>SolidStart - Bare</Title>
+				<Title>Store</Title>
 				<Meta charset="utf-8" />
 				<Meta
 					name="viewport"
@@ -60,7 +60,7 @@ export default function Root() {
 					fallback={(e: Error) => (
 						<>
 							{console.error(e)}
-							<NotFound />
+							{/* <NotFound /> */}
 						</>
 					)}
 				>

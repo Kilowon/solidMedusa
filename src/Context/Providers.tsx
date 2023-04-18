@@ -222,13 +222,13 @@ export function GlobalContextProvider(props: any) {
 		)
 	}, [queryCategories])
 
-	const [currentCategoryId, setCurrentCategoryId] = createSignal('')
+	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])
 
 	const queryCategoryProducts = createQuery(() => ({
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
 			const product = await medusa.products.list({
-				category_id: [currentCategoryId()]
+				category_id: currentCategoryId()
 			})
 			return product
 		}

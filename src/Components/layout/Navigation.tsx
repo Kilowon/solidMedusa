@@ -58,9 +58,14 @@ export function Navigation(props: any) {
 					</div>
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end mr-10">
-						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm px-3">
+						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold px-3">
 							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
-							<A href="/account">Account</A>
+							<A
+								class="hover:cursor-pointer"
+								href="/account"
+							>
+								Account
+							</A>
 						</div>
 						<Suspense
 							fallback={
@@ -103,7 +108,6 @@ export function CartDropdown(props: any) {
 		if (!isServer || queryCart.data !== undefined) {
 			setItems(queryCart?.data?.cart?.items)
 		}
-		console.log('ITEMS***', items())
 	}, [queryCart])
 
 	//effect for opening the cart dropdown on add to cart
@@ -138,18 +142,20 @@ export function CartDropdown(props: any) {
 
 	return (
 		<div
-			class=""
 			onMouseOver={() => handleOnMouseOver()}
 			onMouseLeave={() => handleOnMouseLeave()}
 			onClick={e => handleOnClick(e)}
 		>
-			<div>
-				<div
-					class={props.stayOpen() ? 'text-2xl px-7 text-amber-5' : 'text-2xl px-7'}
-				>
-					<div class="i-ion-cart-outline"></div>
-				</div>
+			<div
+				class={
+					props.stayOpen()
+						? 'text-2xl p-5 text-amber-5 h-full'
+						: 'text-2xl p-5 h-full '
+				}
+			>
+				<div class="i-ion-cart-outline hover:cursor-pointer"></div>
 			</div>
+
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -367,13 +373,21 @@ export function DropdownMenu(props: any) {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full  text-2xl hover:text-gray-5 hover:transition-opacity hover:duration-400 hover:cursor-pointer px-3
+			class=" flex items-center justify-center h-full w-full  text-2xl hover:text-gray-5 hover:transition-opacity hover:duration-400 px-3
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
-				<div class="mr-2 text-sm">Store - {cart.result?.cart.id}</div>
+				<div class="mr-2 text-sm font-semibold">
+					<A
+						class="hover:cursor-pointer"
+						onClick={() => setOpen(false)}
+						href="/Categories/Store"
+					>
+						Store
+					</A>
+				</div>
 			</div>
 			<Transition
 				onEnter={(el, done) => {

@@ -27,7 +27,7 @@ export function Hero() {
 				</p>
 				<div>
 					<A
-						href="/store"
+						href="/Categories/Store"
 						class="text-2xl"
 					>
 						Explore products

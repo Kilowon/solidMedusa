@@ -48,7 +48,7 @@ const ImageOrPlaceholder = ({
 		'title'
 	>) => {
 	return image ? (
-		<div class="w-full h-full absolute inset-0 bg-warmgray hover:border-2 hover:border-black drop-shadow-lg border-rounded-4 flex items-center justify-center overflow-hidden ">
+		<div class="w-full h-full absolute inset-0 bg-[#ddd] hover:border-2 hover:border-sky-1 drop-shadow-sm border-rounded-4 flex items-center justify-center overflow-hidden ">
 			<img
 				src={image}
 				alt="Thumbnail"

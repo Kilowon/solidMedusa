@@ -65,14 +65,12 @@ async function fetchRegion(): Promise<any> {
 
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
-	console.log(region)
 	const cart = await medusa.carts.create({ region_id: region.id })
 	return cart
 }
 
 async function fetchSavedCart(): Promise<Cart> {
 	try {
-		console.log('fetching saved cart')
 		const cartId = localStorage.getItem('cart_id')!
 		const cart = await medusa.carts.retrieve(cartId)
 		return cart
@@ -198,7 +196,6 @@ export function GlobalContextProvider(props: any) {
 
 	const updateCart = () => {
 		if (!cart.pending) {
-			console.log('updating cart')
 			cartServerState()
 		}
 	}

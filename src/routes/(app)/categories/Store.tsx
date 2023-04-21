@@ -27,7 +27,6 @@ export default function Categories() {
 	)
 
 	createEffect(() => {
-		console.log('currentCategoryRoot', currentCategoryRoot())
 		setCategory(filterCategories())
 		setCurrentCategoryId?.(
 			currentCategoryRoot().map((category: any) => category.id)

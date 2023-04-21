@@ -50,9 +50,6 @@ export default function Home() {
 		}
 	})
 
-	createEffect(() => {
-		console.log('cart', cart.result?.cart)
-	})
 	return (
 		<div>
 			<Navigation

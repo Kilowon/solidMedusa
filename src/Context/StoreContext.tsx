@@ -72,10 +72,7 @@ export function StoreProvider(props: {
 	}
 
 	function deleteItem(lineId: string) {
-		console.log('deleted from cart', lineId)
 		deleteLineItem(medusa, cart, lineId)
-		//console.log('removed from cart', lineId)
-		//updateCart?.()
 	}
 
 	function updateItem(lineId: string, quantity: number) {
@@ -151,11 +148,7 @@ export function StoreProvider(props: {
 		return product()?.variants.find(v => v.id === variantId)
 	}, [options, variantRecord, product()?.variants])
 
-	createEffect(() => {
-		if (!isServer) {
-			console.log('variant', variant())
-		}
-	}, [variant])
+	createEffect(() => {}, [variant])
 	// if product only has one variant, then select it
 	createEffect(() => {
 		if (props.product?.variants.length === 1) {
@@ -195,9 +188,7 @@ export function StoreProvider(props: {
 
 	function addToCart() {
 		if (variant()) {
-			console.log('adding to cart', variant()?.id, quantity())
 			addItem(variant()?.id as string, quantity())
-			//console.log('added to cart')
 			queryCartRefetch?.()
 		}
 	}

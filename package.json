@@ -23,6 +23,7 @@
 		"@medusajs/medusa-js": "^2.0.0",
 		"@slidy/solid": "^1.4.0",
 		"@solid-primitives/geolocation": "^1.4.6",
+		"@solid-primitives/range": "^0.1.12",
 		"@solid-primitives/resize-observer": "^2.0.12",
 		"@solidjs/meta": "^0.28.2",
 		"@solidjs/router": "^0.8.2",

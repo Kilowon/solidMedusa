@@ -34,10 +34,6 @@ export const SliderDots = (props: {
 		helpers()?.moveTo(parseInt(idx))
 	}
 
-	createEffect(() => {
-		console.log('DOTS', props.dots)
-	}, [props.dots])
-
 	return (
 		<div
 			class="flex p-[10px,0px] justify-center items-center gap-x-2 
@@ -64,10 +60,9 @@ export const SliderDots = (props: {
 }
 
 export const SliderArrowLeft = (props: {
-	next: any
-	disabled: any
-	class: any
-	classList: any
+	next: boolean
+	disabled: boolean
+	class: string
 }) => {
 	const context = useContext(SliderContext)
 	const [left, setLeft] = createSignal(false)
@@ -82,17 +77,15 @@ export const SliderArrowLeft = (props: {
 			left
 			disabled={props.disabled || false}
 			class={props.class}
-			classList={props.classList}
 			onClick={changeSlide}
 		/>
 	)
 }
 
 export const SliderArrowRight = (props: {
-	next: any
-	disabled: any
-	class: any
-	classList: any
+	next: boolean
+	disabled: boolean
+	class: string
 }) => {
 	const context = useContext(SliderContext)
 	const [left, setLeft] = createSignal(false)
@@ -106,7 +99,6 @@ export const SliderArrowRight = (props: {
 		<Arrow
 			disabled={props.disabled || false}
 			class={props.class}
-			classList={props.classList}
 			onClick={changeSlide}
 		/>
 	)

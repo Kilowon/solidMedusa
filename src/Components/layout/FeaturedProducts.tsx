@@ -11,7 +11,7 @@ export function FeaturedProducts(props: any) {
 					<p class="text-2xl text-gray-900 max-w-lg mb-4">
 						Our newest styles are here to help you look your best.
 					</p>
-					<UnderlineLink href="/Categories/Store">Explore products</UnderlineLink>
+					<UnderlineLink href="/store/Store">Explore products</UnderlineLink>
 				</div>
 				<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
 					<For each={props?.featuredProducts}>

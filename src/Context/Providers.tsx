@@ -8,7 +8,7 @@ import {
 	createMemo
 } from 'solid-js'
 import { createRouteAction } from 'solid-start'
-import { createQuery } from '@tanstack/solid-query'
+import { createQuery, createQueries } from '@tanstack/solid-query'
 
 //TODO: Becareful with imports from @medusajs/medusa-js as it will break the build process with too many imports it seems some webpack issue even though vite is used for the frontend
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size

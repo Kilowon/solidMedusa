@@ -21,7 +21,7 @@ import { isServer } from 'solid-js/web'
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
 	return (
-		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed" /* : isHome */>
+		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
 			<header
 				class={
 					stayOpen()
@@ -51,14 +51,14 @@ export function Navigation(props: any) {
 					<div class="flex items-center h-full">
 						<A
 							href="/"
-							class="text-3xl font-semibold uppercase"
+							class="text-2xl font-semibold  "
 						>
-							Acme
+							<div class=" font-poppins uppercase"> Modern Edge </div>
 						</A>
 					</div>
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end mr-10">
-						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold px-3">
+						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold font-poppins px-3">
 							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
 							<A
 								class="hover:cursor-pointer"
@@ -253,7 +253,7 @@ export function CartDropdown(props: any) {
 										</div>
 										<span>Your shopping bag is empty.</span>
 										<div>
-											<A href="/store">
+											<A href="/store/Store">
 												<span class="sr-only">Go to all products page</span>
 												<button
 													onClick={close}
@@ -379,11 +379,11 @@ export function DropdownMenu(props: any) {
 			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
-				<div class="mr-2 text-sm font-semibold">
+				<div class="mr-2 text-sm font-semibold font-poppins">
 					<A
 						class="hover:cursor-pointer"
 						onClick={() => setOpen(false)}
-						href="/Categories/Store"
+						href="/store/Store"
 					>
 						Store
 					</A>

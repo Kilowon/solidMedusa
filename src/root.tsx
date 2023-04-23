@@ -70,7 +70,7 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
+										<section class="flex items-center justify-center h-[100vh] w-[100vw] p-16 text-gray-900 bg-gray-100 text-4xl">
 											<div class="i-svg-spinners:bars-scale-fade" />
 										</section>
 									}

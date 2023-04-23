@@ -1,4 +1,4 @@
-import { For, Show } from 'solid-js'
+import { For, Show, createSignal, createEffect } from 'solid-js'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import 'solid-slider/slider.css'
 import { Slider, SliderProvider } from 'solid-slider'
@@ -14,7 +14,16 @@ import { Range } from '@solid-primitives/range'
 //so it has Slide count update issues that I can only work around
 //this is why it is duplicated in the code this way below.
 
+//TODO: dots are not working.... it worked in the route file but not in the component
+
 export function SingleLineSlider(props: any) {
+	const [dots, setDots] = createSignal()
+
+	createEffect(() => {
+		if (props.categoryProducts()?.length === 0) {
+			setDots(Number(0))
+		}
+	})
 	return (
 		<SliderProvider>
 			<ul class="flex flex-row relative">
@@ -32,12 +41,12 @@ export function SingleLineSlider(props: any) {
 							},
 							created(slider) {
 								props.setLoaded(true)
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							},
 							optionsChanged(slider) {
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							}
@@ -70,7 +79,7 @@ export function SingleLineSlider(props: any) {
 				</Show>
 			</ul>{' '}
 			<SliderDots
-				dots={props.dots()}
+				dots={dots()}
 				currentSlide={props.currentSlide()}
 				class={' w-[10px] h-[10px] rounded-full'}
 			/>
@@ -79,6 +88,14 @@ export function SingleLineSlider(props: any) {
 }
 
 export function DoubleLineSlider(props: any) {
+	const [dots, setDots] = createSignal()
+
+	createEffect(() => {
+		if (props.categoryProducts()?.length === 0) {
+			setDots(Number(0))
+		}
+	})
+
 	return (
 		<SliderProvider>
 			<ul class="flex flex-row relative">
@@ -96,12 +113,12 @@ export function DoubleLineSlider(props: any) {
 							},
 							created(slider) {
 								props.setLoaded(true)
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							},
 							optionsChanged(slider) {
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							}
@@ -168,7 +185,7 @@ export function DoubleLineSlider(props: any) {
 				</Show>
 			</ul>{' '}
 			<SliderDots
-				dots={props.dots()}
+				dots={dots()}
 				currentSlide={props.currentSlide()}
 				class={' w-[10px] h-[10px] rounded-full'}
 			/>
@@ -177,6 +194,14 @@ export function DoubleLineSlider(props: any) {
 }
 
 export function TripleLineSlider(props: any) {
+	const [dots, setDots] = createSignal()
+
+	createEffect(() => {
+		if (props.categoryProducts()?.length === 0) {
+			setDots(Number(0))
+		}
+	})
+
 	return (
 		<SliderProvider>
 			<ul class="flex flex-row relative">
@@ -194,12 +219,12 @@ export function TripleLineSlider(props: any) {
 							},
 							created(slider) {
 								props.setLoaded(true)
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							},
 							optionsChanged(slider) {
-								props.setDots(() => {
+								setDots(() => {
 									return [...Array(slider.track.details.slides?.length).keys()]
 								})
 							}
@@ -287,7 +312,7 @@ export function TripleLineSlider(props: any) {
 				</Show>
 			</ul>{' '}
 			<SliderDots
-				dots={props.dots()}
+				dots={dots()}
 				currentSlide={props.currentSlide()}
 				class={' w-[10px] h-[10px] rounded-full'}
 			/>

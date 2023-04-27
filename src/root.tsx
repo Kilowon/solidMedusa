@@ -15,7 +15,7 @@ import {
 	unstable_clientOnly
 } from 'solid-start'
 import 'uno.css'
-import '@unocss/reset/tailwind.css'
+import '@unocss/reset/tailwind-compat.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -70,7 +70,7 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex items-center justify-center h-[100vh] w-[100vw] p-16 text-gray-900 bg-gray-100 text-4xl">
+										<section class="flex items-center justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-2xl">
 											<div class="i-svg-spinners:bars-scale-fade" />
 										</section>
 									}

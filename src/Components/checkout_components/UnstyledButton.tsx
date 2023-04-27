@@ -55,12 +55,12 @@ export function UnstyledButton(props: UnstyledButtonProps) {
 				when={props.type === 'button' && props}
 				keyed
 			>
-				{buttton => (
+				{button => (
 					<button
 						class={props.class}
 						type="button"
 						onClick={() => {
-							const result = buttton.onClick()
+							const result = button.onClick()
 							// Start and stop loading if function is async
 							if (Promise.resolve(result) === result) {
 								setLoading(true)

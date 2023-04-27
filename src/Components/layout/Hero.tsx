@@ -1,5 +1,5 @@
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { createSignal, createEffect } from 'solid-js'
+import { createSignal, createEffect, Show } from 'solid-js'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 
@@ -41,14 +41,25 @@ export function Hero() {
 					</div>
 				</div>
 			</div>
+			<Show when={size()?.width > 768}>
+				<Image
+					src="https://res.cloudinary.com/contentdelivery/image/upload/v1682174583/martin-pechy-bpg-ngqrPc8-unsplash_ctefbx.jpg"
+					layout="fullWidth"
+					priority={true}
+					class="object-cover h-full w-full z-0 absolute inset-0  filter brightness-65 animate-fade-in"
+					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+				/>
+			</Show>
 
-			<Image
-				src="https://res.cloudinary.com/contentdelivery/image/upload/v1682174583/martin-pechy-bpg-ngqrPc8-unsplash_ctefbx.jpg"
-				layout="fullWidth"
-				priority={true}
-				class="object-cover h-full w-full z-0 absolute inset-0  filter brightness-65 animate-fade-in"
-				alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-			/>
+			<Show when={size()?.width < 768}>
+				<Image
+					src="https://res.cloudinary.com/contentdelivery/image/upload/v1682276307/MobileHero_uguc1l.webp"
+					layout="fullWidth"
+					priority={true}
+					class="object-cover h-full w-full z-0 absolute inset-0  filter brightness-65 animate-fade-in"
+					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+				/>
+			</Show>
 		</div>
 	)
 }

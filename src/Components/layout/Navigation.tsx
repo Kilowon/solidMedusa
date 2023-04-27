@@ -25,7 +25,7 @@ export function Navigation(props: any) {
 			<header
 				class={
 					stayOpen()
-						? 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#cccccc]'
+						? 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#ddd]'
 						: 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-transparent hover:bg-[#cccccc]'
 				}
 			>
@@ -94,6 +94,14 @@ export function Hamburger() {
 	)
 }
 
+export function totalItemsInCart(items: any) {
+	let total = 0
+	items?.forEach((item: any) => {
+		total += item.quantity
+	})
+	return total
+}
+
 export function CartDropdown(props: any) {
 	const [open, setOpen] = createSignal(false)
 
@@ -103,7 +111,9 @@ export function CartDropdown(props: any) {
 
 	const [cart, setCart] = createSignal(queryCart.data?.cart)
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
-
+	createEffect(() => {
+		console.log('cart', cart())
+	}, [cart])
 	createEffect(() => {
 		if (!isServer || queryCart.data !== undefined) {
 			setItems(queryCart?.data?.cart?.items)
@@ -149,11 +159,18 @@ export function CartDropdown(props: any) {
 			<div
 				class={
 					props.stayOpen()
-						? 'text-2xl p-5 text-amber-5 h-full'
-						: 'text-2xl p-5 h-full '
+						? 'flex text-2xl p-5 text-amber-5 h-full relative'
+						: 'flex text-2xl p-5 h-full relative '
 				}
 			>
 				<div class="i-ion-cart-outline hover:cursor-pointer"></div>
+				<div
+					class={
+						'w-5 h-5 absolute top-3 right-0 bg-dark text-xs text-white font-semibold flex items-center justify-center rounded-full'
+					}
+				>
+					{totalItemsInCart(items())}
+				</div>
 			</div>
 
 			<Transition

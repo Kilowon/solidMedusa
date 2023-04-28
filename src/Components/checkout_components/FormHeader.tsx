@@ -11,8 +11,8 @@ type FormHeaderProps = {
  */
 export function FormHeader(props: FormHeaderProps) {
 	return (
-		<header class="flex items-center justify-between px-8 lg:px-10">
-			<h1 class="text-2xl text-slate-900 dark:text-slate-200 md:text-3xl lg:text-4xl">
+		<header class="flex items-center justify-between">
+			<h1 class="text-2xl font-medium text-slate-900 dark:text-slate-200 ">
 				{props.heading}
 			</h1>
 			<div class="hidden lg:flex lg:space-x-8">

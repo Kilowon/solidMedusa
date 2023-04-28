@@ -6,7 +6,7 @@ import {
 	required,
 	minLength
 } from '@modular-forms/solid'
-import { Match, Switch, createEffect } from 'solid-js'
+import { Match, Switch, createEffect, Show } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
@@ -27,7 +27,7 @@ type PaymentForm = {
 	city: string
 	country: string
 	state: string
-	zipCode: string
+	zipcode: string
 	phoneNumber: string
 	type: 'card' | 'paypal'
 	card: {
@@ -50,7 +50,7 @@ export default function PaymentPage() {
 		console.log(cart)
 	})
 
-	const [paymentForm, { Form, Field }] = createForm<PaymentForm>()
+	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
 
 	return (
 		<div class="bg-[#fefcfa]">
@@ -95,17 +95,18 @@ export default function PaymentPage() {
 				</header>
 			</div>
 			<div class="flex content-container ">
-				<div class="content-container">
+				<div class="content-container md:w-[700px]">
 					<Title>Checkout</Title>
 
 					<Form
-						class="space-y-12 md:space-y-14 lg:space-y-16"
+						class="space-y-2"
 						onSubmit={values => alert(JSON.stringify(values, null, 4))}
 					>
 						<FormHeader
-							of={paymentForm}
+							of={customerForm}
 							heading="Customer"
 						/>
+
 						<div class="space-y-2">
 							{/* //email */}
 							<Field
@@ -146,7 +147,7 @@ export default function PaymentPage() {
 									/>
 								)}
 							</Field>
-							<FormFooter of={paymentForm} />
+							<FormFooter of={customerForm} />
 							{/* //account */}
 							<Field
 								name="checkbox.boolean"
@@ -164,21 +165,19 @@ export default function PaymentPage() {
 						</div>
 					</Form>
 
-					<Form
-						class="space-y-8 md:space-y-14 lg:space-y-16"
-						onSubmit={values => alert(JSON.stringify(values, null, 4))}
-					>
+					<Form onSubmit={values => alert(JSON.stringify(values, null, 4))}>
 						<FormHeader
-							of={paymentForm}
+							of={customerForm}
 							heading="Shipping Information"
 						/>
+
 						<div class="space-y-2 ">
 							<div class="flex flex-col md:flex-row w-full">
 								<div class="w-full md:w-1/2">
 									{/* //first name */}
 									<Field
 										name="firstName"
-										validate={required('Please enter your name.')}
+										validate={required('Please enter your first name.')}
 									>
 										{(field, props) => (
 											<TextInput
@@ -196,7 +195,7 @@ export default function PaymentPage() {
 									{/* //last name */}
 									<Field
 										name="lastName"
-										validate={required('Please enter your name.')}
+										validate={required('Please enter your last name.')}
 									>
 										{(field, props) => (
 											<TextInput
@@ -212,10 +211,7 @@ export default function PaymentPage() {
 								</div>
 							</div>
 							{/* //company Name */}
-							<Field
-								name="companyName"
-								validate={required('Please enter your name.')}
-							>
+							<Field name="companyName">
 								{(field, props) => (
 									<TextInput
 										{...props}
@@ -229,7 +225,7 @@ export default function PaymentPage() {
 							{/* //Phone Number */}
 							<Field
 								name="phoneNumber"
-								validate={required('Please enter your name.')}
+								validate={required('Please enter your number.')}
 							>
 								{(field, props) => (
 									<TextInput
@@ -245,7 +241,7 @@ export default function PaymentPage() {
 
 							<Field
 								name="streetAddress"
-								validate={required('Please enter your name.')}
+								validate={required('Please enter your address.')}
 							>
 								{(field, props) => (
 									<TextInput
@@ -258,10 +254,7 @@ export default function PaymentPage() {
 								)}
 							</Field>
 							{/* /Apt# */}
-							<Field
-								name="aptNumber"
-								validate={required('Please enter your name.')}
-							>
+							<Field name="aptNumber">
 								{(field, props) => (
 									<TextInput
 										{...props}
@@ -272,6 +265,57 @@ export default function PaymentPage() {
 									/>
 								)}
 							</Field>
+							<div class="flex flex-row  w-full">
+								<div class="w-2/3">
+									{/* City */}
+									<Field
+										name="city"
+										validate={required('Please enter your city.')}
+									>
+										{(field, props) => (
+											<TextInput
+												{...props}
+												value={field.value}
+												error={field.error}
+												type="text"
+												label="City"
+											/>
+										)}
+									</Field>
+								</div>
+								{/* City */}
+								<Field
+									name="state"
+									validate={required('Please select your state.')}
+								>
+									{(field, props) => (
+										<Select
+											{...props}
+											value={field.value}
+											options={[{ label: 'AL', value: 'al' }]}
+											error={field.error}
+											label="Type"
+											placeholder="Al"
+											required
+										/>
+									)}
+								</Field>
+								{/* City */}
+								<Field
+									name="zipcode"
+									validate={required('Please enter your city.')}
+								>
+									{(field, props) => (
+										<TextInput
+											{...props}
+											value={field.value}
+											error={field.error}
+											type="text"
+											label="Zipcode"
+										/>
+									)}
+								</Field>
+							</div>
 
 							<Field
 								name="type"
@@ -293,7 +337,7 @@ export default function PaymentPage() {
 								)}
 							</Field>
 							<Switch>
-								<Match when={getValue(paymentForm, 'type') === 'card'}>
+								<Match when={getValue(customerForm, 'type') === 'card'}>
 									<Field
 										name="card.number"
 										validate={[
@@ -339,7 +383,7 @@ export default function PaymentPage() {
 										)}
 									</Field>
 								</Match>
-								<Match when={getValue(paymentForm, 'type') === 'paypal'}>
+								<Match when={getValue(customerForm, 'type') === 'paypal'}>
 									<Field
 										name="paypal.email"
 										validate={[
@@ -362,9 +406,10 @@ export default function PaymentPage() {
 								</Match>
 							</Switch>
 						</div>
-						<FormFooter of={paymentForm} />
+						<FormFooter of={customerForm} />
 					</Form>
 				</div>
+				<div class=" w-[440px] bg-white">Cart Review</div>
 			</div>
 		</div>
 	)

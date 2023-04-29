@@ -46,7 +46,7 @@ export function Select(props: SelectProps) {
 	)
 
 	return (
-		<div class={clsx('px-8 lg:px-10', props.class)}>
+		<div class={clsx('px-2 lg:px-2', props.class)}>
 			<InputLabel
 				name={props.name}
 				label={props.label}
@@ -56,11 +56,11 @@ export function Select(props: SelectProps) {
 				<select
 					{...selectProps}
 					class={clsx(
-						'w-full appearance-none space-y-2 rounded-2xl border-2 bg-transparent px-5 outline-none md:text-lg lg:space-y-3 lg:px-6 lg:text-xl',
+						'w-full appearance-none space-y-1 rounded-[5px] border-2 bg-[ffffff] px-3 outline-none md:text-lg lg:space-y-1 lg:px-3 lg:text-lg ',
 						props.error
 							? 'border-red-600/50 dark:border-red-400/50'
 							: 'border-slate-200 hover:border-slate-300 focus:border-sky-600/50 dark:border-slate-800 dark:hover:border-slate-700 dark:focus:border-sky-400/50',
-						props.multiple ? 'py-5' : 'h-14 md:h-16 lg:h-[70px]',
+						props.multiple ? 'py-5' : 'h-12 md:h-12 lg:h-12',
 						props.placeholder && !props.value?.length && 'text-slate-500'
 					)}
 					id={props.name}

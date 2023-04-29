@@ -16,7 +16,7 @@ export function ActionButton(props: ActionButtonProps) {
 	return (
 		<UnstyledButton
 			class={clsx(
-				'relative flex items-center justify-center rounded-2xl px-5 py-2.5 font-medium no-underline transition-colors md:text-lg lg:rounded-xl lg:px-4.5 lg:py-2 lg:text-xl',
+				'relative flex items-center justify-center rounded-[5px] px-5 py-2.5 font-medium no-underline transition-colors md:text-lg lg:rounded-[5px] lg:px-4.5 lg:py-2 lg:text-xl',
 				props.variant === 'primary' &&
 					'bg-gray-6/80 text-white hover:bg-gray-6/50 dark:bg-sky-400 dark:text-gray-900 dark:hover:bg-sky-400/80',
 				props.variant === 'secondary' &&

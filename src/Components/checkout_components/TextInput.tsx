@@ -7,6 +7,7 @@ type TextInputProps = {
 	ref: (element: HTMLInputElement) => void
 	type: 'text' | 'email' | 'tel' | 'password' | 'url' | 'number' | 'date'
 	name: string
+	description?: string
 	value: string | number | undefined
 	onInput: JSX.EventHandler<HTMLInputElement, InputEvent>
 	onChange: JSX.EventHandler<HTMLInputElement, Event>
@@ -48,6 +49,7 @@ export function TextInput(props: TextInputProps) {
 		<div class={clsx(!props.padding && 'px-2 ', props.class)}>
 			<InputLabel
 				name={props.name}
+				description={props.description}
 				label={props.label}
 				required={props.required}
 			/>

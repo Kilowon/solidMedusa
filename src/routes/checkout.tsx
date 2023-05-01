@@ -49,6 +49,8 @@ type PaymentForm = {
 	checkbox: {
 		array: string[]
 		boolean: boolean
+		phone: boolean
+		business: boolean
 	}
 }
 
@@ -122,22 +124,27 @@ const StatesList = [
 	'Wyoming'
 ]
 
-export default function PaymentPage() {
+export default function CheckoutPage() {
 	const { cart } = useGlobalContext()
 	const [showShipping, setShowShipping] = createSignal(false)
 	const [showPayment, setShowPayment] = createSignal(false)
 
 	return (
-		<div class="bg-[#fefcfa] text-gray-6 h-[100vh]">
+		<div class="bg-[#fefcfa] text-gray-6">
 			<Title>Checkout</Title>
 			<Header />
 			<div class="flex content-container ">
 				<div class="content-container md:w-[700px]">
+					<Express />
+
+					<div class="flex items-center justify-center text-2xl m-2">or</div>
 					<Customer setShowShipping={setShowShipping} />
+					<div class=" m-6" />
 					<Shipping
 						showShipping={showShipping}
 						setShowPayment={setShowPayment}
 					/>
+					<div class=" m-6" />
 					<Payment showPayment={showPayment} />
 				</div>
 				<div class=" w-[440px] bg-white">Cart Review</div>
@@ -159,20 +166,9 @@ export function Header() {
 						'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-dark group-hover:text-gray-900 relative'
 					}
 				>
-					<div class="flex-1 basis-0 h-full flex items-center">
-						<div class="block ">
-							<A
-								href="/cart"
-								class="text-xs font-semibold  "
-							>
-								<div class=" flex items-center font-poppins uppercase">
-									<div class={'i-tabler-chevron-left text-3xl '} />
-									Back
-									<div class="hidden sm:block mx-0.5">to Shopping Cart</div>
-								</div>
-							</A>
-						</div>
-						<div class="hidden sm:block h-full ml-10"></div>
+					<div class="flex-1 basis-0 h-full flex items-center m-2">
+						<div class="i-fa-solid-lock text-gray-6 " />
+						<div class="m-2 text-gray-6">Secure Checkout</div>
 					</div>
 
 					<div class="flex items-center h-full"></div>
@@ -182,11 +178,22 @@ export function Header() {
 					>
 						<div class="flex items-center">
 							<div class=" font-poppins uppercase mx-8"> Modern Edge </div>
-							<div class="i-fa-solid-lock text-gray-6+" />
 						</div>
 					</A>
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end mr-10">
 						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold font-poppins px-3"></div>
+					</div>
+					<div class="block m-2 ">
+						<A
+							href="/cart"
+							class="text-xs font-semibold  "
+						>
+							<div class=" flex items-center font-poppins uppercase">
+								Back
+								<div class="hidden sm:block mx-0.5">to Shopping Cart</div>
+								<div class={'i-tabler-chevron-right text-3xl '} />
+							</div>
+						</A>
 					</div>
 				</nav>
 			</header>
@@ -194,9 +201,44 @@ export function Header() {
 	)
 }
 
+export function Express() {
+	return (
+		<div class="flex flex-col items-center  text-xl">
+			<div class="flex justify-between justify-center items-center ">
+				<div
+					class="flex flex-col items-center   hover:cursor-pointer rounded-lg p-4 m-6 shadow-md "
+					title="PayPal"
+				>
+					<div class="i-cib-paypal text-5xl bg-coolgray-7 hover:bg-blue-200" />
+				</div>
+				<div
+					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-2 m-6 shadow-md"
+					title="Google Pay"
+				>
+					<div class="i-cib-google-pay text-7xl bg-coolgray-7 hover:bg-blue-200" />
+				</div>
+				<div
+					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-2 m-6 shadow-md"
+					title="Apple Pay"
+				>
+					<div class="i-cib-apple-pay text-7xl bg-coolgray-7 hover:bg-blue-200" />
+				</div>
+				<div
+					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-3 m-6 shadow-md "
+					title="Amazon Pay"
+				>
+					<div class="i-cib-amazon-pay text-6xl bg-coolgray-7 hover:bg-blue-200 " />
+				</div>
+			</div>
+			<div class="text-3xl  p-2 font-semibold">Express Checkout</div>
+		</div>
+	)
+}
+
 export function Customer(props: CustomerProps) {
 	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
-
+	const [showForm, setShowForm] = createSignal('active')
+	const [emailValue, setEmailValue] = createSignal('')
 	createEffect(() => {
 		console.log('FORM', getValues(customerForm))
 		console.log(
@@ -208,90 +250,125 @@ export function Customer(props: CustomerProps) {
 		)
 	})
 
+	function handleSubmit(values: PaymentForm) {
+		setEmailValue(values.email)
+		props.setShowShipping(true)
+		setShowForm('edit')
+	}
+
+	createEffect(() => {
+		console.log('FORM', emailValue())
+		console.log('FORM', getValues(customerForm).email)
+	})
+
 	return (
 		<Form
 			class="space-y-2"
-			onSubmit={values => props.setShowShipping(true)}
+			onSubmit={values => handleSubmit(values) as any}
 		>
 			<FormHeader
 				of={customerForm}
 				heading="Customer"
 				numberLabel="one"
+				showForm={showForm()}
+				setShowForm={setShowForm}
 			/>
-
-			<div class="space-y-2">
-				{/* //email */}
-				<Field
-					name="email"
-					validate={[
-						required('Please enter your email.'),
-						email('The email address is badly formatted.')
-					]}
-				>
-					{(field, props) => (
-						<TextInput
-							{...props}
-							value={field.value}
-							error={field.error}
-							type="email"
-							//description="We'll send your order confirmation here."
-							label="Email"
-							placeholder="example@email.com"
-							required
-						/>
-					)}
-				</Field>
-				{/* //password */}
-				<Field
-					name="password"
-					validate={[
-						required('Please enter your password.'),
-						minLength(8, 'You password must have 8 characters or more.')
-					]}
-				>
-					{(field, props) => (
-						<TextInput
-							{...props}
-							value={field.value}
-							error={field.error}
-							type="password"
-							//description="Signup for an account to access your order history."
-							label="Password"
-							placeholder="********"
-						/>
-					)}
-				</Field>
-				<FormFooter of={customerForm} />
-				{/* //account */}
-				<Field
-					name="checkbox.boolean"
-					type="boolean"
-				>
-					{(field, props) => (
-						<Checkbox
-							{...props}
-							checked={field.value}
-							error={field.error}
-							label="create an account"
-						/>
-					)}
-				</Field>
-			</div>
+			<Show when={showForm() === 'active'}>
+				<div class="space-y-2">
+					{/* //email */}
+					<Field
+						name="email"
+						validate={[
+							required('Please enter your email.'),
+							email('The email address is badly formatted.')
+						]}
+					>
+						{(field, props) => (
+							<TextInput
+								{...props}
+								value={field.value}
+								error={field.error}
+								type="email"
+								//description="We'll send your order confirmation here."
+								label="Email"
+								placeholder="example@email.com"
+								required
+							/>
+						)}
+					</Field>
+					{/* //password */}
+					<Show when={getValues(customerForm).checkbox?.boolean}>
+						<Field
+							name="password"
+							validate={[
+								required('Please enter your password.'),
+								minLength(8, 'You password must have 8 characters or more.')
+							]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="password"
+									//description="Signup for an account to access your order history."
+									label="Password"
+									placeholder="********"
+								/>
+							)}
+						</Field>
+					</Show>
+					<FormFooter of={customerForm} />
+					{/* //make account */}
+					<Field
+						name="checkbox.boolean"
+						type="boolean"
+					>
+						{(field, props) => (
+							<Checkbox
+								{...props}
+								checked={field.value}
+								error={field.error}
+								label="create an account"
+							/>
+						)}
+					</Field>
+				</div>
+			</Show>
+			<Show when={showForm() === 'edit'}>
+				<div class="flex px-14">{emailValue()}</div>
+			</Show>
 		</Form>
 	)
 }
 
 export function Shipping(props: ShippingProps) {
 	const [shippingForm, { Form, Field }] = createForm<PaymentForm>()
+	const [showForm, setShowForm] = createSignal('hide')
+	const [shippingValue, setShippingValue] = createSignal<PaymentForm>()
+
+	function handleSubmit(values: PaymentForm) {
+		setShippingValue(values)
+		props.setShowPayment?.(true)
+		setShowForm('edit')
+	}
+
+	createEffect(() => {
+		if (props.showShipping() === true) {
+			setShowForm('active')
+		}
+	})
 
 	return (
-		<Form onSubmit={values => props.setShowPayment?.(true)}>
+		<Form onSubmit={values => handleSubmit(values)}>
 			<FormHeader
 				of={shippingForm}
-				heading="Shipping Information"
+				heading="Shipping"
 				numberLabel={props.showShipping() ? 'two' : 'two'}
+				showForm={showForm()}
+				setShowForm={setShowForm}
 			/>
-			<Show when={props.showShipping() === true}>
+			<Show when={props.showShipping() === true && showForm() === 'active'}>
 				<div class="space-y-2">
 					<div class="flex flex-col md:flex-row w-full">
 						<div class="w-full md:w-1/2">
@@ -331,34 +408,7 @@ export function Shipping(props: ShippingProps) {
 							</Field>
 						</div>
 					</div>
-					{/* //company Name */}
-					<Field name="companyName">
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="Company Name (optional)"
-							/>
-						)}
-					</Field>
-					{/* //Phone Number */}
-					<Field
-						name="phoneNumber"
-						validate={required('Please enter your number.')}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								//description="We'll only use this if we need to contact you about your order."
-								type="text"
-								label="Phone Number"
-							/>
-						)}
-					</Field>
+
 					{/* //Address */}
 
 					<Field
@@ -372,6 +422,7 @@ export function Shipping(props: ShippingProps) {
 								error={field.error}
 								type="text"
 								label="Address"
+								required
 							/>
 						)}
 					</Field>
@@ -383,7 +434,7 @@ export function Shipping(props: ShippingProps) {
 								value={field.value}
 								error={field.error}
 								type="text"
-								label="Apartment/Suite/Building (Optional)"
+								label="Apartment/Suite/Building (optional)"
 							/>
 						)}
 					</Field>
@@ -400,6 +451,7 @@ export function Shipping(props: ShippingProps) {
 								error={field.error}
 								type="text"
 								label="City"
+								required
 							/>
 						)}
 					</Field>
@@ -443,7 +495,74 @@ export function Shipping(props: ShippingProps) {
 							)}
 						</Field>
 					</div>
+
+					<Show when={getValues(shippingForm).checkbox?.phone}>
+						{/* //Phone Number */}
+						<Field
+							name="phoneNumber"
+							validate={required('Please enter your number.')}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									//description="We'll only use this if we need to contact you about your order."
+									type="text"
+									label="Phone Number (optional)"
+								/>
+							)}
+						</Field>
+					</Show>
+
+					<Show when={getValues(shippingForm).checkbox?.business}>
+						{/* //company Name */}
+						<Field name="companyName">
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="text"
+									label="Company Name (optional)"
+								/>
+							)}
+						</Field>
+					</Show>
+					<div class="flex ">
+						{/* //ask phone */}
+						<Field
+							name="checkbox.phone"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="add a number"
+								/>
+							)}
+						</Field>
+						{/* //business account */}
+						<Field
+							name="checkbox.business"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="business purchase"
+								/>
+							)}
+						</Field>
+					</div>
 				</div>
+			</Show>
+			<Show when={showForm() === 'edit'}>
+				<div>{JSON.stringify(shippingValue())}</div>
 			</Show>
 			<FormFooter of={shippingForm} />
 		</Form>

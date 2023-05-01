@@ -1,12 +1,15 @@
 import { FormStore, reset } from '@modular-forms/solid'
 import { ActionButton } from './ActionButton'
 import clsx from 'clsx'
-import { Show } from 'solid-js'
+import { Show, createEffect } from 'solid-js'
+import { create } from 'domain'
 
 type FormHeaderProps = {
 	of: FormStore<any, any>
 	heading: string
 	numberLabel?: string
+	showForm?: string
+	setShowForm?: (value: string) => void
 }
 
 type FormHeaderButtonProps = {
@@ -17,6 +20,11 @@ type FormHeaderButtonProps = {
  * Form header with heading and buttons to reset and submit the form.
  */
 export function FormHeader(props: FormHeaderProps) {
+	console.log(props.showForm)
+
+	createEffect(() => {
+		console.log(props.showForm)
+	})
 	return (
 		<header class="flex items-center justify-between my-3">
 			<div class=" flex items-center">
@@ -26,10 +34,10 @@ export function FormHeader(props: FormHeaderProps) {
 				</h1>
 			</div>
 			<div class="hidden lg:flex lg:space-x-8">
-				<Show when={true}>
-					<div></div>
+				<Show when={props.showForm === 'hide'}>
+					<div>{''}</div>
 				</Show>
-				<Show when={false}>
+				<Show when={props.showForm === 'active'}>
 					<ActionButton
 						variant="secondary"
 						label="Reset"
@@ -42,12 +50,12 @@ export function FormHeader(props: FormHeaderProps) {
 						type="submit"
 					/>
 				</Show>
-				<Show when={false}>
+				<Show when={props.showForm === 'edit'}>
 					<ActionButton
 						variant="secondary"
 						label="Edit"
 						type="button"
-						onClick={() => reset(props.of)}
+						onClick={() => props.setShowForm?.('active')}
 					/>
 				</Show>
 			</div>

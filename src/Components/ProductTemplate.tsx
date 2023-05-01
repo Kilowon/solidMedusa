@@ -1,5 +1,5 @@
-import ImageGallerySlidy from '~/Components/prod_tp_components/ImageGallerySlidy'
-import ProductActions from '~/Components/prod_tp_components/ProductActions'
+import ImageGallerySlidy from '~/Components/prod_tmpl_components/ImageGallerySlidy'
+import ProductActions from '~/Components/prod_tmpl_components/ProductActions'
 import { JSX, Show } from 'solid-js'
 import { Product } from '~/types/models'
 

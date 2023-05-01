@@ -3,7 +3,7 @@ import { A } from 'solid-start'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
-import OptionSelect from '~/Components/prod_tp_components/OptionSelect'
+import OptionSelect from '~/Components/prod_tmpl_components/OptionSelect'
 import { useStore } from '~/Context/StoreContext'
 
 export default function ProductActions(props: {

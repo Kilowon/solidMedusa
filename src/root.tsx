@@ -38,21 +38,11 @@ export default function Root() {
 				/>
 				<Meta
 					name="description"
-					content="SolidJs-MedusaJs-Starter"
+					content="SolidJs-MedusaJs-Ecommerce-Starter"
 				/>
 				<Link
 					rel="icon"
 					href="/favicon.ico"
-				/>
-				<Link
-					rel="preload"
-					as="image"
-					href="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_600,z_1/v1677462156/hero_b4p7fs.webp"
-				/>
-				<Link
-					rel="preload"
-					as="image"
-					href="https://res.cloudinary.com/contentdelivery/image/upload/c_scale,w_440/v1677462424/cta_three_voqqzi.webp"
 				/>
 			</Head>
 			<Body>

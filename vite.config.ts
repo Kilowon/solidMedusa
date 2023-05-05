@@ -67,6 +67,12 @@ export default defineConfig({
 					}
 				],
 				[
+					'height-fill',
+					{
+						['height']: '-webkit-fill-available'
+					}
+				],
+				[
 					/^scrollbar-hide$/,
 					([r]) => `.scrollbar-hide{scrollbar-width:none}
 .scrollbar-hide::-webkit-scrollbar{display:none}`

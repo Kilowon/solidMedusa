@@ -89,46 +89,6 @@ async function getRequiredCart() {
 	}
 }
 
-function enrichLineItem(lineItems: LineItem[], products: any[]) {
-	const items = createMemo(() => {
-		const currItems = lineItems
-
-		if (!currItems?.length) {
-			return []
-		}
-
-		const enrichedItems: Omit<LineItem, 'beforeInsert'>[] = []
-
-		for (const item of currItems) {
-			const product = products.find((p: any) => p.id === item.variant.product_id)
-
-			if (!product) {
-				enrichedItems.push(item)
-				return
-			}
-
-			const variant = product.variants.find((v: any) => v.id === item.variant_id)
-
-			if (!variant) {
-				enrichedItems.push(item)
-				return
-			}
-
-			enrichedItems.push({
-				...item,
-				// @ts-ignore
-				variant: {
-					...variant,
-					// @ts-ignore
-					product: omit('variants', product)
-				}
-			})
-		}
-
-		return enrichedItems
-	}, [lineItems, products])
-}
-
 export function GlobalContextProvider(props: any) {
 	const [cart, cartServerState]: Cart = createRouteAction(getRequiredCart)
 	const [fetching, setFetching] = createSignal(true)

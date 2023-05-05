@@ -19,7 +19,7 @@ import { Checkbox } from '~/Components/checkout_components/Checkbox'
 import { useGlobalContext } from '~/Context/Providers'
 import { A } from 'solid-start'
 import { Cart } from '~/types/types'
-import { createQuery, createMutation } from '@tanstack/solid-query'
+import { createQuery } from '@tanstack/solid-query'
 
 type PaymentForm = {
 	email: string

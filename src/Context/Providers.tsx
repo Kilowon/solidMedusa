@@ -1,25 +1,12 @@
 import { isServer } from 'solid-js/web'
-import {
-	createContext,
-	useContext,
-	createSignal,
-	createResource,
-	createEffect,
-	createMemo
-} from 'solid-js'
+import { createContext, useContext, createSignal, createResource, createEffect, createMemo } from 'solid-js'
 import { createRouteAction } from 'solid-start'
-import { createQuery, createQueries } from '@tanstack/solid-query'
+import { createQuery } from '@tanstack/solid-query'
 
 //TODO: Becareful with imports from @medusajs/medusa-js as it will break the build process with too many imports it seems some webpack issue even though vite is used for the frontend
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
 import Medusa from '@medusajs/medusa-js'
 import { Cart } from '~/types/types'
-
-import { redirect } from 'solid-start'
-import { createMachine } from 'xstate'
-import { useMachine } from '@xstate/solid'
-import { LineItem } from '~/types/models'
-import { listProductCategories } from '~/Services/medusaAPI'
 
 interface ContextProps {
 	medusa?: Medusa | null
@@ -174,9 +161,7 @@ export function GlobalContextProvider(props: any) {
 	const [rootCategories, setRootCategories] = createSignal([])
 	createEffect(() => {
 		categoriesServerState(queryCategories.data?.product_categories)
-		setRootCategories(
-			categories()?.filter((category: any) => category.parent_category_id === null)
-		)
+		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
 	}, [queryCategories])
 
 	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])

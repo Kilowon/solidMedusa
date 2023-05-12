@@ -10,6 +10,7 @@ type FormHeaderProps = {
 	numberLabel?: string
 	showForm?: string
 	setShowForm?: (value: string) => void
+	setRefreshForm?: (value: boolean) => void
 }
 
 type FormHeaderButtonProps = {
@@ -20,6 +21,11 @@ type FormHeaderButtonProps = {
  * Form header with heading and buttons to reset and submit the form.
  */
 export function FormHeader(props: FormHeaderProps) {
+	function handleEdit() {
+		props.setShowForm?.('active')
+		props.setRefreshForm?.(true)
+	}
+
 	return (
 		<header class="flex items-center justify-between my-3">
 			<div class=" flex items-center">
@@ -48,7 +54,7 @@ export function FormHeader(props: FormHeaderProps) {
 						variant="secondary"
 						label="Edit"
 						type="button"
-						onClick={() => props.setShowForm?.('active')}
+						onClick={() => handleEdit()}
 					/>
 				</Show>
 			</div>

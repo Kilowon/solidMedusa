@@ -123,7 +123,8 @@ export function GlobalContextProvider(props: any) {
 		queryFn: async function () {
 			const product = await medusa.products.retrieve(currentProductId())
 			return product
-		}
+		},
+		enabled: false
 	}))
 
 	createEffect(() => {
@@ -148,12 +149,14 @@ export function GlobalContextProvider(props: any) {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+	//TODO: Categories should be fetched when requested not on siteload
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
 			const product = await medusa.productCategories.list({})
 			return product
-		}
+		},
+		enabled: false
 	}))
 
 	const [categories, categoriesServerState] = createSignal([])
@@ -173,7 +176,8 @@ export function GlobalContextProvider(props: any) {
 				category_id: currentCategoryId()
 			})
 			return product
-		}
+		},
+		enabled: false
 	}))
 
 	const [categoryProducts, setCategoryProducts] = createSignal([])

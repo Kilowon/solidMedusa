@@ -7,9 +7,10 @@ import {
 	minLength,
 	getValues,
 	validate,
-	setValue
+	setValue,
+	setValues
 } from '@modular-forms/solid'
-import { Match, Switch, createEffect, Show, createSignal, Accessor } from 'solid-js'
+import { Match, Switch, createEffect, Show, createSignal, Accessor, onMount } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
@@ -20,6 +21,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
+import { get } from 'http'
 
 type PaymentForm = {
 	email: string
@@ -53,25 +55,32 @@ type PaymentForm = {
 }
 
 interface CustomerProps {
-	setShowShipping: (value: boolean) => void
+	showCustomer: Accessor<string>
+	setShowCustomer: (value: string) => void
+	setShowShipping: (value: string) => void
 	cart: Cart
 }
 
 interface ShippingProps {
-	showShipping: Accessor<boolean>
-	setShowPayment?: (value: boolean) => void
-	setShowBilling?: (value: boolean) => void
+	showShipping: Accessor<string>
+	setShowShipping: (value: string) => void
+	setShowPayment?: (value: string) => void
+	setShowBilling?: (value: string) => void
 	cart: Cart
+	setShippingIsBilling?: (value: boolean) => void
 }
 
 interface BillingProps {
-	showBilling: Accessor<boolean>
-	setShowPayment?: (value: boolean) => void
+	showBilling: Accessor<string>
+	setShowBilling: (value: string) => void
+	setShowPayment?: (value: string) => void
 	cart: Cart
+	shippingIsBilling: Accessor<boolean>
 }
 
 interface PaymentProps {
-	showPayment: Accessor<boolean>
+	showPayment: Accessor<string>
+	setShowPayment: (value: string) => void
 	cart: Cart
 }
 
@@ -143,9 +152,21 @@ async function autocompleteAddress(address: string) {
 
 export default function CheckoutPage() {
 	const { queryCart } = useGlobalContext()
-	const [showShipping, setShowShipping] = createSignal(false)
-	const [showPayment, setShowPayment] = createSignal(false)
-	const [showBilling, setShowBilling] = createSignal(false)
+	const [shippingIsBilling, setShippingIsBilling] = createSignal(true)
+	// show states 'hide', 'active', 'edit'
+	const [showCustomer, setShowCustomer] = createSignal('active')
+	const [showShipping, setShowShipping] = createSignal('hide')
+	const [showBilling, setShowBilling] = createSignal('hide')
+	const [showPayment, setShowPayment] = createSignal('hide')
+
+	createEffect(() => {
+		console.log({
+			SHOWCUSTOMER: showCustomer(),
+			SHOWSHIPPING: showShipping(),
+			SHOWBILLING: showBilling(),
+			SHOWPAYMENT: showPayment()
+		})
+	})
 
 	return (
 		<div class=" text-gray-6">
@@ -157,24 +178,31 @@ export default function CheckoutPage() {
 
 					<div class="flex items-center justify-center text-2xl m-2">or</div>
 					<Customer
+						showCustomer={showCustomer}
+						setShowCustomer={setShowCustomer}
 						setShowShipping={setShowShipping}
 						cart={queryCart.data?.cart}
 					/>
 					<div class=" m-6" />
 					<Shipping
 						showShipping={showShipping}
+						setShowShipping={setShowShipping}
 						setShowPayment={setShowPayment}
 						setShowBilling={setShowBilling}
 						cart={queryCart.data?.cart}
+						setShippingIsBilling={setShippingIsBilling}
 					/>
 					<Billing
 						showBilling={showBilling}
+						setShowBilling={setShowBilling}
 						setShowPayment={setShowPayment}
 						cart={queryCart.data?.cart}
+						shippingIsBilling={shippingIsBilling}
 					/>
 					<div class=" m-6" />
 					<Payment
 						showPayment={showPayment}
+						setShowPayment={setShowPayment}
 						cart={queryCart.data?.cart}
 					/>
 				</div>
@@ -236,24 +264,32 @@ export function Express() {
 				<div
 					class="flex flex-col items-center   hover:cursor-pointer rounded-lg p-4 mx-4  "
 					title="PayPal"
+					role="button"
+					tabindex="0"
 				>
 					<div class="i-cib-paypal text-5xl bg-coolgray-7 hover:bg-blue-200" />
 				</div>
 				<div
 					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-2  "
 					title="Google Pay"
+					role="button"
+					tabindex="0"
 				>
 					<div class="i-cib-google-pay text-7xl bg-coolgray-7 hover:bg-blue-200" />
 				</div>
 				<div
 					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-2  "
 					title="Apple Pay"
+					role="button"
+					tabindex="0"
 				>
 					<div class="i-cib-apple-pay text-7xl bg-coolgray-7 hover:bg-blue-200" />
 				</div>
 				<div
 					class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-lg p-3   "
 					title="Amazon Pay"
+					role="button"
+					tabindex="0"
 				>
 					<div class="i-cib-amazon-pay text-6xl bg-coolgray-7 hover:bg-blue-200 " />
 				</div>
@@ -266,7 +302,6 @@ export function Customer(props: CustomerProps) {
 	const { medusa } = useGlobalContext()
 
 	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
-	const [showForm, setShowForm] = createSignal('active')
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
 	const [checkboxValue, setCheckboxValue] = createSignal('none')
@@ -294,16 +329,15 @@ export function Customer(props: CustomerProps) {
 	createEffect(() => {
 		if (props.cart?.email) {
 			setEmailValue(props.cart?.email)
-			setShowForm('edit')
 			setValue(customerForm, 'email', props.cart?.email)
-			props.setShowShipping(true)
+			props.setShowShipping('active')
+			props.setShowCustomer('edit')
 		}
 	})
 
 	function handleSubmit(values: PaymentForm) {
 		setEmailValue(values.email)
-		props.setShowShipping(true)
-		setShowForm('edit')
+
 		if (checkboxValue() === 'none') {
 			handleGuest()
 		}
@@ -315,6 +349,8 @@ export function Customer(props: CustomerProps) {
 			setPasswordValue(values.password)
 			handleSignIn()
 		}
+		props.setShowShipping('active')
+		props.setShowCustomer('edit')
 	}
 	//TODO: When logged in the customer info will pre-populate the form
 	const checkCustomer = createQuery(() => ({
@@ -391,11 +427,11 @@ export function Customer(props: CustomerProps) {
 			<FormHeader
 				of={customerForm}
 				heading="Customer"
-				numberLabel={showForm() === 'edit' ? 'check' : 'one'}
-				showForm={showForm()}
-				setShowForm={setShowForm}
+				numberLabel={props.showCustomer() === 'edit' ? 'check' : 'one'}
+				showForm={props.showCustomer()}
+				setShowForm={props.setShowCustomer}
 			/>
-			<Show when={showForm() === 'active'}>
+			<Show when={props.showCustomer() === 'active'}>
 				<div class="space-y-2">
 					{/* //email */}
 					<Field
@@ -449,7 +485,7 @@ export function Customer(props: CustomerProps) {
 									{...props}
 									checked={field.value}
 									error={field.error}
-									label="create an account"
+									label="sign up to create an account"
 								/>
 							)}
 						</Field>
@@ -469,7 +505,7 @@ export function Customer(props: CustomerProps) {
 					</div>
 				</div>
 			</Show>
-			<Show when={showForm() === 'edit'}>
+			<Show when={props.showCustomer() === 'edit'}>
 				<div class="flex px-14">{emailValue()}</div>
 			</Show>
 		</Form>
@@ -480,96 +516,430 @@ export function Shipping(props: ShippingProps) {
 	const { medusa } = useGlobalContext()
 
 	const [shippingForm, { Form, Field }] = createForm<PaymentForm>()
-	const [showForm, setShowForm] = createSignal('hide')
-	const [shippingAddress, setShippingAddress] = createSignal<PaymentForm>()
-	const [addressAutoComplete, setAddressAutoComplete] = createSignal('')
+	const [firstTime, setFirstTime] = createSignal(true)
 
-	function handleSubmit(values: PaymentForm) {
-		setShippingAddress(values)
-		props.setShowPayment?.(true)
-		setShowForm('edit')
-		handleShippingAddress()
-		//TODO: Add shipping address to Customer account
+	function initialServersideState() {
+		if (firstTime()) {
+			setValue(shippingForm, 'checkbox.billing', true)
+		}
+		if (props.cart?.shipping_address?.metadata?.validated === 'validated' && firstTime()) {
+			setValues(shippingForm, props.cart?.shipping_address)
+			setValue(shippingForm, 'checkbox.phone', props.cart?.shipping_address?.metadata?.checkbox?.phone)
+			setValue(shippingForm, 'checkbox.company', props.cart?.shipping_address?.metadata?.checkbox?.company)
+			setValue(shippingForm, 'checkbox.billing', props.cart?.shipping_address?.metadata?.checkbox?.billing)
+
+			//
+			// place component in edit mode
+			//
+
+			setTimeout(() => {
+				props.setShowShipping?.('edit')
+				if (props.cart?.billing_address?.metadata.validated === 'validated') {
+					props.setShowBilling?.('edit')
+				} else {
+					props.setShowBilling?.('active')
+				}
+			}, 250)
+			setFirstTime(false)
+		}
 	}
 
 	createEffect(() => {
-		if (props.showShipping() === true) {
-			setShowForm('active')
-		}
+		initialServersideState()
 	})
 
-	createEffect(() => {
-		if (props.cart?.shipping_address?.customer_id) {
-			setShowForm('edit')
-			setValue(shippingForm, 'first_name', props.cart?.shipping_address.first_name)
-			setValue(shippingForm, 'last_name', props.cart?.shipping_address.last_name)
-			setValue(shippingForm, 'address_1', props.cart?.shipping_address.address_1)
-			setValue(shippingForm, 'city', props.cart?.shipping_address.city)
-			setValue(shippingForm, 'postal_code', props.cart?.shipping_address.postal_code)
-			setValue(shippingForm, 'phone', props.cart?.shipping_address.phone)
-			setValue(shippingForm, 'company', props.cart?.shipping_address.companyName)
-			setValue(shippingForm, 'address_2', props.cart?.shipping_address.aptNumber)
-			setValue(shippingForm, 'province', props.cart?.shipping_address.province)
-			setValue(shippingForm, 'company', props.cart?.shipping_address.company)
-			setValue(shippingForm, 'checkbox.phone', props.cart?.shipping_address.metadata?.checkbox?.phone)
-			setValue(shippingForm, 'checkbox.company', props.cart?.shipping_address.metadata?.checkbox?.company)
-
-			setShippingAddress({
-				...props.cart?.shipping_address,
-				checkbox: props.cart?.shipping_address.metadata?.checkbox
-			})
-			setShowForm('edit')
-			props.setShowPayment?.(true)
-		}
-	})
+	async function handleSubmit(values: PaymentForm) {
+		console.log('SUBMIT', values.first_name)
+		queryShippingAddress.refetch()
+		setTimeout(() => {
+			props.setShowShipping?.('edit')
+			if (getValues(shippingForm).checkbox?.billing === true) {
+				props.setShowBilling?.('active')
+			}
+			if (getValues(shippingForm).checkbox?.billing === false) {
+				props.setShowBilling?.('edit')
+				props.setShowPayment?.('active')
+			}
+		}, 500)
+	}
 
 	async function handleShippingAddress() {
-		queryShippingAddress.refetch()
+		console.log('SHIPPING', getValues(shippingForm).first_name)
 
-		//TODO: IDK if this is needed yet
-		addCustomerAddress.refetch()
-	}
-
-	const addCustomerAddress = createQuery(() => ({
-		queryKey: ['customer_info'],
-		queryFn: async function () {
-			const address = await medusa?.customers.update({
-				billing_address: {
-					first_name: shippingAddress()?.first_name,
-					last_name: shippingAddress()?.last_name,
-					address_1: shippingAddress()?.address_1,
-					city: shippingAddress()?.city,
-					postal_code: shippingAddress()?.postal_code,
-					phone: shippingAddress()?.phone,
-					company: shippingAddress()?.company,
-					address_2: shippingAddress()?.address_2,
-					province: shippingAddress()?.province
+		const address = await medusa?.carts.update(props.cart?.id, {
+			shipping_address: {
+				first_name: getValues(shippingForm).first_name,
+				last_name: getValues(shippingForm).last_name,
+				address_1: getValues(shippingForm).address_1,
+				city: getValues(shippingForm).city,
+				postal_code: getValues(shippingForm).postal_code,
+				phone: getValues(shippingForm).phone,
+				company: getValues(shippingForm).company,
+				address_2: getValues(shippingForm).address_2,
+				province: getValues(shippingForm).province,
+				metadata: {
+					validated: 'validated',
+					checkbox: {
+						phone: getValues(shippingForm).checkbox?.phone,
+						company: getValues(shippingForm).checkbox?.company,
+						billing: getValues(shippingForm).checkbox?.billing
+					}
 				}
-			})
+			},
+			billing_address:
+				getValues(shippingForm).checkbox?.billing === true
+					? {
+							first_name: getValues(shippingForm).first_name,
+							last_name: getValues(shippingForm).last_name,
+							address_1: getValues(shippingForm).address_1,
+							city: getValues(shippingForm).city,
+							postal_code: getValues(shippingForm).postal_code,
+							phone: getValues(shippingForm).phone,
+							company: getValues(shippingForm).company,
+							address_2: getValues(shippingForm).address_2,
+							province: getValues(shippingForm).province,
+							metadata: {
+								validated: 'validated',
+								checkbox: {
+									phone: getValues(shippingForm).checkbox?.phone,
+									company: getValues(shippingForm).checkbox?.company,
+									billing: getValues(shippingForm).checkbox?.billing
+								}
+							}
+					  }
+					: undefined
+		})
 
-			return address
-		},
+		return address
+	}
+	const queryShippingAddress = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: handleShippingAddress,
 		enabled: false
 	}))
 
-	const queryShippingAddress = createQuery(() => ({
+	return (
+		<div>
+			<Form onSubmit={values => handleSubmit(values)}>
+				<FormHeader
+					of={shippingForm}
+					heading="Shipping"
+					numberLabel={props.showShipping() === 'edit' ? 'check' : 'two'}
+					showForm={props.showShipping()}
+					setShowForm={props.setShowShipping}
+				/>
+				<Show when={props.showShipping() === 'active'}>
+					<div class="space-y-2">
+						<div class="flex flex-col md:flex-row w-full">
+							<div class="w-full md:w-1/2">
+								{/* //first name */}
+								<Field
+									name="first_name"
+									validate={[required('Please enter your first name.'), pattern(/^[a-zA-Z]+$/, 'The name is badly formatted.')]}
+								>
+									{(field, props) => (
+										<TextInput
+											{...props}
+											value={field.value}
+											error={field.error}
+											type="text"
+											label="First Name"
+											required
+										/>
+									)}
+								</Field>
+							</div>
+							<div class="w-full md:w-1/2">
+								{/* //last name */}
+								<Field
+									name="last_name"
+									validate={[required('Please enter your last name.'), pattern(/^[a-zA-Z]+$/, 'The name is badly formatted.')]}
+								>
+									{(field, props) => (
+										<TextInput
+											{...props}
+											value={field.value}
+											error={field.error}
+											type="text"
+											label="Last Name"
+											required
+										/>
+									)}
+								</Field>
+							</div>
+						</div>
+
+						{/* //Address */}
+
+						<Field
+							name="address_1"
+							validate={required('Please enter your address.')}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="text"
+									label="Address"
+								/>
+							)}
+						</Field>
+						{/* /Apt# */}
+						<Field name="address_2">
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="text"
+									label="Apartment/Suite/Building (optional)"
+								/>
+							)}
+						</Field>
+
+						{/* City */}
+						<Field
+							name="city"
+							validate={required('Please enter your city.')}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="text"
+									label="City"
+									required
+								/>
+							)}
+						</Field>
+						<div class="flex flex-row  w-full">
+							<div class="w-2/3">
+								{/* State */}
+								<Field
+									name="province"
+									validate={required('Please select your state.')}
+								>
+									{(field, props) => (
+										<Select
+											{...props}
+											value={field.value}
+											options={StatesList.map(state => ({
+												label: state,
+												value: state
+											}))}
+											error={field.error}
+											label="State"
+											placeholder="Select a State"
+											required
+										/>
+									)}
+								</Field>{' '}
+							</div>
+							{/* zipcode */}
+							<Field
+								name="postal_code"
+								validate={[
+									required('Please enter your zipcode.'),
+									pattern(/^\d{5}(?:[-\s]\d{4})?$/, 'Please check zipcodes formatting.')
+								]}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="text"
+										label="Zipcode"
+										required
+									/>
+								)}
+							</Field>
+						</div>
+
+						<Show when={getValues(shippingForm).checkbox?.phone}>
+							{/* //Phone Number */}
+							<Field name="phone">
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										//description="We'll only use this if we need to contact you about your order."
+										type="text"
+										label="Phone Number"
+										placeholder="Enter your phone number here"
+									/>
+								)}
+							</Field>
+						</Show>
+
+						<Show when={getValues(shippingForm).checkbox?.company}>
+							{/* //company Name */}
+							<Field name="company">
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="text"
+										label="Company Name"
+									/>
+								)}
+							</Field>
+						</Show>
+						<div class="space-y-8">
+							<div class="flex ">
+								{/* //ask phone */}
+								<Field
+									name="checkbox.phone"
+									type="boolean"
+								>
+									{(field, props) => (
+										<Checkbox
+											{...props}
+											checked={field.value}
+											error={field.error}
+											label="add a number"
+										/>
+									)}
+								</Field>
+								{/* //business account */}
+								<Field
+									name="checkbox.company"
+									type="boolean"
+								>
+									{(field, props) => (
+										<Checkbox
+											{...props}
+											checked={field.value}
+											error={field.error}
+											label="business purchase"
+										/>
+									)}
+								</Field>
+							</div>
+							<div class="">
+								<Field
+									name="checkbox.billing"
+									type="boolean"
+								>
+									{(field, props) => (
+										<Checkbox
+											{...props}
+											checked={field.value}
+											error={field.error}
+											label="My billing address is the same as my shipping address."
+										/>
+									)}
+								</Field>
+							</div>
+						</div>
+					</div>
+				</Show>
+
+				<Show when={props.showShipping() === 'edit'}>
+					<div class="flex  flex-col px-14">
+						<div class="font-semibold">Shipping Address:</div>
+						<div class="flex space-x-2">
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.first_name}</div>
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.last_name}</div>
+						</div>
+
+						<div class="flex space-x-2">
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.address_1}</div>
+						</div>
+						<div class="flex space-x-2">
+							<div>
+								{queryShippingAddress?.data?.cart?.shipping_address?.address_2
+									? queryShippingAddress?.data?.cart?.shipping_address?.address_2
+									: ''}
+							</div>
+						</div>
+
+						<div class="flex space-x-2">
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.city}</div>,
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.province}</div>
+							<div>{queryShippingAddress?.data?.cart?.shipping_address?.postal_code}</div>
+						</div>
+						<div>
+							{queryShippingAddress?.data?.cart?.shipping_address?.metadata?.checkbox?.company
+								? queryShippingAddress?.data?.cart?.shipping_address?.company
+								: ''}
+						</div>
+						<div>
+							{queryShippingAddress?.data?.cart?.shipping_address?.metadata?.checkbox?.phone
+								? queryShippingAddress?.data?.cart?.shipping_address?.phone
+								: ''}
+						</div>
+					</div>
+				</Show>
+				<FormFooter of={shippingForm} />
+			</Form>
+		</div>
+	)
+}
+
+export function Billing(props: BillingProps) {
+	const { medusa } = useGlobalContext()
+
+	const [billingForm, { Form, Field }] = createForm<PaymentForm>()
+	const [firstRender, setFirstRender] = createSignal(true)
+	const [refreshForm, setRefreshForm] = createSignal(true)
+
+	function initialServerSideState() {
+		console.log(refreshForm())
+		if (props.cart?.billing_address?.metadata.validated === 'validated' && refreshForm()) {
+			setValues(billingForm, props.cart?.billing_address)
+			setValue(billingForm, 'checkbox.phone', props.cart?.billing_address.metadata.checkbox?.phone)
+			setValue(billingForm, 'checkbox.company', props.cart?.billing_address.metadata.checkbox?.company)
+			setRefreshForm(false)
+
+			if (firstRender()) {
+				props.setShowBilling?.('edit')
+				props.setShowPayment?.('active')
+				setFirstRender(false)
+			}
+		}
+	}
+
+	createEffect(() => {
+		initialServerSideState()
+	})
+
+	async function handleSubmit() {
+		await handleBillingAddress()
+	}
+
+	async function handleBillingAddress() {
+		await queryBillingAddress.refetch()
+
+		setTimeout(() => {
+			props.setShowBilling?.('edit')
+			props.setShowPayment?.('active')
+		}, 250)
+	}
+
+	const queryBillingAddress = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
 			const address = await medusa?.carts.update(props.cart?.id, {
-				shipping_address: {
-					first_name: shippingAddress()?.first_name,
-					last_name: shippingAddress()?.last_name,
-					address_1: shippingAddress()?.address_1,
-					city: shippingAddress()?.city,
-					postal_code: shippingAddress()?.postal_code,
-					phone: shippingAddress()?.phone,
-					company: shippingAddress()?.company,
-					address_2: shippingAddress()?.address_2,
-					province: shippingAddress()?.province,
+				billing_address: {
+					first_name: getValues(billingForm).first_name,
+					last_name: getValues(billingForm).last_name,
+					address_1: getValues(billingForm).address_1,
+					city: getValues(billingForm).city,
+					postal_code: getValues(billingForm).postal_code,
+					phone: getValues(billingForm).phone,
+					company: getValues(billingForm).company,
+					address_2: getValues(billingForm).address_2,
+					province: getValues(billingForm).province,
 					metadata: {
+						validated: 'validated',
 						checkbox: {
-							phone: shippingAddress()?.checkbox.phone,
-							company: shippingAddress()?.checkbox.company
+							phone: getValues(billingForm).checkbox?.phone,
+							company: getValues(billingForm).checkbox?.company
 						}
 					}
 				}
@@ -577,132 +947,70 @@ export function Shipping(props: ShippingProps) {
 
 			return address
 		},
-		enabled: false
+		enabled: false,
+		retry: false
 	}))
 
 	return (
-		<Form onSubmit={values => handleSubmit(values)}>
-			<FormHeader
-				of={shippingForm}
-				heading="Shipping"
-				numberLabel={showForm() === 'edit' ? 'check' : 'two'}
-				showForm={showForm()}
-				setShowForm={setShowForm}
-			/>
-			<Show when={props.showShipping() === true && showForm() === 'active'}>
-				<div class="space-y-2">
-					<div class="flex flex-col md:flex-row w-full">
-						<div class="w-full md:w-1/2">
-							{/* //first name */}
-							<Field
-								name="first_name"
-								validate={required('Please enter your first name.')}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="text"
-										label="First Name"
-										required
-									/>
-								)}
-							</Field>
+		<div>
+			<Form
+				onSubmit={() => handleSubmit()}
+				keepResponse={true}
+			>
+				<FormHeader
+					of={billingForm}
+					heading="Billing Address"
+					numberLabel={props.showBilling() === 'edit' ? 'check' : 'three'}
+					showForm={props.showBilling()}
+					setShowForm={props.setShowBilling}
+					setRefreshForm={setRefreshForm}
+				/>
+				<Show when={props.showBilling() === 'active'}>
+					<div class="space-y-2">
+						<div class="flex flex-col md:flex-row w-full">
+							<div class="w-full md:w-1/2">
+								{/* //first name */}
+								<Field
+									name="first_name"
+									validate={required('Please enter your first name.')}
+								>
+									{(field, props) => (
+										<TextInput
+											{...props}
+											value={field.value}
+											error={field.error}
+											type="text"
+											label="First Name"
+											required
+										/>
+									)}
+								</Field>
+							</div>
+							<div class="w-full md:w-1/2">
+								{/* //last name */}
+								<Field
+									name="last_name"
+									validate={required('Please enter your last name.')}
+								>
+									{(field, props) => (
+										<TextInput
+											{...props}
+											value={field.value}
+											error={field.error}
+											type="text"
+											label="Last Name"
+											required
+										/>
+									)}
+								</Field>
+							</div>
 						</div>
-						<div class="w-full md:w-1/2">
-							{/* //last name */}
-							<Field
-								name="last_name"
-								validate={required('Please enter your last name.')}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="text"
-										label="Last Name"
-										required
-									/>
-								)}
-							</Field>
-						</div>
-					</div>
 
-					{/* //Address */}
+						{/* //Address */}
 
-					<Field
-						name="address_1"
-						validate={required('Please enter your address.')}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="Address"
-								required
-							/>
-						)}
-					</Field>
-					{/* /Apt# */}
-					<Field name="address_2">
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="Apartment/Suite/Building (optional)"
-							/>
-						)}
-					</Field>
-
-					{/* City */}
-					<Field
-						name="city"
-						validate={required('Please enter your city.')}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="City"
-								required
-							/>
-						)}
-					</Field>
-					<div class="flex flex-row  w-full">
-						<div class="w-2/3">
-							{/* State */}
-							<Field
-								name="province"
-								validate={required('Please select your state.')}
-							>
-								{(field, props) => (
-									<Select
-										{...props}
-										value={field.value}
-										options={StatesList.map(state => ({
-											label: state,
-											value: state
-										}))}
-										error={field.error}
-										label="State"
-										placeholder="Select a State"
-										required
-									/>
-								)}
-							</Field>{' '}
-						</div>
-						{/* zipcode */}
 						<Field
-							name="postal_code"
-							validate={required('Please enter your zipcode.')}
+							name="address_1"
+							validate={required('Please enter your address.')}
 						>
 							{(field, props) => (
 								<TextInput
@@ -710,47 +1018,115 @@ export function Shipping(props: ShippingProps) {
 									value={field.value}
 									error={field.error}
 									type="text"
-									label="Zipcode"
+									label="Address"
 									required
 								/>
 							)}
 						</Field>
-					</div>
+						{/* /Apt# */}
+						<Field name="address_2">
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="text"
+									label="Apartment/Suite/Building (optional)"
+								/>
+							)}
+						</Field>
 
-					<Show when={getValues(shippingForm).checkbox?.phone}>
-						{/* //Phone Number */}
+						{/* City */}
 						<Field
-							name="phone"
-							validate={required('Please enter your number.')}
+							name="city"
+							validate={required('Please enter your city.')}
 						>
 							{(field, props) => (
 								<TextInput
 									{...props}
 									value={field.value}
 									error={field.error}
-									//description="We'll only use this if we need to contact you about your order."
 									type="text"
-									label="Phone Number (optional)"
+									label="City"
+									required
 								/>
 							)}
 						</Field>
-					</Show>
+						<div class="flex flex-row  w-full">
+							<div class="w-2/3">
+								{/* State */}
+								<Field
+									name="province"
+									validate={required('Please select your state.')}
+								>
+									{(field, props) => (
+										<Select
+											{...props}
+											value={field.value}
+											options={StatesList.map(state => ({
+												label: state,
+												value: state
+											}))}
+											error={field.error}
+											label="State"
+											placeholder="Select a State"
+											required
+										/>
+									)}
+								</Field>{' '}
+							</div>
+							{/* zipcode */}
+							<Field
+								name="postal_code"
+								validate={required('Please enter your zipcode.')}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="text"
+										label="Zipcode"
+										required
+									/>
+								)}
+							</Field>
+						</div>
 
-					<Show when={getValues(shippingForm).checkbox?.company}>
-						{/* //company Name */}
-						<Field name="company">
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Company Name"
-								/>
-							)}
-						</Field>
-					</Show>
-					<div class="space-y-8">
+						<Show when={getValues(billingForm).checkbox?.phone}>
+							{/* //Phone Number */}
+							<Field
+								name="phone"
+								validate={required('Please enter your number.')}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										//description="We'll only use this if we need to contact you about your order."
+										type="text"
+										label="Phone Number (optional)"
+									/>
+								)}
+							</Field>
+						</Show>
+
+						<Show when={getValues(billingForm).checkbox?.company}>
+							{/* //company Name */}
+							<Field name="company">
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="text"
+										label="Company Name"
+									/>
+								)}
+							</Field>
+						</Show>
+
 						<div class="flex ">
 							{/* //ask phone */}
 							<Field
@@ -782,387 +1158,47 @@ export function Shipping(props: ShippingProps) {
 							</Field>
 						</div>
 					</div>
-				</div>
-			</Show>
+				</Show>
 
-			<Show when={showForm() === 'edit'}>
-				<div class="flex  flex-col px-14">
-					<div>Shipping Address:</div>
-					<div class="flex space-x-2">
-						<div>{shippingAddress()?.first_name}</div>
-						<div>{shippingAddress()?.last_name}</div>
-					</div>
-
-					<div class="flex space-x-2">
-						<div>{shippingAddress()?.address_1}</div>
-					</div>
-					<div class="flex space-x-2">
-						<div>{shippingAddress()?.address_2 ? shippingAddress()?.address_2 : ''}</div>
-					</div>
-
-					<div class="flex space-x-2">
-						<div>{shippingAddress()?.city}</div>,<div>{shippingAddress()?.province}</div>
-						<div>{shippingAddress()?.postal_code}</div>
-					</div>
-					<div>{shippingAddress()?.checkbox?.company ? shippingAddress()?.company : ''}</div>
-					<div>{shippingAddress()?.checkbox?.phone ? shippingAddress()?.phone : ''}</div>
-				</div>
-			</Show>
-			<FormFooter of={shippingForm} />
-		</Form>
-	)
-}
-
-export function Billing(props: BillingProps) {
-	const { medusa } = useGlobalContext()
-
-	const [billingForm, { Form, Field }] = createForm<PaymentForm>()
-
-	//TODO: ShowForm is never used in props to make it active
-
-	const [showForm, setShowForm] = createSignal('hide')
-	const [billingAddress, setBillingAddress] = createSignal<PaymentForm>()
-	const [addressAutoComplete, setAddressAutoComplete] = createSignal('')
-
-	function handleSubmit(values: PaymentForm) {
-		setBillingAddress(values)
-		props.setShowPayment?.(true)
-		setShowForm('edit')
-		handleShippingAddress()
-		//TODO: Add shipping address to Customer account
-	}
-
-	createEffect(() => {
-		if (props.showBilling() === true) {
-			setShowForm('active')
-		}
-	})
-
-	createEffect(() => {
-		if (props.cart?.billing_address) {
-			setShowForm('edit')
-			setValue(billingForm, 'first_name', props.cart?.billing_address.first_name)
-			setValue(billingForm, 'last_name', props.cart?.billing_address.last_name)
-			setValue(billingForm, 'address_1', props.cart?.billing_address.address_1)
-			setValue(billingForm, 'city', props.cart?.billing_address.city)
-			setValue(billingForm, 'postal_code', props.cart?.billing_address.postal_code)
-			setValue(billingForm, 'phone', props.cart?.billing_address.phone)
-			setValue(billingForm, 'company', props.cart?.billing_address.companyName)
-			setValue(billingForm, 'address_2', props.cart?.billing_address.aptNumber)
-			setValue(billingForm, 'province', props.cart?.billing_address.province)
-			setValue(billingForm, 'company', props.cart?.billing_address.company)
-			setValue(billingForm, 'checkbox.phone', props.cart?.billing_address.metadata.checkbox?.phone)
-			setValue(billingForm, 'checkbox.company', props.cart?.billing_address.metadata.checkbox?.company)
-
-			setBillingAddress({
-				...props.cart?.shipping_address,
-				checkbox: props.cart?.shipping_address.metadata?.checkbox
-			})
-			setShowForm('edit')
-			props.setShowPayment?.(true)
-		}
-	})
-
-	async function handleShippingAddress() {
-		queryShippingAddress.refetch()
-		addCustomerAddress.refetch()
-	}
-
-	const addCustomerAddress = createQuery(() => ({
-		queryKey: ['customer_info'],
-		queryFn: async function () {
-			const address = await medusa?.customers.update({
-				billing_address: {
-					first_name: billingAddress()?.first_name,
-					last_name: billingAddress()?.last_name,
-					address_1: billingAddress()?.address_1,
-					city: billingAddress()?.city,
-					postal_code: billingAddress()?.postal_code,
-					phone: billingAddress()?.phone,
-					company: billingAddress()?.company,
-					address_2: billingAddress()?.address_2,
-					province: billingAddress()?.province
-				}
-			})
-
-			return address
-		},
-		enabled: false
-	}))
-
-	const queryShippingAddress = createQuery(() => ({
-		queryKey: ['cart'],
-		queryFn: async function () {
-			const address = await medusa?.carts.update(props.cart?.id, {
-				shipping_address: {
-					first_name: billingAddress()?.first_name,
-					last_name: billingAddress()?.last_name,
-					address_1: billingAddress()?.address_1,
-					city: billingAddress()?.city,
-					postal_code: billingAddress()?.postal_code,
-					phone: billingAddress()?.phone,
-					company: billingAddress()?.company,
-					address_2: billingAddress()?.address_2,
-					province: billingAddress()?.province,
-					metadata: {
-						checkbox: {
-							phone: billingAddress()?.checkbox.phone,
-							company: billingAddress()?.checkbox.company
-						}
-					}
-				}
-			})
-
-			return address
-		},
-		enabled: false
-	}))
-
-	return (
-		<Form onSubmit={values => handleSubmit(values)}>
-			<Show when={props.cart?.customer_id}>
-				<Field
-					name="checkbox.billing"
-					type="boolean"
-				>
-					{(field, props) => (
-						<Checkbox
-							{...props}
-							checked={true}
-							error={field.error}
-							label="My billing address is the same as my shipping address."
-						/>
-					)}
-				</Field>
-			</Show>
-			<Show when={getValues(billingForm).checkbox?.billing === false}>
-				<FormHeader
-					of={billingForm}
-					heading="Billing Address"
-					numberLabel={showForm() === 'edit' ? 'check' : 'fill'}
-					showForm={showForm()}
-					setShowForm={setShowForm}
-				/>
-
-				<div class="space-y-2">
-					<div class="flex flex-col md:flex-row w-full">
-						<div class="w-full md:w-1/2">
-							{/* //first name */}
-							<Field
-								name="first_name"
-								validate={required('Please enter your first name.')}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="text"
-										label="First Name"
-										required
-									/>
-								)}
-							</Field>
+				<Show when={props.showBilling() === 'edit'}>
+					<div class="flex  flex-col px-14">
+						<div class="font-semibold">Billing Address:</div>
+						<div class="flex space-x-2">
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.first_name}</div>
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.last_name}</div>
 						</div>
-						<div class="w-full md:w-1/2">
-							{/* //last name */}
-							<Field
-								name="last_name"
-								validate={required('Please enter your last name.')}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="text"
-										label="Last Name"
-										required
-									/>
-								)}
-							</Field>
+
+						<div class="flex space-x-2">
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.address_1}</div>
+						</div>
+						<div class="flex space-x-2">
+							<div>
+								{queryBillingAddress?.data?.cart?.billing_address?.address_2
+									? queryBillingAddress?.data?.cart?.billing_address?.address_2
+									: ''}
+							</div>
+						</div>
+
+						<div class="flex space-x-2">
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.city}</div>,
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.province}</div>
+							<div>{queryBillingAddress?.data?.cart?.billing_address?.postal_code}</div>
+						</div>
+						<div>
+							{queryBillingAddress?.data?.cart?.billing_address?.metadata?.checkbox?.company
+								? queryBillingAddress?.data?.cart?.billing_address?.company
+								: ''}
+						</div>
+						<div>
+							{queryBillingAddress?.data?.cart?.billing_address?.metadata?.checkbox?.phone
+								? queryBillingAddress?.data?.cart?.billing_address?.phone
+								: ''}
 						</div>
 					</div>
-
-					{/* //Address */}
-
-					<Field
-						name="address_1"
-						validate={required('Please enter your address.')}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="Address"
-								required
-							/>
-						)}
-					</Field>
-					{/* /Apt# */}
-					<Field name="address_2">
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="Apartment/Suite/Building (optional)"
-							/>
-						)}
-					</Field>
-
-					{/* City */}
-					<Field
-						name="city"
-						validate={required('Please enter your city.')}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="text"
-								label="City"
-								required
-							/>
-						)}
-					</Field>
-					<div class="flex flex-row  w-full">
-						<div class="w-2/3">
-							{/* State */}
-							<Field
-								name="province"
-								validate={required('Please select your state.')}
-							>
-								{(field, props) => (
-									<Select
-										{...props}
-										value={field.value}
-										options={StatesList.map(state => ({
-											label: state,
-											value: state
-										}))}
-										error={field.error}
-										label="State"
-										placeholder="Select a State"
-										required
-									/>
-								)}
-							</Field>{' '}
-						</div>
-						{/* zipcode */}
-						<Field
-							name="postal_code"
-							validate={required('Please enter your zipcode.')}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Zipcode"
-									required
-								/>
-							)}
-						</Field>
-					</div>
-
-					<Show when={getValues(billingForm).checkbox?.phone}>
-						{/* //Phone Number */}
-						<Field
-							name="phone"
-							validate={required('Please enter your number.')}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									//description="We'll only use this if we need to contact you about your order."
-									type="text"
-									label="Phone Number (optional)"
-								/>
-							)}
-						</Field>
-					</Show>
-
-					<Show when={getValues(billingForm).checkbox?.company}>
-						{/* //company Name */}
-						<Field name="company">
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Company Name"
-								/>
-							)}
-						</Field>
-					</Show>
-
-					<div class="flex ">
-						{/* //ask phone */}
-						<Field
-							name="checkbox.phone"
-							type="boolean"
-						>
-							{(field, props) => (
-								<Checkbox
-									{...props}
-									checked={field.value}
-									error={field.error}
-									label="add a number"
-								/>
-							)}
-						</Field>
-						{/* //business account */}
-						<Field
-							name="checkbox.company"
-							type="boolean"
-						>
-							{(field, props) => (
-								<Checkbox
-									{...props}
-									checked={field.value}
-									error={field.error}
-									label="business purchase"
-								/>
-							)}
-						</Field>
-					</div>
-				</div>
-			</Show>
-
-			<Show when={showForm() === 'edit'}>
-				<div class="flex  flex-col px-14">
-					<div>Shipping Address:</div>
-					<div class="flex space-x-2">
-						<div>{billingAddress()?.first_name}</div>
-						<div>{billingAddress()?.last_name}</div>
-					</div>
-
-					<div class="flex space-x-2">
-						<div>{billingAddress()?.address_1}</div>
-					</div>
-					<div class="flex space-x-2">
-						<div>{billingAddress()?.address_2 ? billingAddress()?.address_2 : ''}</div>
-					</div>
-
-					<div class="flex space-x-2">
-						<div>{billingAddress()?.city}</div>,<div>{billingAddress()?.province}</div>
-						<div>{billingAddress()?.postal_code}</div>
-					</div>
-					<div>{billingAddress()?.checkbox.company ? billingAddress()?.company : ''}</div>
-					<div>{billingAddress()?.checkbox.phone ? billingAddress()?.phone : ''}</div>
-				</div>
-			</Show>
-			<FormFooter of={billingForm} />
-		</Form>
+				</Show>
+				<FormFooter of={billingForm} />
+			</Form>
+		</div>
 	)
 }
 
@@ -1174,9 +1210,9 @@ export function Payment(props: PaymentProps) {
 			<FormHeader
 				of={paymentForm}
 				heading="Payment"
-				numberLabel="three"
+				numberLabel="four"
 			/>
-			<Show when={props.showPayment() === true}>
+			<Show when={props.showPayment() === 'active'}>
 				<div class="space-y-2 ">
 					<Field
 						name="type"

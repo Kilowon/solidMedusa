@@ -70,6 +70,7 @@ export function NumberIcons(props: FormHeaderButtonProps) {
 				props.numberLabel === 'one' && 'i-ph-number-circle-one-fill',
 				props.numberLabel === 'two' && 'i-ph-number-circle-two-fill',
 				props.numberLabel === 'three' && 'i-ph-number-circle-three-fill',
+				props.numberLabel === 'four' && 'i-ph-number-circle-four-fill',
 				props.numberLabel === 'check' && 'i-ph-check-circle-fill text-green-700',
 				props.numberLabel === 'x' && 'i-ph-x-circle-fill text-red-700',
 				props.numberLabel === 'fill' && 'i-ph-circle-fill '

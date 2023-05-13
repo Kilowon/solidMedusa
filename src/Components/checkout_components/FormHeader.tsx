@@ -33,30 +33,26 @@ export function FormHeader(props: FormHeaderProps) {
 				<h1 class="text-2xl font-medium text-slate-700 dark:text-slate-200 ">{props.heading}</h1>
 			</div>
 			<div class="hidden lg:flex lg:space-x-8">
-				<Show when={props.showForm === 'hide'}>
-					<div>{''}</div>
-				</Show>
-				<Show when={props.showForm === 'active'}>
-					<ActionButton
-						variant="secondary"
-						label="Reset"
-						type="button"
-						onClick={() => reset(props.of)}
-					/>
-					<ActionButton
-						variant="primary"
-						label="Submit"
-						type="submit"
-					/>
-				</Show>
-				<Show when={props.showForm === 'edit'}>
+				<ActionButton
+					variant="secondary"
+					label="Reset"
+					type="button"
+					onClick={() => reset(props.of)}
+				/>
+				<ActionButton
+					variant="primary"
+					label="Submit"
+					type="submit"
+				/>
+
+				{/* <Show when={props.showForm === 'edit'}>
 					<ActionButton
 						variant="secondary"
 						label="Edit"
 						type="button"
 						onClick={() => handleEdit()}
 					/>
-				</Show>
+				</Show> */}
 			</div>
 		</header>
 	)

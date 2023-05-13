@@ -21,6 +21,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
+import CartCore from '~/Components/layout/CartCore'
 
 type PaymentForm = {
 	email: string
@@ -244,7 +245,9 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 				</div>
-				<div class=" w-[440px] bg-white">Cart Review</div>
+				<div class=" w-[440px] mx-auto bg-white">
+					<CartCore />
+				</div>
 			</div>
 		</div>
 	)

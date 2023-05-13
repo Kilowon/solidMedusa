@@ -1,22 +1,12 @@
-import {
-	createEffect,
-	createSignal,
-	For,
-	Switch,
-	Match,
-	Show,
-	Suspense
-} from 'solid-js'
+import { createEffect, createSignal, For, Switch, Match, Show, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
-import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
 import { refetchRouteData } from 'solid-start'
 import { Transition } from 'solid-transition-group'
-import Thumbnail from '../common/Thumbnail'
 import { useStore } from '~/Context/StoreContext'
-import { createQuery } from '@tanstack/solid-query'
 import { isServer } from 'solid-js/web'
+import CartCore from './CartCore'
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
@@ -67,11 +57,7 @@ export function Navigation(props: any) {
 								Account
 							</A>
 						</div>
-						<Suspense
-							fallback={
-								<div class="h-10 w-10 flex items-center justify-center">Loading...</div>
-							}
-						>
+						<Suspense fallback={<div class="h-10 w-10 flex items-center justify-center">Loading...</div>}>
 							<CartDropdown
 								cart={props.cart}
 								stayOpen={stayOpen}
@@ -157,11 +143,7 @@ export function CartDropdown(props: any) {
 			onClick={e => handleOnClick(e)}
 		>
 			<div
-				class={
-					props.stayOpen()
-						? 'flex text-2xl p-5 text-amber-5 h-full relative'
-						: 'flex text-2xl p-5 h-full relative '
-				}
+				class={props.stayOpen() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}
 			>
 				<div class="i-ion-cart-outline hover:cursor-pointer"></div>
 				<div
@@ -188,174 +170,11 @@ export function CartDropdown(props: any) {
 				}}
 			>
 				<Show when={open() && items() !== undefined}>
-					<div class="bg-[#cccccc] absolute top-[calc(100%+1px)] right-0 w-[440px]  text-sm text-gray-7 z-30 mx-auto px-8">
-						<Switch fallback={<div>Empty</div>}>
-							<Match when={items()?.length > 0}>
-								<>
-									<div class="overflow-y-scroll max-h-[700px] px-4 grid grid-cols-1 gap-y-8 scrollbar-hide">
-										<For
-											each={items()?.sort((a: any, b: any) => {
-												return a.created_at > b.created_at ? -1 : 1
-											})}
-										>
-											{item => (
-												<div class="grid grid-cols-[122px_1fr] gap-x-4">
-													<div class="w-[122px]">
-														<Thumbnail
-															thumbnail={item.thumbnail}
-															size="full"
-														/>
-													</div>
-													<div class="flex flex-col justify-between flex-1">
-														<div class="flex flex-col flex-1">
-															<div class="flex items-start justify-between">
-																<div>
-																	<h3 class="text-base overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
-																		<A href={`/products/${item.variant.product?.handle}`}>
-																			{item?.title}
-																		</A>
-																	</h3>
-																	<LineItemOptions variant={item?.variant} />
-																	<span>Quantity: {item?.quantity}</span>
-																</div>
-																<div class="flex justify-end">
-																	<LineItemPrice
-																		region={props.cart?.region}
-																		item={item}
-																		style="tight"
-																	/>
-																</div>
-															</div>
-														</div>
-														<div class="flex items-end justify-between text-sm flex-1">
-															<div>
-																<button
-																	class="flex items-center gap-x-1 text-gray-500"
-																	onClick={() => {
-																		deleteItem(item?.id), queryCartRefetch?.()
-																	}}
-																>
-																	<div class="i-ph-trash-duotone text-sm" />
-																	<span>Remove</span>
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											)}
-										</For>
-									</div>
-									<div class="p-4 flex flex-col gap-y-4 text-sm">
-										<div class="flex items-center justify-between">
-											<span class="text-gray-700 font-semibold">
-												Subtotal <span class="font-normal">(incl. taxes)</span>
-											</span>
-											<span class="text-large-semi">
-												{currencyFormat(Number(cart()?.subtotal || 0), cart()?.region)}
-											</span>
-										</div>
-										<A href="/cart">
-											<button class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
-												Go to bag
-											</button>
-										</A>
-									</div>
-								</>
-							</Match>
-							<Match when={items()?.length === 0}>
-								<div>
-									<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
-										<div class="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
-											<span>0</span>
-										</div>
-										<span>Your shopping bag is empty.</span>
-										<div>
-											<A href="/store/Store">
-												<span class="sr-only">Go to all products page</span>
-												<button
-													onClick={close}
-													class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white"
-												>
-													Explore products
-												</button>
-											</A>
-										</div>
-									</div>
-								</div>
-							</Match>
-						</Switch>
+					<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px]  text-sm text-gray-7 z-30 mx-auto px-8">
+						<CartCore />
 					</div>
 				</Show>
 			</Transition>
-		</div>
-	)
-}
-
-import { ProductVariant } from '~/types/models'
-type LineItemOptionsProps = { variant: ProductVariant }
-export function LineItemOptions(props: LineItemOptionsProps) {
-	return (
-		<div class="text-sm text-gray-700">
-			<For each={props.variant?.options}>
-				{option => {
-					const optionName =
-						props.variant.product?.options?.find(opt => opt.id === option.option_id)
-							?.title || 'Option'
-					return (
-						<div>
-							<span>
-								{optionName}: {option.value}
-							</span>
-						</div>
-					)
-				}}
-			</For>
-		</div>
-	)
-}
-
-import { LineItem, Region } from '~/types/models'
-import { CalculatedVariant } from '~/types/medusa'
-import { getPercentageDiff } from '~/lib/util'
-import { currencyFormat } from '~/lib/helpers/currency'
-
-type LineItemPriceProps = {
-	item: Omit<LineItem, 'beforeInsert'>
-	region: Region
-	style?: 'default' | 'tight'
-}
-export function LineItemPrice(props: LineItemPriceProps) {
-	const originalPrice =
-		(props.item.variant as CalculatedVariant).original_price *
-		props.item?.quantity
-	const hasReducedPrice = (props.item.total || 0) < originalPrice
-
-	return (
-		<div class="flex flex-col text-gray-700 text-right">
-			<span
-				class={clsx('text-base-regular', {
-					'text-rose-600': hasReducedPrice
-				})}
-			>
-				{currencyFormat(Number(props.item.total || 0), props.region?.id)}
-			</span>
-			{hasReducedPrice && (
-				<>
-					<p>
-						{props.style === 'default' && (
-							<span class="text-gray-500">Original: </span>
-						)}
-						<span class="line-through">
-							{currencyFormat(Number(originalPrice), props.region?.id)}
-						</span>
-					</p>
-					{props.style === 'default' && (
-						<span class="text-rose-600">
-							-{getPercentageDiff(originalPrice, props.item?.total || 0)}%
-						</span>
-					)}
-				</>
-			)}
 		</div>
 	)
 }
@@ -425,9 +244,7 @@ export function DropdownMenu(props: any) {
 						<div class="relative py-8 ">
 							<div class="flex items-start  mx-auto px-8 w-[75vw]">
 								<div class="flex flex-col flex-1 max-w-[15vw]">
-									<div class="text-base text-gray-900 mb-4 font-semibold ">
-										Shop by category
-									</div>
+									<div class="text-base text-gray-900 mb-4 font-semibold ">Shop by category</div>
 									<div class="flex items-start">
 										<Show when={rootCategories()}>
 											<ul class="min-w-[152px] max-w-[200px] pr-4">

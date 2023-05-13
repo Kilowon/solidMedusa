@@ -4,12 +4,8 @@ import { createEffect, createSignal, Show, For } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
-import {
-	SingleLineSlider,
-	DoubleLineSlider,
-	TripleLineSlider
-} from '~/Components/common/ProductSlider'
-import { Route, Routes } from 'solid-Start'
+import { SingleLineSlider, DoubleLineSlider, TripleLineSlider } from '~/Components/common/ProductSlider'
+import { Route, Routes } from 'solid-start'
 import Categories from '~/routes/(app)/categories/[handle]'
 
 export default function Store() {
@@ -22,9 +18,7 @@ export default function Store() {
 	const [parentCategories, setParentCategories] = createSignal([])
 	const { setCurrentCategoryId } = useGlobalContext()
 	function filterCategories() {
-		return categories()?.filter(
-			(category: any) => category.handle === params.handle
-		)
+		return categories()?.filter((category: any) => category.handle === params.handle)
 	}
 
 	const [currentCategory, setCategory] = createSignal(filterCategories())
@@ -36,15 +30,11 @@ export default function Store() {
 	})
 
 	function getParentCategories(categories: any[], params: any) {
-		const parentCategories = [
-			categories.find((category: any) => category.handle === params.handle)
-		]
+		const parentCategories = [categories.find((category: any) => category.handle === params.handle)]
 
 		while (parentCategories[parentCategories.length - 1]?.parent_category) {
 			const parentCategory = categories.find(
-				(category: any) =>
-					category.name ===
-					parentCategories[parentCategories.length - 1]?.parent_category?.name
+				(category: any) => category.name === parentCategories[parentCategories.length - 1]?.parent_category?.name
 			)
 			parentCategories.push(parentCategory)
 		}
@@ -59,19 +49,10 @@ export default function Store() {
 	}, [currentCategory()])
 
 	function filterCategoriesRoot() {
-		return categories()?.filter(
-			(category: any) => category.parent_category === null
-		)
+		return categories()?.filter((category: any) => category.parent_category === null)
 	}
 
-	const [currentCategoryRoot, setCategoryRoot] = createSignal(
-		filterCategoriesRoot()
-	)
-
-	createEffect(() => {
-		console.log('currentCategoryRoot', currentCategoryRoot()[0].name)
-		console.log('currentCategoryRoot PRODUCTS', categoryProducts())
-	}, [currentCategoryRoot()])
+	const [currentCategoryRoot, setCategoryRoot] = createSignal(filterCategoriesRoot())
 
 	return (
 		<main>
@@ -84,9 +65,8 @@ export default function Store() {
 				itemProp="og:title"
 				content={currentCategory()[0]?.name}
 			/>
-			<For each={currentCategoryRoot().reverse()}>
+			<For each={currentCategoryRoot()?.reverse()}>
 				{category => {
-					console.log('category', category.id)
 					setCurrentCategoryId?.([category?.id])
 
 					return (

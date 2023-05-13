@@ -63,9 +63,9 @@ export function StepperElement(props: StepperProps) {
 						title={props.title}
 						role="button"
 						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0"
+						class="flex items-center justify-center w-8 h-8 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0"
 					>
-						<div class="text-sky-500 dark:text-sky-300">
+						<div class="text-sky-500 dark:text-sky-300 animate-pulse animate-">
 							<Icon icon={props.title} />
 						</div>
 					</span>
@@ -83,9 +83,9 @@ export function StepperElement(props: StepperProps) {
 						title={props.title}
 						role="button"
 						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
+						class="flex items-center justify-center w-8 h-8 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
 					>
-						<div class="w-5 h-5 text-sky-500 lg:w-8 lg:h-8 dark:text-sky-300 hover:cursor-pointer">
+						<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer">
 							<Icon icon={props.title} />
 						</div>
 					</span>
@@ -112,9 +112,9 @@ export function StepperElement(props: StepperProps) {
 						title={props.title}
 						role="button"
 						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
+						class="flex items-center justify-center w-8 h-8 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
 					>
-						<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer">
+						<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer animate-pulse">
 							<Icon icon={props.title} />
 						</div>
 					</span>
@@ -122,7 +122,7 @@ export function StepperElement(props: StepperProps) {
 			</Show>
 			<Show when={props.elementState === 'queued-end'}>
 				<li class="flex items-center">
-					<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+					<span class="flex items-center justify-center w-8 h-8 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
 						<div class=" text-gray-500  dark:text-gray-200 ">
 							<Icon icon={props.title} />
 						</div>
@@ -137,7 +137,7 @@ export function Icon(props: StepperIconProps) {
 	return (
 		<div
 			class={clsx(
-				'w-5 h-5  lg:w-8 lg:h-8 ',
+				'w-6 h-6 lg:w-8 lg:h-8 ',
 				props.icon === 'Customer' && 'i-mdi-email-fast-outline',
 				props.icon === 'Shipping' && 'i-ph-package',
 				props.icon === 'Billing' && 'i-mdi-id-card-outline',

@@ -6,22 +6,21 @@ import {
 	required,
 	minLength,
 	getValues,
-	validate,
 	setValue,
 	setValues
 } from '@modular-forms/solid'
-import { Match, Switch, createEffect, Show, createSignal, Accessor, onMount } from 'solid-js'
+import { Match, Switch, createEffect, Show, createSignal, Accessor } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
 import { Title } from '~/Components/checkout_components/Title'
 import { Select } from '~/Components/checkout_components/Select'
 import { Checkbox } from '~/Components/checkout_components/Checkbox'
+import { StepperElement } from '~/Components/checkout_components/StepperElement'
 import { useGlobalContext } from '~/Context/Providers'
 import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
-import { get } from 'http'
 
 type PaymentForm = {
 	email: string
@@ -333,58 +332,64 @@ export function Stepper(props: StepperProps) {
 
 	return (
 		<div>
-			<Show when={props.formCompleted().customer !== 'complete' && props.formCompleted().shipping !== 'complete'}>
+			<Show
+				when={
+					props.formCompleted().customer !== 'complete' &&
+					props.formCompleted().shipping !== 'complete' &&
+					props.formCompleted().billing !== 'complete'
+				}
+			>
 				<ol class="flex items-center w-full">
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-blue-800">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
-							<div class="w-5 h-5 text-sky-500 lg:w-8 lg:h-8 dark:text-sky-300 i-mdi-email-fast-outline" />
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-300 i-mdi-id-card-outline" />
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-clipboard-text" />
-						</span>
-					</li>
-					<li class="flex items-center">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-payment" />
-						</span>
-					</li>
+					<StepperElement
+						title="Customer"
+						elementState="active"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Shipping"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Billing"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Payment"
+						elementState="queued-end"
+						setShowForm={props.setShowForm}
+					/>
 				</ol>
 			</Show>
-			<Show when={props.formCompleted().customer === 'complete' && props.formCompleted().shipping !== 'complete'}>
+			<Show
+				when={
+					props.formCompleted().customer === 'complete' &&
+					props.formCompleted().shipping !== 'complete' &&
+					props.formCompleted().billing !== 'complete'
+				}
+			>
 				<ol class="flex items-center w-full">
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-blue-800">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('customer')}
-								class="w-5 h-5 text-sky-500 lg:w-8 lg:h-8 dark:text-sky-300 i-mdi-email-fast-outline hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('shipping')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:bg-sky-300 i-mdi-id-card-outline"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-clipboard-text" />
-						</span>
-					</li>
-					<li class="flex items-center">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-payment" />
-						</span>
-					</li>
+					<StepperElement
+						title="Customer"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Shipping"
+						elementState="active"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Billing"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Payment"
+						elementState="queued-end"
+						setShowForm={props.setShowForm}
+					/>
 				</ol>
 			</Show>
 			<Show
@@ -395,35 +400,26 @@ export function Stepper(props: StepperProps) {
 				}
 			>
 				<ol class="flex items-center w-full">
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-blue-800">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('customer')}
-								class="w-5 h-5 text-sky-500 lg:w-8 lg:h-8 dark:text-sky-300 i-mdi-email-fast-outline hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('shipping')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:bg-sky-300 i-mdi-id-card-outline hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('billing')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-clipboard-text"
-							/>
-						</span>
-					</li>
-					<li class="flex items-center">
-						<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-							<div class="w-5 h-5 text-gray-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-payment" />
-						</span>
-					</li>
+					<StepperElement
+						title="Customer"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Shipping"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Billing"
+						elementState="active"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Payment"
+						elementState="queued-end"
+						setShowForm={props.setShowForm}
+					/>
 				</ol>
 			</Show>
 			<Show
@@ -434,38 +430,26 @@ export function Stepper(props: StepperProps) {
 				}
 			>
 				<ol class="flex items-center w-full">
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-blue-800">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('customer')}
-								class="w-5 h-5 text-sky-500 lg:w-8 lg:h-8 dark:text-sky-300 i-mdi-email-fast-outline hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('shipping')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:bg-sky-300 i-mdi-id-card-outline hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200  after:border-4 after:inline-block dark:after:border-gray-700">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('billing')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:text-gray-200 i-mdi-clipboard-text hover:cursor-pointer"
-							/>
-						</span>
-					</li>
-					<li class="flex items-center">
-						<span class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0">
-							<div
-								onClick={() => handleClick('payment')}
-								class="w-5 h-5 text-sky-500 lg:w-6 lg:h-6 dark:text-sky-200 i-mdi-payment hover:cursor-pointer"
-							/>
-						</span>
-					</li>
+					<StepperElement
+						title="Customer"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Shipping"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Billing"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Payment"
+						elementState="active-end"
+						setShowForm={props.setShowForm}
+					/>
 				</ol>
 			</Show>
 		</div>

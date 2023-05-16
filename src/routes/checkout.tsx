@@ -89,6 +89,8 @@ interface PaymentProps {
 interface CarrierProps {
 	setShowForm: (value: ShowForm) => void
 	showForm: Accessor<ShowForm>
+	setFormCompleted: (value: any) => void
+	formCompleted: Accessor<any>
 	cart: Cart
 }
 
@@ -207,7 +209,7 @@ export default function CheckoutPage() {
 			<Title>Checkout</Title>
 			<Header />
 			<div class="md:flex md:content-container md:h-[80vh]">
-				<div class="content-container md:w-[700px] md:space-y-12 ">
+				<div class="px-1 md:content-container md:w-[700px] md:space-y-12 ">
 					<Stepper
 						formCompleted={formCompleted}
 						setShowForm={setShowForm}
@@ -216,7 +218,7 @@ export default function CheckoutPage() {
 					<Show when={showForm().customer === 'active'}>
 						<Express />
 
-						<div class="flex items-center justify-center text-2xl m-2">or</div>
+						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
 						<Customer
 							setShowForm={setShowForm}
 							showForm={showForm}
@@ -240,6 +242,8 @@ export default function CheckoutPage() {
 						<Carrier
 							setShowForm={setShowForm}
 							showForm={showForm}
+							setFormCompleted={setFormCompleted}
+							formCompleted={formCompleted}
 							cart={queryCart.data?.cart}
 						/>
 					</Show>
@@ -311,17 +315,73 @@ export function Header() {
 	)
 }
 
+export function StepperWIP(props: StepperProps) {
+	const [stepperData, setStepperData] = createSignal([])
+
+	createEffect(() => {
+		const data = [
+			{
+				title: 'Customer',
+				elementState: 'active'
+			},
+			{
+				title: 'Shipping',
+				elementState:
+					props.formCompleted().customer === 'complete'
+						? props.formCompleted().shipping === 'complete'
+							? 'complete'
+							: 'active'
+						: 'queued'
+			},
+			{
+				title: 'Carrier',
+				elementState:
+					props.formCompleted().shipping === 'complete'
+						? props.formCompleted().carrier === 'complete'
+							? 'complete'
+							: 'active'
+						: 'queued'
+			},
+			{
+				title: 'Billing',
+				elementState:
+					props.formCompleted().carrier === 'complete'
+						? props.formCompleted().billing === 'complete'
+							? 'complete'
+							: 'active'
+						: 'queued'
+			},
+			{
+				title: 'Payment',
+				elementState: props.formCompleted().billing === 'complete' ? 'active-end' : 'queued-end'
+			}
+		]
+		setStepperData(data)
+	})
+
+	return (
+		<div>
+			<ol class="flex items-center w-full">
+				{stepperData().map((data, index) => {
+					console.log(data.title, data.elementState)
+					return (
+						<StepperElement
+							key={index}
+							title={data.title}
+							elementState={data.elementState}
+							setShowForm={props.setShowForm}
+						/>
+					)
+				})}
+			</ol>
+		</div>
+	)
+}
+
 export function Stepper(props: StepperProps) {
 	return (
 		<div>
-			<Show
-				when={
-					props.formCompleted().customer !== 'complete' &&
-					props.formCompleted().shipping !== 'complete' &&
-					props.formCompleted().carrier !== 'complete' &&
-					props.formCompleted().billing !== 'complete'
-				}
-			>
+			<Show when={props.formCompleted().customer !== 'complete'}>
 				<ol class="flex items-center w-full">
 					<StepperElement
 						title="Customer"
@@ -350,14 +410,7 @@ export function Stepper(props: StepperProps) {
 					/>
 				</ol>
 			</Show>
-			<Show
-				when={
-					props.formCompleted().customer === 'complete' &&
-					props.formCompleted().shipping !== 'complete' &&
-					props.formCompleted().carrier !== 'complete' &&
-					props.formCompleted().billing !== 'complete'
-				}
-			>
+			<Show when={props.formCompleted().customer === 'complete' && props.formCompleted().shipping !== 'complete'}>
 				<ol class="flex items-center w-full">
 					<StepperElement
 						title="Customer"
@@ -390,8 +443,7 @@ export function Stepper(props: StepperProps) {
 				when={
 					props.formCompleted().customer === 'complete' &&
 					props.formCompleted().shipping === 'complete' &&
-					props.formCompleted().carrier !== 'complete' &&
-					props.formCompleted().billing !== 'complete'
+					props.formCompleted().carrier !== 'complete'
 				}
 			>
 				<ol class="flex items-center w-full">
@@ -500,12 +552,12 @@ export function Stepper(props: StepperProps) {
 
 export function Express() {
 	return (
-		<div class="m-5 space-y-3 ">
-			<div class="text-2xl  font-poppins font-medium">Express Checkout</div>
-			<div class=" space-y-2 ">
-				<div class="md:flex md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-2 ">
+		<div class="m-1 md:m-5 space-y-1 md:space-y-3 ">
+			<div class=" md:text-2xl  font-poppins font-medium">Express Checkout</div>
+			<div class=" space-y-1 md:space-y-2 ">
+				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
 					<div
-						class="flex flex-col items-center  hover:cursor-pointer rounded-t-lg rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500  md:w-1/2  "
+						class="flex flex-col items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-t-lg rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500  md:w-1/2  "
 						title="PayPal"
 						role="button"
 						tabindex="0"
@@ -549,7 +601,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-sm md:rounded-r-sm md:rounded-l-0  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2  "
+						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-r-sm md:rounded-l-0  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2  "
 						title="Google Pay"
 						role="button"
 						tabindex="0"
@@ -649,9 +701,9 @@ export function Express() {
 						</svg>
 					</div>
 				</div>
-				<div class="md:flex md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-2">
+				<div class="md:flex md:flex-row justify-center space-y-1 md:space-y-0 md:space-x-2">
 					<div
-						class="flex flex-col justify-center items-center h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-lg  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
+						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-lg  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
 						title="Apple Pay"
 						role="button"
 						tabindex="0"
@@ -673,7 +725,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center  hover:cursor-pointer rounded-b-lg rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-lg p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
+						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-b-lg rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-lg p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
 						title="Amazon Pay"
 						role="button"
 						tabindex="0"
@@ -855,7 +907,7 @@ export function Customer(props: CustomerProps) {
 
 	return (
 		<Form
-			class="space-y-2"
+			class="space-y-1 md:space-y-2"
 			onSubmit={values => handleSubmit(values) as any}
 		>
 			<FormHeader
@@ -864,7 +916,7 @@ export function Customer(props: CustomerProps) {
 				numberLabel={'one'}
 			/>
 
-			<div class="space-y-8">
+			<div class="space-y-2 md:space-y-8">
 				{/* //email */}
 				<Field
 					name="email"
@@ -930,7 +982,7 @@ export function Customer(props: CustomerProps) {
 							/>
 						)}
 					</Field>
-				</div>{' '}
+				</div>
 				<FormFooter of={customerForm} />
 			</div>
 		</Form>
@@ -1057,8 +1109,8 @@ export function Shipping(props: ShippingProps) {
 					numberLabel={'two'}
 				/>
 
-				<div class="space-y-2">
-					<div class="flex flex-col md:flex-row w-full">
+				<div class="space-y-1 md:space-y-2">
+					<div class="flex flex-col md:flex-row w-full space-y-1">
 						<div class="w-full md:w-1/2">
 							{/* //first name */}
 							<Field
@@ -1275,7 +1327,38 @@ export function Shipping(props: ShippingProps) {
 }
 
 export function Carrier(props: CarrierProps) {
-	return <div>Carrier</div>
+	async function handleSubmit() {
+		if (props.formCompleted().billing === 'complete') {
+			props.setFormCompleted?.({
+				...props.formCompleted(),
+				carrier: 'complete'
+			})
+			props.setShowForm({
+				...props.showForm(),
+				carrier: 'hidden',
+				payment: 'active'
+			})
+		}
+
+		if (props.formCompleted().billing === 'queued') {
+			props.setFormCompleted?.({
+				...props.formCompleted(),
+				carrier: 'complete'
+			})
+
+			props.setShowForm({
+				...props.showForm(),
+				carrier: 'hidden',
+				billing: 'active'
+			})
+		}
+	}
+
+	return (
+		<div>
+			<button onclick={() => handleSubmit()}>Carrier</button>
+		</div>
+	)
 }
 
 export function Billing(props: BillingProps) {
@@ -1366,8 +1449,8 @@ export function Billing(props: BillingProps) {
 					numberLabel={'three'}
 				/>
 
-				<div class="space-y-2">
-					<div class="flex flex-col md:flex-row w-full">
+				<div class="space-y-1 md:space-y-2">
+					<div class="flex flex-col md:flex-row w-full space-y-1">
 						<div class="w-full md:w-1/2">
 							{/* //first name */}
 							<Field

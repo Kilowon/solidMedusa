@@ -32,7 +32,7 @@ export function FormHeader(props: FormHeaderProps) {
 				<NumberIcons numberLabel={props.numberLabel} />
 				<h1 class="text-2xl font-medium text-slate-700 dark:text-slate-200 ">{props.heading}</h1>
 			</div>
-			<div class="hidden lg:flex lg:space-x-8">
+			<div class="hidden md:flex md:space-x-8">
 				{/* <ActionButton
 					variant="secondary"
 					label="Reset"

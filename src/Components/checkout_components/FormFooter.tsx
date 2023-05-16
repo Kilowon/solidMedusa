@@ -10,7 +10,7 @@ type FormFooterProps = {
  */
 export function FormFooter(props: FormFooterProps) {
 	return (
-		<footer class="lg:hidden">
+		<footer class="my-2 flex items-center justify-center md:hidden">
 			<ActionButton
 				variant="primary"
 				label="Submit"

@@ -13,12 +13,7 @@ export type ThumbnailProps = {
 	title?: string | null
 }
 
-export function Thumbnail({
-	thumbnail,
-	images,
-	size = 'small',
-	title
-}: ThumbnailProps) {
+export function Thumbnail({ thumbnail, images, size = 'small', title }: ThumbnailProps) {
 	const initialImage = thumbnail || images?.[0]?.url
 
 	return (
@@ -43,15 +38,13 @@ const ImageOrPlaceholder = ({
 	image,
 	size,
 	title
-}: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<
-		ThumbnailProps,
-		'title'
-	>) => {
+}: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'>) => {
 	return image ? (
-		<div class="w-full h-full absolute inset-0 bg-[#ddd] hover:border-2 hover:border-sky-1 drop-shadow-sm border-rounded-4 flex items-center justify-center overflow-hidden ">
+		<div class="w-full h-full">
 			<img
 				src={image}
 				alt="Thumbnail"
+				class="object-cover w-full h-full"
 			/>
 		</div>
 	) : (

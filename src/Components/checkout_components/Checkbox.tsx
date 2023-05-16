@@ -22,19 +22,13 @@ type CheckboxProps = {
  * checkbox describes the selection option.
  */
 export function Checkbox(props: CheckboxProps) {
-	const [, inputProps] = splitProps(props, [
-		'class',
-		'value',
-		'label',
-		'error',
-		'padding'
-	])
+	const [, inputProps] = splitProps(props, ['class', 'value', 'label', 'error', 'padding'])
 	return (
 		<div class={clsx(!props.padding && 'px-2.5 lg:px-2.5', props.class)}>
-			<label class="flex select-none space-x-4 text-sm font-medium">
+			<label class="flex select-none space-x-2 text-sm font-medium">
 				<input
 					{...inputProps}
-					class="mt-1 h-3 w-3 cursor-pointer "
+					class="mt-1 h-[13px] w-[13px]  cursor-pointer "
 					type="checkbox"
 					id={props.name}
 					value={props.value || ''}
@@ -42,10 +36,7 @@ export function Checkbox(props: CheckboxProps) {
 					aria-invalid={!!props.error}
 					aria-errormessage={`${props.name}-error`}
 				/>
-				<span>{props.label}</span>{' '}
-				{props.required && (
-					<span class="ml-1 text-red-600 dark:text-red-400">*</span>
-				)}
+				<span>{props.label}</span> {props.required && <span class="ml-1 text-red-600 dark:text-red-400">*</span>}
 			</label>
 			<InputError
 				name={props.name}

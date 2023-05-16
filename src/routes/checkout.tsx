@@ -208,7 +208,7 @@ export default function CheckoutPage() {
 		<div class=" text-gray-6 md:space-y-12 ">
 			<Title>Checkout</Title>
 			<Header />
-			<div class="md:flex md:content-container md:h-[80vh]">
+			<div class="min-h-[105vh] md:flex md:content-container md:h-[80vh]">
 				<div class="px-1 md:content-container md:w-[700px] md:space-y-12 ">
 					<Stepper
 						formCompleted={formCompleted}
@@ -553,7 +553,7 @@ export function Stepper(props: StepperProps) {
 export function Express() {
 	return (
 		<div class="m-1 md:m-5 space-y-1 md:space-y-3 ">
-			<div class=" md:text-2xl  font-poppins font-medium">Express Checkout</div>
+			<div class=" text-lg md:text-2xl font-medium text-slate-700 dark:text-slate-200 md:text-2xl  ">Express Checkout</div>
 			<div class=" space-y-1 md:space-y-2 ">
 				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
 					<div

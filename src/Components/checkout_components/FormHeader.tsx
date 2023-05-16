@@ -30,7 +30,7 @@ export function FormHeader(props: FormHeaderProps) {
 		<header class="flex items-center justify-between my-3">
 			<div class=" flex items-center">
 				<NumberIcons numberLabel={props.numberLabel} />
-				<h1 class="text-2xl font-medium text-slate-700 dark:text-slate-200 ">{props.heading}</h1>
+				<h1 class="text-lg md:text-2xl font-medium text-slate-700 dark:text-slate-200 ">{props.heading}</h1>
 			</div>
 			<div class="hidden md:flex md:space-x-8">
 				{/* <ActionButton
@@ -62,7 +62,7 @@ export function NumberIcons(props: FormHeaderButtonProps) {
 	return (
 		<div
 			class={clsx(
-				'text-4xl mx-2',
+				'text-xl md:text-4xl mx-1 md:mx-2',
 				props.numberLabel === 'one' && 'i-ph-number-circle-one-fill',
 				props.numberLabel === 'two' && 'i-ph-number-circle-two-fill',
 				props.numberLabel === 'three' && 'i-ph-number-circle-three-fill',

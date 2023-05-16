@@ -28,25 +28,15 @@ type SelectProps = {
  */
 export function Select(props: SelectProps) {
 	// Split select element props
-	const [, selectProps] = splitProps(props, [
-		'class',
-		'value',
-		'options',
-		'label',
-		'error'
-	])
+	const [, selectProps] = splitProps(props, ['class', 'value', 'options', 'label', 'error'])
 
 	// Create values list
 	const getValues = createMemo(() =>
-		Array.isArray(props.value)
-			? props.value
-			: typeof props.value === 'string'
-			? [props.value]
-			: []
+		Array.isArray(props.value) ? props.value : typeof props.value === 'string' ? [props.value] : []
 	)
 
 	return (
-		<div class={clsx('px-2 lg:px-2', props.class)}>
+		<div class={clsx('px-1 lg:px-2', props.class)}>
 			<InputLabel
 				name={props.name}
 				label={props.label}
@@ -60,7 +50,7 @@ export function Select(props: SelectProps) {
 						props.error
 							? 'border-red-600/50 dark:border-red-400/50'
 							: 'border-slate-200 hover:border-slate-300 focus:border-sky-600/50 dark:border-slate-800 dark:hover:border-slate-700 dark:focus:border-sky-400/50',
-						props.multiple ? 'py-5' : 'h-12 md:h-12 lg:h-12',
+						props.multiple ? 'py-5' : 'h-10 md:h-12 lg:h-12',
 						props.placeholder && !props.value?.length && 'text-slate-500'
 					)}
 					id={props.name}

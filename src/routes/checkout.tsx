@@ -207,14 +207,24 @@ export default function CheckoutPage() {
 	return (
 		<div class=" text-gray-6 md:space-y-12 ">
 			<Title>Checkout</Title>
-			<Header />
-			<div class="min-h-[105vh] md:flex md:content-container md:h-[80vh]">
-				<div class="px-1 md:content-container md:w-[700px] md:space-y-12 ">
-					<Stepper
-						formCompleted={formCompleted}
-						setShowForm={setShowForm}
-						showForm={showForm}
-					/>
+			<div
+				class="sticky top-0 inset-x-0 z-100 bg-white/80"
+				style="backdrop-filter: blur(10px)"
+			>
+				<Header />
+			</div>
+			<div class="min-h-[100vh] md:min-h-[65px] md:flex md:content-container md:h-[80vh]">
+				<div class="md:content-container md:w-[700px] md:space-y-12">
+					<div
+						class="sticky top-12 z-101 bg-white/60 h-12 "
+						style="backdrop-filter: blur(10px)"
+					>
+						<Stepper
+							formCompleted={formCompleted}
+							setShowForm={setShowForm}
+							showForm={showForm}
+						/>
+					</div>
 					<Show when={showForm().customer === 'active'}>
 						<Express />
 
@@ -275,36 +285,30 @@ export default function CheckoutPage() {
 
 export function Header() {
 	return (
-		<div class="sticky top-0 inset-x-0 z-50 group ">
-			<header class={'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#fefcfa]'}>
-				<nav
-					class={
-						'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-dark group-hover:text-gray-900 relative'
-					}
-				>
-					<div class=" h-full flex items-center ">
-						<div class="i-fa-solid-lock text-gray-6 m-2 text-base md:text-sm" />
+		<div>
+			<header class={'relative h-12 md:h-16 mx-auto'}>
+				<nav class={'flex items-center justify-between h-full '}>
+					<div class="flex items-center ">
+						<div class="i-fa-solid-lock text-gray-6 ml-4 text-base md:text-sm" />
 						<div class="hidden md:block text-gray-6 "> Secure Checkout </div>
 					</div>
 
-					<div class="flex items-center h-full">
+					<div class="flex items-center ">
 						<A
 							href="/"
 							class="text-lg md:text-2xl font-semibold  "
 						>
-							<div class="flex items-center">
-								<div class=" font-poppins uppercase mx-8"> Modern Edge </div>
-							</div>
+							<div class=" font-poppins uppercase "> Modern Edge </div>
 						</A>
 					</div>
-					<div class="block m-2 ">
+					<div class="flex">
 						<A
 							href="/cart"
 							class="text-xs font-semibold  "
 						>
 							<div class=" flex items-center font-poppins uppercase">
 								Back
-								<div class="hidden sm:block mx-0.5">to Shopping Cart</div>
+								<div class="hidden sm:block mr-0.5">to Shopping Cart</div>
 								<div class={'i-tabler-chevron-right text-3xl '} />
 							</div>
 						</A>
@@ -1316,7 +1320,6 @@ export function Shipping(props: ShippingProps) {
 								)}
 							</Field>
 						</div>
-						<div>Shipping Method</div>
 					</div>
 				</div>
 
@@ -1559,21 +1562,23 @@ export function Billing(props: BillingProps) {
 							</Field>{' '}
 						</div>
 						{/* zipcode */}
-						<Field
-							name="postal_code"
-							validate={required('Please enter your zipcode.')}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Zipcode"
-									required
-								/>
-							)}
-						</Field>
+						<div class="w-1/3">
+							<Field
+								name="postal_code"
+								validate={required('Please enter your zipcode.')}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="text"
+										label="Zipcode"
+										required
+									/>
+								)}
+							</Field>
+						</div>
 					</div>
 
 					<Show when={getValues(billingForm).checkbox?.phone}>
@@ -1610,7 +1615,7 @@ export function Billing(props: BillingProps) {
 						</Field>
 					</Show>
 
-					<div class="flex ">
+					<div class="flex my-2">
 						{/* //ask phone */}
 						<Field
 							name="checkbox.phone"

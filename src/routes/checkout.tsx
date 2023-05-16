@@ -192,7 +192,7 @@ export default function CheckoutPage() {
 		<div class=" text-gray-6 md:space-y-12 ">
 			<Title>Checkout</Title>
 			<Header />
-			<div class="md:flex md:content-container">
+			<div class="md:flex md:content-container md:h-[80vh]">
 				<div class="content-container md:w-[700px] md:space-y-12 ">
 					<Stepper
 						formCompleted={formCompleted}

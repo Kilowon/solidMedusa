@@ -11,11 +11,25 @@ export default function CartCore(props: any) {
 	const { deleteItem } = useStore()
 
 	return (
-		<div class=" text-sm text-gray-7 z-50">
+		<div class=" text-sm text-gray-5 z-50">
 			<Switch fallback={<div>Empty</div>}>
 				<Match when={queryCart?.data?.cart?.items?.length > 0}>
-					<div>
-						<ol class="overflow-y-scroll  scrollbar-hide mx-auto max-h-[80vh]">
+					<div
+						class={clsx(
+							'',
+							props.variant === 'primary' && 'flex flex-row justify-between items-center',
+							props.variant === 'checkout' && 'space-y-4',
+							props.variant === 'panel' && 'space-y-4'
+						)}
+					>
+						<ol
+							class={clsx(
+								'overflow-y-scroll  scrollbar-hide ',
+								props.variant === 'primary' && 'max-h-[500px]',
+								props.variant === 'checkout' && 'max-h-[460px] mx-auto',
+								props.variant === 'panel' && 'max-h-[580px] mx-auto'
+							)}
+						>
 							<For
 								each={queryCart?.data?.cart?.items?.sort((a: any, b: any) => {
 									return a.created_at > b.created_at ? -1 : 1
@@ -23,34 +37,61 @@ export default function CartCore(props: any) {
 							>
 								{item => (
 									<li>
-										<hr class="  border-gray-400/50 my-2 mx-6" />
-										<div class="grid grid-cols-[100px_1fr] gap-x-3">
-											<div class="flex flex-col items-center space-y-4 ">
+										<div
+											class={clsx(
+												'grid gap-x-3',
+												props.variant === 'primary' && 'grid-cols-[100px_1fr]',
+												props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
+												props.variant === 'panel' && 'grid-cols-[70px_1fr]'
+											)}
+										>
+											<div class="flex flex-col items-center space-y-4">
 												<Thumbnail
 													thumbnail={item.thumbnail}
 													size="full"
 												/>
-												<div class="grid grid-cols-3 gap-x-2">
-													<button class="flex items-center justify-center text-lg text-gray-5 ">
-														<div class="i-mdi-minus-circle" />
+												<div
+													class={clsx(
+														'grid grid-cols-3 gap-x-2',
+														props.variant === 'primary' && '',
+														props.variant === 'checkout' && 'hidden',
+														props.variant === 'panel' && ''
+													)}
+												>
+													<button class="flex items-center justify-center text-lg bg-white">
+														<div class="i-mdi-minus-circle text-gray-5" />
 													</button>
-													<span class="flex items-center justify-center text-lg font-semibold ">{item?.quantity}</span>
-													<button class="flex items-center justify-center text-lg  text-gray-5 ">
-														<div class="i-mdi-plus-circle" />
+													<span class="flex items-center justify-center text-lg font-semibold">{item?.quantity}</span>
+													<button class="flex items-center justify-center text-lg bg-white">
+														<div class="i-mdi-plus-circle text-gray-5" />
 													</button>
 												</div>
 											</div>
 											<div class="grid grid-cols-2">
 												<div class="flex items-start justify-between">
 													<div>
-														<div class="text-xs font-semibold line-clamp-2 text-ellipsis">
+														<div
+															class={clsx(
+																'font-semibold line-clamp-2 text-ellipsis',
+																props.variant === 'primary' && 'md:text-lg',
+																props.variant === 'checkout' && 'text-xs',
+																props.variant === 'panel' && 'text-xs'
+															)}
+														>
 															<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
 														</div>
 														<LineItemOptions variant={item?.variant} />
 													</div>
 												</div>
 
-												<div class="flex flex-col items-end text-sm space-y-12">
+												<div
+													class={clsx(
+														'flex flex-col items-end space-y-12',
+														props.variant === 'primary' && ' text-lg',
+														props.variant === 'checkout' && ' text-sm',
+														props.variant === 'panel' && ' text-sm'
+													)}
+												>
 													<div>
 														<LineItemPrice
 															region={props.cart?.region}
@@ -64,38 +105,62 @@ export default function CartCore(props: any) {
 															style="tight"
 														/>
 													</div>
-													<div>
+													<div
+														class={clsx(
+															props.variant === 'primary' && '',
+															props.variant === 'checkout' && 'hidden',
+															props.variant === 'panel' && ''
+														)}
+													>
 														<button
-															class="flex items-center gap-x-1 text-gray-5  rounded p-1"
+															class="flex items-center gap-x-1 rounded p-1 bg-white"
 															onClick={() => {
 																deleteItem(item?.id), queryCartRefetch?.()
 															}}
 														>
-															<div class="i-ph-trash-duotone text-sm " />
+															<div class="i-ph-trash-duotone text-sm text-gray-5  "></div>
 															<span>Remove</span>
 														</button>
 													</div>
 												</div>
 											</div>
-										</div>
+										</div>{' '}
+										<hr class="border-gray-400/50 my-2 mx-6" />
 									</li>
 								)}
 							</For>
 						</ol>
-						<div class="p-4 flex flex-col gap-y-4 text-sm">
-							<div class="flex items-center justify-between">
-								<span class="text-gray-700 font-semibold">
-									Subtotal <span class="font-normal">(incl. taxes)</span>
-								</span>
-								<span class="text-large-semi">
+						<div class=" flex flex-col gap-y-4 text-sm">
+							<div class="flex flex-col justify-start">
+								<div class="flex justify-center bg-gray-2">
+									<div class={'i-tabler-chevron-down text-3xl  '} />
+								</div>
+								<div class="flex justify-between items-center">
+									<span class=" font-semibold">Subtotal</span>
+									<span class="text-large-semi">
+										{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
+									</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-red-700 font-semibold">Sale Savings</span>
+									<span class="text-red-700 text-large-semi">
+										{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
+									</span>
+								</div>
+							</div>
+							<span class="text-red-700 font-semibold">Apply promo code+</span>
+							<div class="flex justify-between items-center">
+								<span class=" text-base font-semibold">Total</span>
+								<span class=" text-base font-semibold">
 									{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
 								</span>
 							</div>
 							<A href="/cart">
-								<button class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
-									Go to bag
+								<button class="w-full uppercase flex items-center justify-center min-h-[65px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+									SECURE CHECKOUT
 								</button>
 							</A>
+							<span class=" font-semibold underline flex items-center justify-center">save for later</span>
 						</div>
 					</div>
 				</Match>

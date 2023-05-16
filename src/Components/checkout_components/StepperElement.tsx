@@ -65,7 +65,7 @@ export function StepperElement(props: StepperProps) {
 						tabindex="0"
 						class="flex items-center justify-center w-8 h-8 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0"
 					>
-						<div class="text-sky-500 dark:text-sky-300 animate-pulse animate-">
+						<div class="text-sky-500 dark:text-sky-300 animate-pulse ">
 							<Icon icon={props.title} />
 						</div>
 					</span>

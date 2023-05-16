@@ -10,18 +10,18 @@ type FormFooterProps = {
  */
 export function FormFooter(props: FormFooterProps) {
 	return (
-		<footer class="flex space-x-6 px-8 md:space-x-8 lg:hidden">
+		<footer class="lg:hidden">
 			<ActionButton
 				variant="primary"
 				label="Submit"
 				type="submit"
 			/>
-			<ActionButton
+			{/* <ActionButton
 				variant="secondary"
 				label="Reset"
 				type="button"
 				onClick={() => reset(props.of)}
-			/>
+			/> */}
 		</footer>
 	)
 }

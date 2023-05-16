@@ -3,7 +3,7 @@ import { Show, createEffect } from 'solid-js'
 import { create } from 'domain'
 
 type StepperProps = {
-	title: 'Customer' | 'Shipping' | 'Billing' | 'Payment'
+	title: 'Customer' | 'Shipping' | 'Billing' | 'Payment' | 'Carrier'
 	elementState: 'complete' | 'queued' | 'active-end' | 'queued-end' | 'active'
 	setShowForm: (value: any) => void
 }
@@ -18,6 +18,7 @@ export function StepperElement(props: StepperProps) {
 			props.setShowForm({
 				customer: 'active',
 				shipping: 'hidden',
+				carrier: 'hidden',
 				billing: 'hidden',
 				payment: 'hidden'
 			})
@@ -26,6 +27,16 @@ export function StepperElement(props: StepperProps) {
 			props.setShowForm({
 				customer: 'hidden',
 				shipping: 'active',
+				carrier: 'hidden',
+				billing: 'hidden',
+				payment: 'hidden'
+			})
+		}
+		if (activeComponent === 'Carrier') {
+			props.setShowForm({
+				customer: 'hidden',
+				shipping: 'hidden',
+				carrier: 'active',
 				billing: 'hidden',
 				payment: 'hidden'
 			})
@@ -34,6 +45,7 @@ export function StepperElement(props: StepperProps) {
 			props.setShowForm({
 				customer: 'hidden',
 				shipping: 'hidden',
+				carrier: 'hidden',
 				billing: 'active',
 				payment: 'hidden'
 			})
@@ -42,6 +54,7 @@ export function StepperElement(props: StepperProps) {
 			props.setShowForm({
 				customer: 'hidden',
 				shipping: 'hidden',
+				carrier: 'hidden',
 				billing: 'hidden',
 				payment: 'active'
 			})
@@ -139,7 +152,8 @@ export function Icon(props: StepperIconProps) {
 			class={clsx(
 				'w-6 h-6 lg:w-8 lg:h-8 ',
 				props.icon === 'Customer' && 'i-mdi-email-fast-outline',
-				props.icon === 'Shipping' && 'i-ph-package',
+				props.icon === 'Shipping' && 'i-mdi-address-marker-outline',
+				props.icon === 'Carrier' && 'i-ph-package',
 				props.icon === 'Billing' && 'i-mdi-id-card-outline',
 				props.icon === 'Payment' && 'i-mdi-payment'
 			)}

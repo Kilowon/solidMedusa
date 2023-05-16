@@ -86,6 +86,12 @@ interface PaymentProps {
 	cart: Cart
 }
 
+interface CarrierProps {
+	setShowForm: (value: ShowForm) => void
+	showForm: Accessor<ShowForm>
+	cart: Cart
+}
+
 interface StepperProps {
 	setShowForm: (value: ShowForm) => void
 	showForm: Accessor<ShowForm>
@@ -95,12 +101,14 @@ interface StepperProps {
 type FormCompleted = {
 	customer: 'complete' | 'queued'
 	shipping: 'complete' | 'queued'
+	carrier: 'complete' | 'queued'
 	billing: 'complete' | 'queued'
 }
 
 type ShowForm = {
 	customer: 'active' | 'hidden'
 	shipping: 'active' | 'hidden'
+	carrier: 'active' | 'hidden'
 	billing: 'active' | 'hidden'
 	payment: 'active' | 'hidden'
 }
@@ -179,13 +187,19 @@ export default function CheckoutPage() {
 	const [showForm, setShowForm] = createSignal<ShowForm>({
 		customer: 'active',
 		shipping: 'hidden',
+		carrier: 'hidden',
 		billing: 'hidden',
 		payment: 'hidden'
 	})
 	const [formCompleted, setFormCompleted] = createSignal<FormCompleted>({
 		customer: 'queued',
 		shipping: 'queued',
+		carrier: 'queued',
 		billing: 'queued'
+	})
+
+	createEffect(() => {
+		console.log(showForm())
 	})
 
 	return (
@@ -219,6 +233,13 @@ export default function CheckoutPage() {
 							setShippingIsBilling={setShippingIsBilling}
 							setFormCompleted={setFormCompleted}
 							formCompleted={formCompleted}
+							cart={queryCart.data?.cart}
+						/>
+					</Show>
+					<Show when={showForm().carrier === 'active'}>
+						<Carrier
+							setShowForm={setShowForm}
+							showForm={showForm}
 							cart={queryCart.data?.cart}
 						/>
 					</Show>
@@ -291,47 +312,13 @@ export function Header() {
 }
 
 export function Stepper(props: StepperProps) {
-	function handleClick(activeComponent: string) {
-		if (activeComponent === 'customer') {
-			props.setShowForm({
-				customer: 'active',
-				shipping: 'hidden',
-				billing: 'hidden',
-				payment: 'hidden'
-			})
-		}
-		if (activeComponent === 'shipping') {
-			props.setShowForm({
-				customer: 'hidden',
-				shipping: 'active',
-				billing: 'hidden',
-				payment: 'hidden'
-			})
-		}
-		if (activeComponent === 'billing') {
-			props.setShowForm({
-				customer: 'hidden',
-				shipping: 'hidden',
-				billing: 'active',
-				payment: 'hidden'
-			})
-		}
-		if (activeComponent === 'payment') {
-			props.setShowForm({
-				customer: 'hidden',
-				shipping: 'hidden',
-				billing: 'hidden',
-				payment: 'active'
-			})
-		}
-	}
-
 	return (
 		<div>
 			<Show
 				when={
 					props.formCompleted().customer !== 'complete' &&
 					props.formCompleted().shipping !== 'complete' &&
+					props.formCompleted().carrier !== 'complete' &&
 					props.formCompleted().billing !== 'complete'
 				}
 			>
@@ -343,6 +330,11 @@ export function Stepper(props: StepperProps) {
 					/>
 					<StepperElement
 						title="Shipping"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Carrier"
 						elementState="queued"
 						setShowForm={props.setShowForm}
 					/>
@@ -362,6 +354,7 @@ export function Stepper(props: StepperProps) {
 				when={
 					props.formCompleted().customer === 'complete' &&
 					props.formCompleted().shipping !== 'complete' &&
+					props.formCompleted().carrier !== 'complete' &&
 					props.formCompleted().billing !== 'complete'
 				}
 			>
@@ -373,6 +366,47 @@ export function Stepper(props: StepperProps) {
 					/>
 					<StepperElement
 						title="Shipping"
+						elementState="active"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Carrier"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Billing"
+						elementState="queued"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Payment"
+						elementState="queued-end"
+						setShowForm={props.setShowForm}
+					/>
+				</ol>
+			</Show>
+			<Show
+				when={
+					props.formCompleted().customer === 'complete' &&
+					props.formCompleted().shipping === 'complete' &&
+					props.formCompleted().carrier !== 'complete' &&
+					props.formCompleted().billing !== 'complete'
+				}
+			>
+				<ol class="flex items-center w-full">
+					<StepperElement
+						title="Customer"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Shipping"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Carrier"
 						elementState="active"
 						setShowForm={props.setShowForm}
 					/>
@@ -392,6 +426,7 @@ export function Stepper(props: StepperProps) {
 				when={
 					props.formCompleted().customer === 'complete' &&
 					props.formCompleted().shipping === 'complete' &&
+					props.formCompleted().carrier === 'complete' &&
 					props.formCompleted().billing !== 'complete'
 				}
 			>
@@ -403,6 +438,11 @@ export function Stepper(props: StepperProps) {
 					/>
 					<StepperElement
 						title="Shipping"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Carrier"
 						elementState="complete"
 						setShowForm={props.setShowForm}
 					/>
@@ -422,6 +462,7 @@ export function Stepper(props: StepperProps) {
 				when={
 					props.formCompleted().customer === 'complete' &&
 					props.formCompleted().shipping === 'complete' &&
+					props.formCompleted().carrier === 'complete' &&
 					props.formCompleted().billing === 'complete'
 				}
 			>
@@ -433,6 +474,11 @@ export function Stepper(props: StepperProps) {
 					/>
 					<StepperElement
 						title="Shipping"
+						elementState="complete"
+						setShowForm={props.setShowForm}
+					/>
+					<StepperElement
+						title="Carrier"
 						elementState="complete"
 						setShowForm={props.setShowForm}
 					/>
@@ -927,7 +973,7 @@ export function Shipping(props: ShippingProps) {
 				})
 				props.setShowForm({
 					...props.showForm(),
-					payment: 'active',
+					carrier: 'active',
 					shipping: 'hidden'
 				})
 			}
@@ -940,7 +986,7 @@ export function Shipping(props: ShippingProps) {
 
 				props.setShowForm({
 					...props.showForm(),
-					billing: 'active',
+					carrier: 'active',
 					shipping: 'hidden'
 				})
 			}
@@ -1226,6 +1272,10 @@ export function Shipping(props: ShippingProps) {
 			</Form>
 		</div>
 	)
+}
+
+export function Carrier(props: CarrierProps) {
+	return <div>Carrier</div>
 }
 
 export function Billing(props: BillingProps) {

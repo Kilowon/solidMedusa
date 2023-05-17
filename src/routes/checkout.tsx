@@ -66,7 +66,6 @@ interface ShippingProps {
 	setShowForm: (value: ShowForm) => void
 	showForm: Accessor<ShowForm>
 	cart: Cart
-	setShippingIsBilling?: (value: boolean) => void
 	setFormCompleted: (value: any) => void
 	formCompleted: Accessor<any>
 }
@@ -75,7 +74,6 @@ interface BillingProps {
 	setShowForm: (value: ShowForm) => void
 	showForm: Accessor<ShowForm>
 	cart: Cart
-	shippingIsBilling: Accessor<boolean>
 	setFormCompleted: (value: any) => void
 	formCompleted: Accessor<any>
 }
@@ -248,7 +246,6 @@ export default function CheckoutPage() {
 						<Shipping
 							setShowForm={setShowForm}
 							showForm={showForm}
-							setShippingIsBilling={setShippingIsBilling}
 							setFormCompleted={setFormCompleted}
 							formCompleted={formCompleted}
 							cart={queryCart.data?.cart}
@@ -267,7 +264,6 @@ export default function CheckoutPage() {
 						<Billing
 							setShowForm={setShowForm}
 							showForm={showForm}
-							shippingIsBilling={shippingIsBilling}
 							setFormCompleted={setFormCompleted}
 							formCompleted={formCompleted}
 							cart={queryCart.data?.cart}

@@ -211,7 +211,7 @@ export default function CheckoutPage() {
 			<Title>Checkout</Title>
 
 			<div
-				class={`fixed inset-0 bg-white/20 z-200 transition-all duration-1000 ease-in-out ${
+				class={`fixed inset-0 bg-white/20 z-200 transition-all duration-250 ease-in-out ${
 					mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				style="backdrop-filter: blur(5px)"
@@ -222,7 +222,7 @@ export default function CheckoutPage() {
 				}}
 			>
 				<div
-					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform transition-transform duration-1000 ease-in-out p-2 ${
+					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform transition-transform duration-500 ease-in-out p-2 ${
 						mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

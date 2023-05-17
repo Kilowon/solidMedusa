@@ -197,6 +197,10 @@ export default function CheckoutPage() {
 		carrier: 'queued',
 		billing: 'queued'
 	})
+	const [mobileDrawer, setMobileDrawer] = createSignal({
+		checkout: 'active',
+		cart: 'hidden'
+	})
 
 	createEffect(() => {
 		console.log(showForm())
@@ -205,6 +209,27 @@ export default function CheckoutPage() {
 	return (
 		<div class=" text-gray-6 md:space-y-12 ">
 			<Title>Checkout</Title>
+
+			<div
+				class={`fixed inset-0 bg-white/20 z-200 transition-all duration-1000 ease-in-out ${
+					mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
+				}`}
+				style="backdrop-filter: blur(5px)"
+				onClick={event => {
+					if (event.target === event.currentTarget) {
+						setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+					}
+				}}
+			>
+				<div
+					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform transition-transform duration-1000 ease-in-out p-2 ${
+						mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
+					}`}
+				>
+					<CartCore variant="mobile-checkout" />
+				</div>
+			</div>
+
 			<div
 				class="sticky top-0 inset-x-0 z-100 bg-gradient-to-b from-white/50 to-white/10 h-23"
 				style="backdrop-filter: blur(20px)"
@@ -219,8 +244,9 @@ export default function CheckoutPage() {
 				</div>
 			</div>
 			<div
-				class="flex items-center  bg-coolgray-7 rounded-full md:hidden z-1 relative"
-				style="position: fixed; top: 25%; right: -1.75rem; width: 3.5rem; height: 3rem;"
+				class="flex items-center  bg-red-7 rounded-full md:hidden z-1 relative"
+				style="position: fixed; top: 25vh; right: -1.75rem; width: 3.5rem; height: 3rem;"
+				onClick={() => setMobileDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1" />
 			</div>

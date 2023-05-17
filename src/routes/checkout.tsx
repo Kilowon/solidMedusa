@@ -187,8 +187,8 @@ export default function CheckoutPage() {
 	// show states 'hide', 'active', 'edit'
 
 	const [showForm, setShowForm] = createSignal<ShowForm>({
-		customer: 'hidden',
-		shipping: 'active',
+		customer: 'active',
+		shipping: 'hidden',
 		carrier: 'hidden',
 		billing: 'hidden',
 		payment: 'hidden'

@@ -5,7 +5,12 @@ import { useGlobalContext } from '~/Context/Providers'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { useStore } from '~/Context/StoreContext'
 
-export default function CartCore(props: any) {
+interface CartCoreProps {
+	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout'
+	cart?: any
+}
+
+export default function CartCore(props: CartCoreProps) {
 	const { queryCart } = useGlobalContext()
 	const { queryCartRefetch } = useGlobalContext()
 	const { deleteItem } = useStore()
@@ -19,7 +24,8 @@ export default function CartCore(props: any) {
 							'',
 							props.variant === 'primary' && 'flex flex-row justify-between items-center',
 							props.variant === 'checkout' && 'space-y-4',
-							props.variant === 'panel' && 'space-y-4'
+							props.variant === 'panel' && 'space-y-4',
+							props.variant === 'mobile-checkout' && 'space-y-4'
 						)}
 					>
 						<ol
@@ -27,7 +33,8 @@ export default function CartCore(props: any) {
 								'overflow-y-scroll  scrollbar-hide ',
 								props.variant === 'primary' && 'max-h-[500px]',
 								props.variant === 'checkout' && 'max-h-[460px] mx-auto',
-								props.variant === 'panel' && 'max-h-[580px] mx-auto'
+								props.variant === 'panel' && 'max-h-[580px] mx-auto',
+								props.variant === 'mobile-checkout' && 'max-h-[300px] mx-auto'
 							)}
 						>
 							<For
@@ -42,7 +49,8 @@ export default function CartCore(props: any) {
 												'grid gap-x-3',
 												props.variant === 'primary' && 'grid-cols-[100px_1fr]',
 												props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
-												props.variant === 'panel' && 'grid-cols-[70px_1fr]'
+												props.variant === 'panel' && 'grid-cols-[70px_1fr]',
+												props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]'
 											)}
 										>
 											<div class="flex flex-col items-center space-y-4">
@@ -55,7 +63,8 @@ export default function CartCore(props: any) {
 														'grid grid-cols-3 gap-x-2',
 														props.variant === 'primary' && '',
 														props.variant === 'checkout' && 'hidden',
-														props.variant === 'panel' && ''
+														props.variant === 'panel' && '',
+														props.variant === 'mobile-checkout' && 'hidden'
 													)}
 												>
 													<button class="flex items-center justify-center text-lg bg-white">
@@ -75,7 +84,8 @@ export default function CartCore(props: any) {
 																'font-semibold line-clamp-2 text-ellipsis',
 																props.variant === 'primary' && 'md:text-lg',
 																props.variant === 'checkout' && 'text-xs',
-																props.variant === 'panel' && 'text-xs'
+																props.variant === 'panel' && 'text-xs',
+																props.variant === 'mobile-checkout' && 'text-xs'
 															)}
 														>
 															<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
@@ -89,7 +99,8 @@ export default function CartCore(props: any) {
 														'flex flex-col items-end space-y-12',
 														props.variant === 'primary' && ' text-lg',
 														props.variant === 'checkout' && ' text-sm',
-														props.variant === 'panel' && ' text-sm'
+														props.variant === 'panel' && ' text-sm',
+														props.variant === 'mobile-checkout' && ' text-sm'
 													)}
 												>
 													<div>
@@ -109,7 +120,8 @@ export default function CartCore(props: any) {
 														class={clsx(
 															props.variant === 'primary' && '',
 															props.variant === 'checkout' && 'hidden',
-															props.variant === 'panel' && ''
+															props.variant === 'panel' && '',
+															props.variant === 'mobile-checkout' && 'hidden'
 														)}
 													>
 														<button
@@ -155,12 +167,14 @@ export default function CartCore(props: any) {
 									{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
 								</span>
 							</div>
-							<A href="/cart">
-								<button class="w-full uppercase flex items-center justify-center min-h-[65px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
-									SECURE CHECKOUT
-								</button>
-							</A>
-							<span class=" font-semibold underline flex items-center justify-center">save for later</span>
+							<Show when={props.variant === 'panel'}>
+								<A href="/cart">
+									<button class="w-full uppercase flex items-center justify-center min-h-[65px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+										SECURE CHECKOUT
+									</button>
+								</A>
+								<span class=" font-semibold underline flex items-center justify-center">save for later</span>
+							</Show>
 						</div>
 					</div>
 				</Match>

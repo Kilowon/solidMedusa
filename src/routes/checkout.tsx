@@ -208,15 +208,22 @@ export default function CheckoutPage() {
 		<div class=" text-gray-6 md:space-y-12 ">
 			<Title>Checkout</Title>
 			<div
-				class="sticky top-0 inset-x-0 z-100 bg-white/80"
+				class="sticky top-0 inset-x-0 z-100 bg-white/30"
 				style="backdrop-filter: blur(10px)"
 			>
 				<Header />
+				<div class="sticky top-12 z-101 md:hidden mx-2 ">
+					<Stepper
+						formCompleted={formCompleted}
+						setShowForm={setShowForm}
+						showForm={showForm}
+					/>
+				</div>
 			</div>
 			<div class="min-h-[100vh] md:min-h-[65px] md:flex md:content-container md:h-[80vh]">
-				<div class="md:content-container md:w-[700px] md:space-y-12">
+				<div class="md:content-container md:w-[700px] md:space-y-12 mx-2">
 					<div
-						class="sticky top-12 z-101 bg-white/60 h-12 "
+						class="hidden md:block sticky top-12 z-101 bg-white/80 h-12 "
 						style="backdrop-filter: blur(10px)"
 					>
 						<Stepper
@@ -227,7 +234,6 @@ export default function CheckoutPage() {
 					</div>
 					<Show when={showForm().customer === 'active'}>
 						<Express />
-
 						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
 						<Customer
 							setShowForm={setShowForm}
@@ -289,8 +295,8 @@ export function Header() {
 			<header class={'relative h-12 md:h-16 mx-auto'}>
 				<nav class={'flex items-center justify-between h-full '}>
 					<div class="flex items-center ">
-						<div class="i-fa-solid-lock text-gray-6 ml-4 text-base md:text-sm" />
-						<div class="hidden md:block text-gray-6 "> Secure Checkout </div>
+						<div class="i-fa-solid-lock text-gray-6 ml-4.5 text-base md:text-sm" />
+						<div class="hidden md:block text-gray-6 md:ml-3 "> Secure Checkout </div>
 					</div>
 
 					<div class="flex items-center ">
@@ -309,7 +315,7 @@ export function Header() {
 							<div class=" flex items-center font-poppins uppercase">
 								Back
 								<div class="hidden sm:block mr-0.5">to Shopping Cart</div>
-								<div class={'i-tabler-chevron-right text-3xl '} />
+								<div class={'i-tabler-chevron-right text-2xl md:text-3xl '} />
 							</div>
 						</A>
 					</div>
@@ -561,7 +567,7 @@ export function Express() {
 			<div class=" space-y-1 md:space-y-2 ">
 				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
 					<div
-						class="flex flex-col items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-t-lg rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500  md:w-1/2  "
+						class="flex flex-col items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-t-md rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500  md:w-1/2  "
 						title="PayPal"
 						role="button"
 						tabindex="0"
@@ -707,7 +713,7 @@ export function Express() {
 				</div>
 				<div class="md:flex md:flex-row justify-center space-y-1 md:space-y-0 md:space-x-2">
 					<div
-						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-lg  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
+						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-md  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
 						title="Apple Pay"
 						role="button"
 						tabindex="0"
@@ -729,7 +735,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-b-lg rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-lg p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
+						class="flex flex-col justify-center items-center h-[53px] md:h-[66px]  hover:cursor-pointer rounded-b-md rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-md p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
 						title="Amazon Pay"
 						role="button"
 						tabindex="0"
@@ -910,17 +916,14 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<Form
-			class="space-y-1 md:space-y-2"
-			onSubmit={values => handleSubmit(values) as any}
-		>
+		<Form onSubmit={values => handleSubmit(values) as any}>
 			<FormHeader
 				of={customerForm}
 				heading="Customer"
 				numberLabel={'one'}
 			/>
 
-			<div class="space-y-2 md:space-y-8">
+			<div>
 				{/* //email */}
 				<Field
 					name="email"
@@ -959,7 +962,7 @@ export function Customer(props: CustomerProps) {
 					</Field>
 				</Show>
 				{/* //make account */}
-				<div class="flex justify-between">
+				<div class="flex justify-between my-8">
 					<Field
 						name="checkbox.signup"
 						type="boolean"
@@ -1114,7 +1117,7 @@ export function Shipping(props: ShippingProps) {
 				/>
 
 				<div class="space-y-1 md:space-y-2">
-					<div class="flex flex-col md:flex-row w-full space-y-1">
+					<div class="flex flex-col md:flex-row w-full">
 						<div class="w-full md:w-1/2">
 							{/* //first name */}
 							<Field
@@ -1274,52 +1277,52 @@ export function Shipping(props: ShippingProps) {
 							)}
 						</Field>
 					</Show>
-					<div class="space-y-8">
-						<div class="flex ">
-							{/* //ask phone */}
-							<Field
-								name="checkbox.phone"
-								type="boolean"
-							>
-								{(field, props) => (
-									<Checkbox
-										{...props}
-										checked={field.value}
-										error={field.error}
-										label="add a number"
-									/>
-								)}
-							</Field>
-							{/* //business account */}
-							<Field
-								name="checkbox.company"
-								type="boolean"
-							>
-								{(field, props) => (
-									<Checkbox
-										{...props}
-										checked={field.value}
-										error={field.error}
-										label="business purchase"
-									/>
-								)}
-							</Field>
-						</div>
-						<div class="">
-							<Field
-								name="checkbox.billing"
-								type="boolean"
-							>
-								{(field, props) => (
-									<Checkbox
-										{...props}
-										checked={field.value}
-										error={field.error}
-										label="My billing address is the same as my shipping address."
-									/>
-								)}
-							</Field>
-						</div>
+				</div>
+				<div class="space-y-6 my-6">
+					<div class="flex justify-between">
+						{/* //ask phone */}
+						<Field
+							name="checkbox.phone"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="add a number"
+								/>
+							)}
+						</Field>
+						{/* //business account */}
+						<Field
+							name="checkbox.company"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="business purchase"
+								/>
+							)}
+						</Field>
+					</div>
+					<div class="">
+						<Field
+							name="checkbox.billing"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="My billing address is the same as my shipping address."
+								/>
+							)}
+						</Field>
 					</div>
 				</div>
 
@@ -1614,37 +1617,36 @@ export function Billing(props: BillingProps) {
 							)}
 						</Field>
 					</Show>
-
-					<div class="flex my-2">
-						{/* //ask phone */}
-						<Field
-							name="checkbox.phone"
-							type="boolean"
-						>
-							{(field, props) => (
-								<Checkbox
-									{...props}
-									checked={field.value}
-									error={field.error}
-									label="add a number"
-								/>
-							)}
-						</Field>
-						{/* //business account */}
-						<Field
-							name="checkbox.company"
-							type="boolean"
-						>
-							{(field, props) => (
-								<Checkbox
-									{...props}
-									checked={field.value}
-									error={field.error}
-									label="business purchase"
-								/>
-							)}
-						</Field>
-					</div>
+				</div>
+				<div class="flex justify-between my-8">
+					{/* //ask phone */}
+					<Field
+						name="checkbox.phone"
+						type="boolean"
+					>
+						{(field, props) => (
+							<Checkbox
+								{...props}
+								checked={field.value}
+								error={field.error}
+								label="add a number"
+							/>
+						)}
+					</Field>
+					{/* //business account */}
+					<Field
+						name="checkbox.company"
+						type="boolean"
+					>
+						{(field, props) => (
+							<Checkbox
+								{...props}
+								checked={field.value}
+								error={field.error}
+								label="business purchase"
+							/>
+						)}
+					</Field>
 				</div>
 
 				<FormFooter of={billingForm} />

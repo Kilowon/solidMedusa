@@ -64,7 +64,7 @@ export function StepperElement(props: StepperProps) {
 	return (
 		<>
 			<Show when={props.elementState === 'active'}>
-				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-blue-800">
+				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-blue-800">
 					<span
 						onMouseDown={() => handleClick(props.title)}
 						onKeyDown={event => {
@@ -105,8 +105,8 @@ export function StepperElement(props: StepperProps) {
 				</li>
 			</Show>
 			<Show when={props.elementState === 'queued'}>
-				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-bluegray-300 after:border-4 after:inline-block dark:after:border-gray-700">
-					<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-gray-700">
+					<span class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
 						<div class=" text-gray-500  dark:text-gray-200 ">
 							<Icon icon={props.title} />
 						</div>
@@ -135,7 +135,7 @@ export function StepperElement(props: StepperProps) {
 			</Show>
 			<Show when={props.elementState === 'queued-end'}>
 				<li class="flex items-center">
-					<span class="flex items-center justify-center w-10 h-10 bg-bluegray-300 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+					<span class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
 						<div class=" text-gray-500  dark:text-gray-200 ">
 							<Icon icon={props.title} />
 						</div>

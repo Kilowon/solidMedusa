@@ -62,7 +62,7 @@ export function NumberIcons(props: FormHeaderButtonProps) {
 	return (
 		<div
 			class={clsx(
-				'text-xl md:text-4xl mx-1 md:mx-2',
+				'text-2xl md:text-4xl mx-1 md:mx-2',
 				props.numberLabel === 'one' && 'i-ph-number-circle-one-fill',
 				props.numberLabel === 'two' && 'i-ph-number-circle-two-fill',
 				props.numberLabel === 'three' && 'i-ph-number-circle-three-fill',

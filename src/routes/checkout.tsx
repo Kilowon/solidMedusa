@@ -218,6 +218,12 @@ export default function CheckoutPage() {
 					/>
 				</div>
 			</div>
+			<div
+				class="flex items-center  bg-coolgray-7 rounded-full md:hidden z-1 relative"
+				style="position: fixed; top: 25%; right: -1.75rem; width: 3.5rem; height: 3rem;"
+			>
+				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1" />
+			</div>
 			<div class="md:flex md:content-container md:h-[80vh]">
 				<div class="md:content-container md:w-[700px] md:space-y-12 mx-2">
 					<div

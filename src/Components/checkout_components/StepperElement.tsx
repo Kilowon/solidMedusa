@@ -65,23 +65,25 @@ export function StepperElement(props: StepperProps) {
 		<>
 			<Show when={props.elementState === 'active'}>
 				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-blue-800">
-					<span
-						onMouseDown={() => handleClick(props.title)}
-						onKeyDown={event => {
-							if (event.key === 'Enter') {
-								console.log('This should not trigger on tabout')
-								handleClick(props.title)
-							}
-						}}
-						title={props.title}
-						role="button"
-						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0"
-					>
-						<div class="text-sky-500 dark:text-sky-300 animate-pulse ">
-							<Icon icon={props.title} />
-						</div>
-					</span>
+					<div class="flex items-center justify-center w-11 h-11 bg-sky-500 rounded-full lg:h-13 lg:w-13 dark:bg-blue-300 shrink-0  z-01 ">
+						<span
+							onMouseDown={() => handleClick(props.title)}
+							onKeyDown={event => {
+								if (event.key === 'Enter') {
+									console.log('This should not trigger on tabout')
+									handleClick(props.title)
+								}
+							}}
+							title={props.title}
+							role="button"
+							tabindex="0"
+							class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0 z-1"
+						>
+							<div class="text-sky-500 dark:text-sky-300 animate-pulse z-1">
+								<Icon icon={props.title} />
+							</div>
+						</span>
+					</div>
 				</li>
 			</Show>
 			<Show when={props.elementState === 'complete'}>
@@ -115,22 +117,24 @@ export function StepperElement(props: StepperProps) {
 			</Show>
 			<Show when={props.elementState === 'active-end'}>
 				<li class="flex items-center">
-					<span
-						onMouseDown={() => handleClick(props.title)}
-						onKeyDown={event => {
-							if (event.key === 'Enter') {
-								handleClick(props.title)
-							}
-						}}
-						title={props.title}
-						role="button"
-						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
-					>
-						<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer animate-pulse">
-							<Icon icon={props.title} />
-						</div>
-					</span>
+					<div class="flex items-center justify-center w-11 h-11 bg-sky-500 rounded-full lg:h-13 lg:w-13 dark:bg-blue-300 shrink-0  z-01 ">
+						<span
+							onMouseDown={() => handleClick(props.title)}
+							onKeyDown={event => {
+								if (event.key === 'Enter') {
+									handleClick(props.title)
+								}
+							}}
+							title={props.title}
+							role="button"
+							tabindex="0"
+							class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0 z-1"
+						>
+							<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer animate-pulse z-1">
+								<Icon icon={props.title} />
+							</div>
+						</span>
+					</div>
 				</li>
 			</Show>
 			<Show when={props.elementState === 'queued-end'}>

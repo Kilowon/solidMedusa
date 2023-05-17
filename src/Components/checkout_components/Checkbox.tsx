@@ -25,7 +25,7 @@ export function Checkbox(props: CheckboxProps) {
 	const [, inputProps] = splitProps(props, ['class', 'value', 'label', 'error', 'padding'])
 	return (
 		<div class={clsx(!props.padding && 'px-2.5 lg:px-2.5', props.class)}>
-			<label class="flex select-none space-x-2 text-sm font-medium">
+			<label class="flex items-center select-none space-x-2 text-sm font-medium">
 				<input
 					{...inputProps}
 					class="mt-1 h-3.5 w-3.5  cursor-pointer "

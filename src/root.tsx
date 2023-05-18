@@ -58,11 +58,11 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex mt-35 md:mt-70 justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-3xl">
+										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-3xl">
 											<img
 												src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
 												alt="logo"
-												class="w-20 h-20"
+												class="w-20 h-20 mt-35 md:mt-70"
 											/>
 										</section>
 									}

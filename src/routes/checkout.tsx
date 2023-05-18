@@ -311,7 +311,7 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 				</div>
-				<div class="hidden md:flex items-center md:block md:w-[433px] mx-auto bg-white">
+				<div class="hidden md:flex md:w-[433px] mx-auto bg-white">
 					<CartCore variant="checkout" />
 				</div>
 			</div>

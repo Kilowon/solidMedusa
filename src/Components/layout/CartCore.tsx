@@ -19,20 +19,12 @@ export default function CartCore(props: CartCoreProps) {
 		<div class=" text-sm text-gray-5 z-50">
 			<Switch fallback={<div>Empty</div>}>
 				<Match when={queryCart?.data?.cart?.items?.length > 0}>
-					<div
-						class={clsx(
-							'',
-							props.variant === 'primary' && 'flex flex-row justify-between items-center',
-							props.variant === 'checkout' && 'space-y-4',
-							props.variant === 'panel' && 'space-y-4',
-							props.variant === 'mobile-checkout' && 'space-y-4'
-						)}
-					>
+					<div>
 						<ol
 							class={clsx(
 								'overflow-y-scroll  scrollbar-hide ',
 								props.variant === 'primary' && 'max-h-[500px]',
-								props.variant === 'checkout' && 'max-h-[460px] mx-auto',
+								props.variant === 'checkout' && 'max-h-[425px] mx-auto',
 								props.variant === 'panel' && 'max-h-[580px] mx-auto',
 								props.variant === 'mobile-checkout' && 'max-h-[45vh] mx-auto'
 							)}

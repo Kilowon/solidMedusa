@@ -20,6 +20,7 @@ import { GlobalContextProvider } from '~/Context/Providers'
 import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
+import { Image } from '@unpic/solid'
 
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
@@ -58,12 +59,19 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-3xl">
-											<img
-												src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
-												alt="logo"
-												class="w-20 h-20 mt-35 md:mt-70"
-											/>
+										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
+											<div class="flex flex-col items-center">
+												<Image
+													src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
+													alt="logo"
+													layout="constrained"
+													width={600}
+													height={600}
+													priority={true}
+													class="w-20 h-20 mt-35 md:mt-70"
+												/>
+												<div class="i-svg-spinners:bars-scale-fade hidden" />
+											</div>
 										</section>
 									}
 								>

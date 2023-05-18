@@ -21,9 +21,7 @@ import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 
-const SolidQueryDevtools = unstable_clientOnly(
-	() => import('@adeora/solid-query-devtools')
-)
+const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
 const queryClient = new QueryClient()
 export default function Root() {
@@ -60,8 +58,12 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex items-center justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-2xl">
-											<div class="i-svg-spinners:bars-scale-fade" />
+										<section class="flex mt-35 md:mt-70 justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-3xl">
+											<img
+												src="../public/android-chrome-192x192.png"
+												alt="logo"
+												class="w-20 h-20"
+											/>
 										</section>
 									}
 								>

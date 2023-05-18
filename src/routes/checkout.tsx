@@ -211,7 +211,7 @@ export default function CheckoutPage() {
 			<Title>Checkout</Title>
 
 			<div
-				class={`fixed inset-0 bg-white/20 z-200 transition-all duration-250 ease-in-out ${
+				class={`fixed inset-0 bg-black/60 z-200 transition-all duration-250 ease-in-out ${
 					mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				style="backdrop-filter: blur(5px)"
@@ -221,8 +221,10 @@ export default function CheckoutPage() {
 					}
 				}}
 			>
+				{' '}
+				<div class="" />
 				<div
-					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform rounded-sm border border-dark/60 transition-transform duration-500 ease-in-out p-2 ${
 						mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
@@ -1139,7 +1141,7 @@ export function Shipping(props: ShippingProps) {
 			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={shippingForm}
-					heading="Shipping"
+					heading="Shipping Address"
 					numberLabel={'two'}
 				/>
 
@@ -1196,6 +1198,7 @@ export function Shipping(props: ShippingProps) {
 								error={field.error}
 								type="text"
 								label="Address"
+								required
 							/>
 						)}
 					</Field>
@@ -1208,7 +1211,6 @@ export function Shipping(props: ShippingProps) {
 								error={field.error}
 								type="text"
 								label="Apartment/Suite/Building (optional)"
-								required
 							/>
 						)}
 					</Field>
@@ -1361,6 +1363,8 @@ export function Shipping(props: ShippingProps) {
 }
 
 export function Carrier(props: CarrierProps) {
+	const [carrierForm, { Form, Field }] = createForm<PaymentForm>()
+
 	async function handleSubmit() {
 		if (props.formCompleted().billing === 'complete') {
 			props.setFormCompleted?.({
@@ -1390,7 +1394,14 @@ export function Carrier(props: CarrierProps) {
 
 	return (
 		<div>
-			<button onclick={() => handleSubmit()}>Carrier</button>
+			<Form onSubmit={values => handleSubmit()}>
+				<FormHeader
+					of={carrierForm}
+					heading="Shipping Options"
+					numberLabel={'three'}
+				/>
+			</Form>
+			<button onClick={() => handleSubmit()}>Carrier</button>
 		</div>
 	)
 }

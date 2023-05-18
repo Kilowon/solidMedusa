@@ -207,7 +207,7 @@ export default function CheckoutPage() {
 	})
 
 	return (
-		<div class=" text-gray-6 md:space-y-12 ">
+		<div class=" text-gray-6">
 			<Title>Checkout</Title>
 
 			<div

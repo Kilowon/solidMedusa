@@ -199,7 +199,7 @@ export default function CheckoutPage() {
 	})
 	const [mobileDrawer, setMobileDrawer] = createSignal({
 		checkout: 'active',
-		cart: 'hidden'
+		cart: 'active'
 	})
 
 	createEffect(() => {
@@ -209,28 +209,10 @@ export default function CheckoutPage() {
 	return (
 		<div class=" text-gray-6">
 			<Title>Checkout</Title>
-
-			<div
-				class={`fixed inset-0 bg-black/60 z-200 transition-all duration-250 ease-in-out ${
-					mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
-				}`}
-				style="backdrop-filter: blur(5px)"
-				onClick={event => {
-					if (event.target === event.currentTarget) {
-						setMobileDrawer({ cart: 'hidden', checkout: 'active' })
-					}
-				}}
-			>
-				{' '}
-				<div class="" />
-				<div
-					class={`fixed top-12 right-0 h-full w-[90vw] bg-white z-200 transform rounded-sm border border-dark/60 transition-transform duration-500 ease-in-out p-2 ${
-						mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
-					}`}
-				>
-					<CartCore variant="mobile-checkout" />
-				</div>
-			</div>
+			<CartDrawer
+				mobileDrawer={mobileDrawer}
+				setMobileDrawer={setMobileDrawer}
+			/>
 
 			<div
 				class="sticky top-0 inset-x-0 z-100 bg-gradient-to-b from-white/50 to-white/10 h-23"
@@ -351,6 +333,38 @@ export function Header() {
 					</div>
 				</nav>
 			</header>
+		</div>
+	)
+}
+
+export function CartDrawer(props: any) {
+	return (
+		<div
+			class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
+				props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
+			}`}
+			style="backdrop-filter: blur(5px)"
+			onClick={event => {
+				if (event.target === event.currentTarget) {
+					props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+				}
+			}}
+		>
+			<div
+				class="i-ph-x-circle-fill text-red-5 w-6 h-6 absolute top-4 right-4"
+				onClick={event => {
+					if (event.target === event.currentTarget) {
+						props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+					}
+				}}
+			/>
+			<div
+				class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
+				}`}
+			>
+				<CartCore variant="mobile-checkout" />
+			</div>
 		</div>
 	)
 }

@@ -70,7 +70,7 @@ export default function Root() {
 													priority={true}
 													class="w-20 h-20 mt-35 md:mt-70"
 												/>
-												<div class="i-svg-spinners:bars-scale-fade hidden" />
+												<div class="i-svg-spinners:bars-scale-fade" />
 											</div>
 										</section>
 									}

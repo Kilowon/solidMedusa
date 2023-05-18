@@ -10,6 +10,14 @@ interface CartCoreProps {
 	cart?: any
 }
 
+export function totalItemsInCart(items: any) {
+	let total = 0
+	items?.forEach((item: any) => {
+		total += item.quantity
+	})
+	return total
+}
+
 export default function CartCore(props: CartCoreProps) {
 	const { queryCart } = useGlobalContext()
 	const { queryCartRefetch } = useGlobalContext()
@@ -88,25 +96,48 @@ export default function CartCore(props: CartCoreProps) {
 
 												<div
 													class={clsx(
-														'flex flex-col items-end space-y-12',
-														props.variant === 'primary' && ' text-lg',
+														'space-y-12',
+														props.variant === 'primary' && 'lex flex-col items-end text-lg space-y-12',
 														props.variant === 'checkout' && ' text-sm',
-														props.variant === 'panel' && ' text-sm',
+														props.variant === 'panel' && 'lex flex-col items-end text-sm space-y-12',
 														props.variant === 'mobile-checkout' && ' text-sm'
 													)}
 												>
-													<div>
-														<LineItemPrice
-															region={props.cart?.region}
-															item={item}
-															style="tight"
-														/>
+													<div
+														class={clsx(
+															'',
+															props.variant === 'primary' && '',
+															props.variant === 'checkout' && 'grid grid-cols-2',
+															props.variant === 'panel' && '',
+															props.variant === 'mobile-checkout' && 'grid grid-cols-2'
+														)}
+													>
+														<div>
+															<span
+																class={clsx(
+																	'',
+																	props.variant === 'primary' && 'hidden',
+																	props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																	props.variant === 'panel' && 'hidden',
+																	props.variant === 'mobile-checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold'
+																)}
+															>
+																Qty: {item?.quantity}
+															</span>
+														</div>
+														<div class="">
+															<LineItemPrice
+																region={props.cart?.region}
+																item={item}
+																style="tight"
+															/>
 
-														<LineItemPrice
-															region={props.cart?.region}
-															item={item}
-															style="tight"
-														/>
+															<LineItemPrice
+																region={props.cart?.region}
+																item={item}
+																style="tight"
+															/>
+														</div>
 													</div>
 													<div
 														class={clsx(
@@ -153,9 +184,10 @@ export default function CartCore(props: CartCoreProps) {
 								</div>
 							</div>
 							<span class="text-red-700 font-semibold">Apply promo code+</span>
+
 							<div class="flex justify-between items-center">
-								<span class=" text-base font-semibold">Total</span>
-								<span class=" text-base font-semibold">
+								<span class=" text-lg font-semibold">Total</span>
+								<span class=" text-lg font-semibold">
 									{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
 								</span>
 							</div>

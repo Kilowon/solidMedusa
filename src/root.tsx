@@ -60,7 +60,7 @@ export default function Root() {
 									fallback={
 										<section class="flex mt-35 md:mt-70 justify-center h-[100vh] w-[100vw] p-16 text-sky-900 bg-gray-100 text-3xl">
 											<img
-												src="../public/android-chrome-192x192.png"
+												src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
 												alt="logo"
 												class="w-20 h-20"
 											/>

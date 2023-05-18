@@ -335,10 +335,10 @@ export function CartDrawer(props: any) {
 		<div>
 			<div
 				class="flex items-center  bg-red-7 rounded-full md:hidden z-1 relative"
-				style="position: fixed; top: 25vh; right: -1.75rem; width: 3.5rem; height: 3rem;"
+				style="position: fixed; top: 25vh; right: -1.75rem; width: 3.75rem; height: 3rem;"
 				onClick={() => props.setMobileDrawer({ cart: 'active', checkout: 'active' })}
 			>
-				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1" />
+				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1.75" />
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${

@@ -1514,54 +1514,54 @@ export function Carrier(props: CarrierProps) {
 					heading="Shipping Options"
 					numberLabel={'three'}
 				/>
+
+				<ul>
+					<div class="space-y-1 md:space-y-2 p-1">
+						<For each={queryCarriers?.data?.shipping_options}>
+							{option => (
+								<li>
+									<input
+										type="radio"
+										id={option.id}
+										name="hosting"
+										value="hosting-big"
+										class="hidden peer"
+									/>
+									<label
+										for={option.id}
+										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 peer-checked:border-2.5 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+									>
+										<div class="block">
+											<div class="w-full text-lg font-semibold">${option.amount / 100}</div>
+											<div class="w-full">{option.name}</div>
+										</div>
+										<div class="flex item-center w-15 h-20 ">{carrierIcon(option?.metadata?.logo)}</div>
+										<div class=" flex item-center peer-checked:border-blue-600 peer-checked:text-blue-600">
+											<div class="i-ic-twotone-local-shipping w-5 h-5" />
+											<svg
+												aria-hidden="true"
+												class="w-6 h-6 mr-1 ml-2"
+												fill="currentColor"
+												viewBox="0 0 20 20"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+													clip-rule="evenodd"
+												></path>
+											</svg>
+
+											<div class="i-bi-house-fill w-5 h-5" />
+										</div>
+									</label>
+								</li>
+							)}
+						</For>
+					</div>
+				</ul>
+				<FormFooter of={carrierForm} />
 			</Form>
-
-			<ul>
-				<div class="space-y-1 md:space-y-2 p-1">
-					<For each={queryCarriers?.data?.shipping_options}>
-						{option => (
-							<li>
-								<input
-									type="radio"
-									id={option.id}
-									name="hosting"
-									value="hosting-big"
-									class="hidden peer"
-								/>
-								<label
-									for={option.id}
-									class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 peer-checked:border-2.5 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
-								>
-									<div class="block">
-										<div class="w-full text-lg font-semibold">${option.amount / 100}</div>
-										<div class="w-full">{option.name}</div>
-									</div>
-									<div class="flex item-center w-15 h-20 ">{carrierIcon(option?.metadata?.logo)}</div>
-									<div class=" flex item-center peer-checked:border-blue-600 peer-checked:text-blue-600">
-										<div class="i-ic-twotone-local-shipping w-5 h-5" />
-										<svg
-											aria-hidden="true"
-											class="w-6 h-6 mr-1 ml-2"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												fill-rule="evenodd"
-												d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-												clip-rule="evenodd"
-											></path>
-										</svg>
-
-										<div class="i-bi-house-fill w-5 h-5" />
-									</div>
-								</label>
-							</li>
-						)}
-					</For>
-				</div>
-			</ul>
-			<FormFooter of={carrierForm} />
 		</div>
 	)
 }

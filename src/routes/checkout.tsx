@@ -185,9 +185,9 @@ export default function CheckoutPage() {
 	// show states 'hide', 'active', 'edit'
 
 	const [showForm, setShowForm] = createSignal<ShowForm>({
-		customer: 'hidden',
+		customer: 'active',
 		shipping: 'hidden',
-		carrier: 'active',
+		carrier: 'hidden',
 		billing: 'hidden',
 		payment: 'hidden'
 	})
@@ -1268,7 +1268,7 @@ export function Shipping(props: ShippingProps) {
 										required
 									/>
 								)}
-							</Field>{' '}
+							</Field>
 						</div>
 						<div class="w-1/3">
 							{/* zipcode */}
@@ -1383,31 +1383,39 @@ export function Carrier(props: CarrierProps) {
 
 	const [carrierForm, { Form, Field }] = createForm<PaymentForm>()
 
-	async function handleSubmit() {
-		if (props.formCompleted().billing === 'complete') {
-			props.setFormCompleted?.({
-				...props.formCompleted(),
-				carrier: 'complete'
-			})
-			props.setShowForm({
-				...props.showForm(),
-				carrier: 'hidden',
-				payment: 'active'
-			})
-		}
+	const [optionId, setOptionId] = createSignal(null)
 
-		if (props.formCompleted().billing === 'queued') {
-			props.setFormCompleted?.({
-				...props.formCompleted(),
-				carrier: 'complete'
-			})
+	async function handleSubmit(values: any) {
+		if (optionId() === null) return
+		console.log('VALUES', optionId())
 
-			props.setShowForm({
-				...props.showForm(),
-				carrier: 'hidden',
-				billing: 'active'
-			})
-		}
+		mutateCarriers.refetch()
+		setTimeout(() => {
+			if (props.formCompleted().billing === 'complete') {
+				props.setFormCompleted?.({
+					...props.formCompleted(),
+					carrier: 'complete'
+				})
+				props.setShowForm({
+					...props.showForm(),
+					carrier: 'hidden',
+					payment: 'active'
+				})
+			}
+
+			if (props.formCompleted().billing === 'queued') {
+				props.setFormCompleted?.({
+					...props.formCompleted(),
+					carrier: 'complete'
+				})
+
+				props.setShowForm({
+					...props.showForm(),
+					carrier: 'hidden',
+					billing: 'active'
+				})
+			}
+		}, 250)
 	}
 
 	const queryCarriers = createQuery(() => ({
@@ -1419,11 +1427,14 @@ export function Carrier(props: CarrierProps) {
 	}))
 
 	const mutateCarriers = createQuery(() => ({
-		queryKey: ['carrier-list'],
+		queryKey: ['cart'],
 		queryFn: async function () {
-			const response = await medusa?.shippingOptions.listCartOptions(props.cart?.id)
+			const response = await medusa?.carts.addShippingMethod(props.cart?.id, {
+				option_id: optionId()
+			})
 			return response
-		}
+		},
+		enabled: false
 	}))
 
 	function carrierIcon(logo: any) {
@@ -1512,7 +1523,7 @@ export function Carrier(props: CarrierProps) {
 
 	return (
 		<div>
-			<Form onSubmit={values => handleSubmit()}>
+			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={carrierForm}
 					heading="Shipping Options"
@@ -1523,21 +1534,21 @@ export function Carrier(props: CarrierProps) {
 					<div class="space-y-1 md:space-y-2 p-1">
 						<For each={queryCarriers?.data?.shipping_options}>
 							{option => (
-								<li>
+								<li onClick={() => setOptionId(option?.id)}>
 									<input
 										type="radio"
-										id={option.id}
+										id={option?.id}
 										name="hosting"
-										value="hosting-big"
+										value={option?.id}
 										class="hidden peer"
 									/>
 									<label
-										for={option.id}
-										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 peer-checked:border-2.5 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+										for={option?.id}
+										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 peer-checked:border-2 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
 									>
 										<div class="block ">
-											<div class="w-full text-lg font-semibold">${option.amount / 100}</div>
-											<div class="w-full">{option.name}</div>
+											<div class="w-full text-lg font-semibold">${(option?.amount / 100).toFixed(2)}</div>
+											<div class="w-full">{option?.name}</div>
 										</div>
 										<div class="flex item-center justify-self-center md:justify-self-start w-13 h-11 md:w-18 md:h-14 ">
 											{carrierIcon(option?.metadata?.logo)}
@@ -1569,6 +1580,7 @@ export function Carrier(props: CarrierProps) {
 						</For>
 					</div>
 				</ul>
+
 				<FormFooter of={carrierForm} />
 			</Form>
 		</div>

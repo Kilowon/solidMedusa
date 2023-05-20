@@ -1541,10 +1541,11 @@ export function Carrier(props: CarrierProps) {
 										name="hosting"
 										value={option?.id}
 										class="hidden peer"
+										checked={option?.id === props.cart?.shipping_methods?.shipping_option_id}
 									/>
 									<label
 										for={option?.id}
-										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 peer-checked:border-2 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-sky-500 peer-checked:border-sky-600 peer-checked:text-sky-600 peer-checked:border-2 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
 									>
 										<div class="block ">
 											<div class="w-full text-lg font-semibold">${(option?.amount / 100).toFixed(2)}</div>
@@ -1553,7 +1554,7 @@ export function Carrier(props: CarrierProps) {
 										<div class="flex item-center justify-self-center md:justify-self-start w-13 h-11 md:w-18 md:h-14 ">
 											{carrierIcon(option?.metadata?.logo)}
 										</div>
-										<div class=" flex flex-col item-center justify-self-end md:justify-self-center">
+										<div class=" flex flex-col  ml-4 md:justify-self-center">
 											<div class=" flex item-center justify-center">{option?.metadata?.estimate}</div>
 											<div class=" flex item-center justify-center peer-checked:border-blue-600 peer-checked:text-blue-600">
 												<div class="i-ic-twotone-local-shipping w-5 h-5" />

@@ -1,9 +1,11 @@
-import { For, Switch, Match, Show, Suspense } from 'solid-js'
+import { For, Switch, Match, Show, Suspense, createSignal, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { useStore } from '~/Context/StoreContext'
+import { createQuery } from '@tanstack/solid-query'
+import { getProductInfo } from '~/Services/medusaAPI'
 
 interface CartCoreProps {
 	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout'
@@ -33,7 +35,7 @@ export default function CartCore(props: CartCoreProps) {
 								'overflow-y-scroll  scrollbar-hide ',
 								props.variant === 'primary' && 'max-h-[500px]',
 								props.variant === 'checkout' && 'max-h-[425px] mx-auto',
-								props.variant === 'panel' && 'max-h-[580px] mx-auto',
+								props.variant === 'panel' && 'max-h-[565px] mx-auto',
 								props.variant === 'mobile-checkout' && 'max-h-[45vh] mx-auto'
 							)}
 						>
@@ -53,7 +55,7 @@ export default function CartCore(props: CartCoreProps) {
 												props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]'
 											)}
 										>
-											<div class="flex flex-col items-center space-y-4">
+											<div class="flex flex-col items-center ">
 												<Thumbnail
 													thumbnail={item.thumbnail}
 													size="full"
@@ -90,7 +92,11 @@ export default function CartCore(props: CartCoreProps) {
 														>
 															<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
 														</div>
-														<LineItemOptions variant={item?.variant} />
+
+														<ItemOptions
+															item={item}
+															cart={queryCart?.data?.cart}
+														/>
 													</div>
 												</div>
 
@@ -125,19 +131,11 @@ export default function CartCore(props: CartCoreProps) {
 																Qty: {item?.quantity}
 															</span>
 														</div>
-														<div class="">
-															<LineItemPrice
-																region={props.cart?.region}
-																item={item}
-																style="tight"
-															/>
 
-															<LineItemPrice
-																region={props.cart?.region}
-																item={item}
-																style="tight"
-															/>
-														</div>
+														<ItemPrice
+															item={item}
+															cart={queryCart?.data?.cart}
+														/>
 													</div>
 													<div
 														class={clsx(
@@ -165,13 +163,18 @@ export default function CartCore(props: CartCoreProps) {
 								)}
 							</For>
 						</ol>
-						<div class=" flex flex-col gap-y-4 text-sm">
+						<div class=" flex flex-col gap-y-1 text-sm">
 							<div class="flex flex-col justify-start">
 								<div class="flex justify-center bg-gray-2">
 									<div class={'i-tabler-chevron-down text-3xl  '} />
 								</div>
 								<div class="flex justify-between items-center">
-									<span class=" font-semibold">Subtotal</span>
+									<span class=" font-semibold">
+										Item Subtotal {'('}
+										{totalItemsInCart(queryCart?.data?.cart?.items)}
+										{queryCart?.data?.cart?.items.length > 1 ? ' items' : ' item'}
+										{')'}
+									</span>
 									<span class="text-large-semi">
 										{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
 									</span>
@@ -183,20 +186,32 @@ export default function CartCore(props: CartCoreProps) {
 									</span>
 								</div>
 							</div>
-							<span class="text-red-700 font-semibold">Apply promo code+</span>
-
+							<PromoCodeInput onSubmit={promoCode => console.log('Promo code submitted:', promoCode)} />
+							<div class="flex justify-between items-center">
+								<span class=" font-semibold">Shipping</span>
+								<span class="text-large-semi">
+									{currencyFormat(Number(queryCart?.data?.cart?.shipping_total || 0), queryCart?.data?.cart?.region)}
+								</span>
+							</div>
 							<div class="flex justify-between items-center">
 								<span class=" text-lg font-semibold">Total</span>
 								<span class=" text-lg font-semibold">
-									{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
+									{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}
 								</span>
 							</div>
 							<Show when={props.variant === 'panel'}>
-								<A href="/cart">
-									<button class="w-full uppercase flex items-center justify-center min-h-[65px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
-										SECURE CHECKOUT
-									</button>
-								</A>
+								<div>
+									<A href="/checkout">
+										<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-green-600 border-green-300 hover:bg-green-300 hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+											SECURE CHECKOUT
+										</button>
+									</A>
+									<A href="/cart">
+										<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+											View Cart
+										</button>
+									</A>
+								</div>
 								<span class=" font-semibold underline flex items-center justify-center">save for later</span>
 							</Show>
 						</div>
@@ -228,6 +243,95 @@ export default function CartCore(props: CartCoreProps) {
 	)
 }
 
+function ItemPrice(props: any) {
+	const { medusa } = useGlobalContext()
+
+	const queryLineItem = createQuery(() => ({
+		queryKey: ['LineItem', props.item?.id],
+		queryFn: async function () {
+			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
+			return response
+		},
+		cacheTime: 15 * 60 * 1000,
+		staleTime: 15 * 60 * 1000
+	}))
+
+	return (
+		<div>
+			<Show when={queryLineItem?.data?.product}>
+				<For each={queryLineItem?.data?.product?.variants}>
+					{variant => {
+						if (variant.id === props.item.variant_id) {
+							if (variant.prices.length > 1) {
+								return (
+									<div class="flex flex-col">
+										<span class="text-sm text-gray-700 line-through ">
+											{currencyFormat(Number(variant.prices[0].amount), props.cart?.region)}
+										</span>
+										<span class="text-sm text-red-700">
+											{currencyFormat(Number(variant.prices[1].amount), props.cart?.region)}
+										</span>
+									</div>
+								)
+							} else {
+								return (
+									<span class="text-sm text-gray-700  ">
+										{currencyFormat(Number(variant.prices[0].amount), props.cart?.region)}
+									</span>
+								)
+							}
+						}
+					}}
+				</For>
+			</Show>
+		</div>
+	)
+}
+
+function ItemOptions(props: any) {
+	const { medusa } = useGlobalContext()
+
+	const queryLineItem = createQuery(() => ({
+		queryKey: ['LineItem', props.item?.id],
+		queryFn: async function () {
+			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
+			return response
+		},
+		cacheTime: 15 * 60 * 1000,
+		staleTime: 15 * 60 * 1000
+	}))
+	return (
+		<div>
+			<Show when={queryLineItem?.data?.product}>
+				<For each={queryLineItem?.data?.product?.variants}>
+					{variant => {
+						if (variant.id === props.item.variant_id) {
+							return (
+								<For each={variant.options}>
+									{option => {
+										return (
+											<div class="flex text-xs">
+												<For each={queryLineItem?.data?.product?.options}>
+													{opt => {
+														if (opt.id === option.option_id) {
+															return <div class="mr-1 capitalize">{opt.title}:</div>
+														}
+													}}
+												</For>
+												<span>{option.value}</span>
+											</div>
+										)
+									}}
+								</For>
+							)
+						}
+					}}
+				</For>
+			</Show>
+		</div>
+	)
+}
+
 import { ProductVariant } from '~/types/models'
 type LineItemOptionsProps = { variant: ProductVariant }
 export function LineItemOptions(props: LineItemOptionsProps) {
@@ -253,6 +357,7 @@ import { LineItem, Region } from '~/types/models'
 import { CalculatedVariant } from '~/types/medusa'
 import { getPercentageDiff } from '~/lib/util'
 import { currencyFormat } from '~/lib/helpers/currency'
+import { Console } from 'console'
 
 type LineItemPriceProps = {
 	item: Omit<LineItem, 'beforeInsert'>
@@ -283,6 +388,58 @@ export function LineItemPrice(props: LineItemPriceProps) {
 					)}
 				</>
 			)}
+		</div>
+	)
+}
+
+interface PromoCodeInputProps {
+	onSubmit: (promoCode: string) => void
+}
+
+export function PromoCodeInput(props: PromoCodeInputProps) {
+	const [promoCode, setPromoCode] = createSignal('')
+
+	const { medusa } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
+
+	const handleSubmit = (e: Event) => {
+		e.preventDefault()
+		props.onSubmit(promoCode())
+		//setPromoCode('')
+		mutatePromo.refetch()
+	}
+
+	const mutatePromo = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			const response = await medusa?.carts.update(queryCart?.data?.cart?.id, {
+				discounts: [{ code: promoCode() }]
+			})
+			return response
+		},
+		enabled: false
+	}))
+
+	return (
+		<div>
+			<form
+				onSubmit={handleSubmit}
+				class="flex items-center space-x-2"
+			>
+				<input
+					type="text"
+					value={promoCode()}
+					onInput={(e: any) => setPromoCode(e.target.value)}
+					placeholder="Enter promo code"
+					class="border border-gray-300 rounded px-2 py-1"
+				/>
+				<button
+					type="submit"
+					class="bg-gray-300 text-gray-8 px-3 py-1 rounded"
+				>
+					Apply
+				</button>
+			</form>
 		</div>
 	)
 }

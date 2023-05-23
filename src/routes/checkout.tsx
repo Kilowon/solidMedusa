@@ -230,7 +230,7 @@ export default function CheckoutPage() {
 			<div class="md:flex md:content-container md:h-[80vh]">
 				<div class="md:content-container md:w-[700px] md:space-y-12 mx-2">
 					<div
-						class="hidden md:block sticky top-12 z-101 bg-white/80 h-12 "
+						class="hidden md:block sticky top-12 z-101 bg-white/80 h-12 mx-2 "
 						style="backdrop-filter: blur(10px)"
 					>
 						<Stepper
@@ -608,7 +608,7 @@ export function Stepper(props: StepperProps) {
 
 export function Express() {
 	return (
-		<div class="m-1 md:m-5 space-y-1 md:space-y-3 ">
+		<div class="m-1 md:m-2 space-y-1 md:space-y-3 ">
 			<div class=" text-lg md:text-2xl font-medium text-slate-700 dark:text-slate-200 md:text-2xl  ">Express Checkout</div>
 			<div class=" space-y-1 md:space-y-2 ">
 				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
@@ -1551,7 +1551,7 @@ export function Carrier(props: CarrierProps) {
 											<div class="w-full text-lg font-semibold">${(option?.amount / 100).toFixed(2)}</div>
 											<div class="w-full">{option?.name}</div>
 										</div>
-										<div class="flex item-center justify-self-center md:justify-self-start w-13 h-11 md:w-18 md:h-14 ">
+										<div class="flex item-center justify-self-center md:justify-self-center w-13 h-11 md:w-18 md:h-14 ">
 											{carrierIcon(option?.metadata?.logo)}
 										</div>
 										<div class=" flex flex-col  ml-4 md:justify-self-center">

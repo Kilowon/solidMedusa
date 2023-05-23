@@ -21,7 +21,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
-import CartCore from '~/Components/layout/CartCore'
+import CartCore from '~/Components/Core/CartCore'
 
 type PaymentForm = {
 	email: string

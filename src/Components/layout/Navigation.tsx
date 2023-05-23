@@ -6,7 +6,7 @@ import { refetchRouteData } from 'solid-start'
 import { Transition } from 'solid-transition-group'
 import { useStore } from '~/Context/StoreContext'
 import { isServer } from 'solid-js/web'
-import CartCore from './CartCore'
+import CartCore from '../Core/CartCore'
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)

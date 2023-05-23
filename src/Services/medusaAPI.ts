@@ -60,10 +60,7 @@ export async function getProductList(
 
 								original_price: cheapestVariant.original_price,
 
-								difference: getPercentageDiff(
-									cheapestVariant.original_price,
-									cheapestVariant.calculated_price
-								),
+								difference: getPercentageDiff(cheapestVariant.original_price, cheapestVariant.calculated_price),
 								price_type: cheapestVariant.calculated_price_type
 						  }
 						: {
@@ -77,26 +74,15 @@ export async function getProductList(
 	})
 }
 
-export async function fetchProduct(
-	medusa: Medusa | null | undefined,
-	handle: string
-) {
-	return await medusa?.products.list({ handle })
+export async function fetchProduct(medusa: Medusa | null | undefined, cart: Cart, handle: string) {
+	return await medusa?.products.list({ handle: handle, cart_id: cart.result?.cart.id })
 }
 
-export async function getProductInfo(
-	medusa: Medusa | null | undefined,
-	cart: Cart,
-	productId: string
-) {
-	return await medusa?.products.retrieve(productId, cart.result?.cart.id)
+export async function getProductInfo(medusa: Medusa | null | undefined, cart: Cart, productId: string) {
+	return await medusa?.products.retrieve(productId, { cart_id: cart.result?.cart.id })
 }
 
-export async function deleteLineItem(
-	medusa: Medusa | null | undefined,
-	cart: Cart,
-	lineItemId: string
-) {
+export async function deleteLineItem(medusa: Medusa | null | undefined, cart: Cart, lineItemId: string) {
 	return await medusa?.carts.lineItems.delete(cart.result?.cart.id, lineItemId)
 }
 
@@ -111,12 +97,7 @@ export async function updateLineItem(
 	})
 }
 
-export async function addLineItem(
-	medusa: Medusa | null | undefined,
-	cart: Cart,
-	variantId: string,
-	quantity: number
-) {
+export async function addLineItem(medusa: Medusa | null | undefined, cart: Cart, variantId: string, quantity: number) {
 	try {
 		console.log('CARTID', cart.result?.cart.id, variantId, quantity)
 		const data = await medusa?.carts.lineItems.create(cart.result?.cart.id, {

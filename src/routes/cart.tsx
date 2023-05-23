@@ -1,4 +1,4 @@
-import CartCore from '~/Components/layout/CartCore'
+import CartCore from '~/Components/Core/CartCore'
 import { A } from 'solid-start'
 import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
 
@@ -25,7 +25,7 @@ export function Header() {
 				>
 					<div class="block m-2 ">
 						<A
-							href="/cart"
+							href="/"
 							class="text-xs font-semibold  "
 						>
 							<div class=" flex items-center font-poppins uppercase">
@@ -48,7 +48,7 @@ export function Header() {
 					</div>
 					<div class="block m-2 ">
 						<A
-							href="/cart"
+							href="/checkout"
 							class="text-xs font-semibold  "
 						>
 							<div class=" flex items-center font-poppins uppercase">

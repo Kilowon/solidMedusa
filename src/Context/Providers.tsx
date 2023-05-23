@@ -19,6 +19,7 @@ interface ContextProps {
 	categories?: any
 	setCurrentCategoryId?: (id: string) => void
 	categoryProducts?: any
+	queryByProductId?: any
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -124,7 +125,8 @@ export function GlobalContextProvider(props: any) {
 			const product = await medusa.products.retrieve(currentProductId())
 			return product
 		},
-		enabled: false
+		cacheTime: 15 * 60 * 1000,
+		staleTime: 15 * 60 * 1000
 	}))
 
 	createEffect(() => {
@@ -176,7 +178,8 @@ export function GlobalContextProvider(props: any) {
 				category_id: currentCategoryId()
 			})
 			return product
-		}
+		},
+		cacheTime: 15 * 60 * 1000
 		//enabled: false
 	}))
 
@@ -194,6 +197,7 @@ export function GlobalContextProvider(props: any) {
 				updateCart,
 				queryCart: queryCart as Cart,
 				queryCartRefetch,
+				queryByProductId,
 				setCurrentProductId,
 				rootCategories,
 				categories,

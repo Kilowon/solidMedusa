@@ -57,13 +57,12 @@ export function Navigation(props: any) {
 								Account
 							</A>
 						</div>
-						<Suspense fallback={<div class="h-10 w-10 flex items-center justify-center">Loading...</div>}>
-							<CartDropdown
-								cart={props.cart}
-								stayOpen={stayOpen}
-								setStayOpen={setStayOpen}
-							/>
-						</Suspense>
+
+						<CartDropdown
+							cart={props.cart}
+							stayOpen={stayOpen}
+							setStayOpen={setStayOpen}
+						/>
 					</div>
 				</nav>
 				<MobileMenu />

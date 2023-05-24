@@ -12,7 +12,11 @@ import clsx from 'clsx'
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
 	const [isScrolled, setIsScrolled] = createSignal(false)
-	const [mobileDrawer, setMobileDrawer] = createSignal({
+	const [cartDrawer, setCartDrawer] = createSignal({
+		checkout: 'active',
+		cart: 'hidden'
+	})
+	const [menuDrawer, setMenuDrawer] = createSignal({
 		checkout: 'active',
 		cart: 'hidden'
 	})
@@ -47,7 +51,10 @@ export function Navigation(props: any) {
 				>
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="block sm:hidden">
-							<Hamburger /* setOpen={toggle} */ />
+							<Hamburger
+								menuDrawer={menuDrawer}
+								setMenuDrawer={setMenuDrawer}
+							/>
 						</div>
 						<div class="hidden sm:block h-full ml-10">
 							<DropdownMenu
@@ -85,8 +92,8 @@ export function Navigation(props: any) {
 						</div>
 						<div class="block md:hidden ">
 							<CartDrawerNav
-								mobileDrawer={mobileDrawer}
-								setMobileDrawer={setMobileDrawer}
+								cartDrawer={cartDrawer}
+								setCartDrawer={setCartDrawer}
 							/>
 						</div>
 					</div>
@@ -200,33 +207,33 @@ export function CartDrawerNav(props: any) {
 		<div>
 			<div
 				class="flex items-center rounded-full md:hidden z-1 relative"
-				style="position: fixed; top: 1vh; right: -1rem; width: 3.75rem; height: 3rem;"
-				onClick={() => props.setMobileDrawer({ cart: 'active', checkout: 'active' })}
+				style="position: fixed; top: 0.85vh; right: -1rem; width: 3.75rem; height: 3rem;"
+				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1.75" />
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
-					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
+					props.cartDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				style="backdrop-filter: blur(5px)"
 				onClick={event => {
 					if (event.target === event.currentTarget) {
-						props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+						props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
 					}
 				}}
 			>
 				<div
-					class="i-ph-x-circle-fill text-red-5 w-6 h-6 absolute top-3 right-4"
+					class="i-ph-x-circle-fill text-gray-7 w-7 h-7 absolute top-4 right-3"
 					onClick={event => {
 						if (event.target === event.currentTarget) {
-							props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+							props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
 						}
 					}}
 				/>
 				<div
 					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
-						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
+						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
 					<CartCore variant="mobile-panel" />
@@ -236,10 +243,43 @@ export function CartDrawerNav(props: any) {
 	)
 }
 
-export function Hamburger() {
+export function Hamburger(props: any) {
 	return (
 		<div>
-			<div>Hamburger</div>
+			<div
+				class="flex items-center rounded-full md:hidden z-1 relative"
+				style="position: fixed; top: 0.85vh; left: 0.5rem; width: 3.75rem; height: 3rem;"
+				onClick={() => props.setMenuDrawer({ cart: 'active', checkout: 'active' })}
+			>
+				<div class="i-ic-round-menu w-6 h-6 ml-2" />
+			</div>
+			<div
+				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
+					props.menuDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
+				}`}
+				style="backdrop-filter: blur(5px)"
+				onClick={event => {
+					if (event.target === event.currentTarget) {
+						props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+					}
+				}}
+			>
+				<div
+					class="i-ph-x-circle-fill text-gray-7 w-7 h-7 absolute top-4 right-3"
+					onClick={event => {
+						if (event.target === event.currentTarget) {
+							props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+						}
+					}}
+				/>
+				<div
+					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+						props.menuDrawer().cart === 'active' ? '' : 'translate-x-full'
+					}`}
+				>
+					<div>Menu</div>
+				</div>
+			</div>
 		</div>
 	)
 }

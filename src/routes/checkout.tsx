@@ -1673,7 +1673,7 @@ export function Billing(props: BillingProps) {
 				<FormHeader
 					of={billingForm}
 					heading="Billing Address"
-					numberLabel={'three'}
+					numberLabel={'four'}
 				/>
 
 				<div class="space-y-1 md:space-y-2">
@@ -1884,7 +1884,7 @@ export function Payment(props: PaymentProps) {
 			<FormHeader
 				of={paymentForm}
 				heading="Payment"
-				numberLabel="four"
+				numberLabel="five"
 			/>
 
 			<div class="space-y-2 ">

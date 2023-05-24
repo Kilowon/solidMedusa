@@ -201,7 +201,7 @@ export default function CartCore(props: CartCoreProps) {
 										</span>
 									</div>
 								</Show>
-								<div class="flex justify-between items-center bg-[#E5E5E5] border border-gray-5 p-1">
+								<div class="flex justify-between items-center bg-[#E5E5E5] border border-gray-5 p-1.75">
 									<span class=" text-lg font-semibold">Total</span>
 									<span class=" text-lg font-semibold">
 										{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}

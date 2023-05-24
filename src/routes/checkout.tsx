@@ -214,11 +214,11 @@ export default function CheckoutPage() {
 				setMobileDrawer={setMobileDrawer}
 			/>
 			<div
-				class="sticky top-0 inset-x-0 z-100 bg-gradient-to-b from-white/50 to-white/10 h-23"
+				class=" top-0 inset-x-0 z-100 bg-gradient-to-b from-white/50 to-white/10 h-23"
 				style="backdrop-filter: blur(20px)"
 			>
 				<Header />
-				<div class="sticky top-12 z-101 md:hidden mx-2 ">
+				<div class=" top-12 z-101 md:hidden mx-2 ">
 					<Stepper
 						formCompleted={formCompleted}
 						setShowForm={setShowForm}
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
 					<Show when={showForm().customer === 'active'}>
 						<input
 							type="text"
-							autofocus={true}
+							autofocus
 							style="display:none"
 						/>
 						<Express />

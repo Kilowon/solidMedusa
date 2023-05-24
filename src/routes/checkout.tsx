@@ -1006,7 +1006,7 @@ export function Customer(props: CustomerProps) {
 								//description="Signup for an account to access your order history."
 								label="Password"
 								placeholder="********"
-								autocomplete="off"
+								autocomplete="new-password"
 							/>
 						)}
 					</Field>

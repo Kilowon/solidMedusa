@@ -211,7 +211,7 @@ export default function CheckoutPage() {
 		if (showForm().customer === 'active') {
 			setTimeout(() => {
 				setCustomerDelayPassed(true)
-			}, 5000)
+			}, 2500)
 		}
 	})
 

@@ -11,12 +11,7 @@ export function routeData() {
 
 	return createRouteData(async () => {
 		const featuredProducts: any = IsClientCheck(
-			await getProductList(
-				medusa,
-				cart.result?.cart.id,
-				4,
-				cart.result?.cart.region
-			)
+			await getProductList(medusa, cart.result?.cart.id, 4, cart.result?.cart.region)
 		)
 
 		return { featuredProducts }
@@ -27,7 +22,7 @@ export default function App() {
 	const data = useRouteData<typeof routeData>()
 	//data()
 	return (
-		<main class="bg-[#35393b] ">
+		<main>
 			<Hero />
 			<FeaturedProducts featuredProducts={data()?.featuredProducts} />
 		</main>

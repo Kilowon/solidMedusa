@@ -7,17 +7,33 @@ import { Transition } from 'solid-transition-group'
 import { useStore } from '~/Context/StoreContext'
 import { isServer } from 'solid-js/web'
 import CartCore from '../Core/CartCore'
+import clsx from 'clsx'
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
+	const [isScrolled, setIsScrolled] = createSignal(false)
+
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 0) {
+			setIsScrolled(true)
+		} else {
+			setIsScrolled(false)
+		}
+	})
+
+	createEffect(() => {
+		console.log(isScrolled())
+	})
+
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
 			<header
-				class={
-					stayOpen()
-						? 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#ddd]'
-						: 'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-transparent hover:bg-[#cccccc]'
-				}
+				class={clsx(
+					'relative h-16 mx-auto transition-colors border-b border-transparent duration-200',
+					stayOpen() === true && 'bg-[#ddd]',
+					stayOpen() === false && 'bg-transparent hover:bg-[#cccccc]',
+					isScrolled() === true && 'bg-[#ddd]'
+				)}
 			>
 				<nav
 					class={
@@ -65,16 +81,7 @@ export function Navigation(props: any) {
 						/>
 					</div>
 				</nav>
-				<MobileMenu />
 			</header>
-		</div>
-	)
-}
-
-export function Hamburger() {
-	return (
-		<div>
-			<div>Hamburger</div>
 		</div>
 	)
 }
@@ -178,10 +185,10 @@ export function CartDropdown(props: any) {
 	)
 }
 
-export function MobileMenu() {
+export function Hamburger() {
 	return (
 		<div>
-			<div class="sm:invisible">MOBILE MENU</div>
+			<div>Hamburger</div>
 		</div>
 	)
 }

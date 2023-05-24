@@ -13,7 +13,7 @@ export function Hero() {
 
 	return (
 		<div
-			class="h-[100vh] w-full relative 
+			class="h-[100vh] w-full top-0 left-0 z-0 bg-cover bg-center bg-no-repeat 
 		"
 		>
 			<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">

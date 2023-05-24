@@ -182,6 +182,7 @@ async function autocompleteAddress(address: string) {
 export default function CheckoutPage() {
 	const { queryCart } = useGlobalContext()
 	const [shippingIsBilling, setShippingIsBilling] = createSignal(true)
+	const [customerDelayPassed, setCustomerDelayPassed] = createSignal(false)
 	// show states 'hide', 'active', 'edit'
 
 	const [showForm, setShowForm] = createSignal<ShowForm>({
@@ -204,6 +205,14 @@ export default function CheckoutPage() {
 
 	createEffect(() => {
 		console.log(showForm())
+	})
+
+	createEffect(() => {
+		if (showForm().customer === 'active') {
+			setTimeout(() => {
+				setCustomerDelayPassed(true)
+			}, 500)
+		}
 	})
 
 	return (
@@ -247,13 +256,15 @@ export default function CheckoutPage() {
 						/>
 						<Express />
 						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
-						<Customer
-							setShowForm={setShowForm}
-							showForm={showForm}
-							setFormCompleted={setFormCompleted}
-							formCompleted={formCompleted}
-							cart={queryCart.data?.cart}
-						/>
+						<Show when={showForm().customer === 'active' && customerDelayPassed()}>
+							<Customer
+								setShowForm={setShowForm}
+								showForm={showForm}
+								setFormCompleted={setFormCompleted}
+								formCompleted={formCompleted}
+								cart={queryCart.data?.cart}
+							/>
+						</Show>
 					</Show>
 
 					<Show when={showForm().shipping === 'active'}>

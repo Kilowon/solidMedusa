@@ -977,11 +977,7 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<Form
-			onSubmit={values => handleSubmit(values) as any}
-			shouldFocus={false}
-			shouldActive={false}
-		>
+		<Form onSubmit={values => handleSubmit(values) as any}>
 			<FormHeader
 				of={customerForm}
 				heading="Customer"
@@ -999,10 +995,11 @@ export function Customer(props: CustomerProps) {
 							{...props}
 							value={field.value}
 							error={field.error}
-							type="text"
+							type="email"
 							//description="We'll send your order confirmation here."
 							label="Email"
 							placeholder="example@email.com"
+							required
 						/>
 					)}
 				</Field>

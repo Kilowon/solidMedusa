@@ -961,7 +961,11 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<Form onSubmit={values => handleSubmit(values) as any}>
+		<Form
+			onSubmit={values => handleSubmit(values) as any}
+			shouldFocus={false}
+			shouldActive={false}
+		>
 			<FormHeader
 				of={customerForm}
 				heading="Customer"
@@ -1002,6 +1006,7 @@ export function Customer(props: CustomerProps) {
 								//description="Signup for an account to access your order history."
 								label="Password"
 								placeholder="********"
+								autocomplete="off"
 							/>
 						)}
 					</Field>

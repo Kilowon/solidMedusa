@@ -18,6 +18,7 @@ type TextInputProps = {
 	label?: string
 	error?: string
 	padding?: 'none'
+	autocomplete?: 'off' | 'on'
 }
 
 /**
@@ -54,6 +55,7 @@ export function TextInput(props: TextInputProps) {
 				value={getValue()}
 				aria-invalid={!!props.error}
 				aria-errormessage={`${props.name}-error`}
+				autocomplete={props.autocomplete ?? 'on'}
 			/>
 			<InputError
 				name={props.name}

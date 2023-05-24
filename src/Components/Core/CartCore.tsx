@@ -215,7 +215,7 @@ export default function CartCore(props: CartCoreProps) {
 										{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}
 									</span>
 								</div>
-								<Show when={props.variant === 'panel'}>
+								<Show when={props.variant === 'panel' || 'mobile-panel'}>
 									<div>
 										<A href="/checkout">
 											<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-green-600 border-green-300 hover:bg-green-300 hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">

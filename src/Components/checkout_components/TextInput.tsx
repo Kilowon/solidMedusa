@@ -55,7 +55,7 @@ export function TextInput(props: TextInputProps) {
 				value={getValue()}
 				aria-invalid={!!props.error}
 				aria-errormessage={`${props.name}-error`}
-				autocomplete={'off'}
+				autocomplete="false"
 			/>
 			<InputError
 				name={props.name}

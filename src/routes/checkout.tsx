@@ -999,11 +999,10 @@ export function Customer(props: CustomerProps) {
 							{...props}
 							value={field.value}
 							error={field.error}
-							type="email"
+							type="text"
 							//description="We'll send your order confirmation here."
 							label="Email"
 							placeholder="example@email.com"
-							required
 						/>
 					)}
 				</Field>

@@ -8,7 +8,7 @@ import { createQuery } from '@tanstack/solid-query'
 import { getProductInfo } from '~/Services/medusaAPI'
 
 interface CartCoreProps {
-	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout'
+	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout' | 'mobile-panel'
 	cart?: any
 }
 
@@ -38,7 +38,8 @@ export default function CartCore(props: CartCoreProps) {
 									props.variant === 'primary' && 'max-h-[500px]',
 									props.variant === 'checkout' && 'max-h-[425px] mx-auto',
 									props.variant === 'panel' && 'max-h-[565px] mx-auto',
-									props.variant === 'mobile-checkout' && 'max-h-[45vh] mx-auto'
+									props.variant === 'mobile-checkout' && 'max-h-[45vh] mx-auto',
+									props.variant === 'mobile-panel' && 'max-h-[45vh] mx-auto'
 								)}
 							>
 								<For
@@ -55,7 +56,8 @@ export default function CartCore(props: CartCoreProps) {
 														props.variant === 'primary' && 'grid-cols-[100px_1fr]',
 														props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
 														props.variant === 'panel' && 'grid-cols-[70px_1fr]',
-														props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]'
+														props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
+														props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
 													)}
 												>
 													<div class="flex flex-col items-center ">
@@ -69,7 +71,8 @@ export default function CartCore(props: CartCoreProps) {
 																props.variant === 'primary' && '',
 																props.variant === 'checkout' && 'hidden',
 																props.variant === 'panel' && '',
-																props.variant === 'mobile-checkout' && 'hidden'
+																props.variant === 'mobile-checkout' && 'hidden',
+																props.variant === 'mobile-panel' && ''
 															)}
 														>
 															<ItemQuantity
@@ -87,7 +90,8 @@ export default function CartCore(props: CartCoreProps) {
 																		props.variant === 'primary' && 'md:text-lg',
 																		props.variant === 'checkout' && 'text-xs',
 																		props.variant === 'panel' && 'text-xs',
-																		props.variant === 'mobile-checkout' && 'text-xs'
+																		props.variant === 'mobile-checkout' && 'text-xs',
+																		props.variant === 'mobile-panel' && 'text-xs'
 																	)}
 																>
 																	<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
@@ -106,7 +110,8 @@ export default function CartCore(props: CartCoreProps) {
 																props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
 																props.variant === 'checkout' && ' text-sm',
 																props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
-																props.variant === 'mobile-checkout' && ' text-sm'
+																props.variant === 'mobile-checkout' && ' text-sm',
+																props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
 															)}
 														>
 															<div
@@ -115,7 +120,8 @@ export default function CartCore(props: CartCoreProps) {
 																	props.variant === 'primary' && '',
 																	props.variant === 'checkout' && 'grid grid-cols-2',
 																	props.variant === 'panel' && '',
-																	props.variant === 'mobile-checkout' && 'grid grid-cols-2'
+																	props.variant === 'mobile-checkout' && 'grid grid-cols-2',
+																	props.variant === 'mobile-panel' && ''
 																)}
 															>
 																<div>
@@ -125,7 +131,8 @@ export default function CartCore(props: CartCoreProps) {
 																			props.variant === 'primary' && 'hidden',
 																			props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
 																			props.variant === 'panel' && 'hidden',
-																			props.variant === 'mobile-checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold'
+																			props.variant === 'mobile-checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																			props.variant === 'mobile-panel' && 'hidden'
 																		)}
 																	>
 																		Qty: {item?.quantity}
@@ -143,7 +150,8 @@ export default function CartCore(props: CartCoreProps) {
 																	props.variant === 'primary' && '',
 																	props.variant === 'checkout' && 'hidden',
 																	props.variant === 'panel' && '',
-																	props.variant === 'mobile-checkout' && 'hidden'
+																	props.variant === 'mobile-checkout' && 'hidden',
+																	props.variant === 'mobile-panel' && ''
 																)}
 															>
 																<button

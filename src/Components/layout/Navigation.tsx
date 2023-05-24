@@ -12,7 +12,10 @@ import clsx from 'clsx'
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
 	const [isScrolled, setIsScrolled] = createSignal(false)
-
+	const [mobileDrawer, setMobileDrawer] = createSignal({
+		checkout: 'active',
+		cart: 'hidden'
+	})
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 0) {
 			setIsScrolled(true)
@@ -63,7 +66,7 @@ export function Navigation(props: any) {
 						</A>
 					</div>
 
-					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end mr-10">
+					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end md:mr-10">
 						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold font-poppins px-3">
 							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
 							<A
@@ -73,12 +76,19 @@ export function Navigation(props: any) {
 								Account
 							</A>
 						</div>
-
-						<CartDropdown
-							cart={props.cart}
-							stayOpen={stayOpen}
-							setStayOpen={setStayOpen}
-						/>
+						<div class="hidden md:block">
+							<CartDropdown
+								cart={props.cart}
+								stayOpen={stayOpen}
+								setStayOpen={setStayOpen}
+							/>
+						</div>
+						<div class="block md:hidden ">
+							<CartDrawerNav
+								mobileDrawer={mobileDrawer}
+								setMobileDrawer={setMobileDrawer}
+							/>
+						</div>
 					</div>
 				</nav>
 			</header>
@@ -181,6 +191,47 @@ export function CartDropdown(props: any) {
 					</div>
 				</Show>
 			</Transition>
+		</div>
+	)
+}
+
+export function CartDrawerNav(props: any) {
+	return (
+		<div>
+			<div
+				class="flex items-center rounded-full md:hidden z-1 relative"
+				style="position: fixed; top: 1vh; right: -1rem; width: 3.75rem; height: 3rem;"
+				onClick={() => props.setMobileDrawer({ cart: 'active', checkout: 'active' })}
+			>
+				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1.75" />
+			</div>
+			<div
+				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
+					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
+				}`}
+				style="backdrop-filter: blur(5px)"
+				onClick={event => {
+					if (event.target === event.currentTarget) {
+						props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+					}
+				}}
+			>
+				<div
+					class="i-ph-x-circle-fill text-red-5 w-6 h-6 absolute top-3 right-4"
+					onClick={event => {
+						if (event.target === event.currentTarget) {
+							props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
+						}
+					}}
+				/>
+				<div
+					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
+					}`}
+				>
+					<CartCore variant="mobile-panel" />
+				</div>
+			</div>
 		</div>
 	)
 }

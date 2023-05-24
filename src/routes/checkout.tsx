@@ -240,6 +240,11 @@ export default function CheckoutPage() {
 						/>
 					</div>
 					<Show when={showForm().customer === 'active'}>
+						<input
+							type="text"
+							autofocus={true}
+							style="display:none"
+						/>
 						<Express />
 						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
 						<Customer

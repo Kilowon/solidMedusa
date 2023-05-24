@@ -54,8 +54,6 @@ export function TextInput(props: TextInputProps) {
 				value={getValue()}
 				aria-invalid={!!props.error}
 				aria-errormessage={`${props.name}-error`}
-				readonly
-				onFocus={event => event.currentTarget.removeAttribute('readonly')}
 			/>
 			<InputError
 				name={props.name}

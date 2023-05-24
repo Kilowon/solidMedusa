@@ -281,7 +281,8 @@ function ItemQuantity(props: any) {
 				quantity: quantity()
 			})
 			return response
-		}
+		},
+		enabled: false
 	}))
 
 	return (

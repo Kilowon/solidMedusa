@@ -12,6 +12,11 @@ import clsx from 'clsx'
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
 	const [isScrolled, setIsScrolled] = createSignal(false)
+
+	const [navState, setNavState] = createSignal({
+		hero: 'active',
+		product: 'hidden'
+	})
 	const [cartDrawer, setCartDrawer] = createSignal({
 		checkout: 'active',
 		cart: 'hidden'
@@ -33,20 +38,19 @@ export function Navigation(props: any) {
 	})
 
 	return (
-		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
+		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
 			<header
 				class={clsx(
-					'relative h-16 mx-auto transition-colors border-b border-transparent duration-200',
-					stayOpen() === true && 'bg-[#ddd]',
-					stayOpen() === false && 'bg-transparent hover:bg-[#cccccc]',
-					isScrolled() === true && 'bg-[#ddd]'
+					'relative h-16 mx-auto  border-b border-transparent transition-colors duration-400 hover:bg-[#d8ddeb] hover:text-gray-500',
+					stayOpen() === true && 'bg-[#d8ddeb]',
+					isScrolled() === true && 'bg-[#d8ddeb]'
 				)}
 			>
 				<nav
 					class={
-						stayOpen()
-							? 'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-gray-900 relative'
-							: 'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-white group-hover:text-gray-900 relative'
+						stayOpen() || isScrolled()
+							? 'flex items-center justify-between w-full h-full text-sm transition-colors duration-500 text-gray-500 text-gray-900 relative'
+							: 'flex items-center justify-between w-full h-full text-sm transition-colors duration-500 text-[#d8ddeb] hover:text-gray-500 relative'
 					}
 				>
 					<div class="flex-1 basis-0 h-full flex items-center">
@@ -67,7 +71,7 @@ export function Navigation(props: any) {
 					<div class="flex items-center h-full">
 						<A
 							href="/"
-							class="text-2xl font-semibold  "
+							class="text-lg md:text-2xl font-semibold  "
 						>
 							<div class=" font-poppins uppercase"> Modern Edge </div>
 						</A>
@@ -210,7 +214,7 @@ export function CartDrawerNav(props: any) {
 				style="position: fixed; top: 0.85vh; right: -1rem; width: 3.75rem; height: 3rem;"
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
-				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1.75" />
+				<div class="i-ion-cart-outline  text-2xl absolute top-3 left-1.75" />
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
@@ -306,7 +310,7 @@ export function DropdownMenu(props: any) {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full  text-2xl hover:text-gray-5 hover:transition-opacity hover:duration-400 px-3
+			class=" flex items-center justify-center h-full w-full  text-2xl  hover:transition-opacity hover:duration-400 px-3
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
@@ -347,14 +351,16 @@ export function DropdownMenu(props: any) {
 											<ul class="min-w-[152px] max-w-[200px] pr-4">
 												<For each={rootCategories()}>
 													{collection => (
-														<div class="pb-3">
-															<A
-																href={`/categories/${collection.handle}`}
-																onClick={() => setOpen(false)}
-															>
-																{collection.name}
-															</A>
-														</div>
+														<Suspense fallback={<div>Loading...</div>}>
+															<div class="pb-3">
+																<A
+																	href={`/categories/${collection.handle}`}
+																	onClick={() => setOpen(false)}
+																>
+																	{collection.name}
+																</A>
+															</div>
+														</Suspense>
 													)}
 												</For>
 											</ul>
@@ -367,10 +373,12 @@ export function DropdownMenu(props: any) {
 											<Match when={props.product}>
 												<For each={props.product}>
 													{product => (
-														<ProductPreview
-															{...product}
-															handleClick={() => setOpen(false)}
-														/>
+														<Suspense fallback={<div>Loading...</div>}>
+															<ProductPreview
+																{...product}
+																handleClick={() => setOpen(false)}
+															/>
+														</Suspense>
 													)}
 												</For>
 											</Match>

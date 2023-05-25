@@ -76,6 +76,7 @@ export default function ImageGallerySlidy(props: {
 						easing={linear}
 						clamp={0}
 						loop={true}
+						// @ts-ignore
 						animation={blur}
 						arrows={false}
 						background={false}

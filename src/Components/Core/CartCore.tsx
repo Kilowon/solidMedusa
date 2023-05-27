@@ -307,13 +307,19 @@ function ItemQuantity(props: any) {
 	)
 }
 
+import { fetchProduct } from '~/Services/medusaAPI'
 function ItemPrice(props: any) {
 	const { medusa } = useGlobalContext()
+	const { cart } = useGlobalContext()
+
+	createEffect(() => {
+		console.log('ITEMPRICE', queryLineItem?.data?.products[0]?.variants)
+	})
 
 	const queryLineItem = createQuery(() => ({
-		queryKey: ['LineItem', props.item?.id],
+		queryKey: ['LineItem', props.item.variant.product.handle],
 		queryFn: async function () {
-			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
+			const response = await fetchProduct(medusa, cart, props.item.variant.product.handle)
 			return response
 		},
 		cacheTime: 15 * 60 * 1000,
@@ -322,18 +328,18 @@ function ItemPrice(props: any) {
 
 	return (
 		<div>
-			<Show when={queryLineItem?.data?.product}>
-				<For each={queryLineItem?.data?.product?.variants}>
+			<Show when={queryLineItem?.data?.products}>
+				<For each={queryLineItem?.data?.products[0]?.variants}>
 					{variant => {
 						if (variant.id === props.item.variant_id) {
 							if (variant.prices.length > 1) {
 								return (
 									<div class="flex flex-col ">
 										<span class="text-sm text-gray-700 line-through ">
-											{currencyFormat(Number(variant.prices[0].amount), props.cart?.region)}
+											{currencyFormat(Number(variant.original_price), props.cart?.region)}
 										</span>
 										<span class="text-sm text-red-700">
-											{currencyFormat(Number(variant.prices[1].amount), props.cart?.region)}
+											{currencyFormat(Number(variant.calculated_price), props.cart?.region)}
 										</span>
 										<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase min-w-10 ">
 											sale

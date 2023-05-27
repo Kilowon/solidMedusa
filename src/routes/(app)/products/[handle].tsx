@@ -14,7 +14,7 @@ export default function Products() {
 	const params = useParams()
 
 	const queryProduct = createQuery(() => ({
-		queryKey: ['product', params.handle],
+		queryKey: ['producty', params.handle],
 		queryFn: async function () {
 			const product = await fetchProduct(medusa, cart, params.handle)
 			return product

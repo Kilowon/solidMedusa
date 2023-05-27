@@ -24,7 +24,6 @@ export default function CartCore(props: CartCoreProps) {
 	const { queryCart } = useGlobalContext()
 	const { queryCartRefetch } = useGlobalContext()
 	const { deleteItem } = useStore()
-	const { updateItem } = useStore()
 
 	return (
 		<div class=" text-sm text-gray-5 z-50">

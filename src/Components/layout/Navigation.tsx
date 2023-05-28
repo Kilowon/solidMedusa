@@ -71,7 +71,7 @@ export function Navigation(props: any) {
 					<div class="flex items-center h-full">
 						<A
 							href="/"
-							class="text-lg md:text-2xl font-semibold  "
+							class="text-regular md:text-2xl font-semibold  "
 						>
 							<div class=" font-poppins uppercase"> Modern Edge </div>
 						</A>

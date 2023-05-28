@@ -31,15 +31,9 @@ export function Hero() {
 						</h1>
 					</div>
 				</span>
-				<h1 class="hidden  text-xl md:text-2xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins">
+				<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins">
 					Embrace Modern Design
 				</h1>
-				<p class="hidden md:block text-base max-w-[32rem] mb-6 drop-shadow-md shadow-black">
-					At Modern Edge, we believe that furniture should be as stylish as it is functional. That's why we offer a wide
-					range of modern furniture pieces that are designed to elevate your space. From sleek sofas to statement-making
-					accent chairs, we have everything you need to add a touch of modern design to your home. Shop now and embrace the
-					future of furniture with Modern Edge.
-				</p>
 				<div class="flex items-center hover:underline">
 					<A
 						href="/store/Store"

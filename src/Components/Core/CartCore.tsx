@@ -217,7 +217,7 @@ export default function CartCore(props: CartCoreProps) {
 								<Show when={props.variant === 'panel' || 'mobile-panel'}>
 									<div>
 										<A href="/checkout">
-											<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-green-600 border-green-300 hover:bg-green-300 hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
+											<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900  disabled:hover:bg-gray-900 disabled:hover:text-white">
 												SECURE CHECKOUT
 											</button>
 										</A>
@@ -436,7 +436,7 @@ type LineItemPriceProps = {
 	region: Region
 	style?: 'default' | 'tight'
 }
-export function LineItemP5rice(props: LineItemPriceProps) {
+export function LineItemPrice(props: LineItemPriceProps) {
 	const originalPrice = (props.item.variant as CalculatedVariant).original_price * props.item?.quantity
 	const hasReducedPrice = (props.item.total || 0) < originalPrice
 

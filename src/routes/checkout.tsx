@@ -977,83 +977,96 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<Form onSubmit={values => handleSubmit(values) as any}>
-			<FormHeader
-				of={customerForm}
-				heading="Customer"
-				numberLabel={'one'}
-			/>
+		<div>
+			<form id="your-form-id">
+				<input
+					type="text"
+					style={{ display: 'none' }}
+				/>
+				{/* Rest of your form fields */}
+			</form>
 
-			<div class="h-[100%]">
-				{/* //email */}
-				<Field
-					name="email"
-					validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-				>
-					{(field, props) => (
-						<TextInput
-							{...props}
-							value={field.value}
-							error={field.error}
-							type="email"
-							//description="We'll send your order confirmation here."
-							label="Email"
-							placeholder="example@email.com"
-							required
-						/>
-					)}
-				</Field>
-				{/* //password */}
-				<Show when={getValues(customerForm).checkbox?.signup || getValues(customerForm).checkbox?.signin}>
+			<Form onSubmit={values => handleSubmit(values) as any}>
+				<FormHeader
+					of={customerForm}
+					heading="Customer"
+					numberLabel={'one'}
+				/>
+
+				<div class="h-[100%]">
+					{/* //email */}
 					<Field
-						name="password"
-						validate={[required('Please enter your password.'), minLength(8, 'You password must have 8 characters or more.')]}
+						name="email"
+						validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
 					>
 						{(field, props) => (
 							<TextInput
 								{...props}
 								value={field.value}
 								error={field.error}
-								type="password"
-								//description="Signup for an account to access your order history."
-								label="Password"
-								placeholder="********"
+								type="email"
+								//description="We'll send your order confirmation here."
+								label="Email"
+								placeholder="example@email.com"
+								required
 							/>
 						)}
 					</Field>
-				</Show>
-				{/* //make account */}
-				<div class="flex justify-between my-4">
-					<Field
-						name="checkbox.signup"
-						type="boolean"
-					>
-						{(field, props) => (
-							<Checkbox
-								{...props}
-								checked={field.value}
-								error={field.error}
-								label="sign up to create an account"
-							/>
-						)}
-					</Field>
-					<Field
-						name="checkbox.signin"
-						type="boolean"
-					>
-						{(field, props) => (
-							<Checkbox
-								{...props}
-								checked={field.value}
-								error={field.error}
-								label={true ? 'sign in to an existing account' : ''}
-							/>
-						)}
-					</Field>
+					{/* //password */}
+					<Show when={getValues(customerForm).checkbox?.signup || getValues(customerForm).checkbox?.signin}>
+						<Field
+							name="password"
+							validate={[
+								required('Please enter your password.'),
+								minLength(8, 'You password must have 8 characters or more.')
+							]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="password"
+									//description="Signup for an account to access your order history."
+									label="Password"
+									placeholder="********"
+								/>
+							)}
+						</Field>
+					</Show>
+					{/* //make account */}
+					<div class="flex justify-between my-4">
+						<Field
+							name="checkbox.signup"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label="sign up to create an account"
+								/>
+							)}
+						</Field>
+						<Field
+							name="checkbox.signin"
+							type="boolean"
+						>
+							{(field, props) => (
+								<Checkbox
+									{...props}
+									checked={field.value}
+									error={field.error}
+									label={true ? 'sign in to an existing account' : ''}
+								/>
+							)}
+						</Field>
+					</div>
+					<FormFooter of={customerForm} />
 				</div>
-				<FormFooter of={customerForm} />
-			</div>
-		</Form>
+			</Form>
+		</div>
 	)
 }
 

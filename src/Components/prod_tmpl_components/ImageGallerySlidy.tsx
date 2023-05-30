@@ -67,18 +67,18 @@ export default function ImageGallerySlidy(props: {
 			<div class="md:flex md:items-start md:relative">
 				<div
 					id="gallery"
-					class="h-[70vh] md:flex md:h-[90vh] md:mx-8 "
+					class="h-[90vh] w-[100vw] md:flex md:h-[90vh] md:mx-8 "
 				>
 					<Slidy
 						slides={slides()}
 						snap="center"
-						thumbnail={false}
+						thumbnail={true}
 						easing={linear}
 						clamp={0}
 						loop={true}
 						// @ts-ignore
 						animation={blur}
-						arrows={false}
+						arrows={true}
 						background={false}
 					/>
 				</div>

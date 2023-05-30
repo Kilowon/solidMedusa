@@ -47,32 +47,44 @@ export default function ProductActions(props: {
 
 	return (
 		<Show when={props.productInfo}>
-			<div class="flex flex-col gap-y-2 font-poppins">
+			<div class="flex flex-col md:gap-y-2 font-poppins">
 				<A
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
 				>
 					{props.productInfo.collection?.title}
 				</A>
-				<h3 class="text-2xl font-semibold">{props.productInfo?.title}</h3>
-				<div>
-					<Show when={currentVariant()?.original_price}>
-						{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
-							<div class="space-x-2">
-								<span class="text-xl ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
-							</div>
-						) : (
-							<div class="flex flex-col">
-								<span class="text-xl line-through">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
-								<span class="text-xl text-red-7 ">{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}</span>
-								<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase max-w-14 ">
-									sale
-								</span>
-							</div>
-						)}
-					</Show>
+
+				<div
+					class="fixed inset-0 z-40 top-[60vh] h-15 bg-white/50"
+					style="backdrop-filter: blur(10px);"
+				></div>
+				<div class="flex justify-between mx-2 absolute top-[60vh] left-0 z-50 md:static md:w-full md:flex-col md:items-start text-black w-[90vw]">
+					<h3 class="text-2xl font-semibold">{props.productInfo?.title}</h3>
+					<div>
+						<Show when={currentVariant()?.original_price}>
+							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
+								<div class="space-x-2">
+									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+								</div>
+							) : (
+								<div class="flex flex-col justify-center items-center">
+									<span class="text-xl line-through font-semibold">
+										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
+									</span>
+									<span class="text-xl text-red-7 font-semibold ">
+										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
+									</span>
+									<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase w-15 ">
+										on sale
+									</span>
+								</div>
+							)}
+						</Show>
+					</div>
 				</div>
-				<div class="my-8 flex flex-col gap-y-6">
+
+				<div class="md:my-8 flex flex-col md:gap-y-6">
 					<For each={props.productInfo?.options}>
 						{option => {
 							return (
@@ -88,17 +100,21 @@ export default function ProductActions(props: {
 						}}
 					</For>
 				</div>
-				<button
-					onClick={() => {
-						console.log('ADD TO CART')
-						addToCart()
-					}}
-					class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white"
-				>
-					Add to cart
-				</button>
-				<span>description:</span>
-				<p class="text-base">{props.productInfo?.description}</p>
+				<div class="absolute sticky bottom-0">
+					<button
+						onClick={() => {
+							console.log('ADD TO CART')
+							addToCart()
+						}}
+						class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white"
+					>
+						Add to cart
+					</button>
+				</div>
+				<div class="hidden">
+					<span>description:</span>
+					<p class="text-base">{props.productInfo?.description}</p>
+				</div>
 			</div>
 		</Show>
 	)
@@ -120,7 +136,7 @@ export function OptionSelect({ option, current, updateOption, title }: OptionSel
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-3">
 				<span class="text-base font-semibold">Select {title}</span>
-				<div class="grid grid-cols-3 lg:grid-cols-6 gap-2">
+				<div class="grid grid-cols-5 lg:grid-cols-6 gap-2">
 					<For each={filteredOptions}>
 						{v => {
 							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])

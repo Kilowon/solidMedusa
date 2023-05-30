@@ -24,7 +24,7 @@ export default function ProductTemplate(props: {
 							params={props.params}
 						/>
 					</div>
-					<div class="lg:sticky lg:top-20 w-full py-8 sm:py-0 md:max-w-[344px] lg:max-w-[400px] flex flex-col gap-y-12">
+					<div class="lg:sticky lg:top-20 w-full py-8 sm:py-0 md:max-w-[344px] lg:max-w-[400px] md:flex md:flex-col md:gap-y-12">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
 								<ProductActions

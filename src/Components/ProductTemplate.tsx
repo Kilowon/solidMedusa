@@ -16,8 +16,8 @@ export default function ProductTemplate(props: {
 	return (
 		<Show when={props.productInfo}>
 			<main>
-				<div class="content-container flex flex-col lg:flex-row lg:items-start py-6 relative mt-10">
-					<div class="flex flex-col gap-y-8 w-full">
+				<div class="md:content-container md:flex md:flex-col lg:flex-row lg:items-start py-6 relative mt-10">
+					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
 						<ImageGallerySlidy
 							images={props.images}
 							productInfo={props.productInfo}
@@ -40,9 +40,7 @@ export default function ProductTemplate(props: {
 						{/* <ProductTabs productId={product} /> */}
 					</div>
 				</div>
-				<div class="content-container my-16 px-6 sm:px-8 sm:my-32">
-					{/* <RelatedProducts product={product} /> */}
-				</div>
+				<div class="content-container my-16 px-6 sm:px-8 sm:my-32">{/* <RelatedProducts product={product} /> */}</div>
 				{/* <MobileActions
 			product={product}
 			show={!inView}

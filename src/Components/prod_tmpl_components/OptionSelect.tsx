@@ -1,8 +1,7 @@
 import clsx from 'clsx'
-import { For, Show } from 'solid-js'
+import { For, Show, createEffect } from 'solid-js'
 
-export const onlyUnique = (value: unknown, index: number, self: unknown[]) =>
-	self.indexOf(value) === index
+export const onlyUnique = (value: unknown, index: number, self: unknown[]) => self.indexOf(value) === index
 
 type OptionSelectProps = {
 	option: any
@@ -11,15 +10,12 @@ type OptionSelectProps = {
 	title: string
 }
 //TODO: Need Hook to update the option selection
-export default function OptionSelect({
-	option,
-	current,
-	updateOption,
-	title
-}: OptionSelectProps) {
-	const filteredOptions = option.values
-		.map((v: any) => v.value)
-		.filter(onlyUnique)
+export default function OptionSelect({ option, current, updateOption, title }: OptionSelectProps) {
+	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
+
+	createEffect(() => {
+		console.log(current)
+	})
 
 	return (
 		<Show when={option.values.length > 0}>
@@ -32,9 +28,12 @@ export default function OptionSelect({
 								<button
 									onClick={() => {
 										updateOption({ [option.id]: v })
-										console.log('OPTIONS', option.product_id)
+										console.log(v, current)
 									}}
-									class="border-gray-200 border text-xs h-[50px] transition-all duration-200"
+									class={clsx('border-gray-200 border text-xs h-[50px] transition-all duration-200', {
+										'bg-gray-900 text-white': v === current,
+										'bg-gray-900': v === current
+									})}
 								>
 									{v}
 								</button>

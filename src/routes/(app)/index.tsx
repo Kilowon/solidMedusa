@@ -4,6 +4,7 @@ import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
 import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
 import { Cart } from '~/types/types'
+import { Footer } from '~/Components/layout/Footer'
 
 export function routeData() {
 	const { medusa } = useGlobalContext()
@@ -25,6 +26,7 @@ export default function App() {
 		<main>
 			<Hero />
 			<FeaturedProducts featuredProducts={data()?.featuredProducts} />
+			<Footer />
 		</main>
 	)
 }

@@ -12,12 +12,7 @@ export function routeData() {
 
 	return createRouteData(async () => {
 		const responceProduct: any = IsClientCheck(
-			await getProductList(
-				medusa,
-				cart.result?.cart.id,
-				3,
-				cart.result?.cart.region
-			)
+			await getProductList(medusa, cart.result?.cart.id, 3, cart.result?.cart.region)
 		)
 
 		const responceCollection = await medusa!.collections
@@ -58,7 +53,6 @@ export default function Home() {
 				cart={cart.result?.cart}
 			/>
 			<Outlet />
-			<Footer />
 		</div>
 	)
 }

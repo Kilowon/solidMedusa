@@ -978,14 +978,6 @@ export function Customer(props: CustomerProps) {
 
 	return (
 		<div>
-			<form id="your-form-id">
-				<input
-					type="text"
-					style={{ display: 'none' }}
-				/>
-				{/* Rest of your form fields */}
-			</form>
-
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<FormHeader
 					of={customerForm}

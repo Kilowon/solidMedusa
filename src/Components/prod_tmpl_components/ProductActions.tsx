@@ -78,7 +78,7 @@ export default function ProductActions(props: {
 						</Show>
 					</div>
 				</div>
-				<Show when={props.productInfo?.options.length < 2}>
+				<Show when={props.productInfo?.options.length === 1}>
 					<div class="grid grid-cols-2 gap-3 md:my-8 md:flex md:flex-col md:gap-y-6">
 						<For each={props.productInfo?.options}>
 							{option => {
@@ -96,7 +96,7 @@ export default function ProductActions(props: {
 						</For>
 					</div>
 				</Show>
-				<Show when={props.productInfo?.options.length > 2}>
+				<Show when={props.productInfo?.options.length > 1}>
 					<div class="grid grid-cols-2 gap-3 md:my-8 md:flex md:flex-col md:gap-y-6">
 						<For each={props.productInfo?.options}>
 							{option => {

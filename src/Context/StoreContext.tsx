@@ -1,17 +1,7 @@
-import {
-	deleteLineItem,
-	addLineItem,
-	updateLineItem
-} from '~/Services/medusaAPI'
+import { deleteLineItem, addLineItem, updateLineItem } from '~/Services/medusaAPI'
 import Medusa from '@medusajs/medusa-js'
 import { Cart, ProductVariant } from '~/types/types'
-import {
-	createContext,
-	useContext,
-	createMemo,
-	createSignal,
-	createEffect
-} from 'solid-js'
+import { createContext, useContext, createMemo, createSignal, createEffect } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { Product } from '~/types/models'
 import { currencyFormat, findCheapestPrice } from '~/lib/helpers/currency'

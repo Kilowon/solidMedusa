@@ -16,7 +16,7 @@ export default function ProductTemplate(props: {
 	return (
 		<Show when={props.productInfo}>
 			<main>
-				<div class="absolute top-0 md:content-container md:flex md:flex-col lg:flex-row lg:items-start md:py-6  md:mt-10">
+				<div class="absolute lg:static top-0 md:content-container md:flex md:flex-col lg:flex-row lg:items-start md:py-6  md:mt-10">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
 						<ImageGallerySlidy
 							images={props.images}
@@ -24,7 +24,7 @@ export default function ProductTemplate(props: {
 							params={props.params}
 						/>
 					</div>
-					<div class="lg:sticky lg:top-20 md:w-full md:max-w-[344px] lg:max-w-[400px] md:flex md:flex-col md:gap-y-12">
+					<div class="lg:sticky lg:top-20 lg:w-full  lg:max-w-[400px] lg:flex lg:flex-col lg:gap-y-12">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
 								<ProductActions

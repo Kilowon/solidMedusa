@@ -67,7 +67,7 @@ export default function ImageGallerySlidy(props: {
 			<div class="md:flex md:items-start md:relative">
 				<div
 					id="gallery"
-					class="h-[60svh]  md:flex md:h-[90svh] md:mx-8 "
+					class="h-[55svh]  lg:flex lg:h-[90svh] lg:mx-8 "
 				>
 					<Slidy
 						slides={slides()}

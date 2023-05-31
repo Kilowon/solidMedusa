@@ -47,14 +47,14 @@ export default function ProductActions(props: {
 
 	return (
 		<Show when={props.productInfo}>
-			<div class="flex flex-col space-y-2 font-poppins">
+			<div class="flex flex-col space-y-3 font-poppins mx-2">
 				<A
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
 				>
 					{props.productInfo.collection?.title}
 				</A>
-				<div class="flex justify-between w-full lg:flex-col :items-start text-black bg-white">
+				<div class="flex justify-between w-full lg:flex-col items-start text-black bg-white">
 					<h3 class="text-lg md:text-2xl font-semibold">{props.productInfo?.title}</h3>
 					<div>
 						<Show when={currentVariant()?.original_price}>
@@ -97,7 +97,7 @@ export default function ProductActions(props: {
 					</div>
 				</Show>
 				<Show when={props.productInfo?.options.length > 1}>
-					<div class="grid grid-cols-2 flex-none gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
+					<div class="gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6 space-y-2">
 						<For each={props.productInfo?.options}>
 							{option => {
 								return (
@@ -115,7 +115,7 @@ export default function ProductActions(props: {
 						</For>
 					</div>
 				</Show>
-				<div class="absolute sticky bottom-0">
+				<div>
 					<button
 						onClick={() => {
 							console.log('ADD TO CART')
@@ -150,7 +150,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-3">
-				<span class="text-sm md:text-base font-semibold">Select {title}</span>
+				<span class="text-sm md:text-base font-semibold">{title}</span>
 				<div class="grid grid-cols-3 justify-start lg:grid-cols-6 gap-1 md:gap-2">
 					<For each={filteredOptions}>
 						{v => {
@@ -241,7 +241,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
 				<span class="text-sm md:text-base font-semibold">Select {title}</span>
-				<div class=" grid grid-cols-3 gap-0.5 md:grid-cols-5 justify-start lg:grid-cols-6 md:gap-2">
+				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {
 							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
@@ -263,7 +263,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 									onClick={() => {
 										updateOption({ [option.id]: v })
 									}}
-									class={clsx('border-gray-200 border text-xs h-8 transition-all duration-200', {
+									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {
 										'border-gray-5 text-gray-8': isSelected(),
 										'bg-gray-200 text-gray-400 line-through ': !viable()
 									})}

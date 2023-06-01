@@ -13,10 +13,6 @@ type OptionSelectProps = {
 export default function OptionSelect({ option, current, updateOption, title }: OptionSelectProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
 
-	createEffect(() => {
-		console.log(current)
-	})
-
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-3">
@@ -28,7 +24,6 @@ export default function OptionSelect({ option, current, updateOption, title }: O
 								<button
 									onClick={() => {
 										updateOption({ [option.id]: v })
-										console.log(v, current)
 									}}
 									class={clsx('border-gray-200 border text-xs h-[50px] transition-all duration-200', {
 										'bg-gray-900 text-white': v === current,

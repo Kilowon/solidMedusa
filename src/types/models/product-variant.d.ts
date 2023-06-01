@@ -1,31 +1,32 @@
-import { MoneyAmount } from "./money-amount";
-import { Product } from "./product";
-import { ProductOptionValue } from "./product-option-value";
-import { SoftDeletableEntity } from "../interfaces/models/soft-deletable-entity";
+import { MoneyAmount } from './money-amount'
+import { Product } from './product'
+import { ProductOptionValue } from './product-option-value'
+import { SoftDeletableEntity } from '../interfaces/models/soft-deletable-entity'
 export declare class ProductVariant extends SoftDeletableEntity {
-    title: string;
-    product_id: string;
-    product: Product;
-    prices: MoneyAmount[];
-    sku: string;
-    barcode: string;
-    ean: string;
-    upc: string;
-    variant_rank: number;
-    inventory_quantity: number;
-    allow_backorder: boolean;
-    manage_inventory: boolean;
-    hs_code: string;
-    origin_country: string;
-    mid_code: string;
-    material: string;
-    weight: number;
-    length: number;
-    height: number;
-    width: number;
-    options: ProductOptionValue[];
-    metadata: Record<string, unknown>;
-    private beforeInsert;
+	title: string
+	product_id: string
+	product: Product
+	prices: MoneyAmount[]
+	sku: string
+	barcode: string
+	ean: string
+	upc: string
+	variant_rank: number
+	inventory_quantity: number
+	allow_backorder: boolean
+	manage_inventory: boolean
+	hs_code: string
+	origin_country: string
+	mid_code: string
+	material: string
+	weight: number
+	length: number
+	height: number
+	width: number
+	options: ProductOptionValue[]
+	metadata: Record<string, unknown>
+	private beforeInsert
+	purchasable: any
 }
 /**
  * @schema ProductVariant

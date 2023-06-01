@@ -454,7 +454,7 @@ function ItemOptions(props: any) {
 								<For each={variant.options}>
 									{option => {
 										return (
-											<div class="flex text-xs lg:text-base">
+											<div class="flex text-xs">
 												<For each={queryLineItem?.data?.product?.options}>
 													{opt => {
 														if (opt.id === option.option_id) {

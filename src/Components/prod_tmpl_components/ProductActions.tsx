@@ -149,9 +149,9 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 
 	return (
 		<Show when={option.values.length > 0}>
-			<div class="flex flex-col gap-y-3">
-				<span class="text-sm md:text-base font-semibold">{title}</span>
-				<div class="grid grid-cols-3 justify-start lg:grid-cols-6 gap-1 md:gap-2">
+			<div class="flex flex-col gap-y-1">
+				<span class="text-sm md:text-base font-semibold">Select {title}</span>
+				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {
 							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
@@ -160,7 +160,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 									onClick={() => {
 										updateOptions({ [option.id]: v })
 									}}
-									class={clsx('border-gray-200 border text-xs h-[50px] w-16 transition-all duration-200', {
+									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {
 										'border-gray-5 text-gray-8': isSelected()
 									})}
 								>

@@ -1,8 +1,6 @@
 import { JSX, For, Show, createEffect, createMemo, createSignal } from 'solid-js'
-import { A } from 'solid-start'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
-import { useGlobalContext } from '~/Context/Providers'
 import { useStore } from '~/Context/StoreContext'
 import { currencyFormat } from '~/lib/helpers/currency'
 interface CurrentVariant {
@@ -32,6 +30,16 @@ export default function ProductActions(props: {
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 
+	function isProductPurchasable(): string {
+		if (props.variant()) {
+			const variant = props.productInfo.variants.find(v => v.id === props.variant().id)
+			if (variant) {
+				return variant.purchasable ? 'valid' : 'out-of-stock'
+			}
+		}
+		return 'invalid'
+	}
+
 	createEffect(() => {
 		if (props.variant()?.id) {
 			const variant = props.productInfo.variants.find(v => v.id === props.variant()?.id)
@@ -40,6 +48,7 @@ export default function ProductActions(props: {
 			setCurrentVariant(props.productInfo.variants[0])
 		}
 	})
+
 	return (
 		<Show when={props.productInfo}>
 			<div class="flex flex-col space-y-3 font-poppins mx-2">
@@ -115,9 +124,17 @@ export default function ProductActions(props: {
 						onClick={() => {
 							addToCart()
 						}}
-						class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-green-600 border-green-600 hover:bg-green-400  disabled:hover:bg-gray-900 disabled:hover:text-white"
+						disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
+						class={clsx(
+							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50disabled:hover:bg-gray-900 disabled:hover:text-white',
+							isProductPurchasable() === 'valid' && 'text-white bg-green-600 border-green-600 hover:bg-green-400',
+							isProductPurchasable() === 'invalid' && 'text-white bg-gray-600 border-gray-600',
+							isProductPurchasable() === 'out-of-stock' && 'text-white bg-gray-600 border-gray-600'
+						)}
 					>
-						Add to cart
+						{isProductPurchasable() === 'valid' ? 'Add to cart' : ''}
+						{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
+						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
 					</button>
 				</div>
 				<div>

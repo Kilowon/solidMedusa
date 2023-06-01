@@ -18,8 +18,8 @@ export default function ImageGallerySlidy(props: {
 		if (images && images.length > 0) {
 			const newSlides = images.map((image, index) => ({
 				id: `${index}`,
-				width: 1280,
-				height: 853,
+				width: 400,
+				height: 600,
 				alt: `Product image ${index + 1}`,
 				src: image.url
 			}))
@@ -32,7 +32,7 @@ export default function ImageGallerySlidy(props: {
 		} else {
 			const placeholderSlide = {
 				id: 'placeholder',
-				width: 1280,
+				width: 800,
 				height: 853,
 				alt: 'Product thumbnail',
 				src: `https://fakeimg.pl/405x480/?text=${props.productInfo?.title}&font=poppins`
@@ -72,13 +72,43 @@ export default function ImageGallerySlidy(props: {
 					<Slidy
 						slides={slides()}
 						snap="center"
-						thumbnail={true}
+						thumbnail={false}
 						easing={linear}
 						clamp={0}
 						loop={true}
 						// @ts-ignore
 						animation={blur}
-						arrows={true}
+						arrows={() => (
+							<div class="absolute inset-0 flex items-center justify-between w-full h-full">
+								<button
+									data-step="1"
+									class="absolute inset-y-0 left-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
+									aria-label="Previous slide"
+									onClick={() => {}}
+								>
+									<svg
+										class="w-8 h-8 fill-current"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+									</svg>
+								</button>
+								<button
+									data-step="-1"
+									class="absolute inset-y-0 right-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
+									aria-label="Next slide"
+								>
+									<svg
+										class="w-8 h-8 fill-current"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+									</svg>
+								</button>
+							</div>
+						)}
 						background={false}
 						progress={false}
 						counter={false}

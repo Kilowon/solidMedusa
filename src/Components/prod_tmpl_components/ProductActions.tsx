@@ -43,14 +43,14 @@ export default function ProductActions(props: {
 	return (
 		<Show when={props.productInfo}>
 			<div class="flex flex-col space-y-3 font-poppins mx-2">
-				<A
+				{/* <A
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
 				>
 					{props.productInfo.collection?.title}
-				</A>
+				</A> */}
 				<div class="flex justify-between w-full lg:flex-col items-start text-black bg-white">
-					<h3 class="text-lg md:text-2xl font-semibold">{props.productInfo?.title}</h3>
+					<h3 class=" md:text-2xl font-semibold">{props.productInfo?.title}</h3>
 					<div>
 						<Show when={currentVariant()?.original_price}>
 							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
@@ -237,6 +237,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 					<For each={filteredOptions}>
 						{v => {
 							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
+							//@ts-ignore
 							const selectedOptions = createMemo<string[]>(() => {
 								const currentObj = current()
 								if (Object.keys(currentObj).length === 0) {

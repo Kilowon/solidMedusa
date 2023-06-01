@@ -18,8 +18,8 @@ export default function ImageGallerySlidy(props: {
 		if (images && images.length > 0) {
 			const newSlides = images.map((image, index) => ({
 				id: `${index}`,
-				width: 400,
-				height: 600,
+				width: 1280,
+				height: 853,
 				alt: `Product image ${index + 1}`,
 				src: image.url
 			}))
@@ -32,7 +32,7 @@ export default function ImageGallerySlidy(props: {
 		} else {
 			const placeholderSlide = {
 				id: 'placeholder',
-				width: 800,
+				width: 1280,
 				height: 853,
 				alt: 'Product thumbnail',
 				src: `https://fakeimg.pl/405x480/?text=${props.productInfo?.title}&font=poppins`

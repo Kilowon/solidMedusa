@@ -30,11 +30,14 @@ export default function ProductActions(props: {
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 
+	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
+	// I am disabling the purchasable field for now
 	function isProductPurchasable(): string {
 		if (props.variant()) {
 			const variant = props.productInfo.variants.find(v => v.id === props.variant().id)
 			if (variant) {
-				return variant.purchasable ? 'valid' : 'out-of-stock'
+				return 'valid'
+				//return variant.purchasable ? 'valid' : 'out-of-stock'
 			}
 		}
 		return 'invalid'
@@ -285,6 +288,13 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 }
 
 export function ProductInformationTabs() {
+	const [activeTab, setActiveTab] = createSignal({
+		profile: 'active',
+		dashboard: 'inactive',
+		shipping: 'inactive',
+		reviews: 'inactive'
+	})
+
 	return (
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">

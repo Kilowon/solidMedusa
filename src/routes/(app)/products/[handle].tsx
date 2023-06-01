@@ -1,7 +1,7 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { fetchProduct } from '~/Services/medusaAPI'
 import { useParams, Title, Meta } from 'solid-start'
-import { Suspense } from 'solid-js'
+import { Suspense, createEffect } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -22,6 +22,10 @@ export default function Products() {
 		cacheTime: 25 * 60 * 1000,
 		staleTime: 25 * 60 * 1000
 	}))
+
+	createEffect(() => {
+		console.log(queryProduct?.data?.products[0])
+	})
 
 	return (
 		<div>

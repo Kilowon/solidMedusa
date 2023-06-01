@@ -40,11 +40,6 @@ export default function ProductActions(props: {
 			setCurrentVariant(props.productInfo.variants[0])
 		}
 	})
-
-	createEffect(() => {
-		console.log('current variant', currentVariant())
-	})
-
 	return (
 		<Show when={props.productInfo}>
 			<div class="flex flex-col space-y-3 font-poppins mx-2">
@@ -118,7 +113,6 @@ export default function ProductActions(props: {
 				<div>
 					<button
 						onClick={() => {
-							console.log('ADD TO CART')
 							addToCart()
 						}}
 						class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white"
@@ -189,7 +183,6 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	const isOptionViable = (value: string, selectedOptions: string[]) => {
 		// If no options are selected yet, return true
 		if (selectedOptions.length === 0) {
-			console.log('selectedOptions', selectedOptions)
 			return true
 		}
 
@@ -199,7 +192,6 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 
 			// Check if the current option value exists in the variant options
 			if (variantOptions.includes(value)) {
-				console.log('variantOptions', variantOptions)
 				// Check if all selected options are available in the variant options
 				if (selectedOptions.every((selectedOption: string) => variantOptions.includes(selectedOption))) {
 					return true
@@ -253,10 +245,6 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 								return Object.values(currentObj).filter(value => value !== undefined)
 							})
 							const viable = createMemo(() => isOptionViable(v, selectedOptions()), [current()])
-
-							createEffect(() => {
-								console.log(v, selectedOptions())
-							})
 
 							return (
 								<button

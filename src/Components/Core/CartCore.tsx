@@ -46,8 +46,8 @@ export default function CartCore(props: CartCoreProps) {
 									props.variant === 'primary' && 'max-h-[500px] lg:max-h-[2000px] lg:w-2/3',
 									props.variant === 'checkout' && 'max-h-[425px] mx-auto',
 									props.variant === 'panel' && 'max-h-[565px] mx-auto',
-									props.variant === 'mobile-checkout' && 'max-h-[45vh] mx-auto',
-									props.variant === 'mobile-panel' && 'max-h-[45vh] mx-auto'
+									props.variant === 'mobile-checkout' && 'max-h-[45svh] mx-auto',
+									props.variant === 'mobile-panel' && 'max-h-[45svh] mx-auto'
 								)}
 							>
 								<For

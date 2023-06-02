@@ -141,7 +141,7 @@ export default function ProductActions(props: {
 					</button>
 				</div>
 				<div>
-					<ProductInformationTabs />
+					<ProductInformationTabs productInfo={props.productInfo} />
 				</div>
 			</div>
 		</Show>
@@ -287,19 +287,18 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	)
 }
 
-export function ProductInformationTabs() {
+export function ProductInformationTabs(props: { productInfo: Product }) {
 	const [activeTab, setActiveTab] = createSignal({
-		profile: 'active',
-		dashboard: 'inactive',
-		shipping: 'inactive',
-		reviews: 'inactive'
+		description: 'active',
+		info: 'inactive',
+		shipping: 'inactive'
 	})
 
 	return (
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
 				<ul
-					class="flex  -mb-px text-sm font-medium text-center"
+					class="flex -mb-px text-xs font-medium text-center"
 					id="myTab"
 					data-tabs-toggle="#myTabContent"
 					role="tablist"
@@ -309,15 +308,24 @@ export function ProductInformationTabs() {
 						role="presentation"
 					>
 						<button
-							class="inline-block p-4 border-b-2 rounded-t-lg"
+							class={clsx(
+								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								activeTab().description === 'active' &&
+									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
 							id="profile-tab"
 							data-tabs-target="#profile"
 							type="button"
 							role="tab"
 							aria-controls="profile"
 							aria-selected="false"
+							onClick={() => setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive' })}
 						>
-							Profile
+							<div class="flex flex-col justify-center items-center ">
+								<div class="i-material-symbols-description-outline text-lg" />
+								Description
+							</div>
 						</button>
 					</li>
 					<li
@@ -325,15 +333,23 @@ export function ProductInformationTabs() {
 						role="presentation"
 					>
 						<button
-							class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+							class={clsx(
+								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
 							id="dashboard-tab"
 							data-tabs-target="#dashboard"
 							type="button"
 							role="tab"
 							aria-controls="dashboard"
 							aria-selected="false"
+							onClick={() => setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive' })}
 						>
-							Dashboard
+							<div class="flex flex-col justify-center items-center ">
+								<div class="i-carbon-product text-lg bg-gray-7" />
+								Product Information
+							</div>
 						</button>
 					</li>
 					<li
@@ -341,61 +357,69 @@ export function ProductInformationTabs() {
 						role="presentation"
 					>
 						<button
-							class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+							class={clsx(
+								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
 							id="settings-tab"
 							data-tabs-target="#settings"
 							type="button"
 							role="tab"
 							aria-controls="settings"
 							aria-selected="false"
+							onClick={() => setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active' })}
 						>
-							Settings
-						</button>
-					</li>
-					<li role="presentation">
-						<button
-							class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-							id="contacts-tab"
-							data-tabs-target="#contacts"
-							type="button"
-							role="tab"
-							aria-controls="contacts"
-							aria-selected="false"
-						>
-							Contacts
+							{' '}
+							<div class="flex flex-col justify-center items-center ">
+								<div class="i-ph-truck text-lg text-gray-7" />
+								Shipping & Returns
+							</div>
 						</button>
 					</li>
 				</ul>
 			</div>
 			<div id="myTabContent">
 				<div
-					class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+					class={clsx(
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+						activeTab().description === 'active' && '',
+						activeTab().description === 'inactive' && 'hidden'
+					)}
 					id="profile"
 					role="tabpanel"
 					aria-labelledby="profile-tab"
 				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						This is some placeholder content the{' '}
-						<strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking
-						another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-						content visibility and styling.
+					<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
+						{props.productInfo.description}
 					</p>
 				</div>
 				<div
-					class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+					class={clsx(
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+						activeTab().info === 'active' && '',
+						activeTab().info === 'inactive' && 'hidden'
+					)}
 					id="dashboard"
 					role="tabpanel"
 					aria-labelledby="dashboard-tab"
 				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						This is some placeholder content the{' '}
-						<strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking
-						another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-						content visibility and styling.
+					<p class="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
+						Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data
+						from other software development tools, so your IT support and operations teams have richer contextual information
+						to rapidly respond to requests, incidents, and changes.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical
+						development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.
 					</p>
 				</div>
 				<div
-					class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+					class={clsx(
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+						activeTab().shipping === 'active' && '',
+						activeTab().shipping === 'inactive' && 'hidden'
+					)}
 					id="settings"
 					role="tabpanel"
 					aria-labelledby="settings-tab"
@@ -403,19 +427,6 @@ export function ProductInformationTabs() {
 					<p class="text-sm text-gray-500 dark:text-gray-400">
 						This is some placeholder content the{' '}
 						<strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking
-						another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-						content visibility and styling.
-					</p>
-				</div>
-				<div
-					class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
-					id="contacts"
-					role="tabpanel"
-					aria-labelledby="contacts-tab"
-				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						This is some placeholder content the{' '}
-						<strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking
 						another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
 						content visibility and styling.
 					</p>

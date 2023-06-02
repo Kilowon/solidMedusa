@@ -298,18 +298,18 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
 				<ul
-					class="flex -mb-px text-xs font-medium text-center"
+					class="flex -mb-px text-xs font-medium text-center space-x-2 "
 					id="myTab"
 					data-tabs-toggle="#myTabContent"
 					role="tablist"
 				>
 					<li
-						class="mr-2"
+						class=""
 						role="presentation"
 					>
 						<button
 							class={clsx(
-								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full',
 								activeTab().description === 'active' &&
 									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
@@ -329,12 +329,12 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 						</button>
 					</li>
 					<li
-						class="mr-2"
+						class=""
 						role="presentation"
 					>
 						<button
 							class={clsx(
-								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full',
 								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -353,12 +353,12 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 						</button>
 					</li>
 					<li
-						class="mr-2"
+						class=""
 						role="presentation"
 					>
 						<button
 							class={clsx(
-								'inline-block p-2 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full',
 								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -390,7 +390,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					role="tabpanel"
 					aria-labelledby="profile-tab"
 				>
-					<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
+					<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
 						{props.productInfo.description}
 					</p>
 				</div>
@@ -404,7 +404,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					role="tabpanel"
 					aria-labelledby="dashboard-tab"
 				>
-					<p class="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
+					<p class="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
 						Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data
 						from other software development tools, so your IT support and operations teams have richer contextual information
 						to rapidly respond to requests, incidents, and changes.

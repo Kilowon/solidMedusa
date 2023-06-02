@@ -152,7 +152,48 @@ export default function ProductActions(props: {
 					<ProductInformationTabs productInfo={props.productInfo} />
 				</div>
 				<div>
-					<CustomerReviews rating={rating} />
+					<CustomerOverallReviews rating={rating} />
+				</div>
+				<div class="space-y-3">
+					<CustomerIndividualReviews
+						review={`Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didn't come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. ow I have to make a trip to thr store to return.`}
+						rating={5}
+						name={'Shane'}
+						date="July 20, 2021"
+						title={'This is Cool'}
+					/>
+					<CustomerIndividualReviews
+						review={
+							'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.'
+						}
+						rating={5}
+						name={'CoffeeDiva62'}
+						date="July 20, 2022"
+						title={'Beautiful Forest Green Hoodie'}
+					/>
+					<CustomerIndividualReviews
+						review={'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.'}
+						rating={2}
+						name={'LADYV40'}
+						date="2/2/2014"
+						title={'Great Hoodie For The Weather'}
+					/>
+					<CustomerIndividualReviews
+						review={'It’s really soft and cute highly recommend'}
+						rating={5}
+						name={'Abby'}
+						date="July 20, 2021"
+						title={'Great product!'}
+					/>
+					<CustomerIndividualReviews
+						review={
+							'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap'
+						}
+						rating={3}
+						name={'Bob'}
+						date="10/15/2022"
+						title={'Color wayyy off'}
+					/>
 				</div>
 			</div>
 		</Show>
@@ -543,14 +584,14 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 	)
 }
 
-export function CustomerReviews(props: { rating: () => number }) {
+export function CustomerOverallReviews(props: { rating: () => number }) {
 	return (
 		<div class="space-y-4">
 			<div class="flex flex-col justify-center items-center  ">
 				<div class="space-x-2  ">
-					<span class="text-gray-500 dark:text-gray-400 text-7xl">4.5</span>
-					<span class="text-gray-500 dark:text-gray-400 text-3xl font-light">out of</span>
-					<span class="text-gray-500 dark:text-gray-400 text-7xl">5</span>
+					<span class="text-gray-500 dark:text-gray-400 text-5xl">4.5</span>
+					<span class="text-gray-500 dark:text-gray-400 text-2xl font-light">out of</span>
+					<span class="text-gray-500 dark:text-gray-400 text-5xl">5</span>
 				</div>
 				<div class="flex items-center space-x-2">
 					<StarIconRequest rating={props.rating()} />
@@ -589,12 +630,12 @@ export function CustomerReviews(props: { rating: () => number }) {
 
 export function ReviewPercentSlider(props: { percent: number; label: string }) {
 	return (
-		<div class="flex items-center justify-center space-x-2">
-			<div class="text-gray-500 dark:text-gray-400">{props.label} </div>
+		<div class="flex  items-center justify-center space-x-2">
+			<div class="text-gray-500 dark:text-gray-400 ">{props.label} </div>
 
-			<div class="w-3/4 max-w-sm h-2 bg-gray-200 rounded-full">
+			<div class="w-3/4 max-w-sm h-2 bg-gray-200 rounded-full ">
 				<div
-					class="h-full bg-yellow-400 rounded-full"
+					class="h-full bg-yellow-400 rounded-full "
 					style={{ width: `${props.percent}%` }}
 				/>
 			</div>
@@ -625,4 +666,35 @@ export function StarIconRequest(props: { rating: number }) {
 	}
 
 	return <div class="text-2xl text-gray-500 dark:text-gray-400">{getStarIcon(roundRating)}</div>
+}
+
+export function CustomerIndividualReviews(props: {
+	rating: number
+	review: string
+	name: string
+	date: string
+	title: string
+}) {
+	return (
+		<div class="flex flex-col space-y-2 ">
+			<div class="flex items-center space-x-2">
+				<StarIconRequest rating={props.rating} />
+
+				<div class="text-green-600 dark:text-gray-400 text-xs">Verified Purchaser</div>
+				<div class="text-gray-500 dark:text-gray-400">|</div>
+
+				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date}</div>
+			</div>
+
+			<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">{props.title}</div>
+
+			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review}"</div>
+
+			<div class="flex items-center space-x-2">
+				<div class="text-gray-500 dark:text-gray-400">~</div>
+
+				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
+			</div>
+		</div>
+	)
 }

@@ -298,7 +298,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
 				<ul
-					class="flex -mb-px text-xs font-medium text-center space-x-2 "
+					class="flex -mb-px text-xs font-medium text-center space-x-0.5 "
 					id="myTab"
 					data-tabs-toggle="#myTabContent"
 					role="tablist"

@@ -144,7 +144,7 @@ export default function ProductActions(props: {
 						)}
 					>
 						{isProductPurchasable() === 'valid'
-							? `Add to cart - ${currencyFormat(Number(currentVariant()?.original_price), 'US')}`
+							? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
 							: ''}
 						{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
 						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}

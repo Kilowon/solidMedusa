@@ -143,7 +143,9 @@ export default function ProductActions(props: {
 							isProductPurchasable() === 'out-of-stock' && 'text-white bg-gray-600 border-gray-600'
 						)}
 					>
-						{isProductPurchasable() === 'valid' ? 'Add to cart' : ''}
+						{isProductPurchasable() === 'valid'
+							? `Add to cart - ${currencyFormat(Number(currentVariant()?.original_price), 'US')}`
+							: ''}
 						{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
 						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
 					</button>

@@ -660,7 +660,7 @@ export function StarIconRequest(props: { rating: number }) {
 		}
 		if (rating < 5) {
 			for (let i = 0; i < 5 - Math.ceil(rating); i++) {
-				stars.push(<i class="i-ic-outline-star-rate text-gray-400" />)
+				stars.push(<i class="i-ic-outline-star-rate text-gray-400/50" />)
 			}
 		}
 		return stars
@@ -696,7 +696,7 @@ export function CustomerIndividualReviews(props: {
 
 				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
 			</div>
-			<span class="flex mx-2 border border-gray-3 border-1 rounded-36"></span>
+			<span class="flex mx-2 border border-gray-3/70 border-1 rounded-36"></span>
 		</div>
 	)
 }

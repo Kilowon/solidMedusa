@@ -196,14 +196,17 @@ type OptionSelectViableProps = {
 	productInfo: Product
 }
 
+//TODO: Needs to be more explicit with 'not-viable'
 export function OptionSelectViable({ option, current, updateOptions, title, productInfo }: OptionSelectViableProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
 
-	const isOptionViable = (value: string, selectedOptions: string[]) => {
-		// If no options are selected yet, return true
+	const isOptionViable = (value: string, selectedOptions: string[]): string => {
+		// If no options are selected yet, return 'viable'
 		if (selectedOptions.length === 0) {
-			return true
+			return 'viable'
 		}
+
+		let couldBeViable = false
 
 		// Iterate through the options array inside each variant array
 		for (const variant of productInfo.variants) {
@@ -213,11 +216,15 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 			if (variantOptions.includes(value)) {
 				// Check if all selected options are available in the variant options
 				if (selectedOptions.every((selectedOption: string) => variantOptions.includes(selectedOption))) {
-					return true
+					return 'viable'
+				} else {
+					couldBeViable = true
 				}
 			}
 		}
-		return false
+
+		// Return 'could-viable' if the option is not viable but could be selected based on other selections
+		return couldBeViable ? 'could-viable' : 'not-viable'
 	}
 
 	function updateOption(newOption: Record<string, string>) {
@@ -273,7 +280,8 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 									}}
 									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {
 										'border-gray-5 text-gray-8': isSelected(),
-										'bg-gray-200 text-gray-400 line-through ': !viable()
+										'bg-gray-200 text-gray-400 line-through': viable() === 'not-viable',
+										'bg-gray-200 text-gray-400 ': viable() === 'could-viable'
 									})}
 								>
 									{v}

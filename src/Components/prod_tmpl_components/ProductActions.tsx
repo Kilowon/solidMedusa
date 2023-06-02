@@ -154,6 +154,7 @@ export default function ProductActions(props: {
 				<div>
 					<CustomerOverallReviews rating={rating} />
 				</div>
+				<span class="flex mx-2 border border-gray-3 border-1"></span>
 				<div class="space-y-3">
 					<CustomerIndividualReviews
 						review={`Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didn't come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. ow I have to make a trip to thr store to return.`}
@@ -695,6 +696,7 @@ export function CustomerIndividualReviews(props: {
 
 				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
 			</div>
+			<span class="flex mx-2 border border-gray-3 border-1 rounded-36"></span>
 		</div>
 	)
 }

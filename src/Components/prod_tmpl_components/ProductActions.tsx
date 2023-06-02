@@ -593,7 +593,10 @@ export function ReviewPercentSlider(props: { percent: number; label: string }) {
 			<div class="text-gray-500 dark:text-gray-400">{props.label} </div>
 
 			<div class="w-3/4 max-w-sm h-2 bg-gray-200 rounded-full">
-				<div class={`w-[${props.percent}%] h-full bg-yellow-400 rounded-full`} />
+				<div
+					class="h-full bg-yellow-400 rounded-full"
+					style={{ width: `${props.percent}%` }}
+				/>
 			</div>
 
 			<div class="text-gray-500 dark:text-gray-400">{props.percent}%</div>

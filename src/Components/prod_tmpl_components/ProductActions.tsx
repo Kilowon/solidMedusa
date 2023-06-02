@@ -298,8 +298,8 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 export function ProductInformationTabs(props: { productInfo: Product }) {
 	const [activeTab, setActiveTab] = createSignal({
 		description: 'inactive',
-		info: 'active',
-		shipping: 'inactive'
+		info: 'inactive',
+		shipping: 'active'
 	})
 
 	return (
@@ -404,7 +404,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 				</div>
 				<div
 					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2',
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3',
 						activeTab().info === 'active' && '',
 						activeTab().info === 'inactive' && 'hidden'
 					)}
@@ -415,9 +415,12 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					<div>
 						{props.productInfo?.weight && (
 							<div class="">
-								<div class="text-gray-500 dark:text-gray-400 ">Material:</div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-mdi-fabric text-2xl" />
+									<div>Material</div>
+								</div>
 
-								<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material}</div>
+								<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material} </div>
 							</div>
 						)}
 					</div>
@@ -425,14 +428,20 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					<div>
 						{props.productInfo?.weight && (
 							<div class="">
-								<div class="text-gray-500 dark:text-gray-400">Weight:</div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-mdi-weight-pound text-2xl" />
+									<div>Weight</div>
+								</div>
 
 								<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
 							</div>
 						)}
 					</div>
 					<div class="space-y-1">
-						<div class="text-gray-500 dark:text-gray-400">Dimensions:</div>
+						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+							<div class="i-radix-icons-dimensions text-2xl" />
+							<div>Dimensions</div>
+						</div>
 						<div class="flex justify-between">
 							{props.productInfo?.length && (
 								<div>
@@ -457,7 +466,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 				</div>
 				<div
 					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
 						activeTab().shipping === 'active' && '',
 						activeTab().shipping === 'inactive' && 'hidden'
 					)}
@@ -465,12 +474,34 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					role="tabpanel"
 					aria-labelledby="shipping-tab"
 				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						This is some placeholder content the{' '}
-						<strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking
-						another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the
-						content visibility and styling.
-					</p>
+					<div>
+						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+							<div class="i-mdi-truck-fast-outline text-2xl" />
+							<div>Fast delivery:</div>
+						</div>
+						<div class="text-gray-600 dark:text-gray-300">
+							Your package will arrive in 3-5 business days at your pick up location or in the comfort of your home.
+						</div>
+					</div>
+					<div>
+						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+							<div class="i-subway-round-arrow-2 text-xl" />
+							<div>Simple exchanges:</div>
+						</div>
+						<div class="text-gray-600 dark:text-gray-300">
+							Is your order not quite right? No worries - we'll make it right with simple exchanges.
+						</div>
+					</div>
+					<div>
+						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+							<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
+							<div>Easy returns:</div>
+						</div>
+						<div class="text-gray-600 dark:text-gray-300">
+							Just return your product and we'll refund your money. No questions asked – we'll do our best to make sure your
+							return is hassle-free.
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

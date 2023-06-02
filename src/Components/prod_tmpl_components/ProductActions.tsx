@@ -29,6 +29,7 @@ export default function ProductActions(props: {
 	const { addToCart } = useStore()
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
+	const [rating, setRating] = createSignal(4.5)
 
 	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
 	// I am disabling the purchasable field for now
@@ -54,7 +55,7 @@ export default function ProductActions(props: {
 
 	return (
 		<Show when={props.productInfo}>
-			<div class="flex flex-col space-y-3 font-poppins mx-2">
+			<div class="flex flex-col space-y-4 font-poppins mx-2">
 				{/* <A
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
@@ -84,6 +85,13 @@ export default function ProductActions(props: {
 							)}
 						</Show>
 					</div>
+				</div>
+				<div class="flex items-center space-x-2">
+					<StarIconRequest rating={rating()} />
+
+					<div class="text-gray-500 dark:text-gray-400">|</div>
+
+					<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
 				</div>
 				<Show when={props.productInfo?.options.length === 1}>
 					<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
@@ -142,6 +150,9 @@ export default function ProductActions(props: {
 				</div>
 				<div>
 					<ProductInformationTabs productInfo={props.productInfo} />
+				</div>
+				<div>
+					<CustomerReviews rating={rating} />
 				</div>
 			</div>
 		</Show>
@@ -299,7 +310,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 	const [activeTab, setActiveTab] = createSignal({
 		description: 'inactive',
 		info: 'inactive',
-		shipping: 'active'
+		shipping: 'inactive'
 	})
 
 	return (
@@ -328,7 +339,15 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							role="tab"
 							aria-controls="description"
 							aria-selected="false"
-							onClick={() => setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive' })}
+							onClick={() => {
+								if (activeTab().description === 'inactive') {
+									setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive' })
+									return
+								}
+								if (activeTab().description === 'active') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+								}
+							}}
 						>
 							<div class="flex flex-col justify-center items-center ">
 								<div class="i-material-symbols-description-outline text-lg text-gray-6 " />
@@ -352,7 +371,15 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							role="tab"
 							aria-controls="info"
 							aria-selected="false"
-							onClick={() => setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive' })}
+							onClick={() => {
+								if (activeTab().info === 'inactive') {
+									setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive' })
+									return
+								}
+								if (activeTab().info === 'active') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+								}
+							}}
 						>
 							<div class="flex flex-col justify-center items-center ">
 								<div class="i-carbon-product text-lg bg-gray-6" />
@@ -376,7 +403,15 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							role="tab"
 							aria-controls="shipping"
 							aria-selected="false"
-							onClick={() => setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active' })}
+							onClick={() => {
+								if (activeTab().shipping === 'inactive') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active' })
+									return
+								}
+								if (activeTab().shipping === 'active') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+								}
+							}}
 						>
 							{' '}
 							<div class="flex flex-col justify-center items-center ">
@@ -404,7 +439,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 				</div>
 				<div
 					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3',
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6',
 						activeTab().info === 'active' && '',
 						activeTab().info === 'inactive' && 'hidden'
 					)}
@@ -506,4 +541,83 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 			</div>
 		</div>
 	)
+}
+
+export function CustomerReviews(props: { rating: () => number }) {
+	return (
+		<div class="flex flex-col space-y-4 ">
+			<div class="space-x-2  ">
+				<span class="text-gray-500 dark:text-gray-400 text-7xl">4.5</span>
+				<span class="text-gray-500 dark:text-gray-400 text-3xl font-light">out of</span>
+				<span class="text-gray-500 dark:text-gray-400 text-7xl">5</span>
+			</div>
+			<div class="flex items-center space-x-2">
+				<StarIconRequest rating={props.rating()} />
+
+				<div class="text-gray-500 dark:text-gray-400">|</div>
+
+				<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
+			</div>
+
+			<ReviewPercentSlider
+				label="5"
+				percent={87}
+			/>
+			<ReviewPercentSlider
+				label="4"
+				percent={9}
+			/>
+			<ReviewPercentSlider
+				label="3"
+				percent={1}
+			/>
+
+			<ReviewPercentSlider
+				label="2"
+				percent={2}
+			/>
+
+			<ReviewPercentSlider
+				label="1"
+				percent={1}
+			/>
+		</div>
+	)
+}
+
+export function ReviewPercentSlider(props: { percent: number; label: string }) {
+	return (
+		<div class="flex items-center space-x-2">
+			<div class="text-gray-500 dark:text-gray-400">{props.label} </div>
+
+			<div class="w-full h-2 bg-gray-200 rounded-full">
+				<div class={`w-[${props.percent}%] h-full bg-yellow-400 rounded-full`} />
+			</div>
+
+			<div class="text-gray-500 dark:text-gray-400">{props.percent}%</div>
+		</div>
+	)
+}
+
+export function StarIconRequest(props: { rating: number }) {
+	//round rating to nearist half
+	const roundRating = Math.round(props.rating * 2) / 2
+
+	function getStarIcon(rating: number) {
+		const stars = []
+		for (let i = 0; i < Math.floor(rating); i++) {
+			stars.push(<i class="i-ic-baseline-star-rate text-yellow-500" />)
+		}
+		if (rating % 1 !== 0) {
+			stars.push(<i class="i-ic-baseline-star-half text-yellow-500" />)
+		}
+		if (rating < 5) {
+			for (let i = 0; i < 5 - Math.ceil(rating); i++) {
+				stars.push(<i class="i-ic-outline-star-rate text-gray-400" />)
+			}
+		}
+		return stars
+	}
+
+	return <div class="text-2xl text-gray-500 dark:text-gray-400">{getStarIcon(roundRating)}</div>
 }

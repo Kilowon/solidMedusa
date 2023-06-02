@@ -355,8 +355,12 @@ function ItemPrice(props: any) {
 	const { medusa } = useGlobalContext()
 	const { cart } = useGlobalContext()
 
+	createEffect(() => {
+		console.log('ITEMPRICE', queryLineItem?.data?.products[0]?.variants)
+	})
+
 	const queryLineItem = createQuery(() => ({
-		queryKey: ['LineItem', props.item.variant.product.handle],
+		queryKey: ['CartCore-LineItem-Price', props.item.variant.product.handle],
 		queryFn: async function () {
 			const response = await fetchProduct(medusa, cart, props.item.variant.product.handle)
 			return response
@@ -432,7 +436,7 @@ function ItemOptions(props: any) {
 	const { medusa } = useGlobalContext()
 
 	const queryLineItem = createQuery(() => ({
-		queryKey: ['LineItem', props.item?.id],
+		queryKey: ['CartCore-LineItem-Options', props.item?.id],
 		queryFn: async function () {
 			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
 			return response

@@ -297,8 +297,8 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 
 export function ProductInformationTabs(props: { productInfo: Product }) {
 	const [activeTab, setActiveTab] = createSignal({
-		description: 'active',
-		info: 'inactive',
+		description: 'inactive',
+		info: 'active',
 		shipping: 'inactive'
 	})
 
@@ -322,16 +322,16 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
-							id="profile-tab"
-							data-tabs-target="#profile"
+							id="description-tab"
+							data-tabs-target="#description"
 							type="button"
 							role="tab"
-							aria-controls="profile"
+							aria-controls="description"
 							aria-selected="false"
 							onClick={() => setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive' })}
 						>
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-material-symbols-description-outline text-lg" />
+								<div class="i-material-symbols-description-outline text-lg text-gray-6 " />
 								Description
 							</div>
 						</button>
@@ -346,16 +346,16 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
-							id="dashboard-tab"
-							data-tabs-target="#dashboard"
+							id="info-tab"
+							data-tabs-target="#info"
 							type="button"
 							role="tab"
-							aria-controls="dashboard"
+							aria-controls="info"
 							aria-selected="false"
 							onClick={() => setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive' })}
 						>
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-carbon-product text-lg bg-gray-7" />
+								<div class="i-carbon-product text-lg bg-gray-6" />
 								Product Information
 							</div>
 						</button>
@@ -370,33 +370,33 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
-							id="settings-tab"
-							data-tabs-target="#settings"
+							id="shipping-tab"
+							data-tabs-target="#shipping"
 							type="button"
 							role="tab"
-							aria-controls="settings"
+							aria-controls="shipping"
 							aria-selected="false"
 							onClick={() => setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active' })}
 						>
 							{' '}
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ph-truck text-lg text-gray-7" />
+								<div class="i-ph-truck text-lg text-gray-6" />
 								Shipping & Returns
 							</div>
 						</button>
 					</li>
 				</ul>
 			</div>
-			<div id="myTabContent">
+			<div class="text-sm">
 				<div
 					class={clsx(
 						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
 						activeTab().description === 'active' && '',
 						activeTab().description === 'inactive' && 'hidden'
 					)}
-					id="profile"
+					id="description"
 					role="tabpanel"
-					aria-labelledby="profile-tab"
+					aria-labelledby="description-tab"
 				>
 					<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
 						{props.productInfo.description}
@@ -404,23 +404,56 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 				</div>
 				<div
 					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2',
 						activeTab().info === 'active' && '',
 						activeTab().info === 'inactive' && 'hidden'
 					)}
-					id="dashboard"
+					id="info"
 					role="tabpanel"
-					aria-labelledby="dashboard-tab"
+					aria-labelledby="info-tab"
 				>
-					<p class="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
-						Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data
-						from other software development tools, so your IT support and operations teams have richer contextual information
-						to rapidly respond to requests, incidents, and changes.
-					</p>
-					<p class="text-gray-500 dark:text-gray-400">
-						Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical
-						development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.
-					</p>
+					<div>
+						{props.productInfo?.weight && (
+							<div class="">
+								<div class="text-gray-500 dark:text-gray-400 ">Material:</div>
+
+								<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material}</div>
+							</div>
+						)}
+					</div>
+
+					<div>
+						{props.productInfo?.weight && (
+							<div class="">
+								<div class="text-gray-500 dark:text-gray-400">Weight:</div>
+
+								<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
+							</div>
+						)}
+					</div>
+					<div class="space-y-1">
+						<div class="text-gray-500 dark:text-gray-400">Dimensions:</div>
+						<div class="flex justify-between">
+							{props.productInfo?.length && (
+								<div>
+									<div class="text-gray-500 dark:text-gray-400">Length</div>
+									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.length / 25.4).toFixed(2)} in</div>
+								</div>
+							)}
+							{props.productInfo?.width && (
+								<div>
+									<div class="text-gray-500 dark:text-gray-400">Width</div>
+									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.width / 25.4).toFixed(2)} in</div>
+								</div>
+							)}
+							{props.productInfo?.height && (
+								<div>
+									<div class="text-gray-500 dark:text-gray-400">Height</div>
+									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.height / 25.4).toFixed(2)} in</div>
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
 				<div
 					class={clsx(
@@ -428,9 +461,9 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 						activeTab().shipping === 'active' && '',
 						activeTab().shipping === 'inactive' && 'hidden'
 					)}
-					id="settings"
+					id="shipping"
 					role="tabpanel"
-					aria-labelledby="settings-tab"
+					aria-labelledby="shipping-tab"
 				>
 					<p class="text-sm text-gray-500 dark:text-gray-400">
 						This is some placeholder content the{' '}

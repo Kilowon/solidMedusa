@@ -545,18 +545,20 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 
 export function CustomerReviews(props: { rating: () => number }) {
 	return (
-		<div class="flex flex-col space-y-4 ">
-			<div class="space-x-2  ">
-				<span class="text-gray-500 dark:text-gray-400 text-7xl">4.5</span>
-				<span class="text-gray-500 dark:text-gray-400 text-3xl font-light">out of</span>
-				<span class="text-gray-500 dark:text-gray-400 text-7xl">5</span>
-			</div>
-			<div class="flex items-center space-x-2">
-				<StarIconRequest rating={props.rating()} />
+		<div class="space-y-4">
+			<div class="flex flex-col justify-center items-center  ">
+				<div class="space-x-2  ">
+					<span class="text-gray-500 dark:text-gray-400 text-7xl">4.5</span>
+					<span class="text-gray-500 dark:text-gray-400 text-3xl font-light">out of</span>
+					<span class="text-gray-500 dark:text-gray-400 text-7xl">5</span>
+				</div>
+				<div class="flex items-center space-x-2">
+					<StarIconRequest rating={props.rating()} />
 
-				<div class="text-gray-500 dark:text-gray-400">|</div>
+					<div class="text-gray-500 dark:text-gray-400">|</div>
 
-				<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
+					<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
+				</div>
 			</div>
 
 			<ReviewPercentSlider
@@ -587,10 +589,10 @@ export function CustomerReviews(props: { rating: () => number }) {
 
 export function ReviewPercentSlider(props: { percent: number; label: string }) {
 	return (
-		<div class="flex items-center space-x-2">
+		<div class="flex items-center justify-center space-x-2">
 			<div class="text-gray-500 dark:text-gray-400">{props.label} </div>
 
-			<div class="w-full h-2 bg-gray-200 rounded-full">
+			<div class="w-3/4 max-w-sm h-2 bg-gray-200 rounded-full">
 				<div class={`w-[${props.percent}%] h-full bg-yellow-400 rounded-full`} />
 			</div>
 

@@ -34,34 +34,24 @@ export function Navigation(props: any) {
 		}
 	})
 
-	createEffect(() => {
-		console.log(isScrolled())
-	})
-
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
 			<header
 				class={clsx(
-					'relative h-16 mx-auto  border-b border-transparent transition-colors duration-400 hover:bg-white hover:text-gray-500',
+					'relative h-16 mx-auto  border-b border-transparent hover:bg-white hover:text-gray-500',
 					stayOpen() === true && 'bg-white',
 					isScrolled() === true && 'bg-white'
 				)}
 			>
-				<nav
-					class={
-						stayOpen() || isScrolled()
-							? 'flex items-center justify-between w-full h-full text-sm transition-colors duration-500 text-gray-500 text-gray-900 relative'
-							: 'flex items-center justify-between w-full h-full text-sm transition-colors duration-500 text-[#d8ddeb] hover:text-gray-500 relative'
-					}
-				>
+				<nav class={'flex items-center justify-between w-full h-full text-sm text-[#d8ddeb] hover:text-gray-500 relative'}>
 					<div class="flex-1 basis-0 h-full flex items-center">
-						<div class="block sm:hidden">
+						<div class="xl:hidden">
 							<HamburgerDrawerNav
 								menuDrawer={menuDrawer}
 								setMenuDrawer={setMenuDrawer}
 							/>
 						</div>
-						<div class="hidden sm:block h-full ml-10">
+						<div class="hidden xl:block h-full ml-10">
 							<DropdownMenu
 								collection={props.collection}
 								product={props.product}
@@ -125,9 +115,7 @@ export function CartDropdown(props: any) {
 
 	const [cart, setCart] = createSignal(queryCart.data?.cart)
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
-	createEffect(() => {
-		console.log('cart', cart())
-	}, [cart])
+
 	createEffect(() => {
 		if (!isServer || queryCart.data !== undefined) {
 			setItems(queryCart?.data?.cart?.items)
@@ -221,21 +209,12 @@ export function CartDrawerNav(props: any) {
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
 					props.cartDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
-				style="backdrop-filter: blur(5px)"
 				onClick={event => {
 					if (event.target === event.currentTarget) {
 						props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
 					}
 				}}
 			>
-				<div
-					class="i-ph-x-circle-fill text-gray-7 w-7 h-7 absolute top-4 right-3"
-					onClick={event => {
-						if (event.target === event.currentTarget) {
-							props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
-						}
-					}}
-				/>
 				<div
 					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
@@ -255,20 +234,13 @@ export function HamburgerDrawerNav(props: any) {
 	const [selectedRoot, setSelectedRoot] = createSignal(rootCategories())
 
 	function getChildrenOfRoot(rootCategory: { name: string }[]) {
-		console.log('ROOTyBooy', rootCategory)
 		return categories()?.filter((category: any) => rootCategory.some(cat => cat.name === category.name))
 	}
-
-	createEffect(() => {
-		console.log('Catts', categories())
-		//console.log(selectedRoot())
-		console.log('ROOT', selectedRoot())
-	})
 
 	return (
 		<div>
 			<div
-				class="flex items-center rounded-full md:hidden z-1 relative"
+				class="flex items-center rounded-full z-1 relative"
 				style="position: fixed; top: 0.85vh; left: 0.5rem; width: 3.75rem; height: 3rem;"
 				onClick={() => {
 					setSelectedRoot(rootCategories())
@@ -281,7 +253,6 @@ export function HamburgerDrawerNav(props: any) {
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
 					props.menuDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
-				style="backdrop-filter: blur(5px)"
 				onClick={event => {
 					if (event.target === event.currentTarget) {
 						props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
@@ -289,23 +260,14 @@ export function HamburgerDrawerNav(props: any) {
 				}}
 			>
 				<div
-					class="i-ph-x-circle-fill text-gray-7 w-7 h-7 absolute top-4 right-3"
-					onClick={event => {
-						if (event.target === event.currentTarget) {
-							props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
-						}
-					}}
-				/>
-				<div
-					class={`fixed top-12 right-0 h-full w-[95vw] sm:[40vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
-						props.menuDrawer().cart === 'active' ? '' : 'translate-x-full'
+					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+						props.menuDrawer().cart === 'active' ? '' : '-translate-x-full'
 					}`}
 				>
 					<Show when={selectedRoot()}>
 						<ol class="px-4 text-xl space-y-2">
 							<For each={selectedRoot()}>
 								{collection => {
-									console.log('BEEP', collection.category_children)
 									if (collection.category_children?.length > 0) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>

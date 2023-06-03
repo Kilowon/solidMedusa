@@ -311,7 +311,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 		description: 'inactive',
 		info: 'inactive',
 		shipping: 'inactive',
-		reviews: 'inactive'
+		reviews: 'active'
 	})
 
 	return (
@@ -728,7 +728,7 @@ export function CustomerIndividualReviews(props: {
 }) {
 	return (
 		<div class="flex flex-col space-y-2 ">
-			<div class="flex items-center space-x-2">
+			<div class="flex items-center space-x-8 mb-3 lg:space-x-2">
 				<div class="lg:flex lg:items-center lg:space-x-2">
 					<StarIconRequest rating={props.rating} />
 
@@ -743,7 +743,7 @@ export function CustomerIndividualReviews(props: {
 
 			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review}"</div>
 
-			<div class="flex items-center space-x-2">
+			<div class="flex justify-end space-x-2">
 				<div class="text-gray-500 dark:text-gray-400">~</div>
 
 				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>

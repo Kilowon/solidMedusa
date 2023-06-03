@@ -3,6 +3,7 @@ import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
 import { currencyFormat } from '~/lib/helpers/currency'
+import { TransitionGroup } from 'solid-transition-group'
 interface CurrentVariant {
 	id: string
 	original_price?: string
@@ -313,7 +314,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 		description: 'inactive',
 		info: 'inactive',
 		shipping: 'inactive',
-		reviews: 'active'
+		reviews: 'inactive'
 	})
 
 	return (
@@ -458,194 +459,205 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					</li>
 				</ul>
 			</div>
-			<div class="text-sm">
-				<div
-					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
-						activeTab().description === 'active' && '',
-						activeTab().description === 'inactive' && 'hidden'
-					)}
-					id="description"
-					role="tabpanel"
-					aria-labelledby="description-tab"
+			<div class="text-sm h-full">
+				<TransitionGroup
+					onEnter={(el, done) => {
+						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+							duration: 250
+						})
+						a.finished.then(done)
+					}}
+					onExit={(el, done) => {
+						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+							duration: 0
+						})
+						a.finished.then(done)
+					}}
 				>
-					<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
-						{props.productInfo.description}
-					</p>
-				</div>
-				<div
-					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6',
-						activeTab().info === 'active' && '',
-						activeTab().info === 'inactive' && 'hidden'
-					)}
-					id="info"
-					role="tabpanel"
-					aria-labelledby="info-tab"
-				>
-					<div>
-						{props.productInfo?.weight && (
-							<div class="">
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div class="i-mdi-fabric text-2xl" />
-									<div>Material</div>
-								</div>
+					<Show when={activeTab().description === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+								activeTab().description === 'active' && ''
+								//activeTab().description === 'inactive' && 'hidden'
+							)}
+						>
+							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
+								{props.productInfo.description}
+							</p>
+						</div>
+					</Show>
+					<Show when={activeTab().info === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6',
+								activeTab().info === 'active' && ''
+								//activeTab().info === 'inactive' && 'hidden'
+							)}
+						>
+							<div>
+								{props.productInfo?.weight && (
+									<div class="">
+										<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+											<div class="i-mdi-fabric text-2xl" />
+											<div>Material</div>
+										</div>
 
-								<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material} </div>
+										<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material} </div>
+									</div>
+								)}
 							</div>
-						)}
-					</div>
 
-					<div>
-						{props.productInfo?.weight && (
-							<div class="">
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div class="i-mdi-weight-pound text-2xl" />
-									<div>Weight</div>
-								</div>
+							<div>
+								{props.productInfo?.weight && (
+									<div class="">
+										<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+											<div class="i-mdi-weight-pound text-2xl" />
+											<div>Weight</div>
+										</div>
 
-								<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
+										<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
+									</div>
+								)}
 							</div>
-						)}
-					</div>
-					<div class="space-y-1">
-						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-							<div class="i-radix-icons-dimensions text-2xl" />
-							<div>Dimensions</div>
-						</div>
-						<div class="flex justify-between">
-							{props.productInfo?.length && (
-								<div>
-									<div class="text-gray-500 dark:text-gray-400">Length</div>
-									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.length / 25.4).toFixed(2)} in</div>
+							<div class="space-y-1">
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-radix-icons-dimensions text-2xl" />
+									<div>Dimensions</div>
 								</div>
-							)}
-							{props.productInfo?.width && (
-								<div>
-									<div class="text-gray-500 dark:text-gray-400">Width</div>
-									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.width / 25.4).toFixed(2)} in</div>
+								<div class="flex justify-between">
+									{props.productInfo?.length && (
+										<div>
+											<div class="text-gray-500 dark:text-gray-400">Length</div>
+											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.length / 25.4).toFixed(2)} in</div>
+										</div>
+									)}
+									{props.productInfo?.width && (
+										<div>
+											<div class="text-gray-500 dark:text-gray-400">Width</div>
+											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.width / 25.4).toFixed(2)} in</div>
+										</div>
+									)}
+									{props.productInfo?.height && (
+										<div>
+											<div class="text-gray-500 dark:text-gray-400">Height</div>
+											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.height / 25.4).toFixed(2)} in</div>
+										</div>
+									)}
 								</div>
+							</div>
+						</div>
+					</Show>
+					<Show when={activeTab().shipping === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								activeTab().shipping === 'active' && ''
+								//activeTab().shipping === 'inactive' && 'hidden'
 							)}
-							{props.productInfo?.height && (
-								<div>
-									<div class="text-gray-500 dark:text-gray-400">Height</div>
-									<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.height / 25.4).toFixed(2)} in</div>
+						>
+							<div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-mdi-truck-fast-outline text-2xl" />
+									<div>Fast delivery:</div>
 								</div>
+								<div class="text-gray-600 dark:text-gray-300">
+									Your package will arrive in 3-5 business days at your pick up location or in the comfort of your home.
+								</div>
+							</div>
+							<div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-subway-round-arrow-2 text-xl" />
+									<div>Simple exchanges:</div>
+								</div>
+								<div class="text-gray-600 dark:text-gray-300">
+									Is your order not quite right? No worries - we'll make it right with simple exchanges.
+								</div>
+							</div>
+							<div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
+									<div>Easy returns:</div>
+								</div>
+								<div class="text-gray-600 dark:text-gray-300">
+									Just return your product and we'll refund your money. No questions asked – we'll do our best to make sure your
+									return is hassle-free.
+								</div>
+							</div>
+						</div>
+					</Show>
+					<Show when={activeTab().reviews === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								activeTab().reviews === 'active' && ''
+								//activeTab().reviews === 'inactive' && 'hidden'
 							)}
+						>
+							<div>
+								<div>
+									<CustomerOverallReviews rating={props.rating} />
+								</div>
+								<span class="flex mx-2 border border-gray-3 border-1"></span>
+								<div class="space-y-3">
+									<CustomerIndividualReviews
+										review={{
+											customer:
+												'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
+											owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
+										}}
+										rating={4}
+										name={{ customer: 'Shane', owner: 'Modern Edge' }}
+										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+										title={'Ink on my order'}
+									/>
+									<CustomerIndividualReviews
+										review={{
+											customer:
+												'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
+											owner: 'Glad you like the color!'
+										}}
+										rating={5}
+										name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
+										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+										title={'Beautiful Forest Green Hoodie'}
+									/>
+									<CustomerIndividualReviews
+										review={{
+											customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
+											owner: 'I hope they win!'
+										}}
+										rating={5}
+										name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
+										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+										title={'Great Hoodie For The Weather'}
+									/>
+									<CustomerIndividualReviews
+										review={{
+											customer: 'It’s really soft and cute highly recommend',
+											owner: 'Soft is good!'
+										}}
+										rating={5}
+										name={{ customer: 'Abby', owner: 'Modern Edge' }}
+										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+										title={'Great product!'}
+									/>
+									<CustomerIndividualReviews
+										review={{
+											customer:
+												'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
+											owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
+										}}
+										rating={3}
+										name={{ customer: 'Bob', owner: 'Modern Edge' }}
+										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+										title={'Color wayyy off'}
+									/>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div
-					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
-						activeTab().shipping === 'active' && '',
-						activeTab().shipping === 'inactive' && 'hidden'
-					)}
-					id="shipping"
-					role="tabpanel"
-					aria-labelledby="shipping-tab"
-				>
-					<div>
-						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-							<div class="i-mdi-truck-fast-outline text-2xl" />
-							<div>Fast delivery:</div>
-						</div>
-						<div class="text-gray-600 dark:text-gray-300">
-							Your package will arrive in 3-5 business days at your pick up location or in the comfort of your home.
-						</div>
-					</div>
-					<div>
-						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-							<div class="i-subway-round-arrow-2 text-xl" />
-							<div>Simple exchanges:</div>
-						</div>
-						<div class="text-gray-600 dark:text-gray-300">
-							Is your order not quite right? No worries - we'll make it right with simple exchanges.
-						</div>
-					</div>
-					<div>
-						<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-							<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
-							<div>Easy returns:</div>
-						</div>
-						<div class="text-gray-600 dark:text-gray-300">
-							Just return your product and we'll refund your money. No questions asked – we'll do our best to make sure your
-							return is hassle-free.
-						</div>
-					</div>
-				</div>
-				<div
-					class={clsx(
-						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
-						activeTab().reviews === 'active' && '',
-						activeTab().reviews === 'inactive' && 'hidden'
-					)}
-					id="reviews"
-					role="tabpanel"
-					aria-labelledby="reviews-tab"
-				>
-					<div>
-						<div>
-							<CustomerOverallReviews rating={props.rating} />
-						</div>
-						<span class="flex mx-2 border border-gray-3 border-1"></span>
-						<div class="space-y-3">
-							<CustomerIndividualReviews
-								review={{
-									customer:
-										'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
-									owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
-								}}
-								rating={4}
-								name={{ customer: 'Shane', owner: 'Modern Edge' }}
-								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-								title={'Ink on my order'}
-							/>
-							<CustomerIndividualReviews
-								review={{
-									customer:
-										'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
-									owner: 'Glad you like the color!'
-								}}
-								rating={5}
-								name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
-								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-								title={'Beautiful Forest Green Hoodie'}
-							/>
-							<CustomerIndividualReviews
-								review={{
-									customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
-									owner: 'I hope they win!'
-								}}
-								rating={2}
-								name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
-								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-								title={'Great Hoodie For The Weather'}
-							/>
-							<CustomerIndividualReviews
-								review={{
-									customer: 'It’s really soft and cute highly recommend',
-									owner: 'Soft is good!'
-								}}
-								rating={5}
-								name={{ customer: 'Abby', owner: 'Modern Edge' }}
-								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-								title={'Great product!'}
-							/>
-							<CustomerIndividualReviews
-								review={{
-									customer:
-										'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
-									owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
-								}}
-								rating={3}
-								name={{ customer: 'Bob', owner: 'Modern Edge' }}
-								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-								title={'Color wayyy off'}
-							/>
-						</div>
-					</div>
-				</div>
+					</Show>
+				</TransitionGroup>
 			</div>
 		</div>
 	)
@@ -700,16 +712,16 @@ export function CustomerOverallReviews(props: { rating: () => number }) {
 export function ReviewPercentSlider(props: { percent: number; label: string }) {
 	return (
 		<div class="flex  items-center justify-center space-x-2">
-			<div class="text-gray-500 dark:text-gray-400 ">{props.label} </div>
+			<div class=" w-[10%] text-gray-500 dark:text-gray-400 flex justify-end ">{props.label} </div>
 
-			<div class="w-3/4 max-w-sm h-2 bg-gray-200 rounded-full ">
+			<div class="w-[80%] max-w-sm h-2 bg-gray-200 rounded-full ">
 				<div
 					class="h-full bg-yellow-400 rounded-full "
 					style={{ width: `${props.percent}%` }}
 				/>
 			</div>
 
-			<div class="text-gray-500 dark:text-gray-400">{props.percent}%</div>
+			<div class=" w-[10%] text-gray-500 dark:text-gray-400">{props.percent}%</div>
 		</div>
 	)
 }

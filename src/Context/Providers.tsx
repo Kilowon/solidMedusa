@@ -175,7 +175,8 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
 			const product = await medusa.products.list({
-				category_id: currentCategoryId()
+				category_id: currentCategoryId(),
+				cart_id: cart?.result?.cart?.id
 			})
 			return product
 		},

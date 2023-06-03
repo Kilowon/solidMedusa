@@ -591,42 +591,56 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 						<span class="flex mx-2 border border-gray-3 border-1"></span>
 						<div class="space-y-3">
 							<CustomerIndividualReviews
-								review={`Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didn't come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. ow I have to make a trip to thr store to return.`}
-								rating={5}
-								name={'Shane'}
-								date="July 20, 2021"
-								title={'This is Cool'}
+								review={{
+									customer:
+										'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
+									owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
+								}}
+								rating={4}
+								name={{ customer: 'Shane', owner: 'Modern Edge' }}
+								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+								title={'Ink on my order'}
 							/>
 							<CustomerIndividualReviews
-								review={
-									'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.'
-								}
+								review={{
+									customer:
+										'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
+									owner: 'Glad you like the color!'
+								}}
 								rating={5}
-								name={'CoffeeDiva62'}
-								date="July 20, 2022"
+								name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
+								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
 								title={'Beautiful Forest Green Hoodie'}
 							/>
 							<CustomerIndividualReviews
-								review={'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.'}
+								review={{
+									customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
+									owner: 'I hope they win!'
+								}}
 								rating={2}
-								name={'LADYV40'}
-								date="2/2/2014"
+								name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
+								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
 								title={'Great Hoodie For The Weather'}
 							/>
 							<CustomerIndividualReviews
-								review={'It’s really soft and cute highly recommend'}
+								review={{
+									customer: 'It’s really soft and cute highly recommend',
+									owner: 'Soft is good!'
+								}}
 								rating={5}
-								name={'Abby'}
-								date="July 20, 2021"
+								name={{ customer: 'Abby', owner: 'Modern Edge' }}
+								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
 								title={'Great product!'}
 							/>
 							<CustomerIndividualReviews
-								review={
-									'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap'
-								}
+								review={{
+									customer:
+										'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
+									owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
+								}}
 								rating={3}
-								name={'Bob'}
-								date="10/15/2022"
+								name={{ customer: 'Bob', owner: 'Modern Edge' }}
+								date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
 								title={'Color wayyy off'}
 							/>
 						</div>
@@ -725,26 +739,56 @@ export function StarIconRequest(props: { rating: number }) {
 
 export function CustomerIndividualReviews(props: {
 	rating: number
-	review: string
-	name: string
-	date: string
+	review: { customer: string; owner: string }
+	name: { customer: string; owner: string }
+	date: { customer: string; owner: string }
 	title: string
 }) {
 	return (
 		<div class="flex flex-col space-y-2 ">
-			<div class="flex items-center space-x-8 mb-3 lg:space-x-2">
+			<div class="flex items-center space-x-8 mb-1 mt-3 lg:space-x-2">
 				<div class="lg:flex lg:items-center lg:space-x-2">
 					<StarIconRequest rating={props.rating} />
 
-					<div class="text-green-600 dark:text-gray-400 text-xs">Verified Purchaser</div>
+					<div class="text-green-600 dark:text-gray-400 text-[10px] lg:text-xs ">Verified Purchaser</div>
+				</div>
+				<div class="text-gray-500 dark:text-gray-400">|</div>
+
+				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date.customer}</div>
+			</div>
+
+			<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">{props.title}</div>
+
+			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review.customer}"</div>
+
+			<div class="flex justify-end space-x-2">
+				<div class="text-gray-500 dark:text-gray-400">~</div>
+
+				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
+			</div>
+			<Show when={props.review.owner}>
+				<OwnerResponce
+					review={props.review.owner}
+					name={props.name.owner}
+					date={props.date.owner}
+				/>
+			</Show>
+			<span class="flex mx-2 border border-gray-3/70 border-1 rounded-36"></span>
+		</div>
+	)
+}
+
+export function OwnerResponce(props: { name: string; review: string; date: string }) {
+	return (
+		<div class="flex flex-col">
+			<div class="flex items-center space-x-8 mb-1 mt-3 lg:space-x-2">
+				<div class="lg:flex lg:items-center lg:space-x-2">
+					<div class="text-blue-600 dark:text-gray-400 text-[10px] lg:text-xs font-bold ">Owner Responce</div>
 				</div>
 				<div class="text-gray-500 dark:text-gray-400">|</div>
 
 				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date}</div>
 			</div>
-
-			<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">{props.title}</div>
-
 			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review}"</div>
 
 			<div class="flex justify-end space-x-2">
@@ -752,7 +796,6 @@ export function CustomerIndividualReviews(props: {
 
 				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
 			</div>
-			<span class="flex mx-2 border border-gray-3/70 border-1 rounded-36"></span>
 		</div>
 	)
 }

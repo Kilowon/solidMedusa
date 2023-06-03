@@ -309,17 +309,15 @@ export function HamburgerDrawerNav(props: any) {
 									if (collection.category_children?.length > 0) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
-												<div class="flex justify-between items-center w-full">
-													<li
-														class="pb-3"
-														onClick={() => {
-															setSelectedRoot(getChildrenOfRoot(collection.category_children))
-														}}
-													>
-														{collection.name}
-													</li>
+												<button
+													class="flex justify-between items-center w-full "
+													onClick={() => {
+														setSelectedRoot(getChildrenOfRoot(collection.category_children))
+													}}
+												>
+													<li class="pb-3 ml-2">{collection.name}</li>
 													<div class="i-octicon-chevron-right-12 text-2xl" />
-												</div>
+												</button>
 											</Suspense>
 										)
 									}
@@ -327,11 +325,12 @@ export function HamburgerDrawerNav(props: any) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<li
-													class="pb-3 underline underline-offset-2 underline-yellow-6/50 "
+													class="pb-3 ml-2 w-full "
 													onClick={() => {
 														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 													}}
 												>
+													{' '}
 													<A href={`/categories/${collection.handle}`}>{collection.name}</A>
 												</li>
 											</Suspense>

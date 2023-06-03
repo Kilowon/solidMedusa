@@ -4,11 +4,7 @@ import { createEffect, createSignal, Show } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
-import {
-	SingleLineSlider,
-	DoubleLineSlider,
-	TripleLineSlider
-} from '~/Components/common/ProductSlider'
+import { SingleLineSlider, DoubleLineSlider, TripleLineSlider } from '~/Components/common/ProductSlider'
 
 export default function Categories() {
 	const params = useParams()
@@ -21,9 +17,7 @@ export default function Categories() {
 	const [parentCategories, setParentCategories] = createSignal([])
 
 	function filterCategories() {
-		return categories()?.filter(
-			(category: any) => category.handle === params.handle
-		)
+		return categories()?.filter((category: any) => category.handle === params.handle)
 	}
 
 	const [currentCategory, setCategory] = createSignal(filterCategories())
@@ -34,15 +28,11 @@ export default function Categories() {
 	}, [params.handle])
 
 	function getParentCategories(categories: any[], params: any) {
-		const parentCategories = [
-			categories.find((category: any) => category.handle === params.handle)
-		]
+		const parentCategories = [categories.find((category: any) => category.handle === params.handle)]
 
 		while (parentCategories[parentCategories.length - 1]?.parent_category) {
 			const parentCategory = categories.find(
-				(category: any) =>
-					category.name ===
-					parentCategories[parentCategories.length - 1]?.parent_category?.name
+				(category: any) => category.name === parentCategories[parentCategories.length - 1]?.parent_category?.name
 			)
 			parentCategories.push(parentCategory)
 		}
@@ -69,8 +59,8 @@ export default function Categories() {
 			/>
 
 			<main>
-				<div class="py-12 ">
-					<div class="content-container py-12 font-poppins antialiased ">
+				<div class="pt-4 lg:py-12 ">
+					<div class="content-container lg:py-12 font-poppins antialiased ">
 						<FlexCategories
 							parentCategories={parentCategories}
 							currentCategory={currentCategory}
@@ -92,7 +82,7 @@ export default function Categories() {
 						>
 							<Show when={categoryProducts()?.length <= 6}>
 								<SingleLineSlider
-									slideVisible={3}
+									slideVisible={2}
 									categoryProducts={categoryProducts}
 									setCurrentSlide={setCurrentSlide}
 									setLoaded={setLoaded}
@@ -116,9 +106,7 @@ export default function Categories() {
 								a.finished.then(done)
 							}}
 						>
-							<Show
-								when={categoryProducts()?.length > 6 && categoryProducts()?.length < 10}
-							>
+							<Show when={categoryProducts()?.length > 6 && categoryProducts()?.length < 10}>
 								<DoubleLineSlider
 									slideVisible={3}
 									categoryProducts={categoryProducts}

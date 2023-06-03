@@ -248,6 +248,8 @@ export function CartDrawerNav(props: any) {
 }
 
 export function Hamburger(props: any) {
+	const { rootCategories } = useGlobalContext()
+
 	return (
 		<div>
 			<div
@@ -281,7 +283,17 @@ export function Hamburger(props: any) {
 						props.menuDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
-					<div>Menu</div>
+					<Show when={rootCategories()}>
+						<ul class="min-w-[152px] max-w-[200px] pr-4">
+							<For each={rootCategories()}>
+								{collection => (
+									<Suspense fallback={<div>Loading...</div>}>
+										<div class="pb-3">{collection.name}</div>
+									</Suspense>
+								)}
+							</For>
+						</ul>
+					</Show>
 				</div>
 			</div>
 		</div>

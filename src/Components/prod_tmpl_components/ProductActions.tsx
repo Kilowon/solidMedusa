@@ -100,11 +100,13 @@ export default function ProductActions(props: {
 					</div>
 				</div>
 				<div class="flex items-center space-x-2">
-					<StarIconRequest rating={rating()} />
+					<div class="text-xl">
+						<StarIconRequest rating={rating()} />
+					</div>
 
 					<div class="text-gray-500 dark:text-gray-400">|</div>
 
-					<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
+					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
 				</div>
 				<Show when={props.productInfo?.options.length === 1}>
 					<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
@@ -645,11 +647,13 @@ export function CustomerOverallReviews(props: { rating: () => number }) {
 					<span class="text-gray-500 dark:text-gray-400 text-5xl">5</span>
 				</div>
 				<div class="flex items-center space-x-2">
-					<StarIconRequest rating={props.rating()} />
+					<div class="text-xl">
+						<StarIconRequest rating={props.rating()} />
+					</div>
 
 					<div class="text-gray-500 dark:text-gray-400">|</div>
 
-					<div class="text-gray-500 dark:text-gray-400">45 reviews</div>
+					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
 				</div>
 			</div>
 
@@ -716,7 +720,7 @@ export function StarIconRequest(props: { rating: number }) {
 		return stars
 	}
 
-	return <div class="text-2xl text-gray-500 dark:text-gray-400">{getStarIcon(roundRating)}</div>
+	return <div class=" text-gray-500 dark:text-gray-400">{getStarIcon(roundRating)}</div>
 }
 
 export function CustomerIndividualReviews(props: {

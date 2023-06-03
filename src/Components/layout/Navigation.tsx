@@ -8,6 +8,7 @@ import { useStore } from '~/Context/StoreContext'
 import { isServer } from 'solid-js/web'
 import CartCore from '../Core/CartCore'
 import clsx from 'clsx'
+import { root } from 'postcss'
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
@@ -55,7 +56,7 @@ export function Navigation(props: any) {
 				>
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="block sm:hidden">
-							<Hamburger
+							<HamburgerDrawerNav
 								menuDrawer={menuDrawer}
 								setMenuDrawer={setMenuDrawer}
 							/>
@@ -247,15 +248,32 @@ export function CartDrawerNav(props: any) {
 	)
 }
 
-export function Hamburger(props: any) {
+export function HamburgerDrawerNav(props: any) {
 	const { rootCategories } = useGlobalContext()
+	const { categories } = useGlobalContext()
+
+	const [selectedRoot, setSelectedRoot] = createSignal(rootCategories())
+
+	function getChildrenOfRoot(rootCategory: { name: string }[]) {
+		console.log('ROOTyBooy', rootCategory)
+		return categories()?.filter((category: any) => rootCategory.some(cat => cat.name === category.name))
+	}
+
+	createEffect(() => {
+		console.log('Catts', categories())
+		//console.log(selectedRoot())
+		console.log('ROOT', selectedRoot())
+	})
 
 	return (
 		<div>
 			<div
 				class="flex items-center rounded-full md:hidden z-1 relative"
 				style="position: fixed; top: 0.85vh; left: 0.5rem; width: 3.75rem; height: 3rem;"
-				onClick={() => props.setMenuDrawer({ cart: 'active', checkout: 'active' })}
+				onClick={() => {
+					setSelectedRoot(rootCategories())
+					props.setMenuDrawer({ cart: 'active', checkout: 'active' })
+				}}
 			>
 				<div class="i-ic-round-menu w-6 h-6 ml-2" />
 			</div>
@@ -283,16 +301,42 @@ export function Hamburger(props: any) {
 						props.menuDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
-					<Show when={rootCategories()}>
-						<ul class="min-w-[152px] max-w-[200px] pr-4">
-							<For each={rootCategories()}>
-								{collection => (
-									<Suspense fallback={<div>Loading...</div>}>
-										<div class="pb-3">{collection.name}</div>
-									</Suspense>
-								)}
+					<Show when={selectedRoot()}>
+						<ol class="min-w-[152px] max-w-[200px] pr-4">
+							<For each={selectedRoot()}>
+								{collection => {
+									console.log('BEEP', collection.category_children)
+									if (collection.category_children?.length > 0) {
+										return (
+											<Suspense fallback={<div>Loading...</div>}>
+												<li
+													class="pb-3"
+													onClick={() => {
+														setSelectedRoot(getChildrenOfRoot(collection.category_children))
+													}}
+												>
+													{collection.name}
+												</li>
+											</Suspense>
+										)
+									}
+									if (collection.category_children?.length === 0) {
+										return (
+											<Suspense fallback={<div>Loading...</div>}>
+												<li
+													class="pb-3 text-amber-5"
+													onClick={() => {
+														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+													}}
+												>
+													<A href={`/categories/${collection.handle}`}>{collection.name}</A>
+												</li>
+											</Suspense>
+										)
+									}
+								}}
 							</For>
-						</ul>
+						</ol>
 					</Show>
 				</div>
 			</div>

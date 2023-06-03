@@ -17,7 +17,7 @@ interface ContextProps {
 	setCurrentProductId?: (id: string) => void
 	rootCategories?: any
 	categories?: any
-	setCurrentCategoryId?: (id: string) => void
+	setCurrentCategoryId?: (id: string[]) => void
 	categoryProducts?: any
 	queryByProductId?: any
 }

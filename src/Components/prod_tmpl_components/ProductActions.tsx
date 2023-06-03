@@ -8,6 +8,19 @@ interface CurrentVariant {
 	original_price?: string
 	calculated_price?: string
 }
+type OptionSelectProps = {
+	option: any
+	current: any
+	updateOptions: (option: Record<string, string>) => void
+	title: string
+}
+type OptionSelectViableProps = {
+	option: any
+	current: any
+	updateOptions: (option: Record<string, string>) => void
+	title: string
+	productInfo: Product
+}
 
 export default function ProductActions(props: {
 	productInfo: Product
@@ -151,51 +164,9 @@ export default function ProductActions(props: {
 					</button>
 				</div>
 				<div>
-					<ProductInformationTabs productInfo={props.productInfo} />
-				</div>
-				<div>
-					<CustomerOverallReviews rating={rating} />
-				</div>
-				<span class="flex mx-2 border border-gray-3 border-1"></span>
-				<div class="space-y-3">
-					<CustomerIndividualReviews
-						review={`Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didn't come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. ow I have to make a trip to thr store to return.`}
-						rating={5}
-						name={'Shane'}
-						date="July 20, 2021"
-						title={'This is Cool'}
-					/>
-					<CustomerIndividualReviews
-						review={
-							'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.'
-						}
-						rating={5}
-						name={'CoffeeDiva62'}
-						date="July 20, 2022"
-						title={'Beautiful Forest Green Hoodie'}
-					/>
-					<CustomerIndividualReviews
-						review={'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.'}
-						rating={2}
-						name={'LADYV40'}
-						date="2/2/2014"
-						title={'Great Hoodie For The Weather'}
-					/>
-					<CustomerIndividualReviews
-						review={'It’s really soft and cute highly recommend'}
-						rating={5}
-						name={'Abby'}
-						date="July 20, 2021"
-						title={'Great product!'}
-					/>
-					<CustomerIndividualReviews
-						review={
-							'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap'
-						}
-						rating={3}
-						name={'Bob'}
-						date="10/15/2022"
-						title={'Color wayyy off'}
+					<ProductInformationTabs
+						productInfo={props.productInfo}
+						rating={rating}
 					/>
 				</div>
 			</div>
@@ -205,12 +176,6 @@ export default function ProductActions(props: {
 
 export const onlyUnique = (value: unknown, index: number, self: unknown[]) => self.indexOf(value) === index
 
-type OptionSelectProps = {
-	option: any
-	current: any
-	updateOptions: (option: Record<string, string>) => void
-	title: string
-}
 //TODO: Need Hook to update the option selection
 export function OptionSelect({ option, current, updateOptions, title }: OptionSelectProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
@@ -242,15 +207,6 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 		</Show>
 	)
 }
-
-type OptionSelectViableProps = {
-	option: any
-	current: any
-	updateOptions: (option: Record<string, string>) => void
-	title: string
-	productInfo: Product
-}
-
 //TODO: Needs to be more explicit with 'not-viable'
 export function OptionSelectViable({ option, current, updateOptions, title, productInfo }: OptionSelectViableProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
@@ -350,18 +306,19 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	)
 }
 
-export function ProductInformationTabs(props: { productInfo: Product }) {
+export function ProductInformationTabs(props: { productInfo: Product; rating: () => number }) {
 	const [activeTab, setActiveTab] = createSignal({
 		description: 'inactive',
 		info: 'inactive',
-		shipping: 'inactive'
+		shipping: 'inactive',
+		reviews: 'inactive'
 	})
 
 	return (
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
 				<ul
-					class="flex -mb-px text-xs font-medium text-center space-x-0.5 "
+					class="flex -mb-px text-xs font-medium text-center space-x-0.5 lg:space-x-6 "
 					id="myTab"
 					data-tabs-toggle="#myTabContent"
 					role="tablist"
@@ -372,7 +329,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full',
 								activeTab().description === 'active' &&
 									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
@@ -385,11 +342,11 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							aria-selected="false"
 							onClick={() => {
 								if (activeTab().description === 'inactive') {
-									setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive' })
+									setActiveTab({ description: 'active', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
 									return
 								}
 								if (activeTab().description === 'active') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
 								}
 							}}
 						>
@@ -417,11 +374,11 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							aria-selected="false"
 							onClick={() => {
 								if (activeTab().info === 'inactive') {
-									setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive' })
+									setActiveTab({ description: 'inactive', info: 'active', shipping: 'inactive', reviews: 'inactive' })
 									return
 								}
 								if (activeTab().info === 'active') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
 								}
 							}}
 						>
@@ -449,11 +406,11 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							aria-selected="false"
 							onClick={() => {
 								if (activeTab().shipping === 'inactive') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active' })
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'active', reviews: 'inactive' })
 									return
 								}
 								if (activeTab().shipping === 'active') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive' })
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
 								}
 							}}
 						>
@@ -461,6 +418,39 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 							<div class="flex flex-col justify-center items-center ">
 								<div class="i-ph-truck text-lg text-gray-6" />
 								Shipping & Returns
+							</div>
+						</button>
+					</li>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 border-b-2 rounded-t-lg h-full',
+								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="reviews-tab"
+							data-tabs-target="#reviews"
+							type="button"
+							role="tab"
+							aria-controls="reviews"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().reviews === 'inactive') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'active' })
+									return
+								}
+								if (activeTab().reviews === 'active') {
+									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
+								}
+							}}
+						>
+							{' '}
+							<div class="flex flex-col justify-center items-center ">
+								<div class="i-ic-baseline-star-rate text-lg text-gray-6" />
+								Customer Reviews
 							</div>
 						</button>
 					</li>
@@ -582,6 +572,64 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 						</div>
 					</div>
 				</div>
+				<div
+					class={clsx(
+						'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+						activeTab().reviews === 'active' && '',
+						activeTab().reviews === 'inactive' && 'hidden'
+					)}
+					id="reviews"
+					role="tabpanel"
+					aria-labelledby="reviews-tab"
+				>
+					<div>
+						<div>
+							<CustomerOverallReviews rating={props.rating} />
+						</div>
+						<span class="flex mx-2 border border-gray-3 border-1"></span>
+						<div class="space-y-3">
+							<CustomerIndividualReviews
+								review={`Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didn't come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. ow I have to make a trip to thr store to return.`}
+								rating={5}
+								name={'Shane'}
+								date="July 20, 2021"
+								title={'This is Cool'}
+							/>
+							<CustomerIndividualReviews
+								review={
+									'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.'
+								}
+								rating={5}
+								name={'CoffeeDiva62'}
+								date="July 20, 2022"
+								title={'Beautiful Forest Green Hoodie'}
+							/>
+							<CustomerIndividualReviews
+								review={'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.'}
+								rating={2}
+								name={'LADYV40'}
+								date="2/2/2014"
+								title={'Great Hoodie For The Weather'}
+							/>
+							<CustomerIndividualReviews
+								review={'It’s really soft and cute highly recommend'}
+								rating={5}
+								name={'Abby'}
+								date="July 20, 2021"
+								title={'Great product!'}
+							/>
+							<CustomerIndividualReviews
+								review={
+									'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap'
+								}
+								rating={3}
+								name={'Bob'}
+								date="10/15/2022"
+								title={'Color wayyy off'}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
@@ -589,7 +637,7 @@ export function ProductInformationTabs(props: { productInfo: Product }) {
 
 export function CustomerOverallReviews(props: { rating: () => number }) {
 	return (
-		<div class="space-y-4">
+		<div class="space-y-2">
 			<div class="flex flex-col justify-center items-center  ">
 				<div class="space-x-2  ">
 					<span class="text-gray-500 dark:text-gray-400 text-5xl">4.5</span>

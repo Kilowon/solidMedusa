@@ -729,9 +729,11 @@ export function CustomerIndividualReviews(props: {
 	return (
 		<div class="flex flex-col space-y-2 ">
 			<div class="flex items-center space-x-2">
-				<StarIconRequest rating={props.rating} />
+				<div class="lg:flex lg:items-center lg:space-x-2">
+					<StarIconRequest rating={props.rating} />
 
-				<div class="text-green-600 dark:text-gray-400 text-xs">Verified Purchaser</div>
+					<div class="text-green-600 dark:text-gray-400 text-xs">Verified Purchaser</div>
+				</div>
 				<div class="text-gray-500 dark:text-gray-400">|</div>
 
 				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date}</div>

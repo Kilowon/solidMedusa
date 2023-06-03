@@ -42,9 +42,9 @@ export function Navigation(props: any) {
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
 			<header
 				class={clsx(
-					'relative h-16 mx-auto  border-b border-transparent transition-colors duration-400 hover:bg-[#d8ddeb] hover:text-gray-500',
-					stayOpen() === true && 'bg-[#d8ddeb]',
-					isScrolled() === true && 'bg-[#d8ddeb]'
+					'relative h-16 mx-auto  border-b border-transparent transition-colors duration-400 hover:bg-white hover:text-gray-500',
+					stayOpen() === true && 'bg-white',
+					isScrolled() === true && 'bg-white'
 				)}
 			>
 				<nav
@@ -297,26 +297,29 @@ export function HamburgerDrawerNav(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-12 right-0 h-full w-[95vw] sm:[40vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
 						props.menuDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
 					<Show when={selectedRoot()}>
-						<ol class="min-w-[152px] max-w-[200px] pr-4">
+						<ol class="px-4 text-xl space-y-2">
 							<For each={selectedRoot()}>
 								{collection => {
 									console.log('BEEP', collection.category_children)
 									if (collection.category_children?.length > 0) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
-												<li
-													class="pb-3"
-													onClick={() => {
-														setSelectedRoot(getChildrenOfRoot(collection.category_children))
-													}}
-												>
-													{collection.name}
-												</li>
+												<div class="flex justify-between items-center w-full">
+													<li
+														class="pb-3"
+														onClick={() => {
+															setSelectedRoot(getChildrenOfRoot(collection.category_children))
+														}}
+													>
+														{collection.name}
+													</li>
+													<div class="i-octicon-chevron-right-12 text-2xl" />
+												</div>
 											</Suspense>
 										)
 									}
@@ -324,7 +327,7 @@ export function HamburgerDrawerNav(props: any) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<li
-													class="pb-3 text-amber-5"
+													class="pb-3 underline underline-offset-2 underline-yellow-6/50 "
 													onClick={() => {
 														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 													}}
@@ -397,7 +400,7 @@ export function DropdownMenu(props: any) {
 				}}
 			>
 				<Show when={open()}>
-					<div class="bg-[#cccccc] absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
+					<div class="bg-white absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
 						<div class="relative py-8 ">
 							<div class="flex items-start  mx-auto px-8 w-[75vw]">
 								<div class="flex flex-col flex-1 max-w-[15vw]">

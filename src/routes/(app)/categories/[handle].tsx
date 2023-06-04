@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta } from 'solid-start'
-import { createEffect, createSignal, Show } from 'solid-js'
+import { useParams, Title, Meta, useNavigate } from 'solid-start'
+import { createEffect, createSignal, Show, onCleanup } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
@@ -11,6 +11,7 @@ export default function Categories() {
 	const { categories } = useGlobalContext()
 	const { setCurrentCategoryId } = useGlobalContext()
 	const { categoryProducts } = useGlobalContext()
+	const { setCategoryProducts } = useGlobalContext()
 	const [currentSlide, setCurrentSlide] = createSignal(0)
 	const [loaded, setLoaded] = createSignal(false)
 
@@ -45,6 +46,19 @@ export default function Categories() {
 	createEffect(() => {
 		getParentCategories(categories(), params)
 	}, [currentCategory()])
+
+	const navigate = useNavigate()
+
+	createEffect(() => {
+		if (categoryProducts()?.length === 1) {
+			const productId = categoryProducts()[0].handle
+			navigate(`/products/${productId}`, { replace: true })
+		}
+	})
+
+	onCleanup(() => {
+		setCategoryProducts?.([])
+	})
 
 	return (
 		<div>

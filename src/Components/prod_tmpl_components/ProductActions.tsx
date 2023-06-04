@@ -47,8 +47,7 @@ export default function ProductActions(props: {
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 	const [rating, setRating] = createSignal(4.5)
 
-	const notify = () =>
-		toast.success('Added to cart!', { duration: 3000, style: { 'z-index': 289 }, position: 'bottom-right' })
+	const notify = () => toast.success('Added to cart!')
 
 	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
 	// I am disabling the purchasable field for now
@@ -74,7 +73,22 @@ export default function ProductActions(props: {
 
 	return (
 		<Show when={props.productInfo}>
-			<Toaster />
+			<Toaster
+				position="top-center"
+				gutter={8}
+				containerClassName=""
+				containerStyle={{
+					'z-index': 60
+				}}
+				toastOptions={{
+					className: '',
+					duration: 1500,
+					style: {
+						background: '#363636',
+						color: '#fff'
+					}
+				}}
+			/>
 			<div class="flex flex-col space-y-4 font-poppins mx-2">
 				{/* <A
 					href={`/collections/${props.productInfo.collection?.id}`}

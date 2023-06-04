@@ -186,7 +186,7 @@ export function CartDropdown(props: any) {
 				}}
 			>
 				<Show when={open() && items() !== undefined}>
-					<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-30 mx-auto px-8">
+					<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
 						<CartCore variant="panel" />
 					</div>
 				</Show>

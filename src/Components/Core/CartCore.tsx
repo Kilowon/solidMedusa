@@ -355,10 +355,6 @@ function ItemPrice(props: any) {
 	const { medusa } = useGlobalContext()
 	const { cart } = useGlobalContext()
 
-	createEffect(() => {
-		console.log('ITEMPRICE', queryLineItem?.data?.products[0]?.variants)
-	})
-
 	const queryLineItem = createQuery(() => ({
 		queryKey: ['CartCore-LineItem-Price', props.item.variant.product.handle],
 		queryFn: async function () {

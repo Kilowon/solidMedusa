@@ -38,12 +38,12 @@ export function Navigation(props: any) {
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
 			<header
 				class={clsx(
-					'relative h-16 mx-auto  border-b border-transparent hover:bg-white hover:text-gray-500',
+					'relative h-16 mx-auto  border-b border-transparent ',
 					stayOpen() === true && 'bg-white',
 					isScrolled() === true && 'bg-white'
 				)}
 			>
-				<nav class={'flex items-center justify-between w-full h-full text-sm text-[#d8ddeb] hover:text-gray-500 relative'}>
+				<nav class={'flex items-center justify-between w-full h-full text-sm text-gray-500 relative'}>
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="xl:hidden">
 							<HamburgerDrawerNav
@@ -78,14 +78,14 @@ export function Navigation(props: any) {
 								Account
 							</A>
 						</div>
-						<div class="hidden md:block">
+						<div class="hidden xl:block">
 							<CartDropdown
 								cart={props.cart}
 								stayOpen={stayOpen}
 								setStayOpen={setStayOpen}
 							/>
 						</div>
-						<div class="block md:hidden ">
+						<div class="block xl:hidden ">
 							<CartDrawerNav
 								cartDrawer={cartDrawer}
 								setCartDrawer={setCartDrawer}
@@ -199,7 +199,7 @@ export function CartDrawerNav(props: any) {
 	return (
 		<div>
 			<div
-				class="flex items-center rounded-full md:hidden z-1 relative"
+				class="flex items-center rounded-full xl:hidden z-1 relative"
 				style="position: fixed; top: 0.85vh; right: -1rem; width: 3.75rem; height: 3rem;"
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
@@ -216,7 +216,7 @@ export function CartDrawerNav(props: any) {
 				}}
 			>
 				<div
-					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-12 right-0 h-full w-[95vw] sm:w-[85vw] md:w-[45vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

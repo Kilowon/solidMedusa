@@ -4,6 +4,8 @@ import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { TransitionGroup } from 'solid-transition-group'
+import toast, { Toaster } from 'solid-toast'
+
 interface CurrentVariant {
 	id: string
 	original_price?: string
@@ -45,6 +47,9 @@ export default function ProductActions(props: {
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 	const [rating, setRating] = createSignal(4.5)
 
+	const notify = () =>
+		toast.success('Added to cart!', { duration: 3000, style: { 'z-index': 289 }, position: 'bottom-right' })
+
 	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
 	// I am disabling the purchasable field for now
 	function isProductPurchasable(): string {
@@ -69,6 +74,7 @@ export default function ProductActions(props: {
 
 	return (
 		<Show when={props.productInfo}>
+			<Toaster />
 			<div class="flex flex-col space-y-4 font-poppins mx-2">
 				{/* <A
 					href={`/collections/${props.productInfo.collection?.id}`}
@@ -150,6 +156,7 @@ export default function ProductActions(props: {
 					<button
 						onClick={() => {
 							addToCart()
+							notify()
 						}}
 						disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
 						class={clsx(

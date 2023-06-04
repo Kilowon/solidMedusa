@@ -365,29 +365,30 @@ export function DropdownMenu(props: any) {
 							<div class="flex items-start  mx-auto px-8 ">
 								<div class="flex flex-col flex-1 max-w-[15vw]">
 									<div class=" mb-4 text-base">Shop by category</div>
-									<span class="border border-gray-3 w-[93vw]"></span>
+
 									<div class="flex items-start">
 										<Show when={rootCategories()}>
-											<ol class="flex flex-auto space-x-4 ">
+											<ol class="flex flex-auto space-x-4 mt-2 ">
 												<For each={rootCategories()}>
 													{collection => (
 														<Suspense fallback={<div>Loading...</div>}>
-															<li class="whitespace-nowrap">
-																<div class="text-base text-gray-6 font-500">
+															<li class="whitespace-nowrap space-y-4">
+																<span class="flex border border-gray-3"></span>
+																<div class="text-base text-gray-6 text-lg font-500">
 																	<A
 																		href={`/categories/${collection.handle}`}
 																		onClick={() => setOpen(false)}
 																	>
 																		{collection.name}
-																	</A>
+																	</A>{' '}
 																</div>
-																<div class="text-gray-6">
+																<div class="space-y-2">
 																	<For each={categories()}>
 																		{category => {
 																			if (category.parent_category?.id === collection.id) {
 																				return (
 																					<Suspense fallback={<div>Loading...</div>}>
-																						<div class="text-gray-6">
+																						<div class="text-gray-5">
 																							<A
 																								href={`/categories/${category.handle}`}
 																								onClick={() => setOpen(false)}

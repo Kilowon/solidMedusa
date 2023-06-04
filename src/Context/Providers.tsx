@@ -20,6 +20,7 @@ interface ContextProps {
 	setCurrentCategoryId?: (id: string[]) => void
 	categoryProducts?: any
 	queryByProductId?: any
+	setCategoryProducts?: (products: any) => void
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -203,7 +204,8 @@ export function GlobalContextProvider(props: any) {
 				rootCategories,
 				categories,
 				setCurrentCategoryId,
-				categoryProducts
+				categoryProducts,
+				setCategoryProducts
 			}}
 		>
 			{props.children}

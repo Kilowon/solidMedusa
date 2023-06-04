@@ -32,7 +32,7 @@ export default defineConfig({
 						poppins: [
 							{
 								name: 'Poppins',
-								weights: ['400', '700'],
+								weights: ['400', '500', '700'],
 								italic: true
 							},
 							{

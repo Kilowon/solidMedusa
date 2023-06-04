@@ -16,7 +16,10 @@ export function Navigation(props: any) {
 
 	const [navState, setNavState] = createSignal({
 		hero: 'active',
-		product: 'hidden'
+		product: 'hidden',
+		scroll: 'hidden',
+		cart: 'hidden',
+		checkout: 'hidden'
 	})
 	const [cartDrawer, setCartDrawer] = createSignal({
 		checkout: 'active',
@@ -36,14 +39,8 @@ export function Navigation(props: any) {
 
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
-			<header
-				class={clsx(
-					'relative h-16 mx-auto  border-b border-transparent ',
-					stayOpen() === true && 'bg-white',
-					isScrolled() === true && 'bg-white'
-				)}
-			>
-				<nav class={'flex items-center justify-between w-full h-full text-sm text-gray-500 relative'}>
+			<header class="relative h-16 mx-auto  border-b border-transparent bg-white">
+				<nav class="flex items-center justify-between w-full h-full text-sm text-gray-500 relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="xl:hidden">
 							<HamburgerDrawerNav
@@ -319,8 +316,10 @@ export function DesktopSearchModal() {
 export function DropdownMenu(props: any) {
 	const { cart } = useGlobalContext()
 	const { rootCategories } = useGlobalContext()
-
+	const { categories } = useGlobalContext()
 	const [open, setOpen] = createSignal(false)
+
+	createEffect(() => {})
 
 	createEffect(() => {
 		if (props.product?.map((p: any) => p.price.original_price) !== null) {
@@ -330,13 +329,13 @@ export function DropdownMenu(props: any) {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full  text-2xl  hover:transition-opacity hover:duration-400 px-3
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 px-3 font-poppins
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
-				<div class="mr-2 text-sm font-semibold font-poppins">
+				<div class="mr-2 text-sm font-semibold ">
 					<A
 						class="hover:cursor-pointer"
 						onClick={() => setOpen(false)}
@@ -361,33 +360,56 @@ export function DropdownMenu(props: any) {
 				}}
 			>
 				<Show when={open()}>
-					<div class="bg-white absolute top-full w-full inset-x-0 text-sm text-gray-7 z-30 mx-auto px-8">
-						<div class="relative py-8 ">
-							<div class="flex items-start  mx-auto px-8 w-[75vw]">
+					<div class="bg-white absolute top-full w-full inset-x-0 z-30 mx-auto px-8">
+						<div class="relative py-4">
+							<div class="flex items-start  mx-auto px-8 ">
 								<div class="flex flex-col flex-1 max-w-[15vw]">
-									<div class="text-base text-gray-900 mb-4 font-semibold ">Shop by category</div>
+									<div class=" mb-4 text-base">Shop by category</div>
+									<span class="border border-gray-3 w-[93vw]"></span>
 									<div class="flex items-start">
 										<Show when={rootCategories()}>
-											<ul class="min-w-[152px] max-w-[200px] pr-4">
+											<ol class="flex flex-auto space-x-4 ">
 												<For each={rootCategories()}>
 													{collection => (
 														<Suspense fallback={<div>Loading...</div>}>
-															<div class="pb-3">
-																<A
-																	href={`/categories/${collection.handle}`}
-																	onClick={() => setOpen(false)}
-																>
-																	{collection.name}
-																</A>
-															</div>
+															<li class="whitespace-nowrap">
+																<div class="text-base text-gray-6 font-500">
+																	<A
+																		href={`/categories/${collection.handle}`}
+																		onClick={() => setOpen(false)}
+																	>
+																		{collection.name}
+																	</A>
+																</div>
+																<div class="text-gray-6">
+																	<For each={categories()}>
+																		{category => {
+																			if (category.parent_category?.id === collection.id) {
+																				return (
+																					<Suspense fallback={<div>Loading...</div>}>
+																						<div class="text-gray-6">
+																							<A
+																								href={`/categories/${category.handle}`}
+																								onClick={() => setOpen(false)}
+																							>
+																								{category.name}
+																							</A>
+																						</div>
+																					</Suspense>
+																				)
+																			}
+																		}}
+																	</For>
+																</div>
+															</li>
 														</Suspense>
 													)}
 												</For>
-											</ul>
+											</ol>
 										</Show>
 									</div>
 								</div>
-								<div class="flex-1 ">
+								{/* <div class="flex-1 ">
 									<div class="grid grid-cols-3 gap-2">
 										<Switch>
 											<Match when={props.product}>
@@ -404,7 +426,7 @@ export function DropdownMenu(props: any) {
 											</Match>
 										</Switch>
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</div>

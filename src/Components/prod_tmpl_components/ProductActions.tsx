@@ -389,7 +389,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-33',
 								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -421,7 +421,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31',
 								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -454,7 +454,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full',
+								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full',
 								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -781,7 +781,7 @@ export function CustomerIndividualReviews(props: {
 	title: string
 }) {
 	return (
-		<div class="flex flex-col space-y-2 ">
+		<div class="flex flex-col justify-between space-y-2 ">
 			<div class="flex items-center space-x-8 mb-1 mt-3 lg:space-x-2">
 				<div class="lg:flex lg:items-center lg:space-x-2">
 					<StarIconRequest rating={props.rating} />
@@ -833,5 +833,75 @@ export function OwnerResponce(props: { name: string; review: string; date: strin
 				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
 			</div>
 		</div>
+	)
+}
+
+export function ReviewsWide(props: { rating: () => number }) {
+	return (
+		<Show when={true}>
+			<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm')}>
+				<div>
+					<div class="lg:grid  lg:grid-cols-2 lg:gap-2 xl:grid-cols-3 xl:gap-4 ">
+						<div class="flex flex-col justify-between">
+							<CustomerOverallReviews rating={props.rating} />
+							<span class="flex mx-2 border border-gray-3 border-1"></span>
+						</div>
+						<CustomerIndividualReviews
+							review={{
+								customer:
+									'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
+								owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
+							}}
+							rating={4}
+							name={{ customer: 'Shane', owner: 'Modern Edge' }}
+							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+							title={'Ink on my order'}
+						/>
+						<CustomerIndividualReviews
+							review={{
+								customer:
+									'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
+								owner: 'Glad you like the color!'
+							}}
+							rating={5}
+							name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
+							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+							title={'Beautiful Forest Green Hoodie'}
+						/>
+						<CustomerIndividualReviews
+							review={{
+								customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
+								owner: 'I hope they win!'
+							}}
+							rating={5}
+							name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
+							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+							title={'Great Hoodie For The Weather'}
+						/>
+						<CustomerIndividualReviews
+							review={{
+								customer: 'It’s really soft and cute highly recommend',
+								owner: 'Soft is good!'
+							}}
+							rating={5}
+							name={{ customer: 'Abby', owner: 'Modern Edge' }}
+							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+							title={'Great product!'}
+						/>
+						<CustomerIndividualReviews
+							review={{
+								customer:
+									'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
+								owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
+							}}
+							rating={3}
+							name={{ customer: 'Bob', owner: 'Modern Edge' }}
+							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
+							title={'Color wayyy off'}
+						/>
+					</div>
+				</div>
+			</div>
+		</Show>
 	)
 }

@@ -269,12 +269,12 @@ export function HamburgerDrawerNav(props: any) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<button
-													class="flex justify-between items-center w-full "
+													class="flex justify-between justify-center items-center w-full py-1 "
 													onClick={() => {
 														setSelectedRoot(getChildrenOfRoot(collection.category_children))
 													}}
 												>
-													<li class="pb-3 ml-2">{collection.name}</li>
+													<li class=" ml-2">{collection.name}</li>
 													<div class="i-octicon-chevron-right-12 text-2xl" />
 												</button>
 											</Suspense>
@@ -284,7 +284,7 @@ export function HamburgerDrawerNav(props: any) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<li
-													class="pb-3 ml-2 w-full "
+													class=" ml-2 w-full text-gray-6"
 													onClick={() => {
 														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 													}}

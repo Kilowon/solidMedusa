@@ -217,9 +217,12 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 									onClick={() => {
 										updateOptions({ [option.id]: v })
 									}}
-									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {
-										'border-gray-5 text-gray-8': isSelected()
-									})}
+									class={clsx(
+										'border-gray-200 border text-xs min-h-8 min-w-12 px-0.5 rounded-sm max-w-18 transition-all duration-200',
+										{
+											'border-gray-5 text-gray-8': isSelected()
+										}
+									)}
 								>
 									{v}
 								</button>

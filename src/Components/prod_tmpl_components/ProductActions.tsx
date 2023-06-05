@@ -335,7 +335,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 
 export function ProductInformationTabs(props: { productInfo: Product; rating: () => number }) {
 	const [activeTab, setActiveTab] = createSignal({
-		description: 'inactive',
+		description: 'active',
 		info: 'inactive',
 		shipping: 'inactive',
 		reviews: 'inactive'

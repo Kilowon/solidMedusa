@@ -70,7 +70,7 @@ export default function ImageGallerySlidy(props: {
 					class="h-[55svh]  lg:flex lg:h-[90svh] lg:mx-8"
 					style={{
 						'--slidy-slide-radius': '3px',
-						'--slidy-slide-width': '75%',
+						'--slidy-slide-height': '90%',
 						'--slidy-progress-thumb-color': '#363636',
 						'--slidy-height': '100%'
 					}}

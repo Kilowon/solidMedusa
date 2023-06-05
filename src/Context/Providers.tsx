@@ -21,6 +21,7 @@ interface ContextProps {
 	categoryProducts?: any
 	queryByProductId?: any
 	setCategoryProducts?: (products: any) => void
+	collections?: any
 }
 
 const GlobalContext = createContext<ContextProps>()
@@ -191,6 +192,22 @@ export function GlobalContextProvider(props: any) {
 		setCategoryProducts(queryCategoryProducts.data?.products)
 	}, [queryCategoryProducts, currentCategoryId])
 
+	const queryCollections = createQuery(() => ({
+		queryKey: ['collections', currentCategoryId()],
+		queryFn: async function () {
+			const product = await medusa.collections.list()
+			return product
+		},
+		cacheTime: 15 * 60 * 1000
+		//enabled: false
+	}))
+
+	const [collections, setCollections] = createSignal([])
+
+	createEffect(() => {
+		setCollections(queryCollections?.data)
+	}, [queryCollections])
+
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -205,7 +222,8 @@ export function GlobalContextProvider(props: any) {
 				categories,
 				setCurrentCategoryId,
 				categoryProducts,
-				setCategoryProducts
+				setCategoryProducts,
+				collections
 			}}
 		>
 			{props.children}

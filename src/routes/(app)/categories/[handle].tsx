@@ -47,19 +47,6 @@ export default function Categories() {
 		getParentCategories(categories(), params)
 	}, [currentCategory()])
 
-	const navigate = useNavigate()
-
-	createEffect(() => {
-		if (categoryProducts()?.length === 1) {
-			const productId = categoryProducts()[0].handle
-			navigate(`/products/${productId}`, { replace: true })
-		}
-	})
-
-	onCleanup(() => {
-		setCategoryProducts?.([])
-	})
-
 	return (
 		<div>
 			<Title>{currentCategory()[0]?.name}</Title>
@@ -94,68 +81,14 @@ export default function Categories() {
 								a.finished.then(done)
 							}}
 						>
-							<Show when={categoryProducts()?.length <= 6}>
-								<SingleLineSlider
-									slideVisible={2}
-									categoryProducts={categoryProducts}
-									setCurrentSlide={setCurrentSlide}
-									setLoaded={setLoaded}
-									loaded={loaded}
-									currentSlide={currentSlide}
-								/>
-							</Show>
-						</Transition>
-
-						<Transition
-							onEnter={(el, done) => {
-								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-									duration: 250
-								})
-								a.finished.then(done)
-							}}
-							onExit={(el, done) => {
-								const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-									duration: 0
-								})
-								a.finished.then(done)
-							}}
-						>
-							<Show when={categoryProducts()?.length > 6 && categoryProducts()?.length < 10}>
-								<DoubleLineSlider
-									slideVisible={3}
-									categoryProducts={categoryProducts}
-									setCurrentSlide={setCurrentSlide}
-									setLoaded={setLoaded}
-									loaded={loaded}
-									currentSlide={currentSlide}
-								/>
-							</Show>
-						</Transition>
-
-						<Transition
-							onEnter={(el, done) => {
-								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-									duration: 250
-								})
-								a.finished.then(done)
-							}}
-							onExit={(el, done) => {
-								const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-									duration: 0
-								})
-								a.finished.then(done)
-							}}
-						>
-							<Show when={categoryProducts()?.length > 10}>
-								<TripleLineSlider
-									slideVisible={4}
-									categoryProducts={categoryProducts}
-									setCurrentSlide={setCurrentSlide}
-									setLoaded={setLoaded}
-									loaded={loaded}
-									currentSlide={currentSlide}
-								/>
-							</Show>
+							<SingleLineSlider
+								slideVisible={6}
+								categoryProducts={categoryProducts}
+								setCurrentSlide={setCurrentSlide}
+								setLoaded={setLoaded}
+								loaded={loaded}
+								currentSlide={currentSlide}
+							/>
 						</Transition>
 					</div>
 				</div>

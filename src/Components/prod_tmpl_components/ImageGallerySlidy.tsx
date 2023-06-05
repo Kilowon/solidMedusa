@@ -81,7 +81,7 @@ export default function ImageGallerySlidy(props: {
 						arrows={() => (
 							<div class="absolute inset-0 flex items-center justify-between w-full h-full">
 								<button
-									data-step="1"
+									data-step="-1"
 									class="absolute inset-y-0 left-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
 									aria-label="Previous slide"
 									onClick={() => {}}
@@ -95,7 +95,7 @@ export default function ImageGallerySlidy(props: {
 									</svg>
 								</button>
 								<button
-									data-step="-1"
+									data-step="1"
 									class="absolute inset-y-0 right-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
 									aria-label="Next slide"
 								>

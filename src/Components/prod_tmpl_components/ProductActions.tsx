@@ -90,23 +90,19 @@ export default function ProductActions(props: {
 				}}
 			/>
 			<div class="flex flex-col space-y-4 font-poppins mx-2">
-				<div class="flex items-center space-x-2">
-					<div class="text-xl">
-						<StarIconRequest rating={rating()} />
-					</div>
-
-					<div class="text-gray-500 dark:text-gray-400">|</div>
-
-					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
-				</div>
-				{/* <A
-					href={`/collections/${props.productInfo.collection?.id}`}
-					class="text-sm text-gray-700"
-				>
-					{props.productInfo.collection?.title}
-				</A> */}
 				<div class="flex justify-between w-full lg:flex-col items-start text-black bg-white">
-					<h3 class=" md:text-2xl font-semibold">{props.productInfo?.title}</h3>
+					<div class="lg:space-y-2">
+						<div class="flex items-center space-x-2">
+							<div class="text-xl">
+								<StarIconRequest rating={rating()} />
+							</div>
+
+							<div class="text-gray-500 dark:text-gray-400">|</div>
+
+							<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
+						</div>
+						<h3 class=" md:text-2xl font-semibold">{props.productInfo?.title}</h3>
+					</div>
 					<div>
 						<Show when={currentVariant()?.original_price}>
 							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (

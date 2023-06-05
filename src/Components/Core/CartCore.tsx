@@ -458,7 +458,7 @@ function ItemOptions(props: any) {
 														}
 													}}
 												</For>
-												<span>{option.value}</span>
+												<span class="text-ellipsis line-clamp-1 ">{option.value}</span>
 											</div>
 										)
 									}}

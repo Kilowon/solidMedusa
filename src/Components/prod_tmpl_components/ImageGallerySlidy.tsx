@@ -1,6 +1,6 @@
 import { createSignal, createEffect, Show } from 'solid-js'
 import { Slidy } from '@slidy/solid'
-import { fade } from '@slidy/animation'
+import { blur } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
@@ -77,7 +77,7 @@ export default function ImageGallerySlidy(props: {
 						clamp={0}
 						loop={true}
 						// @ts-ignore
-						animation={fade}
+						animation={blur}
 						arrows={() => (
 							<div class="absolute inset-0 flex items-center justify-between w-full h-full">
 								<button

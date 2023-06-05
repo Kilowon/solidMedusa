@@ -67,7 +67,13 @@ export default function ImageGallerySlidy(props: {
 			<div class="md:flex md:items-start md:relative">
 				<div
 					id="gallery"
-					class="h-[55svh]  lg:flex lg:h-[90svh] lg:mx-8 "
+					class="h-[55svh]  lg:flex lg:h-[90svh] lg:mx-8"
+					style={{
+						'--slidy-slide-radius': '3px',
+						'--slidy-slide-width': '75%',
+						'--slidy-progress-thumb-color': '#363636',
+						'--slidy-height': '100%'
+					}}
 				>
 					<Slidy
 						slides={slides()}
@@ -110,7 +116,7 @@ export default function ImageGallerySlidy(props: {
 							</div>
 						)}
 						background={false}
-						progress={false}
+						progress={true}
 						counter={false}
 					/>
 				</div>

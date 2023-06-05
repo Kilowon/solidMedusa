@@ -74,11 +74,11 @@ export default function ProductActions(props: {
 	return (
 		<Show when={props.productInfo}>
 			<Toaster
-				position="top-center"
+				position="top-right"
 				gutter={8}
 				containerClassName=""
 				containerStyle={{
-					'z-index': 60
+					'z-index': 200
 				}}
 				toastOptions={{
 					className: '',
@@ -90,6 +90,15 @@ export default function ProductActions(props: {
 				}}
 			/>
 			<div class="flex flex-col space-y-4 font-poppins mx-2">
+				<div class="flex items-center space-x-2">
+					<div class="text-xl">
+						<StarIconRequest rating={rating()} />
+					</div>
+
+					<div class="text-gray-500 dark:text-gray-400">|</div>
+
+					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
+				</div>
 				{/* <A
 					href={`/collections/${props.productInfo.collection?.id}`}
 					class="text-sm text-gray-700"
@@ -105,7 +114,7 @@ export default function ProductActions(props: {
 									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
 							) : (
-								<div class="flex flex-col justify-center items-center">
+								<div class="flex flex-col justify-center items-center lg:flex-row space-x-2">
 									<span class="text-xl line-through font-semibold">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
@@ -120,15 +129,7 @@ export default function ProductActions(props: {
 						</Show>
 					</div>
 				</div>
-				<div class="flex items-center space-x-2">
-					<div class="text-xl">
-						<StarIconRequest rating={rating()} />
-					</div>
 
-					<div class="text-gray-500 dark:text-gray-400">|</div>
-
-					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
-				</div>
 				<Show when={props.productInfo?.options.length === 1}>
 					<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
 						<For each={props.productInfo?.options}>

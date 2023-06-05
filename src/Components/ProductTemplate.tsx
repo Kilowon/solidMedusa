@@ -2,6 +2,7 @@ import ImageGallerySlidy from '~/Components/prod_tmpl_components/ImageGallerySli
 import ProductActions from '~/Components/prod_tmpl_components/ProductActions'
 import { JSX, Show } from 'solid-js'
 import { Product } from '~/types/models'
+import { ReviewsWide } from './prod_tmpl_components/ProductActions'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -16,7 +17,7 @@ export default function ProductTemplate(props: {
 	return (
 		<Show when={props.productInfo}>
 			<main>
-				<div class=" md:content-container md:flex md:flex-col lg:flex-row md:py-6  md:mt-10">
+				<div class=" md:content-container md:flex md:flex-col lg:flex-row ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
 						<ImageGallerySlidy
 							images={props.images}
@@ -24,7 +25,7 @@ export default function ProductTemplate(props: {
 							params={props.params}
 						/>
 					</div>
-					<div class="lg:sticky lg:top-20 lg:w-full  lg:max-w-[400px] lg:flex lg:flex-col lg:gap-y-12">
+					<div class="lg:sticky lg:top-20  lg:flex lg:flex-col lg:gap-y-12">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
 								<ProductActions
@@ -37,14 +38,11 @@ export default function ProductTemplate(props: {
 								/>
 							</div>
 						</div>
-						{/* <ProductTabs productId={product} /> */}
 					</div>
 				</div>
-				<div class="content-container my-16 px-6 sm:px-8 sm:my-32">{/* <RelatedProducts product={product} /> */}</div>
-				{/* <MobileActions
-			product={product}
-			show={!inView}
-		/> */}
+				<div class="hidden lg:flex lg:content-container">
+					<ReviewsWide rating={() => 4.5} />
+				</div>
 			</main>
 		</Show>
 	)

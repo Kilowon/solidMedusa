@@ -227,8 +227,10 @@ export function CartDrawerNav(props: any) {
 export function HamburgerDrawerNav(props: any) {
 	const { rootCategories } = useGlobalContext()
 	const { categories } = useGlobalContext()
+	const { collections } = useGlobalContext()
 
 	const [selectedRoot, setSelectedRoot] = createSignal(rootCategories())
+	const [backButton, setBackButton] = createSignal('inactive')
 
 	function getChildrenOfRoot(rootCategory: { name: string }[]) {
 		return categories()?.filter((category: any) => rootCategory.some(cat => cat.name === category.name))
@@ -263,15 +265,30 @@ export function HamburgerDrawerNav(props: any) {
 				>
 					<Show when={selectedRoot()}>
 						<ol class="px-4 text-xl space-y-2">
+							<Show when={backButton() === 'active'}>
+								<Suspense fallback={<div>Loading...</div>}>
+									<button
+										class="flex space-x-2 items-center w-full py-1"
+										onClick={() => {
+											setSelectedRoot(rootCategories())
+											setBackButton('inactive')
+										}}
+									>
+										<div class="i-octicon-chevron-left-16 text-2xl" />
+										<li class=" ml-2">Back</li>
+									</button>
+								</Suspense>
+							</Show>
 							<For each={selectedRoot()}>
 								{collection => {
-									if (collection.category_children?.length > 0) {
+									if (collection?.category_children?.length > 0) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<button
 													class="flex justify-between justify-center items-center w-full py-1 "
 													onClick={() => {
 														setSelectedRoot(getChildrenOfRoot(collection.category_children))
+														setBackButton('active')
 													}}
 												>
 													<li class=" ml-2">{collection.name}</li>
@@ -280,23 +297,40 @@ export function HamburgerDrawerNav(props: any) {
 											</Suspense>
 										)
 									}
-									if (collection.category_children?.length === 0) {
+									if (collection?.category_children?.length === 0) {
 										return (
 											<Suspense fallback={<div>Loading...</div>}>
 												<li
-													class=" ml-2 w-full text-gray-6"
+													class=" ml-2 w-full  text-gray-6"
 													onClick={() => {
 														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 													}}
 												>
 													{' '}
-													<A href={`/categories/${collection.handle}`}>{collection.name}</A>
+													<A href={`/categories/${collection?.handle}`}>{collection?.name}</A>
 												</li>
 											</Suspense>
 										)
 									}
 								}}
 							</For>
+							<div class="flex flex-col space-y-1 ">
+								<div class="text-base text-gray-5 bg-gray-2 p-2">
+									<A href={`/store/Store`}>Shop All Our Items </A>
+								</div>
+								<Show when={collections()?.collections}>
+									<For each={collections()?.collections}>
+										{collection => {
+											if (collection?.metadata?.menu !== 'hidden')
+												return (
+													<div class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5">
+														<A href={`/collections/${collection?.handle}`}>Shop {collection?.title}</A>
+													</div>
+												)
+										}}
+									</For>
+								</Show>
+							</div>
 						</ol>
 					</Show>
 				</div>
@@ -316,10 +350,9 @@ export function DesktopSearchModal() {
 export function DropdownMenu(props: any) {
 	const { cart } = useGlobalContext()
 	const { rootCategories } = useGlobalContext()
+	const { collections } = useGlobalContext()
 	const { categories } = useGlobalContext()
 	const [open, setOpen] = createSignal(false)
-
-	createEffect(() => {})
 
 	createEffect(() => {
 		if (props.product?.map((p: any) => p.price.original_price) !== null) {
@@ -363,49 +396,92 @@ export function DropdownMenu(props: any) {
 					<div class="bg-white absolute top-full w-full inset-x-0 z-30 mx-auto px-8">
 						<div class="relative py-4">
 							<div class="flex items-start  mx-auto px-8 ">
-								<div class="flex flex-col flex-1 max-w-[15vw]">
-									<div class=" mb-4 text-base">Shop by category</div>
-
+								<div class="flex flex-col ">
+									<div class="flex space-x-12 ">
+										<div class="text-base bg-gray-5 text-white  p-2">
+											<A href={`/store/Store`}>Shop All Our Items </A>
+										</div>
+										<Show when={collections()?.collections}>
+											<For each={collections()?.collections}>
+												{collection => {
+													if (collection?.metadata?.menu !== 'hidden')
+														return (
+															<div class="text-base bg-gray-5/70 text-white  p-2 rounded-0.5">
+																<A href={`/collections/${collection.handle}`}>Shop {collection.title}</A>
+															</div>
+														)
+												}}
+											</For>
+										</Show>
+									</div>
 									<div class="flex items-start">
 										<Show when={rootCategories()}>
 											<ol class="flex flex-auto space-x-4 mt-2 ">
 												<For each={rootCategories()}>
-													{collection => (
-														<Suspense fallback={<div>Loading...</div>}>
-															<li class="whitespace-nowrap space-y-4">
-																<span class="flex border border-gray-3"></span>
-																<div class="text-base text-gray-6 text-lg font-500">
-																	<A
-																		href={`/categories/${collection.handle}`}
-																		onClick={() => setOpen(false)}
-																	>
-																		{collection.name}
-																	</A>{' '}
-																</div>
-																<div class="space-y-2">
-																	<For each={categories()}>
-																		{category => {
-																			if (category.parent_category?.id === collection.id) {
-																				return (
-																					<Suspense fallback={<div>Loading...</div>}>
-																						<div class="text-gray-5">
-																							<A
-																								href={`/categories/${category.handle}`}
-																								onClick={() => setOpen(false)}
-																							>
-																								{category.name}
-																							</A>
-																						</div>
-																					</Suspense>
-																				)
-																			}
-																		}}
-																	</For>
-																</div>
-															</li>
-														</Suspense>
-													)}
+													{collection => {
+														if (collection.category_children?.length > 0) {
+															return (
+																<Suspense fallback={<div>Loading...</div>}>
+																	<li class="whitespace-nowrap space-y-4">
+																		<span class="flex border border-gray-3"></span>
+																		<div class="text-base text-gray-6 text-lg font-500">
+																			<A
+																				href={`/categories/${collection.handle}`}
+																				onClick={() => setOpen(false)}
+																			>
+																				{collection.name}
+																			</A>
+																		</div>
+																		<div class="space-y-2">
+																			<For each={categories()}>
+																				{category => {
+																					if (category.parent_category?.id === collection.id) {
+																						return (
+																							<Suspense fallback={<div>Loading...</div>}>
+																								<div class="text-gray-5">
+																									<A
+																										href={`/categories/${category.handle}`}
+																										onClick={() => setOpen(false)}
+																									>
+																										{category.name}
+																									</A>
+																								</div>
+																							</Suspense>
+																						)
+																					}
+																				}}
+																			</For>
+																		</div>
+																	</li>
+																</Suspense>
+															)
+														}
+													}}
 												</For>
+
+												<li class="flex flex-col whitespace-nowrap space-y-5">
+													<span class="flex border border-gray-3"></span>
+													<div class="text-base text-gray-6 font-500 space-y-2">
+														<For each={rootCategories()}>
+															{collection => {
+																if (collection.category_children?.length === 0) {
+																	return (
+																		<Suspense fallback={<div>Loading...</div>}>
+																			<div>
+																				<A
+																					href={`/categories/${collection.handle}`}
+																					onClick={() => setOpen(false)}
+																				>
+																					{collection.name}
+																				</A>
+																			</div>
+																		</Suspense>
+																	)
+																}
+															}}
+														</For>
+													</div>
+												</li>
 											</ol>
 										</Show>
 									</div>

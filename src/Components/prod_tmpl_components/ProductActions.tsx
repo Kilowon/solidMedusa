@@ -791,12 +791,12 @@ export function CustomerIndividualReviews(props: {
 					<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date.customer}</div>
 				</div>
 
-				<div class="flex justify-between text-gray-500 dark:text-gray-400 font-semibold text-sm">
+				<div class="flex flex-col items-end lg:flex-row  space-x-2">
+					<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
+					<StarIconRequest rating={props.rating} />
+				</div>
+				<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">
 					<div class="text-ellipsis">{props.title}</div>
-					<div class="flex justify-end space-x-2">
-						<StarIconRequest rating={props.rating} />
-						<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
-					</div>
 				</div>
 
 				<div class="text-gray-500 dark:text-gray-400 text-sm line-clamp-7 text-ellipsis">"{props.review.customer}"</div>

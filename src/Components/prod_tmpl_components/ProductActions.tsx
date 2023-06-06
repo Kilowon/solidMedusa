@@ -110,7 +110,7 @@ export default function ProductActions(props: {
 									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
 							) : (
-								<div class="flex flex-col justify-center items-center lg:flex-row space-x-2">
+								<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
 									<span class="text-xl line-through font-semibold">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
@@ -207,21 +207,21 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 				<span class="text-sm md:text-base font-semibold">Select {title}</span>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
-						{v => {
-							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
+						{value => {
+							const isSelected = createMemo(() => current()[option.id] === value, [current()[option.id], value])
 							return (
 								<button
 									onClick={() => {
-										updateOptions({ [option.id]: v })
+										updateOptions({ [option.id]: value })
 									}}
 									class={clsx(
-										'border-gray-200 border text-xs min-h-8 min-w-12 px-0.5 rounded-sm max-w-18 transition-all duration-200',
+										'border-gray-200 border text-xs min-h-8 px-0.5 rounded-sm min-w-12 max-w-fit transition-all duration-200',
 										{
 											'border-gray-5 text-gray-8': isSelected()
 										}
 									)}
 								>
-									{v}
+									{value}
 								</button>
 							)
 						}}

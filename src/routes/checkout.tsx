@@ -24,6 +24,7 @@ import { createQuery } from '@tanstack/solid-query'
 import CartCore from '~/Components/Core/CartCore'
 
 type PaymentForm = {
+	emailDelayFake: string
 	email: string
 	password: string
 	first_name: string
@@ -256,7 +257,7 @@ export default function CheckoutPage() {
 						/>
 						<Express />
 						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
-						<Show when={showForm().customer === 'active' && customerDelayPassed()}>
+						<Show when={showForm().customer === 'active'}>
 							<Customer
 								setShowForm={setShowForm}
 								showForm={showForm}
@@ -848,6 +849,8 @@ export function Customer(props: CustomerProps) {
 	const [passwordValue, setPasswordValue] = createSignal('')
 	const [checkboxValue, setCheckboxValue] = createSignal('none')
 
+	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
+
 	createEffect(() => {
 		if (getValue(customerForm, 'checkbox.signup')) {
 			setCheckboxValue('signup')
@@ -874,6 +877,14 @@ export function Customer(props: CustomerProps) {
 			setValue(customerForm, 'email', props.cart?.email)
 			/* props.setShowShipping('active')
 			props.setShowCustomer('hide') */
+		}
+	})
+
+	createEffect(() => {
+		if (props.showForm().customer === 'active') {
+			setTimeout(() => {
+				setCustomerDelayPassed('hidden')
+			}, 100)
 		}
 	})
 
@@ -987,23 +998,45 @@ export function Customer(props: CustomerProps) {
 
 				<div class="h-[100%]">
 					{/* //email */}
-					<Field
-						name="email"
-						validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-					>
-						{(field, props) => (
-							<TextInput
-								{...props}
-								value={field.value}
-								error={field.error}
-								type="email"
-								//description="We'll send your order confirmation here."
-								label="Email"
-								placeholder="example@email.com"
-								required
-							/>
-						)}
-					</Field>
+
+					<Show when={customerDelayPassed() === 'show'}>
+						<Field
+							name="emailDelayFake"
+							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="email"
+									//description="We'll send your order confirmation here."
+									label="Email"
+									placeholder="example@email.com"
+									required
+								/>
+							)}
+						</Field>
+					</Show>
+					<Show when={customerDelayPassed() === 'hidden'}>
+						<Field
+							name="email"
+							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="email"
+									//description="We'll send your order confirmation here."
+									label="Email"
+									placeholder="example@email.com"
+									required
+								/>
+							)}
+						</Field>
+					</Show>
 					{/* //password */}
 					<Show when={getValues(customerForm).checkbox?.signup || getValues(customerForm).checkbox?.signin}>
 						<Field

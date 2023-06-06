@@ -43,7 +43,7 @@ export default function CartCore(props: CartCoreProps) {
 							<ol
 								class={clsx(
 									'overflow-y-scroll  scrollbar-hide ',
-									props.variant === 'primary' && 'max-h-[500px] lg:max-h-[2000px] lg:w-2/3',
+									props.variant === 'primary' && 'lg:w-2/3',
 									props.variant === 'checkout' && 'max-h-[425px] mx-auto',
 									props.variant === 'panel' && 'max-h-[565px] mx-auto',
 									props.variant === 'mobile-checkout' && 'max-h-[45dvh] mx-auto',
@@ -194,7 +194,7 @@ export default function CartCore(props: CartCoreProps) {
 							<div
 								class={clsx(
 									'flex flex-col gap-y-1 text-sm',
-									props.variant === 'primary' && 'lg:w-1/3 sticky top-20 self-start mt-12',
+									props.variant === 'primary' && 'lg:w-1/3 lg:sticky lg:top-20 lg:self-start lg:mt-12',
 									props.variant === 'checkout' && '',
 									props.variant === 'panel' && '',
 									props.variant === 'mobile-checkout' && '',

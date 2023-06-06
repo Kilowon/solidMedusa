@@ -210,7 +210,9 @@ export function CartDrawerNav(props: any) {
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline  text-2xl absolute top-3 left-1.75" />
-				<div>{totalItemsInCart(items())}</div>
+				<div class="absolute top-1.5 left-5 w-4 h-4 text-white text-xs flex items-center justify-center bg-gray-5 rounded-full">
+					{totalItemsInCart(items())}
+				</div>
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${

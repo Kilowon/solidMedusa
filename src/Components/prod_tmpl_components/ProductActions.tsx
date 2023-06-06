@@ -572,7 +572,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					<Show when={activeTab().shipping === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm',
 								activeTab().shipping === 'active' && ''
 								//activeTab().shipping === 'inactive' && 'hidden'
 							)}
@@ -687,11 +687,11 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 export function CustomerOverallReviews(props: { rating: () => number }) {
 	return (
 		<div class="space-y-2">
-			<div class="flex flex-col justify-center items-center  ">
+			<div class="flex flex-col justify-center items-center   ">
 				<div class="space-x-2  ">
-					<span class="text-gray-500 dark:text-gray-400 text-5xl">4.5</span>
-					<span class="text-gray-500 dark:text-gray-400 text-2xl font-light">out of</span>
-					<span class="text-gray-500 dark:text-gray-400 text-5xl">5</span>
+					<span class="text-gray-500 dark:text-gray-400 text-5xl lg:font-700">{props.rating()}</span>
+					<span class="text-gray-500 dark:text-gray-400 text-2xl font-light lg:font-500 ">out of</span>
+					<span class="text-gray-500 dark:text-gray-400 text-5xl lg:font-700">5</span>
 				</div>
 				<div class="flex items-center space-x-2">
 					<div class="text-xl">
@@ -779,25 +779,27 @@ export function CustomerIndividualReviews(props: {
 }) {
 	return (
 		<div class="flex flex-col justify-between space-y-2 ">
-			<div class="flex items-center space-x-8 mb-1 mt-3 lg:space-x-2">
-				<div class="lg:flex lg:items-center lg:space-x-2">
-					<StarIconRequest rating={props.rating} />
+			<div class="space-y-1">
+				<div class="flex items-center space-x-2 mb-1 mt-3">
+					<div class="text-green-600 dark:text-gray-400 text-[10px] lg:text-xs ">
+						<div class="i-ic-twotone-person-pin text-base" />
+						Verified Purchaser
+					</div>
 
-					<div class="text-green-600 dark:text-gray-400 text-[10px] lg:text-xs ">Verified Purchaser</div>
+					<div class="text-gray-500 dark:text-gray-400">|</div>
+
+					<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date.customer}</div>
 				</div>
-				<div class="text-gray-500 dark:text-gray-400">|</div>
 
-				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date.customer}</div>
-			</div>
+				<div class="flex justify-between text-gray-500 dark:text-gray-400 font-semibold text-sm">
+					<div class="text-ellipsis">{props.title}</div>
+					<div class="flex justify-end space-x-2">
+						<StarIconRequest rating={props.rating} />
+						<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
+					</div>
+				</div>
 
-			<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">{props.title}</div>
-
-			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review.customer}"</div>
-
-			<div class="flex justify-end space-x-2">
-				<div class="text-gray-500 dark:text-gray-400">~</div>
-
-				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
+				<div class="text-gray-500 dark:text-gray-400 text-sm line-clamp-7 text-ellipsis">"{props.review.customer}"</div>
 			</div>
 			<Show when={props.review.owner}>
 				<OwnerResponce
@@ -814,21 +816,17 @@ export function CustomerIndividualReviews(props: {
 export function OwnerResponce(props: { name: string; review: string; date: string }) {
 	return (
 		<div class="flex flex-col">
-			<div class="flex items-center space-x-8 mb-1 mt-3 lg:space-x-2">
-				<div class="lg:flex lg:items-center lg:space-x-2">
-					<div class="text-blue-600 dark:text-gray-400 text-[10px] lg:text-xs font-bold ">Owner Responce</div>
+			<div class="flex items-center space-x-2 mb-1 mt-3">
+				<div class="text-blue-600 dark:text-gray-400 text-[10px] lg:text-xs font-bold ">
+					<div class="i-ic-twotone-person-pin text-base" />
+					{props.name}
 				</div>
+
 				<div class="text-gray-500 dark:text-gray-400">|</div>
 
 				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date}</div>
 			</div>
 			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review}"</div>
-
-			<div class="flex justify-end space-x-2">
-				<div class="text-gray-500 dark:text-gray-400">~</div>
-
-				<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name}</div>
-			</div>
 		</div>
 	)
 }

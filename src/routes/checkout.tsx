@@ -389,6 +389,8 @@ export function CartDrawer(props: any) {
 }
 
 export function StepperWIP(props: StepperProps) {
+	//TODO: WIP converting stepper into a reusable component
+	
 	/* 	const [stepperData, setStepperData] = createSignal([])
 
 	createEffect(() => {
@@ -997,8 +999,7 @@ export function Customer(props: CustomerProps) {
 				/>
 
 				<div class="h-[100%]">
-					{/* //email */}
-
+					{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping the page and hidding the express buttons  */}
 					<Show when={customerDelayPassed() === 'show'}>
 						<Field
 							name="emailDelayFake"
@@ -1018,6 +1019,7 @@ export function Customer(props: CustomerProps) {
 							)}
 						</Field>
 					</Show>
+					{/* //email */}
 					<Show when={customerDelayPassed() === 'hidden'}>
 						<Field
 							name="email"

@@ -87,7 +87,8 @@ export function StepperElement(props: StepperProps) {
 				</li>
 			</Show>
 			<Show when={props.elementState === 'complete'}>
-				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-sky-200 after:border-4 after:inline-block dark:after:border-blue-800">
+				<li class="relative flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-gray-700">
+					<div class="i-tabler-discount-check-filled absolute top--1 left-5 lg:left-7 text-gray-5/80 text-xl" />
 					<span
 						onMouseDown={() => handleClick(props.title)}
 						onKeyDown={event => {
@@ -98,9 +99,9 @@ export function StepperElement(props: StepperProps) {
 						title={props.title}
 						role="button"
 						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
+						class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
 					>
-						<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer">
+						<div class="  text-gray-400/50  dark:text-gray-200  hover:cursor-pointer relative">
 							<Icon icon={props.title} />
 						</div>
 					</span>

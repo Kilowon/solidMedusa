@@ -193,6 +193,15 @@ export function CartDropdown(props: any) {
 }
 
 export function CartDrawerNav(props: any) {
+	const { queryCart } = useGlobalContext()
+	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
+
+	createEffect(() => {
+		if (!isServer || queryCart.data !== undefined) {
+			setItems(queryCart?.data?.cart?.items)
+		}
+	})
+
 	return (
 		<div>
 			<div
@@ -201,6 +210,7 @@ export function CartDrawerNav(props: any) {
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline  text-2xl absolute top-3 left-1.75" />
+				<div>{totalItemsInCart(items())}</div>
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
@@ -303,10 +313,10 @@ export function HamburgerDrawerNav(props: any) {
 												<li
 													class=" ml-2 w-full  text-gray-6"
 													onClick={() => {
+														setBackButton('inactive')
 														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 													}}
 												>
-													{' '}
 													<A href={`/categories/${collection?.handle}`}>{collection?.name}</A>
 												</li>
 											</Suspense>
@@ -323,7 +333,13 @@ export function HamburgerDrawerNav(props: any) {
 										{collection => {
 											if (collection?.metadata?.menu !== 'hidden')
 												return (
-													<div class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5">
+													<div
+														class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5"
+														onClick={() => {
+															setBackButton('inactive')
+															props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+														}}
+													>
 														<A href={`/collections/${collection?.handle}`}>Shop {collection?.title}</A>
 													</div>
 												)

@@ -223,24 +223,23 @@ export default function CheckoutPage() {
 				mobileDrawer={mobileDrawer}
 				setMobileDrawer={setMobileDrawer}
 			/>
-			<div
-				class=" top-0 inset-x-0 z-100 bg-gradient-to-b from-white/50 to-white/10 h-23"
-				style="backdrop-filter: blur(20px)"
-			>
-				<Header />
-				<div class=" top-12 z-101 md:hidden mx-2 ">
-					<Stepper
-						formCompleted={formCompleted}
-						setShowForm={setShowForm}
-						showForm={showForm}
-					/>
-				</div>
+			<div class="h-16">
+				<Header
+					mobileDrawer={mobileDrawer}
+					setMobileDrawer={setMobileDrawer}
+				/>
 			</div>
-
-			<div class="md:flex md:content-container md:h-[80vh]">
-				<div class="md:content-container md:w-[700px] md:space-y-12 mx-2">
+			<div class="mx-3 md:content-container lg:hidden">
+				<Stepper
+					formCompleted={formCompleted}
+					setShowForm={setShowForm}
+					showForm={showForm}
+				/>
+			</div>
+			<div class="md:flex md:content-container lg:h-[80vh]">
+				<div class="md:content-container lg:w-[700px] lg:space-y-12 mx-2">
 					<div
-						class="hidden md:block sticky top-12 z-101 bg-white/80 h-12 mx-2 "
+						class="hidden lg:block sticky top-12 z-101 bg-white/80 h-12 mx-2 "
 						style="backdrop-filter: blur(10px)"
 					>
 						<Stepper
@@ -303,7 +302,7 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 				</div>
-				<div class="hidden md:block md:w-[433px] mx-auto bg-white">
+				<div class="hidden lg:block lg:w-[433px] mx-auto bg-white">
 					<CartCore variant="checkout" />
 				</div>
 			</div>
@@ -311,32 +310,40 @@ export default function CheckoutPage() {
 	)
 }
 
-export function Header() {
+export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 	return (
 		<div>
-			<header class={'relative h-12 md:h-16 mx-auto'}>
-				<nav class={'flex items-center justify-between h-full '}>
+			<header>
+				<nav class="flex items-center justify-between h-16">
 					<div class="flex items-center ">
-						<div class="i-fa-solid-lock text-gray-6 ml-4.5 text-base md:text-sm" />
-						<div class="hidden md:block text-gray-6 md:ml-3 "> Secure Checkout </div>
+						<div class="i-fa-solid-lock text-gray-5 ml-4.5 text-base lg:text-sm" />
+						<div class="hidden lg:block text-gray-5 lg:ml-3 "> Secure Checkout </div>
 					</div>
 
 					<div class="flex items-center ">
 						<A
 							href="/"
-							class="text-lg md:text-2xl font-semibold  "
+							class="text-sm md:text-2xl font-semibold  "
 						>
 							<div class=" font-poppins uppercase "> Modern Edge </div>
 						</A>
 					</div>
 					<div class="flex">
+						<div
+							class="i-ion-cart-outline bg-gray-5 text-2xl lg:hidden mr-4 "
+							onClick={() =>
+								props.setMobileDrawer({
+									checkout: 'hidden',
+									cart: 'active'
+								})
+							}
+						/>
 						<A
 							href="/cart"
 							class="text-xs font-semibold  "
 						>
-							<div class=" flex items-center font-poppins uppercase">
-								Back
-								<div class="hidden sm:block mr-0.5">to Shopping Cart</div>
+							<div class=" hidden lg:flex items-center font-poppins uppercase">
+								<div class=" mr-0.5">Back to Shopping Cart</div>
 								<div class={'i-tabler-chevron-right text-2xl md:text-3xl '} />
 							</div>
 						</A>
@@ -351,17 +358,9 @@ export function CartDrawer(props: any) {
 	return (
 		<div>
 			<div
-				class="flex items-center  bg-red-7 rounded-full md:hidden z-1 relative"
-				style="position: fixed; top: 25vh; right: -1.75rem; width: 3.75rem; height: 3rem;"
-				onClick={() => props.setMobileDrawer({ cart: 'active', checkout: 'active' })}
-			>
-				<div class="i-ion-cart-outline bg-white text-2xl absolute top-3 left-1.75" />
-			</div>
-			<div
-				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
+				class={`fixed inset-0 bg-white/50 z-200 transition-all duration-250 ease-in-out ${
 					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
-				style="backdrop-filter: blur(5px)"
 				onClick={event => {
 					if (event.target === event.currentTarget) {
 						props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
@@ -369,7 +368,7 @@ export function CartDrawer(props: any) {
 				}}
 			>
 				<div
-					class="i-ph-x-circle-fill text-red-5 w-6 h-6 absolute top-3 right-4"
+					class="i-ph-x-circle-fill text-gray-5 w-6 h-6 absolute top-3 right-4"
 					onClick={event => {
 						if (event.target === event.currentTarget) {
 							props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
@@ -377,7 +376,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-12 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-16 right-0 h-full w-[100vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
@@ -390,7 +389,6 @@ export function CartDrawer(props: any) {
 
 export function StepperWIP(props: StepperProps) {
 	//TODO: WIP converting stepper into a reusable component
-	
 	/* 	const [stepperData, setStepperData] = createSignal([])
 
 	createEffect(() => {

@@ -358,7 +358,7 @@ export function CartDrawer(props: any) {
 	return (
 		<div>
 			<div
-				class={`fixed inset-0 bg-white/50 z-200 transition-all duration-250 ease-in-out ${
+				class={`fixed inset-0 bg-white/70 z-200 transition-all duration-250 ease-in-out ${
 					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				onClick={event => {
@@ -368,7 +368,7 @@ export function CartDrawer(props: any) {
 				}}
 			>
 				<div
-					class="i-ph-x-circle-fill text-gray-5 w-6 h-6 absolute top-3 right-4"
+					class="i-ph-x-bold text-gray-5 w-6 h-6 absolute top-5 right-4"
 					onClick={event => {
 						if (event.target === event.currentTarget) {
 							props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })

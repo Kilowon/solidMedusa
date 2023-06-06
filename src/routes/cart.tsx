@@ -20,7 +20,7 @@ export function Header() {
 			<header class={'relative h-16 mx-auto transition-colors border-b border-transparent duration-200 bg-[#fefcfa]'}>
 				<nav
 					class={
-						'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-dark group-hover:text-gray-900 relative'
+						'flex items-center justify-between w-full h-full text-sm transition-colors duration-200 text-gray-5 relative'
 					}
 				>
 					<div class="block m-2 ">
@@ -42,7 +42,7 @@ export function Header() {
 							class="text-lg md:text-2xl font-semibold  "
 						>
 							<div class="flex items-center">
-								<div class=" font-poppins uppercase mx-8"> Modern Edge </div>
+								<div class=" font-poppins uppercase text-sm ml-4 lg:text-2xl"> Modern Edge </div>
 							</div>
 						</A>
 					</div>

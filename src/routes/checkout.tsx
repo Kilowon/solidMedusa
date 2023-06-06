@@ -314,10 +314,10 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 	return (
 		<div>
 			<header>
-				<nav class="flex items-center justify-between h-16">
+				<nav class="flex items-center justify-between h-16 text-gray-5">
 					<div class="flex items-center ">
-						<div class="i-fa-solid-lock text-gray-5 ml-4.5 text-base lg:text-sm" />
-						<div class="hidden lg:block text-gray-5 lg:ml-3 "> Secure Checkout </div>
+						<div class="i-fa-solid-lock  ml-4.5 text-base lg:text-sm" />
+						<div class="hidden lg:block  lg:ml-3 "> Secure Checkout </div>
 					</div>
 
 					<div class="flex items-center ">
@@ -325,7 +325,7 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 							href="/"
 							class="text-sm md:text-2xl font-semibold  "
 						>
-							<div class=" font-poppins uppercase "> Modern Edge </div>
+							<div class=" font-poppins uppercase  "> Modern Edge </div>
 						</A>
 					</div>
 					<div class="flex">

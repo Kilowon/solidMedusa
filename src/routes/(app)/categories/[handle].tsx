@@ -1,17 +1,17 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta, useNavigate } from 'solid-start'
-import { createEffect, createSignal, Show, onCleanup } from 'solid-js'
+import { createEffect, createSignal, Show, onCleanup, For } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import { SingleLineSlider, DoubleLineSlider, TripleLineSlider } from '~/Components/common/ProductSlider'
+import ProductPreview from '~/Components/nav_components/ProductPreview'
 
 export default function Categories() {
 	const params = useParams()
 	const { categories } = useGlobalContext()
 	const { setCurrentCategoryId } = useGlobalContext()
 	const { categoryProducts } = useGlobalContext()
-	const { setCategoryProducts } = useGlobalContext()
 	const [currentSlide, setCurrentSlide] = createSignal(0)
 	const [loaded, setLoaded] = createSignal(false)
 
@@ -81,6 +81,18 @@ export default function Categories() {
 								a.finished.then(done)
 							}}
 						>
+							<Show when={true}>
+								<ol class="grid grid-cols-4 gap-2">
+									<For each={categoryProducts()}>
+										{(product: any) => (
+											<li class="col-span-4 md:col-span-2 lg:col-span-1">
+												<ProductPreview {...product} />
+											</li>
+										)}
+									</For>
+								</ol>
+							</Show>
+
 							<SingleLineSlider
 								slideVisible={6}
 								categoryProducts={categoryProducts}

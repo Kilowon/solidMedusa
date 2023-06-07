@@ -33,30 +33,30 @@ export default function Categories() {
 
 		while (parentCategories[parentCategories.length - 1]?.parent_category) {
 			const parentCategory = categories.find(
-				(category: any) => category.name === parentCategories[parentCategories.length - 1]?.parent_category?.name
+				(category: any) => category.name === parentCategories?.[parentCategories.length - 1]?.parent_category?.name
 			)
 			parentCategories.push(parentCategory)
 		}
 
-		setParentCategories(parentCategories.reverse() as never[])
+		setParentCategories(parentCategories?.reverse() as never[])
 
 		return parentCategories
 	}
 
 	createEffect(() => {
-		getParentCategories(categories(), params)
-	}, [currentCategory()])
+		getParentCategories(categories?.(), params)
+	}, [currentCategory?.()])
 
 	return (
 		<div>
-			<Title>{currentCategory()[0]?.name}</Title>
+			<Title>{currentCategory?.()[0]?.name}</Title>
 			<Meta
 				itemProp="description"
-				content={currentCategory()[0]?.handle}
+				content={currentCategory?.()[0]?.handle}
 			/>
 			<Meta
 				itemProp="og:title"
-				content={currentCategory()[0]?.name}
+				content={currentCategory?.()[0]?.name}
 			/>
 
 			<main>
@@ -83,7 +83,7 @@ export default function Categories() {
 						>
 							<Show when={true}>
 								<ol class="grid grid-cols-4 gap-2">
-									<For each={categoryProducts()}>
+									<For each={categoryProducts?.()}>
 										{(product: any) => (
 											<li class="col-span-4 md:col-span-2 lg:col-span-1">
 												<ProductPreview {...product} />

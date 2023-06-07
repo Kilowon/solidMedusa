@@ -271,12 +271,13 @@ export function HamburgerDrawerNav(props: any) {
 				}}
 			>
 				<div
-					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-white z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 ${
 						props.menuDrawer().cart === 'active' ? '' : '-translate-x-full'
 					}`}
+					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()}>
-						<ol class="px-4 text-xl space-y-2">
+						<ol class="px-4 text-xl space-y-2 overflow-y-scroll">
 							<Show when={backButton() === 'active'}>
 								<Suspense fallback={<div>Loading...</div>}>
 									<button
@@ -328,7 +329,12 @@ export function HamburgerDrawerNav(props: any) {
 							</For>
 							<div class="flex flex-col space-y-1 ">
 								<div class="text-base text-gray-5 bg-gray-2 p-2">
-									<A href={`/store/Store`}>Shop All Our Items </A>
+									<A
+										href={`/store/Store`}
+										onClick={() => props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })}
+									>
+										Shop All Our Items{' '}
+									</A>
 								</div>
 								<Show when={collections()?.collections}>
 									<For each={collections()?.collections}>
@@ -342,7 +348,12 @@ export function HamburgerDrawerNav(props: any) {
 															props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
 														}}
 													>
-														<A href={`/collections/${collection?.handle}`}>Shop {collection?.title}</A>
+														<A
+															href={`/collections/${collection?.handle}`}
+															onClick={() => props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })}
+														>
+															Shop {collection?.title}
+														</A>
 													</div>
 												)
 										}}
@@ -417,7 +428,12 @@ export function DropdownMenu(props: any) {
 								<div class="flex flex-col ">
 									<div class="flex space-x-12 ">
 										<div class="text-base bg-gray-5 text-white  p-2">
-											<A href={`/store/Store`}>Shop All Our Items </A>
+											<A
+												href={`/store/Store`}
+												onClick={() => setOpen(false)}
+											>
+												Shop All Our Items
+											</A>
 										</div>
 										<Show when={collections()?.collections}>
 											<For each={collections()?.collections}>
@@ -425,7 +441,12 @@ export function DropdownMenu(props: any) {
 													if (collection?.metadata?.menu !== 'hidden')
 														return (
 															<div class="text-base bg-gray-5/70 text-white  p-2 rounded-0.5">
-																<A href={`/collections/${collection.handle}`}>Shop {collection.title}</A>
+																<A
+																	href={`/collections/${collection.handle}`}
+																	onClick={() => setOpen(false)}
+																>
+																	Shop {collection.title}
+																</A>
 															</div>
 														)
 												}}

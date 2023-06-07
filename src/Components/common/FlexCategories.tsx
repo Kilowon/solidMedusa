@@ -27,10 +27,10 @@ export function FlexCategories(props: any) {
 								{(category: any) => (
 									<li class="flex flex-row pr-1 whitespace-nowrap">
 										<A href={`/categories/${category?.handle}`}>
-											<div class={category?.name === props.currentCategory()[0]?.name ? 'flex' : ''}>{category?.name}</div>
+											<div class={category?.name === props.currentCategory?.()[0]?.name ? 'flex' : ''}>{category?.name}</div>
 										</A>
 										<div class={'pr-1 font-bold lg:text-3xl flex flex-row items-center '}>
-											<div class={category?.category_children.length === 0 ? '' : 'i-ic-outline-chevron-right'} />
+											<div class={category?.category_children?.length === 0 ? '' : 'i-ic-outline-chevron-right'} />
 										</div>
 									</li>
 								)}
@@ -38,7 +38,7 @@ export function FlexCategories(props: any) {
 						</TransitionGroup>
 					</Show>
 
-					<Show when={props.currentCategory()[0]?.category_children}>
+					<Show when={props.currentCategory?.()[0]?.category_children}>
 						<TransitionGroup
 							onEnter={(el, done) => {
 								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {

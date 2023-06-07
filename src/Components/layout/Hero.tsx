@@ -1,16 +1,7 @@
-import { getWindowSize } from '@solid-primitives/resize-observer'
-import { createSignal, createEffect, Show } from 'solid-js'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 
-const [size, setSize] = createSignal(getWindowSize())
-
 export function Hero() {
-	createEffect(() => {
-		setSize(getWindowSize())
-		size()
-	})
-
 	return (
 		<div
 			class="h-[100vh] w-full top-0 left-0 z-0 bg-cover bg-center bg-no-repeat 

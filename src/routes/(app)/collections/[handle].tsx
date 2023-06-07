@@ -9,6 +9,10 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 
 interface Collection {
 	id: string
+	title: string
+	metadata: {
+		description: string
+	}
 	// add any other properties here
 }
 
@@ -84,8 +88,12 @@ export default function Collection() {
 					a.finished.then(done)
 				}}
 			>
-				<div class="content-container">
+				<div class="content-container sm:mt-16 font-poppins">
 					<Show when={queryCollection?.data?.products}>
+						<div class="mb-8">
+							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
+							<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
+						</div>
 						<ol class="grid grid-cols-12 gap-4">
 							<For each={queryCollection?.data?.products}>
 								{product => {

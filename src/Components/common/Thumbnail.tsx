@@ -44,10 +44,10 @@ const ImageOrPlaceholder = ({
 		<div class="w-full h-full">
 			<Image
 				src={image}
-				width={80}
-				height={80}
+				height={100}
+				width={100}
 				alt="Thumbnail"
-				class="object-cover w-full h-full"
+				class="object-contain w-full h-full"
 			/>
 		</div>
 	) : (

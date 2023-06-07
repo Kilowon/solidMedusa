@@ -1,5 +1,6 @@
 import { PlaceholderImage } from '~/Components/common/PlaceholderImage'
 import clsx from 'clsx'
+import { Image } from '@unpic/solid'
 
 interface MedusaImage {
 	url: string
@@ -41,8 +42,10 @@ const ImageOrPlaceholder = ({
 }: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'>) => {
 	return image ? (
 		<div class="w-full h-full">
-			<img
+			<Image
 				src={image}
+				width={80}
+				height={80}
 				alt="Thumbnail"
 				class="object-cover w-full h-full"
 			/>

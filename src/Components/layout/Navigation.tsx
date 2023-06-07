@@ -276,7 +276,7 @@ export function HamburgerDrawerNav(props: any) {
 					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()}>
-						<ol class="px-4 text-xl space-y-2 overflow-y-scroll">
+						<ol class="px-4 text-xl space-y-2 h-[120vh] overflow-y-auto">
 							<Show when={backButton() === 'active'}>
 								<Suspense fallback={<div>Loading...</div>}>
 									<button
@@ -319,7 +319,15 @@ export function HamburgerDrawerNav(props: any) {
 														props.setMenuDrawer({ menu: 'hidden' })
 													}}
 												>
-													<A href={`/categories/${collection?.handle}`}>{collection?.name}</A>
+													<A
+														href={`/categories/${collection?.handle}`}
+														onClick={() => {
+															setBackButton('inactive')
+															props.setMenuDrawer({ menu: 'hidden' })
+														}}
+													>
+														{collection?.name}
+													</A>
 												</li>
 											</Suspense>
 										)

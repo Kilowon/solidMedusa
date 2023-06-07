@@ -24,8 +24,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 					title={props.title}
 					size="full"
 				/>
-				<div class="text-base mt-6">
-					<span>{props.title}</span>
+				<div class="text-xs ">
 					<div>
 						<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 							<div class="">
@@ -42,11 +41,12 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
 										: ''}
 								</div>
-								<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase min-w-10 max-w-14">
+								<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase max-w-10">
 									sale
 								</span>
 							</div>
 						</Show>
+						<span>{props.title}</span>
 					</div>
 				</div>
 			</div>

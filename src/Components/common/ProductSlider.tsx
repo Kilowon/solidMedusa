@@ -2,11 +2,7 @@ import { For, Show, createSignal, createEffect } from 'solid-js'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import 'solid-slider/slider.css'
 import { Slider, SliderProvider } from 'solid-slider'
-import {
-	SliderDots,
-	SliderArrowLeft,
-	SliderArrowRight
-} from '~/Components/common/SliderExtended'
+import { SliderDots, SliderArrowLeft, SliderArrowRight } from '~/Components/common/SliderExtended'
 import { Range } from '@solid-primitives/range'
 
 //This Slider component is not SolidJS native, and it is a third party library with a wrapper for SolidJS
@@ -24,6 +20,7 @@ export function SingleLineSlider(props: any) {
 			setDots(Number(0))
 		}
 	})
+
 	return (
 		<SliderProvider>
 			<ul class="flex flex-row relative">
@@ -64,16 +61,12 @@ export function SingleLineSlider(props: any) {
 						<SliderArrowLeft
 							next={false}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute left-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-5  absolute left--10 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 						<SliderArrowRight
 							next={true}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute right-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-5  absolute right--10 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 					</Show>
 				</Show>
@@ -133,13 +126,8 @@ export function DoubleLineSlider(props: any) {
 							{index => {
 								const product = props.categoryProducts()[index]
 								const nextProduct = props.categoryProducts()[index + 1]
-								const randomProduct =
-									props.categoryProducts()[
-										Math.floor(Math.random() * props.categoryProducts().length)
-									]
-								props.categoryProducts()[
-									Math.floor(Math.random() * props.categoryProducts().length)
-								]
+								const randomProduct = props.categoryProducts()[Math.floor(Math.random() * props.categoryProducts().length)]
+								props.categoryProducts()[Math.floor(Math.random() * props.categoryProducts().length)]
 								if (nextProduct) {
 									return (
 										<div>
@@ -170,16 +158,12 @@ export function DoubleLineSlider(props: any) {
 						<SliderArrowLeft
 							next={false}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute left-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-10 h-10 absolute left-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 						<SliderArrowRight
 							next={true}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute right-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-10 h-10 absolute right-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 					</Show>
 				</Show>
@@ -240,13 +224,8 @@ export function TripleLineSlider(props: any) {
 								const product = props.categoryProducts()[index]
 								const secondProduct = props.categoryProducts()[index + 1]
 								const thirdProduct = props.categoryProducts()[index + 2]
-								const randomProduct =
-									props.categoryProducts()[
-										Math.floor(Math.random() * props.categoryProducts().length)
-									]
-								props.categoryProducts()[
-									Math.floor(Math.random() * props.categoryProducts().length)
-								]
+								const randomProduct = props.categoryProducts()[Math.floor(Math.random() * props.categoryProducts().length)]
+								props.categoryProducts()[Math.floor(Math.random() * props.categoryProducts().length)]
 								if (secondProduct && thirdProduct) {
 									return (
 										<div>
@@ -297,16 +276,12 @@ export function TripleLineSlider(props: any) {
 						<SliderArrowLeft
 							next={false}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute left-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-10 h-10 absolute left-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 						<SliderArrowRight
 							next={true}
 							disabled={false}
-							class={
-								'w-10 h-10 absolute right-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'
-							}
+							class={'w-10 h-10 absolute right-0 top-[50%] fill-coolGray-8 hover:fill-amber-500'}
 						/>
 					</Show>
 				</Show>

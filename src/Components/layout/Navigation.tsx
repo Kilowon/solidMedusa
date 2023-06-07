@@ -26,8 +26,7 @@ export function Navigation(props: any) {
 		cart: 'hidden'
 	})
 	const [menuDrawer, setMenuDrawer] = createSignal({
-		checkout: 'active',
-		cart: 'hidden'
+		menu: 'hidden'
 	})
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 0) {
@@ -317,7 +316,7 @@ export function HamburgerDrawerNav(props: any) {
 													class=" ml-2 w-full  text-gray-6"
 													onClick={() => {
 														setBackButton('inactive')
-														props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+														props.setMenuDrawer({ menu: 'hidden' })
 													}}
 												>
 													<A href={`/categories/${collection?.handle}`}>{collection?.name}</A>
@@ -331,7 +330,7 @@ export function HamburgerDrawerNav(props: any) {
 								<div class="text-base text-gray-5 bg-gray-2 p-2">
 									<A
 										href={`/store/Store`}
-										onClick={() => props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })}
+										onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
 									>
 										Shop All Our Items{' '}
 									</A>
@@ -345,12 +344,12 @@ export function HamburgerDrawerNav(props: any) {
 														class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5"
 														onClick={() => {
 															setBackButton('inactive')
-															props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })
+															props.setMenuDrawer({ menu: 'hidden' })
 														}}
 													>
 														<A
 															href={`/collections/${collection?.handle}`}
-															onClick={() => props.setMenuDrawer({ cart: 'hidden', checkout: 'active' })}
+															onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
 														>
 															Shop {collection?.title}
 														</A>
@@ -377,7 +376,6 @@ export function DesktopSearchModal() {
 }
 
 export function DropdownMenu(props: any) {
-	const { cart } = useGlobalContext()
 	const { rootCategories } = useGlobalContext()
 	const { collections } = useGlobalContext()
 	const { categories } = useGlobalContext()

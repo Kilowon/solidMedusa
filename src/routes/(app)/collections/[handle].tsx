@@ -39,11 +39,8 @@ export default function Collection() {
 				(collection: any) => collection.handle === params.handle
 			)
 			setCurrentCollection(collection)
+			queryCollection.refetch()
 		}
-	})
-
-	createEffect(() => {
-		queryCollection.refetch()
 	}, [params.handle])
 
 	const queryCollectionsList = createQuery(() => ({
@@ -65,7 +62,10 @@ export default function Collection() {
 				limit: 100
 			})
 			return product
-		}
+		},
+		cacheTime: 15 * 60 * 1000,
+		refetchInterval: 15 * 60 * 1000,
+		enabled: false
 	}))
 
 	return (

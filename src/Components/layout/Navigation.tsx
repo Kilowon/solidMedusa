@@ -228,7 +228,10 @@ export function CartDrawerNav(props: any) {
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
-					<CartCore variant="mobile-panel" />
+					<CartCore
+						variant="mobile-panel"
+						setCartDrawer={props.setCartDrawer()}
+					/>
 				</div>
 			</div>
 		</div>

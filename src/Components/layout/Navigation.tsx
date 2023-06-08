@@ -47,7 +47,7 @@ export function Navigation(props: any) {
 								setMenuDrawer={setMenuDrawer}
 							/>
 						</div>
-						<div class="hidden xl:block h-full ml-10">
+						<div class="hidden xl:block h-full ml-2">
 							<DropdownMenu
 								collection={props.collection}
 								product={props.product}
@@ -64,14 +64,14 @@ export function Navigation(props: any) {
 						</A>
 					</div>
 
-					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end md:mr-10">
-						<div class="hidden sm:flex items-center gap-x-2 h-full text-sm font-semibold font-poppins px-3">
+					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
+						<div class="flex items-center mr-4 ">
 							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
 							<A
 								class="hover:cursor-pointer"
 								href="/account"
 							>
-								Account
+								<div class="i-ion-person-circle-outline  text-2xl " />
 							</A>
 						</div>
 						<div class="hidden xl:block">
@@ -205,7 +205,7 @@ export function CartDrawerNav(props: any) {
 		<div>
 			<div
 				class="flex items-center rounded-full xl:hidden z-1 relative"
-				style="position: fixed; top: 0.85vh; right: -1rem; width: 3.75rem; height: 3rem;"
+				style="position: fixed; top: 0.85vh; right: -0.5rem; width: 3.75rem; height: 3rem;"
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline  text-2xl absolute top-3 left-1.75" />
@@ -397,20 +397,17 @@ export function DropdownMenu(props: any) {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 px-3 font-poppins
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400  font-poppins
 			"
 			onMouseOver={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
 		>
 			<div>
-				<div class="mr-2 text-sm font-semibold ">
-					<A
-						class="hover:cursor-pointer"
-						onClick={() => setOpen(false)}
-						href="/store/Store"
-					>
-						Store
-					</A>
+				<div
+					class="hover:cursor-pointer"
+					onClick={() => setOpen(true)}
+				>
+					<div class="i-ic-round-menu w-6 h-6 ml-2" />
 				</div>
 			</div>
 			<Transition

@@ -19,7 +19,7 @@ export function Thumbnail({ thumbnail, images, size = 'small', title }: Thumbnai
 
 	return (
 		<div
-			class={clsx('relative aspect-[29/34]', {
+			class={clsx('relative aspect-[100/75]', {
 				'w-[180px]': size === 'small',
 				'w-[290px]': size === 'medium',
 				'w-[440px]': size === 'large',

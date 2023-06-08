@@ -271,12 +271,12 @@ export function HamburgerDrawerNav(props: any) {
 			>
 				<div
 					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-white z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 ${
-						props.menuDrawer().cart === 'active' ? '' : '-translate-x-full'
+						props.menuDrawer().cart === 'active' ? '' : ''
 					}`}
 					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()}>
-						<ol class="px-4 text-xl space-y-2 h-[120vh] overflow-y-auto">
+						<ol class=" text-xl space-y-2 h-[120vh] ">
 							<Show when={backButton() === 'active'}>
 								<Suspense fallback={<div>Loading...</div>}>
 									<button

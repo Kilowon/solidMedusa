@@ -374,7 +374,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 								}
 							}}
 						>
-							<div class="flex flex-col justify-center items-center ">
+							<div class="flex flex-col justify-center items-center mb-2 sm:mb-0  ">
 								<div class="i-material-symbols-description-outline text-lg text-gray-6 " />
 								Description
 							</div>

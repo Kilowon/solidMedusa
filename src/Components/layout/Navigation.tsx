@@ -71,7 +71,7 @@ export function Navigation(props: any) {
 								class="hover:cursor-pointer"
 								href="/account"
 							>
-								<div class="i-ion-person-circle-outline  text-2xl " />
+								<div class="i-la-user-plus h-7 w-7 " />
 							</A>
 						</div>
 						<div class="hidden xl:block">
@@ -134,7 +134,7 @@ export function CartDropdown(props: any) {
 	function handleOnClick(e: Event) {
 		const target = e.target as HTMLElement
 		if (target.classList.contains('i-ion-cart-outline')) {
-			props.setStayOpen(!props.stayOpen())
+			//props.setStayOpen(!props.stayOpen())
 		}
 	}
 
@@ -157,10 +157,10 @@ export function CartDropdown(props: any) {
 			<div
 				class={props.stayOpen() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}
 			>
-				<div class="i-ion-cart-outline hover:cursor-pointer"></div>
+				<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
 				<div
 					class={
-						'w-5 h-5 absolute top-3 right-0 bg-dark text-xs text-white font-semibold flex items-center justify-center rounded-full'
+						'w-5 h-5 absolute top-3 right-3 bg-gray-5 text-xs text-white font-semibold flex items-center justify-center rounded-full'
 					}
 				>
 					{totalItemsInCart(items())}
@@ -208,8 +208,8 @@ export function CartDrawerNav(props: any) {
 				style="position: fixed; top: 0.85vh; right: -0.5rem; width: 3.75rem; height: 3rem;"
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
-				<div class="i-ion-cart-outline  text-2xl absolute top-3 left-1.75" />
-				<div class="absolute top-1.5 left-5 w-4 h-4 text-white text-xs flex items-center justify-center bg-gray-5 rounded-full">
+				<div class="i-ion-cart-outline h-7 w-7 absolute top-3 left-1.75" />
+				<div class="absolute top-1.5 left-5.8 w-4 h-4 text-white text-xs flex items-center justify-center bg-gray-5 rounded-full">
 					{totalItemsInCart(items())}
 				</div>
 			</div>
@@ -257,7 +257,7 @@ export function HamburgerDrawerNav(props: any) {
 					props.setMenuDrawer({ cart: 'active', checkout: 'active' })
 				}}
 			>
-				<div class="i-ic-round-menu w-6 h-6 ml-2" />
+				<div class="i-ic-round-menu w-7 h-7 ml-2" />
 			</div>
 			<div
 				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
@@ -407,7 +407,7 @@ export function DropdownMenu(props: any) {
 					class="hover:cursor-pointer"
 					onClick={() => setOpen(true)}
 				>
-					<div class="i-ic-round-menu w-6 h-6 ml-2" />
+					<div class="i-ic-round-menu  w-7 h-7 ml-2" />
 				</div>
 			</div>
 			<Transition

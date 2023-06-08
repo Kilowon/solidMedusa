@@ -55,7 +55,12 @@ export function Navigation(props: any) {
 						</div>
 					</div>
 
-					<div class="flex items-center h-full">
+					<div
+						class="flex items-center h-full"
+						title="Home"
+						role="button"
+						tabindex="0"
+					>
 						<A
 							href="/"
 							class="text-regular md:text-2xl font-semibold  "
@@ -66,7 +71,6 @@ export function Navigation(props: any) {
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
 						<div class="flex items-center mr-4 ">
-							{process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
 							<A
 								class="hover:cursor-pointer"
 								href="/account"
@@ -156,6 +160,9 @@ export function CartDropdown(props: any) {
 		>
 			<div
 				class={props.stayOpen() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}
+				title="Cart"
+				role="button"
+				tabindex="0"
 			>
 				<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
 				<div
@@ -206,6 +213,9 @@ export function CartDrawerNav(props: any) {
 			<div
 				class="flex items-center rounded-full xl:hidden z-1 relative"
 				style="position: fixed; top: 0.85vh; right: -0.5rem; width: 3.75rem; height: 3rem;"
+				title="Cart"
+				role="button"
+				tabindex="0"
 				onClick={() => props.setCartDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ion-cart-outline h-7 w-7 absolute top-3 left-1.75" />
@@ -255,6 +265,9 @@ export function HamburgerDrawerNav(props: any) {
 			<div
 				class="flex items-center rounded-full z-1 relative"
 				style="position: fixed; top: 0.85vh; left: 0.5rem; width: 3.75rem; height: 3rem;"
+				title="Menu"
+				role="button"
+				tabindex="0"
 				onClick={() => {
 					setSelectedRoot(rootCategories())
 					props.setMenuDrawer({ cart: 'active', checkout: 'active' })
@@ -378,14 +391,6 @@ export function HamburgerDrawerNav(props: any) {
 	)
 }
 
-export function DesktopSearchModal() {
-	return (
-		<div>
-			<div>DESKTOP SEARCH MODAL</div>
-		</div>
-	)
-}
-
 export function DropdownMenu(props: any) {
 	const { rootCategories } = useGlobalContext()
 	const { collections } = useGlobalContext()
@@ -408,6 +413,9 @@ export function DropdownMenu(props: any) {
 			<div>
 				<div
 					class="hover:cursor-pointer"
+					title="Main Menu"
+					role="button"
+					tabindex="0"
 					onClick={() => setOpen(true)}
 				>
 					<div class="i-ic-round-menu  w-7 h-7 ml-2" />

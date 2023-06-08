@@ -55,12 +55,7 @@ export function Navigation(props: any) {
 						</div>
 					</div>
 
-					<div
-						class="flex items-center h-full"
-						title="Home"
-						role="button"
-						tabindex="0"
-					>
+					<div class="flex items-center h-full">
 						<A
 							href="/"
 							class="text-regular md:text-2xl font-semibold  "
@@ -138,7 +133,7 @@ export function CartDropdown(props: any) {
 	function handleOnClick(e: Event) {
 		const target = e.target as HTMLElement
 		if (target.classList.contains('i-ion-cart-outline')) {
-			//props.setStayOpen(!props.stayOpen())
+			props.setStayOpen(!props.stayOpen())
 		}
 	}
 
@@ -157,12 +152,20 @@ export function CartDropdown(props: any) {
 			onMouseOver={() => handleOnMouseOver()}
 			onMouseLeave={() => handleOnMouseLeave()}
 			onClick={e => handleOnClick(e)}
+			onKeyDown={e => {
+				if (e.key === 'Enter') {
+					setOpen(true)
+				}
+				if (e.key === 'Escape') {
+					setOpen(false)
+				}
+			}}
+			title="Cart"
+			role="button"
+			tabindex="0"
 		>
 			<div
 				class={props.stayOpen() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}
-				title="Cart"
-				role="button"
-				tabindex="0"
 			>
 				<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
 				<div
@@ -272,6 +275,7 @@ export function HamburgerDrawerNav(props: any) {
 					setSelectedRoot(rootCategories())
 					props.setMenuDrawer({ cart: 'active', checkout: 'active' })
 				}}
+				onkeypress={() => props.setMenuDrawer({ cart: 'active', checkout: 'active' })}
 			>
 				<div class="i-ic-round-menu w-7 h-7 ml-2" />
 			</div>
@@ -417,6 +421,7 @@ export function DropdownMenu(props: any) {
 					role="button"
 					tabindex="0"
 					onClick={() => setOpen(true)}
+					onkeypress={() => setOpen(true)}
 				>
 					<div class="i-ic-round-menu  w-7 h-7 ml-2" />
 				</div>

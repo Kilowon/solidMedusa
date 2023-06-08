@@ -1,10 +1,10 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta, useNavigate } from 'solid-start'
-import { createEffect, createSignal, Show, onCleanup, For } from 'solid-js'
+import { useParams, Title, Meta } from 'solid-start'
+import { createEffect, createSignal, Show, For } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
-import { SingleLineSlider, DoubleLineSlider, TripleLineSlider } from '~/Components/common/ProductSlider'
+import { SingleLineSlider } from '~/Components/common/ProductSlider'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 
 export default function Categories() {

@@ -72,7 +72,8 @@ export default function ImageGallerySlidy(props: {
 						'--slidy-slide-radius': '3px',
 						'--slidy-slide-height': '93%',
 						'--slidy-progress-thumb-color': '#363636',
-						'--slidy-height': '100%'
+						'--slidy-height': '100%',
+						'--slidy-slide-bg-color': '#ffffff'
 					}}
 				>
 					<Slidy

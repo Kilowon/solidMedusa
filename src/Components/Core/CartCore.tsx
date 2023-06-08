@@ -26,6 +26,15 @@ export default function CartCore(props: CartCoreProps) {
 	const { queryCartRefetch } = useGlobalContext()
 	const { deleteItem } = useStore()
 
+	const [sortedItems, setSortedItems] = createSignal(null)
+
+	createEffect(() => {
+		const sorted = queryCart?.data?.cart?.items?.sort((a: any, b: any) => {
+			return a.created_at > b.created_at ? -1 : 1
+		})
+		setSortedItems(sorted)
+	})
+
 	return (
 		<div class=" text-sm text-gray-5 z-50">
 			<Switch fallback={<div>Empty</div>}>
@@ -51,11 +60,7 @@ export default function CartCore(props: CartCoreProps) {
 									props.variant === 'mobile-panel' && 'max-h-[45dvh] mx-auto'
 								)}
 							>
-								<For
-									each={queryCart?.data?.cart?.items?.sort((a: any, b: any) => {
-										return a.created_at > b.created_at ? -1 : 1
-									})}
-								>
+								<For each={sortedItems()}>
 									{item => (
 										<Suspense fallback={<div>Loading...</div>}>
 											<li>
@@ -332,7 +337,14 @@ function ItemQuantity(props: any) {
 
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
-			<button class="flex items-center justify-center text-lg bg-white">
+			<button
+				class="flex items-center justify-center text-lg bg-white"
+				onKeyDown={e => {
+					if (e.key === 'Enter') {
+						handleQuanity(props.item.quantity - 1)
+					}
+				}}
+			>
 				<div
 					class="i-mdi-minus-circle text-gray-5"
 					onclick={() => {
@@ -341,7 +353,14 @@ function ItemQuantity(props: any) {
 				/>
 			</button>
 			<span class="flex items-center justify-center text-lg font-semibold">{props.item?.quantity}</span>
-			<button class="flex items-center justify-center text-lg bg-white">
+			<button
+				class="flex items-center justify-center text-lg bg-white"
+				onKeyDown={e => {
+					if (e.key === 'Enter') {
+						handleQuanity(props.item.quantity + 1)
+					}
+				}}
+			>
 				<div
 					class="i-mdi-plus-circle text-gray-5"
 					onClick={() => {

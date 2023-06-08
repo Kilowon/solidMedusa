@@ -61,13 +61,7 @@ export function FlexCategories(props: any) {
 										<li class="text-sm lg:text-base border border-gray-5 text-gray-5 px-0.5  lg:px-1 lg:h-6  rounded-2  flex ">
 											<A href={`/categories/${child?.handle}`}>{child?.name}</A>
 										</li>
-										<div class="flex flex-row items-center text-xl pr-1   ">
-											{/* <div
-												class={
-													props.currentCategory()[0]?.category_children.length === index() + 1 ? ' ' : 'i-ph-dot-outline-light'
-												}
-											/> */}
-										</div>
+										<div class="flex flex-row items-center text-xl pr-1   "></div>
 									</div>
 								)}
 							</For>

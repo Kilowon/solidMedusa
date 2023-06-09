@@ -53,6 +53,7 @@ export default function Home() {
 				cart={cart.result?.cart}
 			/>
 			<Outlet />
+			<Footer />
 		</div>
 	)
 }

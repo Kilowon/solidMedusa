@@ -1,13 +1,13 @@
 import { FooterCTA } from './FooterCTA'
 import { FooterNav } from './FooterNav'
-import { MedusaCTA } from './MedusaCTA'
+import { MECTA } from './MECTA'
 
 export function Footer() {
 	return (
-		<footer class="bg-gradient-to-l from-blue-5 to-purple-5">
+		<footer>
 			<FooterCTA />
 			<FooterNav />
-			<MedusaCTA />
+			<MECTA />
 		</footer>
 	)
 }

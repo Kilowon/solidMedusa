@@ -2,14 +2,14 @@ import { A } from 'solid-start'
 
 export function FooterNav() {
 	return (
-		<div class="max-w-[1440px] w-full mx-auto px8 flex flex-col gap-y-8 pt-16 pb-8">
+		<div class="max-w-[1440px] w-full mx-auto px8 flex flex-col gap-y-8 pt-16 pb-8 z-1">
 			<div class="flex flex-col gap-y-6 sm:flex-row items-start justify-between">
 				<div>
 					<A
 						href="/"
-						class="text-4xl text-black font-bold uppercase no-underline hover:underline"
+						class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-bold uppercase no-underline hover:underline"
 					>
-						Acme
+						Modern Edge
 					</A>
 				</div>
 				<div class="text-sm grid grid-cols-2 gap-x-16">
@@ -59,10 +59,8 @@ export function FooterNav() {
 				</div>
 			</div>
 			<div class="flex flex-col-reverse gap-y-4 justify-center sm:items-center sm:flex-row sm:items-end sm:justify-between">
-				<span class="text-xs text-gray-500">© Copyright 2022 ACME</span>
-				<div class="min-w-[316px] flex sm:justify-end">
-					{/* TODO: <CountrySelect /> */}
-				</div>
+				<span class="text-xs text-gray-500">© Copyright 2023 Modern Edge</span>
+				<div class="min-w-[316px] flex sm:justify-end">{/* TODO: <CountrySelect /> */}</div>
 			</div>
 		</div>
 	)

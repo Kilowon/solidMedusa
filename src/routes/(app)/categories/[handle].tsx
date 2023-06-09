@@ -61,7 +61,7 @@ export default function Categories() {
 
 			<main>
 				<div class="pt-4 lg:py-12 ">
-					<div class="content-container lg:py-12 font-poppins antialiased ">
+					<div class="mx-1 sm:mx-auto sm:content-container lg:py-12 font-poppins antialiased ">
 						<FlexCategories
 							parentCategories={parentCategories}
 							currentCategory={currentCategory}

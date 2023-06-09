@@ -88,7 +88,7 @@ export default function Collection() {
 					a.finished.then(done)
 				}}
 			>
-				<div class="content-container sm:mt-16 font-poppins">
+				<div class="mx-1 sm:mx-auto sm:content-container sm:mt-16 font-poppins">
 					<Show when={queryCollection?.data?.products}>
 						<div class="mb-8">
 							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>

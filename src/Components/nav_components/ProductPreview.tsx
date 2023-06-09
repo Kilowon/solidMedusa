@@ -22,7 +22,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 					<Thumbnail
 						thumbnail={props.thumbnail}
 						title={props.title}
-						size="full"
+						variant="wide"
 					/>
 					<div class="text-xs ">
 						<div>

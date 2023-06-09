@@ -12,24 +12,25 @@ export type ThumbnailProps = {
 	images?: MedusaImage[] | null
 	size?: string | 'small' | 'medium' | 'large' | 'full'
 	title?: string | null
+	variant?: 'wide' | 'clothing' | 'tall'
 }
 
-export function Thumbnail({ thumbnail, images, size = 'small', title }: ThumbnailProps) {
-	const initialImage = thumbnail || images?.[0]?.url
+export function Thumbnail(props: ThumbnailProps) {
+	const initialImage = props.thumbnail || props.images?.[0]?.url
 
 	return (
 		<div
-			class={clsx('relative aspect-[100/75]', {
-				'w-[180px]': size === 'small',
-				'w-[290px]': size === 'medium',
-				'w-[440px]': size === 'large',
-				'w-full': size === 'full'
-			})}
+			class={clsx(
+				'relative aspect-[29/34]',
+				props.variant === 'wide' && 'aspect-[100/75]',
+				props.variant === 'clothing' && 'aspect-[29/34]',
+				props.variant === 'tall' && 'aspect-[75/100]'
+			)}
 		>
 			<ImageOrPlaceholder
-				title={title}
+				title={props.title}
 				image={initialImage}
-				size={size}
+				size={props.size}
 			/>
 		</div>
 	)

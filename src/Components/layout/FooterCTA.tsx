@@ -12,7 +12,7 @@ export function FooterCTA() {
 	})
 	return (
 		<div class="bg-gray-1 w-full">
-			<div class="max-w-[1440px] w-full mx-auto px8 flex flex-col-reverse gap-y-8 sm:flex-row sm:items-center justify-between py-16 relative">
+			<div class=" py-16">
 				<div>
 					<FeaturedProducts variant="footer" />
 				</div>

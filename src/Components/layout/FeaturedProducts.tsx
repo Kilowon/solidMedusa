@@ -31,13 +31,13 @@ export function FeaturedProducts(props: FeaturedProps) {
 
 	function sidesVisible() {
 		if (size().width > 1500) {
-			return 4
+			return 8
 		}
-		if (size().width > 900) {
-			return 3
+		if (size().width > 767) {
+			return 6
 		}
 		if (size().width <= 900) {
-			return 2
+			return 4
 		}
 	}
 
@@ -78,7 +78,7 @@ export function FeaturedProducts(props: FeaturedProps) {
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
 				collection_id: [currentFeatured()?.id],
-				limit: currentFeatured()?.metadata?.limit
+				limit: Math.min(Number(currentFeatured()?.metadata?.limit), Number(sidesVisible()))
 			})
 			return product
 		},
@@ -103,7 +103,7 @@ export function FeaturedProducts(props: FeaturedProps) {
 					a.finished.then(done)
 				}}
 			>
-				<div class="content-container sm:my-16 font-poppins">
+				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
 					<Show when={queryCollection?.data?.products}>
 						<div class="mb-8">
 							<h1 class="text-base md:text-xl lg:text-2xl font-500    text-gray-6 ">{currentFeatured()?.title}</h1>

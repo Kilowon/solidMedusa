@@ -21,10 +21,10 @@ export function Thumbnail(props: ThumbnailProps) {
 	return (
 		<div
 			class={clsx(
-				'relative aspect-[29/34]',
-				props.variant === 'wide' && 'aspect-[100/75]',
+				'relative aspect-[100/75]',
 				props.variant === 'clothing' && 'aspect-[29/34]',
-				props.variant === 'tall' && 'aspect-[75/100]'
+				props.variant === 'tall' && 'aspect-[75/100]',
+				props.variant === 'wide' && 'aspect-[100/75]'
 			)}
 		>
 			<ImageOrPlaceholder

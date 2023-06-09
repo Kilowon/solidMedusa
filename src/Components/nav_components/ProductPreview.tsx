@@ -22,31 +22,37 @@ const ProductPreview = (props: ProductPreviewProps) => {
 					<Thumbnail
 						thumbnail={props.thumbnail}
 						title={props.title}
-						variant="wide"
+						variant="clothing"
 					/>
-					<div class="text-xs ">
+					<div class="text-base ">
 						<div>
-							<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
-								<div class="">
-									{props.variants?.[0]?.original_price ? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD') : ''}
-								</div>
-							</Show>
-							<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-								<div class="line-through ">
-									{props.variants?.[0]?.original_price ? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD') : ''}
-								</div>
-								<div>
-									<div class=" text-red-7 ">
-										{props.variants?.[0]?.calculated_price
-											? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
+							<div class="flex sm:block space-x-1 sm:space-x-0">
+								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
+									<div class="">
+										{props.variants?.[0]?.original_price
+											? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
 											: ''}
 									</div>
-									<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase max-w-10">
-										sale
-									</span>
-								</div>
-							</Show>
-							<span>{props.title}</span>
+								</Show>
+								<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
+									<div class="line-through ">
+										{props.variants?.[0]?.original_price
+											? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+											: ''}
+									</div>
+									<div class="flex sm:block space-x-1 sm:space-x-0">
+										<div class=" text-red-7 ">
+											{props.variants?.[0]?.calculated_price
+												? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
+												: ''}
+										</div>
+										<span class="text-xs text-red-700 sm:text-white font-semibold sm:bg-red-700 rounded-lg flex justify-center items-center  uppercase max-w-10">
+											sale
+										</span>
+									</div>
+								</Show>
+							</div>
+							<span class="text-sm font-500">{props.title}</span>
 						</div>
 					</div>
 				</div>

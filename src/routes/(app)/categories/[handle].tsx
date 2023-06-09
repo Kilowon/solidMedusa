@@ -85,7 +85,7 @@ export default function Categories() {
 								<ol class="grid grid-cols-4 gap-2">
 									<For each={categoryProducts?.()}>
 										{(product: any) => (
-											<li class="col-span-4 md:col-span-2 lg:col-span-1">
+											<li class="col-span-4 sm:col-span-2 lg:col-span-1">
 												<ProductPreview {...product} />
 											</li>
 										)}

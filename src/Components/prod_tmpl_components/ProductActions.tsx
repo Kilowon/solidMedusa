@@ -5,6 +5,7 @@ import { useStore } from '~/Context/StoreContext'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { TransitionGroup } from 'solid-transition-group'
 import toast, { Toaster } from 'solid-toast'
+import { createQuery } from '@tanstack/solid-query'
 
 interface CurrentVariant {
 	id: string
@@ -33,15 +34,6 @@ export default function ProductActions(props: {
 	variant: any
 	useStore: any
 }): JSX.Element {
-	//const price = useProductPrice({ id: props.productInfo.id, variantId: variant()?.id })
-
-	//const selectedPrice =
-	/* useMemo(() => {
-		const { variantPrice, cheapestPrice } = price
-
-		return variantPrice || cheapestPrice || null
-	}, [price]) */
-
 	const { addToCart } = useStore()
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
@@ -70,6 +62,25 @@ export default function ProductActions(props: {
 			setCurrentVariant(props.productInfo.variants[0])
 		}
 	})
+
+	createEffect(() => {
+		queryPostReview.refetch()
+	})
+
+	const queryPostReview = createQuery(() => ({
+		queryKey: ['reviews-send'],
+		queryFn: async function () {
+			console.log('posting review', props.productInfo.id)
+			fetch(`http://localhost:9000/store/products/${props.productInfo.id}/reviews`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ product_review: { rating: 4.5, review: 'test' } })
+			})
+		},
+		enabled: false
+	}))
 
 	return (
 		<Show when={props.productInfo}>

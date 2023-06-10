@@ -9,6 +9,7 @@ import { isServer } from 'solid-js/web'
 import CartCore from '../Core/CartCore'
 import clsx from 'clsx'
 import { root } from 'postcss'
+import { isClient } from '@solid-primitives/utils'
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
@@ -28,13 +29,15 @@ export function Navigation(props: any) {
 	const [menuDrawer, setMenuDrawer] = createSignal({
 		menu: 'hidden'
 	})
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 0) {
-			setIsScrolled(true)
-		} else {
-			setIsScrolled(false)
-		}
-	})
+	if (isClient) {
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 0) {
+				setIsScrolled(true)
+			} else {
+				setIsScrolled(false)
+			}
+		})
+	}
 
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">

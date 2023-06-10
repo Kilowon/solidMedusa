@@ -7,7 +7,7 @@ import { getWindowSize } from '@solid-primitives/resize-observer'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { create } from 'domain'
-
+import { isClient } from '@solid-primitives/utils'
 interface Collection {
 	id: string
 	title: string
@@ -27,19 +27,7 @@ export function FeaturedProducts(props: FeaturedProps) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
-	const [size, setSize] = createSignal(getWindowSize())
-
-	function sidesVisible() {
-		if (size().width > 1500) {
-			return 8
-		}
-		if (size().width > 767) {
-			return 6
-		}
-		if (size().width <= 900) {
-			return 4
-		}
-	}
+	const [size, setSize] = createSignal({ width: 0, height: 0 })
 
 	const [currentFeatured, setCurrentFeatured] = createSignal<Collection | null>(null)
 
@@ -78,7 +66,7 @@ export function FeaturedProducts(props: FeaturedProps) {
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
 				collection_id: [currentFeatured()?.id],
-				limit: Math.min(Number(currentFeatured()?.metadata?.limit), Number(sidesVisible()))
+				limit: 4
 			})
 			return product
 		},

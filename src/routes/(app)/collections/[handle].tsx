@@ -21,20 +21,6 @@ export default function Collection() {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
-	const [size, setSize] = createSignal(getWindowSize())
-
-	function sidesVisible() {
-		if (size().width > 1500) {
-			return 4
-		}
-		if (size().width > 900) {
-			return 3
-		}
-		if (size().width <= 900) {
-			return 2
-		}
-	}
-
 	const [currentCollection, setCurrentCollection] = createSignal<Collection | null>(null)
 
 	createEffect(() => {

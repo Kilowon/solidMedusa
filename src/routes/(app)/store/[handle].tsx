@@ -4,24 +4,11 @@ import 'solid-slider/slider.css'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
+import { isClient } from '@solid-primitives/utils'
 
 export default function Store() {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
-
-	const [size, setSize] = createSignal(getWindowSize())
-
-	function sidesVisible() {
-		if (size().width > 1500) {
-			return 4
-		}
-		if (size().width > 900) {
-			return 3
-		}
-		if (size().width <= 900) {
-			return 2
-		}
-	}
 
 	const queryAllProducts = createQuery(() => ({
 		queryKey: ['all-products'],

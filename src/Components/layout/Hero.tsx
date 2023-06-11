@@ -42,7 +42,7 @@ export function Hero() {
 				src="https://res.cloudinary.com/contentdelivery/image/upload/v1682174583/martin-pechy-bpg-ngqrPc8-unsplash_ctefbx.jpg"
 				layout="fullWidth"
 				priority={true}
-				class="object-cover object-right md:object-center h-full w-full z-0 absolute inset-0  filter brightness-65 animate-fade-in"
+				class="object-cover object-right md:object-center h-full w-full z-0 absolute inset-0  filter brightness-65"
 				alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 			/>
 		</div>

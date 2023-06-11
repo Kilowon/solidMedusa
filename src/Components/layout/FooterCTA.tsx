@@ -1,12 +1,12 @@
-import { createEffect, createSignal } from 'solid-js'
-import UnderlineLink from '~/Components/common/Underline-link'
+import { createEffect, createSignal, lazy } from 'solid-js'
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
 import { isClient } from '@solid-primitives/utils'
+
+const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
 const [size, setSize] = createSignal(getWindowSize())
 
-export function FooterCTA() {
+export default function FooterCTA() {
 	createEffect(() => {
 		if (isClient) {
 			setSize(getWindowSize())

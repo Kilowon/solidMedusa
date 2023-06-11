@@ -1,6 +1,8 @@
 import CartCore from '~/Components/Core/CartCore'
+import { lazy } from 'solid-js'
 import { A } from 'solid-start'
-import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
+
+const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
 export default function Cart(props: any) {
 	return (
@@ -9,7 +11,7 @@ export default function Cart(props: any) {
 			<div class="content-container">
 				<CartCore variant="primary" />
 			</div>
-			<FeaturedProducts featuredProducts={props.featuredProducts} />
+			<FeaturedProducts variant="footer" />
 		</div>
 	)
 }

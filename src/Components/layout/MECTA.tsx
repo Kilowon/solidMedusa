@@ -1,6 +1,6 @@
 import { Image } from '@unpic/solid'
 
-export function MECTA() {
+export default function MECTA() {
 	return (
 		<div class="py-4 flex justify-center items-center w-full">
 			<div class="content-container flex justify-center">

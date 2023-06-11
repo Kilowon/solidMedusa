@@ -1,9 +1,11 @@
 import { Hero } from '~/Components/layout/Hero'
+import { lazy } from 'solid-js'
 import { useRouteData, createRouteData } from 'solid-start'
-import { FeaturedProducts } from '~/Components/layout/FeaturedProducts'
 import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
 import { Cart } from '~/types/types'
+
+const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
 export function routeData() {
 	const { medusa } = useGlobalContext()

@@ -2,12 +2,9 @@ import { useGlobalContext } from '~/Context/Providers'
 import { createSignal, Show, For, createEffect } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
-import { useParams } from 'solid-start'
-import { getWindowSize } from '@solid-primitives/resize-observer'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
-import { create } from 'domain'
-import { isClient } from '@solid-primitives/utils'
+
 interface Collection {
 	id: string
 	title: string
@@ -23,7 +20,7 @@ interface FeaturedProps {
 	variant?: 'hero' | 'menu' | 'footer'
 }
 
-export function FeaturedProducts(props: FeaturedProps) {
+export default function FeaturedProducts(props: FeaturedProps) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 

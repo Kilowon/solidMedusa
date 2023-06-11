@@ -1,6 +1,6 @@
 import { A } from 'solid-start'
 
-export function FooterNav() {
+export default function FooterNav() {
 	return (
 		<div class="max-w-[1440px] w-full mx-auto px8 flex flex-col gap-y-8 pt-16 pb-8 z-1">
 			<div class="flex flex-col gap-y-6 sm:flex-row items-start justify-between">

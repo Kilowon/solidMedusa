@@ -1,6 +1,6 @@
-import { createSignal, lazy } from 'solid-js'
+import { Suspense, createSignal, lazy, Show } from 'solid-js'
 import { A } from 'solid-start'
-
+import { isServer } from 'solid-js/web'
 const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
 const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
 const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
@@ -14,7 +14,7 @@ export function Navigation(props: any) {
 		cart: 'hidden'
 	})
 	const [menuDrawer, setMenuDrawer] = createSignal({
-		menu: 'hidden'
+		menu: 'hidden' as const
 	})
 
 	return (

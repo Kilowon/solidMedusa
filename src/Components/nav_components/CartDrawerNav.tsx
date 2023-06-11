@@ -17,7 +17,7 @@ export default function CartDrawerNav(props: any) {
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
 
 	createEffect(() => {
-		if (!isServer || queryCart.data !== undefined) {
+		if (isServer === false || queryCart.data !== undefined) {
 			setItems(queryCart?.data?.cart?.items)
 		}
 	})

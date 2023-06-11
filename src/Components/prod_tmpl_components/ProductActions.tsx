@@ -63,7 +63,7 @@ export default function ProductActions(props: {
 		}
 	})
 
-	createEffect(() => {
+	/* createEffect(() => {
 		queryPostReview.refetch()
 	})
 
@@ -80,7 +80,7 @@ export default function ProductActions(props: {
 			})
 		},
 		enabled: false
-	}))
+	})) */
 
 	return (
 		<Show when={props.productInfo}>

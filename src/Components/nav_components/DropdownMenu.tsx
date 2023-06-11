@@ -1,14 +1,31 @@
 import { createEffect, createSignal, For, Show, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
-
+import { createQuery } from '@tanstack/solid-query'
 import { Transition } from 'solid-transition-group'
 
 export default function DropdownMenu(props: any) {
-	const { rootCategories } = useGlobalContext()
+	const { medusa } = useGlobalContext()
 	const { collections } = useGlobalContext()
-	const { categories } = useGlobalContext()
+
 	const [open, setOpen] = createSignal(false)
+
+	const queryCategories = createQuery(() => ({
+		queryKey: ['categories_list'],
+		queryFn: async function () {
+			const product = await medusa?.productCategories.list({})
+			return product
+		}
+		//enabled: false
+	}))
+
+	const [categories, categoriesServerState] = createSignal([])
+
+	const [rootCategories, setRootCategories] = createSignal([])
+	createEffect(() => {
+		categoriesServerState(queryCategories.data?.product_categories)
+		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
+	}, [queryCategories])
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
@@ -83,7 +100,7 @@ export default function DropdownMenu(props: any) {
 												<Show when={rootCategories()}>
 													<ol class="flex flex-auto space-x-4 mt-2 ">
 														<For each={rootCategories()}>
-															{collection => {
+															{(collection: any) => {
 																if (collection.category_children?.length > 0) {
 																	return (
 																		<Suspense fallback={<div>Loading...</div>}>
@@ -99,7 +116,7 @@ export default function DropdownMenu(props: any) {
 																				</div>
 																				<div class="space-y-2">
 																					<For each={categories()}>
-																						{category => {
+																						{(category: any) => {
 																							if (category.parent_category?.id === collection.id) {
 																								return (
 																									<Suspense fallback={<div>Loading...</div>}>
@@ -128,7 +145,7 @@ export default function DropdownMenu(props: any) {
 															<span class="flex border border-gray-3"></span>
 															<div class="text-base text-gray-6 font-500 space-y-2">
 																<For each={rootCategories()}>
-																	{collection => {
+																	{(collection: any) => {
 																		if (collection.category_children?.length === 0) {
 																			return (
 																				<Suspense fallback={<div>Loading...</div>}>

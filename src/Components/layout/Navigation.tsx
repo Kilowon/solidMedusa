@@ -50,6 +50,9 @@ export function Navigation(props: any) {
 							<A
 								class="hover:cursor-pointer"
 								href="/account"
+								title="account info"
+								role="button"
+								tabindex="0"
 							>
 								<div class="i-la-user-plus h-7 w-7 " />
 							</A>

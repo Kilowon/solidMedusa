@@ -26,7 +26,7 @@ export default function App() {
 	return (
 		<main>
 			<Hero />
-			<FeaturedProducts variant="hero" />
+			<div class="my-16">{/* <FeaturedProducts variant="hero" /> */}</div>
 		</main>
 	)
 }

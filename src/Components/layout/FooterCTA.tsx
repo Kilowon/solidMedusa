@@ -14,11 +14,9 @@ export default function FooterCTA() {
 		}
 	})
 	return (
-		<div class="bg-gray-1 w-full">
+		<div class=" w-full">
 			<div class=" py-16">
-				<div>
-					<FeaturedProducts variant="footer" />
-				</div>
+				<div>{/* <FeaturedProducts variant="footer" /> */}</div>
 			</div>
 		</div>
 	)

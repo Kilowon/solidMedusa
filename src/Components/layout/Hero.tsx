@@ -4,7 +4,7 @@ import { Image } from '@unpic/solid'
 export function Hero() {
 	return (
 		<div
-			class="h-[100vh] w-full top-0 left-0 z-0 bg-cover bg-center bg-no-repeat 
+			class="h-[100svh] w-full top-0 left-0 z-0 bg-cover bg-center bg-no-repeat 
 		"
 		>
 			<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">
@@ -17,9 +17,9 @@ export function Hero() {
 							alt="couch"
 						/>
 						<div class="absolute text-white top-6 right-3.5 z-15 text-2xl font-bold font-poppins ">ME</div>
-						<h1 class=" absolute top-17 left--17 w-300% text-xl md:text-2xl drop-shadow-md shadow-black flex items-baseline font-poppins">
+						{/* <h1 class=" absolute top-17 left--17 w-300% text-xl md:text-2xl drop-shadow-md shadow-black flex items-baseline font-poppins">
 							Embrace Modern Design
-						</h1>
+						</h1> */}
 					</div>
 				</span>
 				<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins">
@@ -28,7 +28,7 @@ export function Hero() {
 				<div class="flex items-center hover:underline">
 					<A
 						href="/store/Store"
-						class="text-xl md:text-4xl"
+						class="text-xl md:text-4xl z-2"
 					>
 						Explore products
 					</A>

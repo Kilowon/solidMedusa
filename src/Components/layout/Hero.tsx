@@ -19,7 +19,8 @@ export function Hero() {
 				}}
 			>
 				<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">
-					{/* <Suspense>
+					<Suspense>
+						{/* 
 						<div class="relative block md:hidden mt-[20vh]">
 							<Image
 								src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
@@ -32,7 +33,8 @@ export function Hero() {
 								Embrace Modern Design
 							</h1>
 						</div>
-					</Suspense> */}
+					*/}
+					</Suspense>
 
 					<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins z-2">
 						Embrace Modern Design

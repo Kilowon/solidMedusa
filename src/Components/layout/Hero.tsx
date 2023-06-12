@@ -36,7 +36,7 @@ export function Hero() {
 					*/}
 					</Suspense>
 
-					<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins z-2">
+					<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins font-400 z-2">
 						Embrace Modern Design
 					</h1>
 					<div class="flex items-center hover:underline">

@@ -4,30 +4,30 @@ import { A } from 'solid-start'
 //import CartDropdown from '~/Components/nav_components/CartDropdown'
 
 const CartDropdown = lazy(async () => {
-	await new Promise(r => setTimeout(r, 3000))
+	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDropdown')
 })
 
 //const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
 
 const CartDrawerNav = lazy(async () => {
-	await new Promise(r => setTimeout(r, 3000))
+	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDrawerNav')
 })
 
 //const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
 
 const DropdownMenu = lazy(async () => {
-	await new Promise(r => setTimeout(r, 3000))
+	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/DropdownMenu')
 })
 
 const HamburgerDrawerNav = lazy(async () => {
-	await new Promise(r => setTimeout(r, 3000))
+	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/HamburgerDrawerNav')
 })
 
-export function Navigation(props: any) {
+export default function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
 
 	const [cartDrawer, setCartDrawer] = createSignal({

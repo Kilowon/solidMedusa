@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show, lazy } from 'solid-js'
+import { createEffect, createSignal, Show, lazy, Suspense } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { Transition } from 'solid-transition-group'
 import { useStore } from '~/Context/StoreContext'
@@ -80,7 +80,7 @@ export default function CartDropdown(props: any) {
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 150
+						duration: 200
 					})
 					a.finished.then(done)
 				}}
@@ -91,11 +91,13 @@ export default function CartDropdown(props: any) {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={open() && items() !== undefined && isServer === false}>
-					<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
-						<CartCore variant="panel" />
-					</div>
-				</Show>
+				<Suspense>
+					<Show when={open() && items() !== undefined && isServer === false}>
+						<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
+							<CartCore variant="panel" />
+						</div>
+					</Show>
+				</Suspense>
 			</Transition>
 		</div>
 	)

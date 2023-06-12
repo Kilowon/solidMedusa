@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta } from 'solid-start'
-import { createEffect, createSignal, Show, For } from 'solid-js'
+import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { FlexCategories } from '~/Components/common/FlexCategories'
@@ -67,20 +67,7 @@ export default function Categories() {
 							currentCategory={currentCategory}
 						/>
 
-						<Transition
-							onEnter={(el, done) => {
-								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-									duration: 250
-								})
-								a.finished.then(done)
-							}}
-							onExit={(el, done) => {
-								const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-									duration: 0
-								})
-								a.finished.then(done)
-							}}
-						>
+						<Suspense fallback={<div>Loading...</div>}>
 							<Show when={true}>
 								<ol class="grid grid-cols-4 gap-2">
 									<For each={categoryProducts?.()}>
@@ -92,16 +79,15 @@ export default function Categories() {
 									</For>
 								</ol>
 							</Show>
-
-							<SingleLineSlider
-								slideVisible={6}
-								categoryProducts={categoryProducts}
-								setCurrentSlide={setCurrentSlide}
-								setLoaded={setLoaded}
-								loaded={loaded}
-								currentSlide={currentSlide}
-							/>
-						</Transition>
+						</Suspense>
+						<SingleLineSlider
+							slideVisible={6}
+							categoryProducts={categoryProducts}
+							setCurrentSlide={setCurrentSlide}
+							setLoaded={setLoaded}
+							loaded={loaded}
+							currentSlide={currentSlide}
+						/>
 					</div>
 				</div>
 			</main>

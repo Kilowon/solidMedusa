@@ -22,7 +22,7 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'google', // default provider
+					provider: 'fontshare', // default provider
 					fonts: {
 						// these will extend the default theme
 						/* sans: 'Roboto', */
@@ -32,8 +32,7 @@ export default defineConfig({
 						poppins: [
 							{
 								name: 'Poppins',
-								weights: ['400', '500', '700'],
-								italic: true
+								weights: ['700', '400', '500']
 							},
 							{
 								name: 'sans-serif',

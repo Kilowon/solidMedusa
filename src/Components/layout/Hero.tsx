@@ -1,4 +1,4 @@
-import { Suspense } from 'solid-js/types/render'
+import { Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 
@@ -25,6 +25,7 @@ export function Hero() {
 						</div>
 					</span>
 				</Suspense>
+
 				<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins z-2">
 					Embrace Modern Design
 				</h1>

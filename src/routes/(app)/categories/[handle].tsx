@@ -79,14 +79,14 @@ export default function Categories() {
 								</ol>
 							</Show>
 						</Suspense>
-						<SingleLineSlider
+						{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}
 							setCurrentSlide={setCurrentSlide}
 							setLoaded={setLoaded}
 							loaded={loaded}
 							currentSlide={currentSlide}
-						/>
+						/> */}
 					</div>
 				</div>
 			</main>

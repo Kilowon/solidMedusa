@@ -65,6 +65,9 @@ export default function Navigation(props: any) {
 						<A
 							href="/"
 							class="text-regular md:text-2xl font-semibold  "
+							title="Home"
+							role="button"
+							tabindex="0"
 						>
 							<div class=" font-poppins uppercase"> Modern Edge </div>
 						</A>

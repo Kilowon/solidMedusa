@@ -1,3 +1,4 @@
+import { Suspense } from 'solid-js/types/render'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 
@@ -8,20 +9,22 @@ export function Hero() {
 		"
 		>
 			<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">
-				<span>
-					<div class="relative block md:hidden mt-[20vh]">
-						<Image
-							src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
-							width={100}
-							height={100}
-							alt="couch"
-						/>
-						<div class="absolute text-white top-6 right-3.5 z-15 text-2xl font-bold font-poppins ">ME</div>
-						{/* <h1 class=" absolute top-17 left--17 w-300% text-xl md:text-2xl drop-shadow-md shadow-black flex items-baseline font-poppins">
+				<Suspense>
+					<span>
+						<div class="relative block md:hidden mt-[20vh]">
+							<Image
+								src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
+								width={100}
+								height={100}
+								alt="couch"
+							/>
+							<div class="absolute text-white top-6 right-3.5 z-15 text-2xl font-bold font-poppins ">ME</div>
+							{/* <h1 class=" absolute top-17 left--17 w-300% text-xl md:text-2xl drop-shadow-md shadow-black flex items-baseline font-poppins">
 							Embrace Modern Design
 						</h1> */}
-					</div>
-				</span>
+						</div>
+					</span>
+				</Suspense>
 				<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins z-2">
 					Embrace Modern Design
 				</h1>

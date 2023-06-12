@@ -1,5 +1,5 @@
 import { Hero } from '~/Components/layout/Hero'
-import { lazy } from 'solid-js'
+import { lazy, Suspense } from 'solid-js'
 import { useRouteData, createRouteData } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { IsClientCheck, getProductList } from '~/Services/medusaAPI'
@@ -26,7 +26,11 @@ export default function App() {
 	return (
 		<main>
 			<Hero />
-			<div class="my-16">{/* <FeaturedProducts variant="hero" /> */}</div>
+			<div class="my-16">
+				<Suspense>
+					<FeaturedProducts variant="hero" />
+				</Suspense>
+			</div>
 		</main>
 	)
 }

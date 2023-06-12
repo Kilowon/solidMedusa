@@ -1,10 +1,31 @@
-import { createSignal, lazy } from 'solid-js'
+import { createSignal, lazy, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 
-const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
-const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
-const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
-const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
+//import CartDropdown from '~/Components/nav_components/CartDropdown'
+
+const CartDropdown = lazy(async () => {
+	await new Promise(r => setTimeout(r, 3000))
+	return import('~/Components/nav_components/CartDropdown')
+})
+
+//const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
+
+const CartDrawerNav = lazy(async () => {
+	await new Promise(r => setTimeout(r, 3000))
+	return import('~/Components/nav_components/CartDrawerNav')
+})
+
+//const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
+
+const DropdownMenu = lazy(async () => {
+	await new Promise(r => setTimeout(r, 3000))
+	return import('~/Components/nav_components/DropdownMenu')
+})
+
+const HamburgerDrawerNav = lazy(async () => {
+	await new Promise(r => setTimeout(r, 3000))
+	return import('~/Components/nav_components/HamburgerDrawerNav')
+})
 
 export function Navigation(props: any) {
 	const [stayOpen, setStayOpen] = createSignal(false)
@@ -23,16 +44,20 @@ export function Navigation(props: any) {
 				<nav class="flex items-center justify-between w-full h-full text-sm text-gray-500 relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="xl:hidden">
-							<HamburgerDrawerNav
-								menuDrawer={menuDrawer}
-								setMenuDrawer={setMenuDrawer}
-							/>
+							<Suspense>
+								<HamburgerDrawerNav
+									menuDrawer={menuDrawer}
+									setMenuDrawer={setMenuDrawer}
+								/>
+							</Suspense>
 						</div>
 						<div class="hidden xl:block h-full ml-2">
-							<DropdownMenu
-								collection={props.collection}
-								product={props.product}
-							/>
+							<Suspense>
+								<DropdownMenu
+									collection={props.collection}
+									product={props.product}
+								/>
+							</Suspense>
 						</div>
 					</div>
 
@@ -58,17 +83,21 @@ export function Navigation(props: any) {
 							</A>
 						</div>
 						<div class="hidden xl:block">
-							<CartDropdown
-								cart={props.cart}
-								stayOpen={stayOpen}
-								setStayOpen={setStayOpen}
-							/>
+							<Suspense>
+								<CartDropdown
+									cart={props.cart}
+									stayOpen={stayOpen}
+									setStayOpen={setStayOpen}
+								/>
+							</Suspense>
 						</div>
 						<div class="block xl:hidden ">
-							<CartDrawerNav
-								cartDrawer={cartDrawer}
-								setCartDrawer={setCartDrawer}
-							/>
+							<Suspense>
+								<CartDrawerNav
+									cartDrawer={cartDrawer}
+									setCartDrawer={setCartDrawer}
+								/>
+							</Suspense>
 						</div>
 					</div>
 				</nav>

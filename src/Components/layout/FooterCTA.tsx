@@ -1,4 +1,4 @@
-import { createEffect, createSignal, lazy } from 'solid-js'
+import { createEffect, createSignal, lazy, Suspense } from 'solid-js'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { isClient } from '@solid-primitives/utils'
 
@@ -16,7 +16,11 @@ export default function FooterCTA() {
 	return (
 		<div class=" w-full">
 			<div class=" py-16">
-				<div>{/* <FeaturedProducts variant="footer" /> */}</div>
+				<div>
+					<Suspense>
+						<FeaturedProducts variant="footer" />
+					</Suspense>
+				</div>
 			</div>
 		</div>
 	)

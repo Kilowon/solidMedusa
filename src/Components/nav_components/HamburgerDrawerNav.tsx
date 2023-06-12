@@ -1,4 +1,5 @@
-import { createSignal, For, Show, Suspense, SuspenseList, Accessor, createEffect } from 'solid-js'
+import { For } from 'solid-js/web'
+import { createSignal, Show, Suspense, SuspenseList, Accessor, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
@@ -54,7 +55,10 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 					setSelectedRoot(rootCategories())
 					props.setMenuDrawer({ menu: 'active' })
 				}}
-				onkeypress={() => props.setMenuDrawer({ menu: 'active' })}
+				onkeypress={() => {
+					setSelectedRoot(rootCategories())
+					props.setMenuDrawer({ menu: 'active' })
+				}}
 			>
 				<div class="i-ic-round-menu w-7 h-7 ml-2" />
 			</div>

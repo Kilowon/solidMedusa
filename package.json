@@ -20,7 +20,7 @@
 	"dependencies": {
 		"@adeora/solid-query-devtools": "^0.0.10",
 		"@iconify/json": "^2.2.34",
-		"@medusajs/medusa-js": "^2.0.0",
+		"@medusajs/medusa-js": "^6.0.0",
 		"@modular-forms/solid": "^0.13.2",
 		"@slidy/solid": "^1.4.0",
 		"@solid-primitives/geolocation": "^1.4.6",

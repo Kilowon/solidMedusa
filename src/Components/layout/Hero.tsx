@@ -10,7 +10,7 @@ export function Hero() {
 			<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">
 				<span>
 					<div class="relative block md:hidden mt-[20vh]">
-						<img
+						<Image
 							src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
 							width={100}
 							height={100}

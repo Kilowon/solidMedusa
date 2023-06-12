@@ -23,10 +23,6 @@ export default function Products() {
 		staleTime: 25 * 60 * 1000
 	}))
 
-	createEffect(() => {
-		console.log(queryProduct?.data?.products[0])
-	})
-
 	return (
 		<div>
 			<Title>{queryProduct?.data?.products[0]?.title}</Title>

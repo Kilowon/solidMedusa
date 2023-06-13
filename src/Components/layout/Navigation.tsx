@@ -64,12 +64,12 @@ export default function Navigation(props: any) {
 					<div class="flex items-center h-full">
 						<A
 							href="/"
-							class="text-regular md:text-2xl font-semibold  "
+							class="text-regular md:text-2xl font-semibold font-poppins uppercase "
 							title="Home"
 							role="button"
 							tabindex="0"
 						>
-							<div class=" font-poppins uppercase"> Modern Edge </div>
+							Modern Edge
 						</A>
 					</div>
 

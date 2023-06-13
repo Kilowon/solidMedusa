@@ -248,7 +248,7 @@ export default function CheckoutPage() {
 							showForm={showForm}
 						/>
 					</div>
-					<Show when={showForm().customer === 'active'}>
+					<Show when={showForm()?.customer === 'active'}>
 						<input
 							type="text"
 							autofocus
@@ -256,7 +256,7 @@ export default function CheckoutPage() {
 						/>
 						<Express />
 						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
-						<Show when={showForm().customer === 'active'}>
+						<Show when={showForm()?.customer === 'active'}>
 							<Customer
 								setShowForm={setShowForm}
 								showForm={showForm}
@@ -267,7 +267,7 @@ export default function CheckoutPage() {
 						</Show>
 					</Show>
 
-					<Show when={showForm().shipping === 'active'}>
+					<Show when={showForm()?.shipping === 'active'}>
 						<Shipping
 							setShowForm={setShowForm}
 							showForm={showForm}
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
 							cart={queryCart.data?.cart}
 						/>
 					</Show>
-					<Show when={showForm().billing === 'active'}>
+					<Show when={showForm()?.billing === 'active'}>
 						<Billing
 							setShowForm={setShowForm}
 							showForm={showForm}
@@ -294,7 +294,7 @@ export default function CheckoutPage() {
 							cart={queryCart.data?.cart}
 						/>
 					</Show>
-					<Show when={showForm().payment === 'active'}>
+					<Show when={showForm()?.payment === 'active'}>
 						<Payment
 							setShowForm={setShowForm}
 							showForm={showForm}
@@ -454,7 +454,7 @@ export function StepperWIP(props: StepperProps) {
 export function Stepper(props: StepperProps) {
 	return (
 		<div>
-			<Show when={props.formCompleted().customer !== 'complete'}>
+			<Show when={props.formCompleted()?.customer !== 'complete'}>
 				<ol class="flex items-center w-full">
 					<StepperElement
 						title="Customer"
@@ -1038,7 +1038,7 @@ export function Customer(props: CustomerProps) {
 						</Field>
 					</Show>
 					{/* //password */}
-					<Show when={getValues(customerForm).checkbox?.signup || getValues(customerForm).checkbox?.signin}>
+					<Show when={getValues(customerForm)?.checkbox?.signup || getValues(customerForm)?.checkbox?.signin}>
 						<Field
 							name="password"
 							validate={[
@@ -1346,7 +1346,7 @@ export function Shipping(props: ShippingProps) {
 							</Field>
 						</div>
 					</div>
-					<Show when={getValues(shippingForm).checkbox?.phone}>
+					<Show when={getValues(shippingForm)?.checkbox?.phone}>
 						{/* //Phone Number */}
 						<Field name="phone">
 							{(field, props) => (
@@ -1363,7 +1363,7 @@ export function Shipping(props: ShippingProps) {
 						</Field>
 					</Show>
 
-					<Show when={getValues(shippingForm).checkbox?.company}>
+					<Show when={getValues(shippingForm)?.checkbox?.company}>
 						{/* //company Name */}
 						<Field name="company">
 							{(field, props) => (
@@ -1483,7 +1483,7 @@ export function Carrier(props: CarrierProps) {
 	const mutateCarriers = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			const response = await medusa?.carts.addShippingMethod(props.cart?.id, {
+			const response = await medusa?.carts?.addShippingMethod(props.cart?.id, {
 				option_id: optionId()
 			})
 			return response
@@ -1859,7 +1859,7 @@ export function Billing(props: BillingProps) {
 						</div>
 					</div>
 
-					<Show when={getValues(billingForm).checkbox?.phone}>
+					<Show when={getValues(billingForm)?.checkbox?.phone}>
 						{/* //Phone Number */}
 						<Field
 							name="phone"
@@ -1878,7 +1878,7 @@ export function Billing(props: BillingProps) {
 						</Field>
 					</Show>
 
-					<Show when={getValues(billingForm).checkbox?.company}>
+					<Show when={getValues(billingForm)?.checkbox?.company}>
 						{/* //company Name */}
 						<Field name="company">
 							{(field, props) => (

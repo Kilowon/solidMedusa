@@ -61,13 +61,21 @@ export default function Navigation(props: any) {
 						</div>
 					</div>
 
-					<A
-						href="/"
-						class="flex items-center h-full text-regular md:text-2xl font-semibold font-poppins uppercase z-52"
-						title="Home"
-					>
-						Modern Edge
-					</A>
+					<div class="flex items-center h-full">
+						<A
+							title="Home"
+							href="/"
+							class="text-regular md:text-2xl font-semibold  "
+						>
+							<div
+								title="Modern Edge"
+								class=" font-poppins uppercase"
+							>
+								{' '}
+								Modern Edge{' '}
+							</div>
+						</A>
+					</div>
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
 						<div class="flex items-center mr-4 ">

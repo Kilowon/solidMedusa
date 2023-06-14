@@ -234,6 +234,10 @@ export default function CartCore(props: CartCoreProps) {
 										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
 										cart={queryCart?.data?.cart}
 									/>
+									<GiftCardInput
+										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
+										cart={queryCart?.data?.cart}
+									/>
 									<div class="flex justify-between items-center">
 										<span class=" font-semibold">Shipping</span>
 										<span class="text-large-semi">
@@ -624,6 +628,69 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 						</div>
 					</div>
 					<div>-{currencyFormat(Number(props?.cart?.discount_total || 0), props?.cart?.region?.id)}</div>
+				</div>
+			</Show>
+		</div>
+	)
+}
+
+export function GiftCardInput(props: PromoCodeInputProps) {
+	const [giftCard, setGiftCard] = createSignal('')
+
+	const { medusa } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
+
+	const handleSubmit = (e: Event) => {
+		e.preventDefault()
+		props.onSubmit(giftCard())
+		//setPromoCode('')
+		mutateGiftCard.refetch()
+	}
+
+	const mutateGiftCard = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			const response = await medusa?.carts.update(queryCart?.data?.cart?.id, {
+				gift_cards: [{ code: giftCard() }]
+			})
+			return response
+		},
+		enabled: false
+	}))
+
+	return (
+		<div>
+			<Show when={props?.cart?.gift_card_total === 0}>
+				<form
+					onSubmit={handleSubmit}
+					class="flex items-center space-x-2"
+				>
+					<input
+						type="text"
+						value={giftCard()}
+						onInput={(e: any) => setGiftCard(e.target.value)}
+						placeholder="Enter gift card code"
+						class="border border-gray-300 rounded px-2 py-1"
+					/>
+					<button
+						type="submit"
+						class="bg-gray-300 text-gray-8 px-3 py-1 rounded"
+					>
+						Apply
+					</button>
+				</form>
+			</Show>
+			<Show when={props?.cart?.gift_card_total > 0}>
+				<div class="flex justify-between text-gray-6">
+					<div class="flex space-x-2">
+						<div class="text-xs">{props?.cart?.gift_cards[0]?.code}</div>
+						<div class="text-xs">
+							{'('}
+							{currencyFormat(Number(props?.cart?.gift_cards[0]?.value || 0), props?.cart?.region?.id)} currently available
+							{')'}
+						</div>
+					</div>
+					<div>-{currencyFormat(Number(props?.cart?.gift_card_total || 0), props?.cart?.region?.id)}</div>
 				</div>
 			</Show>
 		</div>

@@ -43,10 +43,6 @@ export default function FeaturedProducts(props: FeaturedProps) {
 		}
 	})
 
-	createEffect(() => {
-		console.log('ERR', currentFeatured())
-	})
-
 	const queryCollectionsList = createQuery(() => ({
 		queryKey: ['collections-list'],
 		queryFn: async function () {
@@ -81,15 +77,9 @@ export default function FeaturedProducts(props: FeaturedProps) {
 					})
 					a.finished.then(done)
 				}}
-				onExit={(el, done) => {
-					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-						duration: 0
-					})
-					a.finished.then(done)
-				}}
 			>
 				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
-					<Show when={queryCollection?.data?.products}>
+					<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
 						<div class="mb-8">
 							<h1 class="text-base md:text-xl lg:text-2xl font-500    text-gray-6 ">{currentFeatured()?.title}</h1>
 							<div class="text-xs lg:text-base  text-gray-5">{currentFeatured()?.metadata?.description}</div>

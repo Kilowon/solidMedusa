@@ -17,66 +17,50 @@ interface ProductPreviewProps extends ProductPreviewType {
 
 const ProductPreview = (props: ProductPreviewProps) => {
 	return (
-		<Transition
-			appear={true}
-			onEnter={(el, done) => {
-				const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-					duration: 250
-				})
-				a.finished.then(done)
-			}}
-			onExit={(el, done) => {
-				const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-					duration: 200
-				})
-				a.finished.then(done)
-			}}
-		>
-			<Suspense>
-				<Show when={props.title}>
-					<A href={`/products/${props.handle}`}>
-						<div onClick={props.handleClick}>
-							<Thumbnail
-								thumbnail={props.thumbnail}
-								title={props.title}
-								variant="clothing"
-							/>
-							<div class="text-base ">
-								<div>
-									<div class="flex sm:block space-x-1 sm:space-x-0">
-										<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
-											<div class="">
-												{props.variants?.[0]?.original_price
-													? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+		<Suspense>
+			<Show when={props.title}>
+				<A href={`/products/${props.handle}`}>
+					<div onClick={props.handleClick}>
+						<Thumbnail
+							thumbnail={props.thumbnail}
+							title={props.title}
+							variant="clothing"
+						/>
+						<div class="text-base ">
+							<div>
+								<div class="flex sm:block space-x-1 sm:space-x-0">
+									<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
+										<div class="">
+											{props.variants?.[0]?.original_price
+												? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+												: ''}
+										</div>
+									</Show>
+									<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
+										<div class="line-through ">
+											{props.variants?.[0]?.original_price
+												? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+												: ''}
+										</div>
+										<div class="flex sm:block space-x-1 sm:space-x-0">
+											<div class=" text-red-7 ">
+												{props.variants?.[0]?.calculated_price
+													? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
 													: ''}
 											</div>
-										</Show>
-										<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-											<div class="line-through ">
-												{props.variants?.[0]?.original_price
-													? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
-													: ''}
-											</div>
-											<div class="flex sm:block space-x-1 sm:space-x-0">
-												<div class=" text-red-7 ">
-													{props.variants?.[0]?.calculated_price
-														? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
-														: ''}
-												</div>
-												<span class="text-xs text-red-700 sm:text-white font-semibold sm:bg-red-700 rounded-lg flex justify-center items-center  uppercase max-w-10">
-													sale
-												</span>
-											</div>
-										</Show>
-									</div>
-									<span class="text-sm font-500">{props.title}</span>
+											<span class="text-xs text-red-700 sm:text-white font-semibold sm:bg-red-700 rounded-lg flex justify-center items-center  uppercase max-w-10">
+												sale
+											</span>
+										</div>
+									</Show>
 								</div>
+								<span class="text-sm font-500">{props.title}</span>
 							</div>
 						</div>
-					</A>
-				</Show>
-			</Suspense>
-		</Transition>
+					</div>
+				</A>
+			</Show>
+		</Suspense>
 	)
 }
 

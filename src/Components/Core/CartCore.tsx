@@ -1,4 +1,4 @@
-import { For, Switch, Match, Show, Suspense, createSignal, createEffect } from 'solid-js'
+import { For, Switch, Match, Show, Suspense, createSignal, createEffect, ErrorBoundary } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
@@ -38,10 +38,10 @@ export default function CartCore(props: CartCoreProps) {
 
 	return (
 		<div class=" text-sm text-gray-5 z-50">
-			<Show when={isServer === false}>
-				<Switch fallback={<div>Empty</div>}>
+			<Show when={isServer === false && queryCart?.data?.cart?.items && sortedItems()}>
+				<ErrorBoundary fallback={(err, reset) => <div onClick={reset}>Error: {err.toString()}</div>}>
 					<Suspense fallback={<div>Loading...</div>}>
-						<Match when={queryCart?.data?.cart?.items?.length > 0}>
+						<Show when={queryCart?.data?.cart?.items?.length > 0}>
 							<div
 								class={clsx(
 									'',
@@ -65,116 +65,26 @@ export default function CartCore(props: CartCoreProps) {
 									<For each={sortedItems()}>
 										{item => (
 											<Suspense fallback={<div>Loading...</div>}>
-												<li>
-													<div
-														class={clsx(
-															'grid gap-x-3',
-															props.variant === 'primary' && 'grid-cols-[100px_1fr]',
-															props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
-															props.variant === 'panel' && 'grid-cols-[70px_1fr]',
-															props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
-															props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
-														)}
-													>
-														<div class="flex flex-col items-center ">
-															<Thumbnail
-																thumbnail={item.thumbnail}
-																size="full"
-															/>
-															<div
-																class={clsx(
-																	'',
-																	props.variant === 'primary' && '',
-																	props.variant === 'checkout' && 'hidden',
-																	props.variant === 'panel' && '',
-																	props.variant === 'mobile-checkout' && 'hidden',
-																	props.variant === 'mobile-panel' && ''
-																)}
-															>
-																<Show when={isServer === false}>
-																	<ItemQuantity
-																		item={item}
-																		cart={queryCart?.data?.cart}
-																	/>
-																</Show>
-															</div>
-														</div>
+												<Show when={item.variant.product}>
+													<li>
 														<div
 															class={clsx(
-																'grid grid-cols-2',
-																props.variant === 'primary' && 'lg:flex lg:justify-between',
-																props.variant === 'checkout' && '',
-																props.variant === 'panel' && '',
-																props.variant === 'mobile-checkout' && '',
-																props.variant === 'mobile-panel' && ''
+																'grid gap-x-3',
+																props.variant === 'primary' && 'grid-cols-[100px_1fr]',
+																props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
+																props.variant === 'panel' && 'grid-cols-[70px_1fr]',
+																props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
+																props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
 															)}
 														>
-															<div class="flex items-start justify-between">
-																<div>
-																	<div
-																		class={clsx(
-																			'font-semibold line-clamp-2 text-ellipsis',
-																			props.variant === 'primary' && 'md:text-lg',
-																			props.variant === 'checkout' && 'text-xs',
-																			props.variant === 'panel' && 'text-xs',
-																			props.variant === 'mobile-checkout' && 'text-xs',
-																			props.variant === 'mobile-panel' && 'text-xs'
-																		)}
-																	>
-																		<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
-																	</div>
-
-																	<ItemOptions
-																		item={item}
-																		cart={queryCart?.data?.cart}
-																	/>
-																</div>
-															</div>
-
-															<div
-																class={clsx(
-																	'space-y-12',
-																	props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
-																	props.variant === 'checkout' && ' text-sm',
-																	props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
-																	props.variant === 'mobile-checkout' && ' text-sm',
-																	props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
-																)}
-															>
+															<div class="flex flex-col items-center ">
+																<Thumbnail
+																	thumbnail={item.thumbnail}
+																	size="full"
+																/>
 																<div
 																	class={clsx(
 																		'',
-																		props.variant === 'primary' && '',
-																		props.variant === 'checkout' && 'grid grid-cols-2',
-																		props.variant === 'panel' && '',
-																		props.variant === 'mobile-checkout' && 'grid grid-cols-2',
-																		props.variant === 'mobile-panel' && ''
-																	)}
-																>
-																	<div>
-																		<span
-																			class={clsx(
-																				'',
-																				props.variant === 'primary' && 'hidden',
-																				props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
-																				props.variant === 'panel' && 'hidden',
-																				props.variant === 'mobile-checkout' &&
-																					'flex items-center justify-center mt-2 text-sm font-semibold',
-																				props.variant === 'mobile-panel' && 'hidden'
-																			)}
-																		>
-																			Qty: {item?.quantity}
-																		</span>
-																	</div>
-																	<div class="flex items-center justify-end ">
-																		<ItemPrice
-																			item={item}
-																			cart={queryCart?.data?.cart}
-																		/>
-																	</div>
-																</div>
-																<div
-																	class={clsx(
 																		props.variant === 'primary' && '',
 																		props.variant === 'checkout' && 'hidden',
 																		props.variant === 'panel' && '',
@@ -182,21 +92,113 @@ export default function CartCore(props: CartCoreProps) {
 																		props.variant === 'mobile-panel' && ''
 																	)}
 																>
-																	<button
-																		class="flex items-center gap-x-1 rounded p-1 bg-white"
-																		onClick={() => {
-																			deleteItem(item?.id), queryCartRefetch?.()
-																		}}
-																	>
-																		<div class="i-ph-trash-duotone text-sm lg:text-base text-gray-5  "></div>
-																		<span class="text-sm lg:text-base ">Remove</span>
-																	</button>
+																	<Show when={isServer === false}>
+																		<ItemQuantity
+																			item={item}
+																			cart={queryCart?.data?.cart}
+																		/>
+																	</Show>
 																</div>
 															</div>
-														</div>
-													</div>{' '}
-													<hr class="border-gray-400/50 my-2 mx-6" />
-												</li>
+															<div
+																class={clsx(
+																	'grid grid-cols-2',
+																	props.variant === 'primary' && 'lg:flex lg:justify-between',
+																	props.variant === 'checkout' && '',
+																	props.variant === 'panel' && '',
+																	props.variant === 'mobile-checkout' && '',
+																	props.variant === 'mobile-panel' && ''
+																)}
+															>
+																<div class="flex items-start justify-between">
+																	<div>
+																		<div
+																			class={clsx(
+																				'font-semibold line-clamp-2 text-ellipsis',
+																				props.variant === 'primary' && 'md:text-lg',
+																				props.variant === 'checkout' && 'text-xs',
+																				props.variant === 'panel' && 'text-xs',
+																				props.variant === 'mobile-checkout' && 'text-xs',
+																				props.variant === 'mobile-panel' && 'text-xs'
+																			)}
+																		>
+																			<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
+																		</div>
+
+																		<ItemOptions
+																			item={item}
+																			cart={queryCart?.data?.cart}
+																		/>
+																	</div>
+																</div>
+
+																<div
+																	class={clsx(
+																		'space-y-12',
+																		props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
+																		props.variant === 'checkout' && ' text-sm',
+																		props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
+																		props.variant === 'mobile-checkout' && ' text-sm',
+																		props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
+																	)}
+																>
+																	<div
+																		class={clsx(
+																			'',
+																			props.variant === 'primary' && '',
+																			props.variant === 'checkout' && 'grid grid-cols-2',
+																			props.variant === 'panel' && '',
+																			props.variant === 'mobile-checkout' && 'grid grid-cols-2',
+																			props.variant === 'mobile-panel' && ''
+																		)}
+																	>
+																		<div>
+																			<span
+																				class={clsx(
+																					'',
+																					props.variant === 'primary' && 'hidden',
+																					props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																					props.variant === 'panel' && 'hidden',
+																					props.variant === 'mobile-checkout' &&
+																						'flex items-center justify-center mt-2 text-sm font-semibold',
+																					props.variant === 'mobile-panel' && 'hidden'
+																				)}
+																			>
+																				Qty: {item?.quantity}
+																			</span>
+																		</div>
+																		<div class="flex items-center justify-end ">
+																			<ItemPrice
+																				item={item}
+																				cart={queryCart?.data?.cart}
+																			/>
+																		</div>
+																	</div>
+																	<div
+																		class={clsx(
+																			props.variant === 'primary' && '',
+																			props.variant === 'checkout' && 'hidden',
+																			props.variant === 'panel' && '',
+																			props.variant === 'mobile-checkout' && 'hidden',
+																			props.variant === 'mobile-panel' && ''
+																		)}
+																	>
+																		<button
+																			class="flex items-center gap-x-1 rounded p-1 bg-white"
+																			onClick={() => {
+																				deleteItem(item?.id), queryCartRefetch?.()
+																			}}
+																		>
+																			<div class="i-ph-trash-duotone text-sm lg:text-base text-gray-5  "></div>
+																			<span class="text-sm lg:text-base ">Remove</span>
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>{' '}
+														<hr class="border-gray-400/50 my-2 mx-6" />
+													</li>
+												</Show>
 											</Suspense>
 										)}
 									</For>
@@ -285,10 +287,11 @@ export default function CartCore(props: CartCoreProps) {
 									</Show>
 								</div>
 							</div>
-						</Match>
+						</Show>
 					</Suspense>
+
 					<Suspense fallback={<div>Loading...</div>}>
-						<Match when={queryCart?.data?.cart?.items?.length === 0}>
+						<Show when={queryCart?.data?.cart?.items?.length === 0}>
 							<div>
 								<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
 									<div class="bg-gray-6 text-sm font-poppins flex items-center justify-center w-6 h-6 rounded-full text-white">
@@ -310,9 +313,9 @@ export default function CartCore(props: CartCoreProps) {
 									</div>
 								</div>
 							</div>
-						</Match>
+						</Show>
 					</Suspense>
-				</Switch>
+				</ErrorBoundary>
 			</Show>
 		</div>
 	)

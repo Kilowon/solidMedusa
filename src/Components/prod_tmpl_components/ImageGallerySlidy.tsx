@@ -14,9 +14,8 @@ export default function ImageGallerySlidy(props: {
 	const [location, setLocation] = createSignal(useLocation().pathname)
 	// Slidy has a bug where it shutters the image when you have less than 3 slides so this is a workaround that just adds the first slide to the end of the array until there are 3 slides if there are less than 3 slides provided or if no images are provided we throw in a placeholder image
 	createEffect(() => {
-		const images = props.images
-		if (images && images.length > 0) {
-			const newSlides = images.map((image, index) => ({
+		if (props.images && props.images?.length > 0) {
+			const newSlides = props.images?.map((image, index) => ({
 				id: `${index}`,
 				width: 1280,
 				height: 853,
@@ -57,7 +56,7 @@ export default function ImageGallerySlidy(props: {
 
 	return (
 		<Show
-			when={location() === useLocation().pathname}
+			when={location() === useLocation().pathname && slides().length > 0}
 			fallback={
 				<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
 					<div class="i-svg-spinners:bars-scale-fade" />

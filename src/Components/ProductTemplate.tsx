@@ -15,7 +15,18 @@ export default function ProductTemplate(props: {
 	useStore: any
 }): JSX.Element {
 	return (
-		<Show when={props.productInfo}>
+		<Show
+			when={
+				props.productInfo &&
+				props.images &&
+				props.inStock &&
+				props.options &&
+				props.params &&
+				props.updateOptions &&
+				props.useStore &&
+				props.variant
+			}
+		>
 			<main>
 				<div class=" lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">

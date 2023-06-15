@@ -90,7 +90,7 @@ export default function Categories() {
 		<ErrorBoundary>
 			<Show
 				when={currentCategory()}
-				fallback={<div>First</div>}
+				fallback={<div></div>}
 			>
 				<Title>{currentCategory?.()[0]?.name}</Title>
 				<Meta
@@ -105,7 +105,7 @@ export default function Categories() {
 				<div class="pt-4 lg:py-12 ">
 					<Show
 						when={parentCategories() && currentCategory()}
-						fallback={<div>Second</div>}
+						fallback={<div></div>}
 					>
 						<div class="mx-1 sm:mx-auto sm:content-container lg:py-12 font-poppins antialiased ">
 							<FlexCategories
@@ -116,7 +116,7 @@ export default function Categories() {
 							<Suspense fallback={<div>Loading...</div>}>
 								<Show
 									when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
-									fallback={<div>Three</div>}
+									fallback={<div></div>}
 								>
 									<ol class="grid grid-cols-4 gap-2">
 										<For each={queryCategoryProducts.data?.products}>

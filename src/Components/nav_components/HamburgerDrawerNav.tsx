@@ -97,16 +97,28 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 								{(collection: any) => {
 									if (collection?.category_children?.length > 0) {
 										return (
-											<button
-												class="flex justify-between justify-center items-center w-full py-1 "
-												onClick={() => {
-													setSelectedRoot(getChildrenOfRoot(collection.category_children))
-													setBackButton('active')
-												}}
-											>
-												<li class=" ml-2">{collection.name}</li>
-												<div class="i-octicon-chevron-right-12 text-2xl" />
-											</button>
+											<div class="flex justify-between space-x-0.5">
+												<A
+													class="w-1/2 bg-gray-1"
+													href={`/categories/${collection?.handle}`}
+													onClick={() => {
+														setBackButton('inactive')
+														props.setMenuDrawer({ menu: 'hidden' })
+													}}
+												>
+													<li class=" ml-2">{collection.name}</li>
+												</A>
+
+												<button
+													class="flex w-1/2 py-1 justify-end bg-gray-1"
+													onClick={() => {
+														setSelectedRoot(getChildrenOfRoot(collection.category_children))
+														setBackButton('active')
+													}}
+												>
+													<div class="i-octicon-chevron-right-12 text-2xl " />
+												</button>
+											</div>
 										)
 									}
 									if (collection?.category_children?.length === 0) {

@@ -61,11 +61,7 @@ export default function Root() {
 									revealOrder="forwards"
 									tail="collapsed"
 								>
-									<Suspense
-										fallback={
-											<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-900 text-xl"></section>
-										}
-									>
+									<Suspense>
 										<Routes>
 											<FileRoutes />
 										</Routes>

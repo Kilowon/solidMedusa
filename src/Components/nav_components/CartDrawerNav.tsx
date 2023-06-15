@@ -56,7 +56,7 @@ export default function CartDrawerNav(props: any) {
 						<Show when={!isServer && props.cartDrawer().cart === 'active'}>
 							<CartCore
 								variant="mobile-panel"
-								setCartDrawer={props.setCartDrawer()}
+								setCartDrawer={props.setCartDrawer}
 							/>
 						</Show>
 					</ErrorBoundary>

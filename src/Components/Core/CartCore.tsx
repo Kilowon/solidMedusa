@@ -305,14 +305,21 @@ export default function CartCore(props: CartCoreProps) {
 									<div>
 										<A href="/store/Store">
 											<span class="sr-only">Go to all products page</span>
-											<button
-												onClick={() => {
-													props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
-												}}
-												class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-600 disabled:hover:bg-gray-600 disabled:hover:text-white"
-											>
-												Explore products
-											</button>
+											<Show when={props.variant === 'mobile-panel'}>
+												<div
+													onClick={() => {
+														props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
+													}}
+													class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-600 disabled:hover:bg-gray-600 disabled:hover:text-white"
+												>
+													Explore products
+												</div>
+											</Show>
+											<Show when={props.variant === 'panel'}>
+												<div class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-600 disabled:hover:bg-gray-600 disabled:hover:text-white">
+													Explore products
+												</div>
+											</Show>
 										</A>
 									</div>
 								</div>

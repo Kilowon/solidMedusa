@@ -99,7 +99,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 										return (
 											<div class="flex justify-between space-x-0.5">
 												<A
-													class="w-1/2 bg-gray-1"
+													class="w-2/3 bg-gray-1"
 													href={`/categories/${collection?.handle}`}
 													onClick={() => {
 														setBackButton('inactive')
@@ -110,7 +110,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 												</A>
 
 												<button
-													class="flex w-1/2 py-1 justify-end bg-gray-1"
+													class="flex w-1/3 py-1 justify-end bg-gray-1"
 													onClick={() => {
 														setSelectedRoot(getChildrenOfRoot(collection.category_children))
 														setBackButton('active')

@@ -81,14 +81,14 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
 					<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
 						<div class="mb-8">
-							<h1 class="text-base md:text-xl lg:text-2xl font-500    text-gray-6 ">{currentFeatured()?.title}</h1>
+							<h1 class="text-base md:text-xl lg:text-2xl font-500 text-gray-6 ">{currentFeatured()?.title}</h1>
 							<div class="text-xs lg:text-base  text-gray-5">{currentFeatured()?.metadata?.description}</div>
 						</div>
 						<ol class="grid grid-cols-12 gap-4">
 							<For each={queryCollection?.data?.products}>
 								{product => {
 									return (
-										<li class="col-span-6 md:col-span-4 lg:col-span-3 ">
+										<li class="col-span-6 md:col-span-3 lg:col-span-3 ">
 											<ProductPreview {...product} />
 										</li>
 									)

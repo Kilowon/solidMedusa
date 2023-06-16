@@ -1,5 +1,6 @@
 import { createSignal, lazy, Suspense } from 'solid-js'
 import { A } from 'solid-start'
+import clsx from 'clsx'
 
 //import CartDropdown from '~/Components/nav_components/CartDropdown'
 
@@ -37,6 +38,7 @@ export default function Navigation(props: any) {
 	const [menuDrawer, setMenuDrawer] = createSignal({
 		menu: 'hidden' as const
 	})
+	const [accountStatus, setAccountStatus] = createSignal('inactive')
 
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">
@@ -71,8 +73,7 @@ export default function Navigation(props: any) {
 								title="Modern Edge"
 								class=" font-poppins uppercase"
 							>
-								{' '}
-								Modern Edge{' '}
+								Modern Edge
 							</div>
 						</A>
 					</div>
@@ -86,7 +87,13 @@ export default function Navigation(props: any) {
 								role="button"
 								tabindex="0"
 							>
-								<div class="i-la-user-plus h-7 w-7 " />
+								<div
+									class={clsx(
+										'h-7 w-7',
+										accountStatus() === 'inactive' && 'i-la-user-plus',
+										accountStatus() === 'active' && 'i-la-user-check'
+									)}
+								/>
 							</A>
 						</div>
 						<div class="hidden xl:block">

@@ -8,7 +8,8 @@ import {
 	minLength,
 	getValues,
 	setValue,
-	setValues
+	setValues,
+	Form
 } from '@modular-forms/solid'
 import { createEffect, Show, createSignal } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
@@ -51,12 +52,26 @@ type PaymentForm = {
 }
 
 export default function Account() {
-	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
+	return (
+		<div>
+			<Navigation />
+			<div class="sm:flex sm:h-100svh sm:justify-center sm:items-center">
+				<div class="lg:flex space-y-15 lg:space-y-0   lg:space-x-40">
+					<SignUp />
+					<span class="bg-gray-3 w-0.5 "></span>
+					<SignIn />
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export function SignUp() {
+	const [customerSignUp, { Form, Field }] = createForm<PaymentForm>()
 
 	const { medusa } = useGlobalContext()
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
-	const [checkboxValue, setCheckboxValue] = createSignal('none')
 
 	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
 
@@ -68,22 +83,10 @@ export default function Account() {
 
 	function handleSubmit(values: PaymentForm) {
 		setEmailValue(values.email)
-	}
-	//TODO: When logged in the customer info will pre-populate the form
-	const checkCustomer = createQuery(() => ({
-		queryKey: ['customer_info'],
-		queryFn: async function () {
-			const customer = await medusa?.customers.retrieve()
-
-			return customer
-		},
-		enabled: false
-	}))
-
-	async function handleSignUp() {
-		console.log('SIGNUP', emailValue(), passwordValue())
-
-		createCustomer.refetch()
+		setPasswordValue(values.password)
+		if (emailValue() && passwordValue()) {
+			createCustomer.refetch()
+		}
 	}
 
 	const createCustomer = createQuery(() => ({
@@ -100,10 +103,92 @@ export default function Account() {
 		enabled: false
 	}))
 
-	async function handleSignIn() {
-		console.log('SIGNIN', emailValue(), passwordValue())
+	return (
+		<div>
+			<Form onSubmit={values => handleSubmit(values) as any}>
+				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
+					<div class="text-xl font-500 font-poppins ml-2">I'm new here</div>
+					<div class="">
+						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
+						<Show when={customerDelayPassed() === 'show'}>
+							<Field
+								name="emailDelayFake"
+								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="email"
+										label="Email"
+										placeholder="example@email.com"
+										required
+									/>
+								)}
+							</Field>
+						</Show>
+						<Show when={customerDelayPassed() === 'hidden'}>
+							<Field
+								name="email"
+								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="email"
+										//description="We'll send your order confirmation here."
+										label="Email"
+										placeholder="example@email.com"
+										required
+									/>
+								)}
+							</Field>
+						</Show>
+						<Field
+							name="password"
+							validate={[
+								required('Please enter your password.'),
+								minLength(8, 'You password must have 8 characters or more.')
+							]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="password"
+									//description="Signup for an account to access your order history."
+									label="Password"
+									placeholder="********"
+								/>
+							)}
+						</Field>
+						<FormFooter of={customerSignUp} />
+					</div>
+					<FormHeader
+						of={customerSignUp}
+						heading=""
+					/>
+				</div>
+			</Form>
+		</div>
+	)
+}
 
-		signInCustomer.refetch()
+export function SignIn() {
+	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
+
+	const { medusa } = useGlobalContext()
+	const [emailValue, setEmailValue] = createSignal('')
+	const [passwordValue, setPasswordValue] = createSignal('')
+
+	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
+
+	function handleSubmit(values: PaymentForm) {
+		setEmailValue(values.email)
 	}
 
 	const signInCustomer = createQuery(() => ({
@@ -121,148 +206,75 @@ export default function Account() {
 
 	return (
 		<div>
-			<Navigation />
-			<div class="sm:flex sm:h-100svh sm:justify-center sm:items-center">
-				<Form onSubmit={values => handleSubmit(values) as any}>
-					<div class="lg:flex space-y-15 lg:space-y-0   lg:space-x-40">
-						<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
-							<div class="text-xl font-500 font-poppins ml-2">I'm new here</div>
-							<div class="">
-								{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
-								<Show when={customerDelayPassed() === 'show'}>
-									<Field
-										name="emailDelayFake"
-										validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-									>
-										{(field, props) => (
-											<TextInput
-												{...props}
-												value={field.value}
-												error={field.error}
-												type="email"
-												label="Email"
-												placeholder="example@email.com"
-												required
-											/>
-										)}
-									</Field>
-								</Show>
-								<Show when={customerDelayPassed() === 'hidden'}>
-									<Field
-										name="email"
-										validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-									>
-										{(field, props) => (
-											<TextInput
-												{...props}
-												value={field.value}
-												error={field.error}
-												type="email"
-												//description="We'll send your order confirmation here."
-												label="Email"
-												placeholder="example@email.com"
-												required
-											/>
-										)}
-									</Field>
-								</Show>
-								<Field
-									name="password"
-									validate={[
-										required('Please enter your password.'),
-										minLength(8, 'You password must have 8 characters or more.')
-									]}
-								>
-									{(field, props) => (
-										<TextInput
-											{...props}
-											value={field.value}
-											error={field.error}
-											type="password"
-											//description="Signup for an account to access your order history."
-											label="Password"
-											placeholder="********"
-										/>
-									)}
-								</Field>
-								<FormFooter of={customerForm} />
-							</div>
-							<FormHeader
-								of={customerForm}
-								heading=""
-							/>
-						</div>
-						<span class="bg-gray-3 w-0.5 "></span>
-						<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
-							<div class="text-xl font-500 font-poppins ml-2">Welcome back</div>
-							<div class="">
-								{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
-								<Show when={customerDelayPassed() === 'show'}>
-									<Field
-										name="emailDelayFake"
-										validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-									>
-										{(field, props) => (
-											<TextInput
-												{...props}
-												value={field.value}
-												error={field.error}
-												type="email"
-												label="Email"
-												placeholder="example@email.com"
-												required
-											/>
-										)}
-									</Field>
-								</Show>
-								<Show when={customerDelayPassed() === 'hidden'}>
-									<Field
-										name="email"
-										validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-									>
-										{(field, props) => (
-											<TextInput
-												{...props}
-												value={field.value}
-												error={field.error}
-												type="email"
-												//description="We'll send your order confirmation here."
-												label="Email"
-												placeholder="example@email.com"
-												required
-											/>
-										)}
-									</Field>
-								</Show>
-								<Field
-									name="password"
-									validate={[
-										required('Please enter your password.'),
-										minLength(8, 'You password must have 8 characters or more.')
-									]}
-								>
-									{(field, props) => (
-										<TextInput
-											{...props}
-											value={field.value}
-											error={field.error}
-											type="password"
-											//description="Signup for an account to access your order history."
-											label="Password"
-											placeholder="********"
-										/>
-									)}
-								</Field>
-								<FormFooter of={customerForm} />
-							</div>
-							<FormHeader
-								of={customerForm}
-								heading=""
-							/>
-						</div>
+			<Form onSubmit={values => handleSubmit(values) as any}>
+				<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
+					<div class="text-xl font-500 font-poppins ml-2">Welcome back</div>
+					<div class="">
+						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
+						<Show when={customerDelayPassed() === 'show'}>
+							<Field
+								name="emailDelayFake"
+								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="email"
+										label="Email"
+										placeholder="example@email.com"
+										required
+									/>
+								)}
+							</Field>
+						</Show>
+						<Show when={customerDelayPassed() === 'hidden'}>
+							<Field
+								name="email"
+								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+							>
+								{(field, props) => (
+									<TextInput
+										{...props}
+										value={field.value}
+										error={field.error}
+										type="email"
+										//description="We'll send your order confirmation here."
+										label="Email"
+										placeholder="example@email.com"
+										required
+									/>
+								)}
+							</Field>
+						</Show>
+						<Field
+							name="password"
+							validate={[
+								required('Please enter your password.'),
+								minLength(8, 'You password must have 8 characters or more.')
+							]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="password"
+									//description="Signup for an account to access your order history."
+									label="Password"
+									placeholder="********"
+								/>
+							)}
+						</Field>
+						<FormFooter of={customerForm} />
 					</div>
-				</Form>
-			</div>
+					<FormHeader
+						of={customerForm}
+						heading=""
+					/>
+				</div>
+			</Form>
 		</div>
 	)
 }

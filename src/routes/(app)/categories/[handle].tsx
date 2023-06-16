@@ -1,21 +1,38 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta, ErrorBoundary } from 'solid-start'
 import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
-import 'solid-slider/slider.css'
 import { FlexCategories } from '~/Components/common/FlexCategories'
+import 'solid-slider/slider.css'
 import { SingleLineSlider } from '~/Components/common/ProductSlider'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { createQuery } from '@tanstack/solid-query'
-import { error } from 'console'
+import { Motion, Presence } from '@motionone/solid'
+import { onMount } from 'solid-js'
 
 export default function Categories() {
 	const params = useParams()
-	//const { categories } = useGlobalContext()
-	//const { setCurrentCategoryId } = useGlobalContext()
-	//const { categoryProducts } = useGlobalContext()
+
 	const { cart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
+	const [toggle, setToggle] = createSignal(true)
+
+	/* 	let listRef: any
+	const { play, getIsFinished, replay } = createAnimation(
+		() => listRef,
+		{ y: -20, opacity: 1 },
+		{
+			delay: stagger(1, { from: 'first' }),
+			duration: 1.5,
+			easing: [0.22, 0.03, 0.26, 1]
+		}
+	)
+
+	// Play the animation on mount of the component
+	onMount(() => {
+		play()
+	})
+ */
 	/////////////////////////////////////////////////////////////////////
 
 	const queryCategories = createQuery(() => ({
@@ -118,15 +135,24 @@ export default function Categories() {
 									when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
 									fallback={<div></div>}
 								>
-									<ol class="grid grid-cols-4 gap-2">
+									<ul class="grid grid-cols-4 gap-2">
 										<For each={queryCategoryProducts.data?.products}>
 											{(product: any) => (
-												<li class="col-span-2 sm:col-span-2 lg:col-span-1">
-													<ProductPreview {...product} />
-												</li>
+												<Presence exitBeforeEnter>
+													<Show when={queryCategoryProducts.isFetched}>
+														<Motion
+															animate={{ opacity: [0, 1] }}
+															transition={{ duration: 0.5, easing: 'ease-in-out' }}
+														>
+															<li class="col-span-2 sm:col-span-2 lg:col-span-1">
+																<ProductPreview {...product} />
+															</li>
+														</Motion>
+													</Show>
+												</Presence>
 											)}
 										</For>
-									</ol>
+									</ul>
 								</Show>
 							</Suspense>
 							{/* <SingleLineSlider

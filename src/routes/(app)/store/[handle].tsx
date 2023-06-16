@@ -1,10 +1,10 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { createSignal, Show, For } from 'solid-js'
+import { Show, For } from 'solid-js'
 import 'solid-slider/slider.css'
-import { getWindowSize } from '@solid-primitives/resize-observer'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
-import { isClient } from '@solid-primitives/utils'
+import { Motion, Presence } from '@motionone/solid'
+import { Rerun } from '@solid-primitives/keyed'
 
 export default function Store() {
 	const { medusa } = useGlobalContext()
@@ -31,17 +31,26 @@ export default function Store() {
 				<div class="text-gray-6 font-500 text-base lg:text-2xl">Shop everything in the store</div>
 
 				<Show when={queryAllProducts?.data?.products}>
-					<ol class="grid grid-cols-12 gap-4">
+					<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  gap-4">
 						<For each={queryAllProducts?.data?.products}>
-							{product => {
+							{(product, index) => {
 								return (
-									<li class="col-span-6 md:col-span-4 lg:col-span-3 ">
-										<ProductPreview {...product} />
-									</li>
+									<Presence initial>
+										<Rerun on={index}>
+											<Motion
+												animate={{ opacity: [0, 1] }}
+												transition={{ duration: 0.75, delay: index() * 0.25, easing: 'ease-in-out' }}
+											>
+												<li>
+													<ProductPreview {...product} />
+												</li>
+											</Motion>
+										</Rerun>
+									</Presence>
 								)
 							}}
 						</For>
-					</ol>
+					</ul>
 				</Show>
 			</div>
 		</main>

@@ -3,9 +3,10 @@ import { createSignal, Show, For, createEffect } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { useParams } from 'solid-start'
-import { getWindowSize } from '@solid-primitives/resize-observer'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
+import { Motion, Presence } from '@motionone/solid'
+import { Rerun } from '@solid-primitives/keyed'
 
 interface Collection {
 	id: string
@@ -80,17 +81,26 @@ export default function Collection() {
 							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
 							<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
 						</div>
-						<ol class="grid grid-cols-12 gap-4">
+						<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 							<For each={queryCollection?.data?.products}>
-								{product => {
+								{(product, index) => {
 									return (
-										<li class="col-span-6 md:col-span-4 lg:col-span-3 ">
-											<ProductPreview {...product} />
-										</li>
+										<Presence initial>
+											<Rerun on={index}>
+												<Motion
+													animate={{ opacity: [0, 1] }}
+													transition={{ duration: 0.75, delay: index() * 0.25, easing: 'ease-in-out' }}
+												>
+													<li class="col-span-6 md:col-span-4 lg:col-span-3 ">
+														<ProductPreview {...product} />
+													</li>
+												</Motion>
+											</Rerun>
+										</Presence>
 									)
 								}}
 							</For>
-						</ol>
+						</ul>
 					</Show>
 				</div>
 			</Transition>

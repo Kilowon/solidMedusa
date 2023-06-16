@@ -142,7 +142,7 @@ export default function Categories() {
 													<Show when={queryCategoryProducts.isFetched}>
 														<Motion
 															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 0.5, easing: 'ease-in-out' }}
+															transition={{ duration: 1.0, easing: 'ease-in-out' }}
 														>
 															<li class="col-span-2 sm:col-span-2 lg:col-span-1">
 																<ProductPreview {...product} />

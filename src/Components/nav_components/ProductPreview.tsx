@@ -3,7 +3,6 @@ import { ProductPreviewType } from '~/types/global'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { Show, Suspense } from 'solid-js'
-import { Transition } from 'solid-transition-group'
 
 interface ProductPreviewProps extends ProductPreviewType {
 	handleClick: () => void

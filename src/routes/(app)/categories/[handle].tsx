@@ -127,7 +127,7 @@ export default function Categories() {
 													<Rerun on={index}>
 														<Motion
 															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 0.75, delay: index() * 0.25, easing: 'ease-in-out' }}
+															transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
 														>
 															<li>
 																<ProductPreview {...product} />

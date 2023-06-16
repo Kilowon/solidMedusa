@@ -89,7 +89,7 @@ export default function Collection() {
 											<Rerun on={index}>
 												<Motion
 													animate={{ opacity: [0, 1] }}
-													transition={{ duration: 0.75, delay: index() * 0.25, easing: 'ease-in-out' }}
+													transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
 												>
 													<li class="col-span-6 md:col-span-4 lg:col-span-3 ">
 														<ProductPreview {...product} />

@@ -7,7 +7,7 @@ import { SingleLineSlider } from '~/Components/common/ProductSlider'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
-import { onMount } from 'solid-js'
+import { Rerun } from '@solid-primitives/keyed'
 
 export default function Categories() {
 	const params = useParams()
@@ -15,24 +15,9 @@ export default function Categories() {
 	const { cart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
-	const [toggle, setToggle] = createSignal(true)
+	const [count, setCount] = createSignal(1)
+	const increment = () => setCount(p => ++p)
 
-	/* 	let listRef: any
-	const { play, getIsFinished, replay } = createAnimation(
-		() => listRef,
-		{ y: -20, opacity: 1 },
-		{
-			delay: stagger(1, { from: 'first' }),
-			duration: 1.5,
-			easing: [0.22, 0.03, 0.26, 1]
-		}
-	)
-
-	// Play the animation on mount of the component
-	onMount(() => {
-		play()
-	})
- */
 	/////////////////////////////////////////////////////////////////////
 
 	const queryCategories = createQuery(() => ({
@@ -135,20 +120,20 @@ export default function Categories() {
 									when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
 									fallback={<div></div>}
 								>
-									<ul class="grid grid-cols-4 gap-2">
+									<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
 										<For each={queryCategoryProducts.data?.products}>
-											{(product: any) => (
-												<Presence exitBeforeEnter>
-													<Show when={queryCategoryProducts.isFetched}>
+											{(product: any, index) => (
+												<Presence initial>
+													<Rerun on={index}>
 														<Motion
 															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 1.0, easing: 'ease-in-out' }}
+															transition={{ duration: 0.75, delay: index() * 0.25, easing: 'ease-in-out' }}
 														>
-															<li class="col-span-2 sm:col-span-2 lg:col-span-1">
+															<li>
 																<ProductPreview {...product} />
 															</li>
 														</Motion>
-													</Show>
+													</Rerun>
 												</Presence>
 											)}
 										</For>

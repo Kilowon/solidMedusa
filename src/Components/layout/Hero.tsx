@@ -13,7 +13,7 @@ export function Hero() {
 				appear={true}
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 0
+						duration: 3000
 					})
 					a.finished.then(done)
 				}}

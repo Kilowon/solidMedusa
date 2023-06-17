@@ -1,16 +1,5 @@
 import Navigation from '~/Components/layout/Navigation'
-import {
-	createForm,
-	email,
-	getValue,
-	pattern,
-	required,
-	minLength,
-	getValues,
-	setValue,
-	setValues,
-	Form
-} from '@modular-forms/solid'
+import { createForm, email, required, minLength } from '@modular-forms/solid'
 import { createEffect, Show, createSignal, Accessor } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
@@ -58,9 +47,6 @@ interface SideProps {
 export default function Account() {
 	const [side, setSide] = createSignal('right')
 
-	createEffect(() => {
-		console.log(side())
-	})
 	return (
 		<div>
 			<Navigation />
@@ -103,7 +89,7 @@ export default function Account() {
 
 export function SignUp(props: SideProps) {
 	const [customerSignUp, { Form, Field }] = createForm<PaymentForm>()
-
+	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
@@ -121,6 +107,10 @@ export function SignUp(props: SideProps) {
 		setPasswordValue(values.password)
 		if (emailValue() && passwordValue()) {
 			createCustomer.refetch()
+			if (createCustomer.data()) {
+				queryCart.refetch()
+				console.log('customer created')
+			}
 		}
 	}
 
@@ -163,11 +153,9 @@ export function SignUp(props: SideProps) {
 									<TextInput
 										{...props}
 										value={field.value}
-										error={field.error}
 										type="email"
 										label="Email"
 										placeholder="example@email.com"
-										required
 									/>
 								)}
 							</Field>

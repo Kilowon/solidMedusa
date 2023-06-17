@@ -8,7 +8,7 @@ import presetUno from '@unocss/preset-uno'
 export default defineConfig({
 	plugins: [
 		solid({
-			ssr: true
+			ssr: false
 		}),
 		unocssPlugin({
 			presets: [
@@ -22,7 +22,7 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'google', // default provider
+					provider: 'fontshare', // default provider
 					fonts: {
 						// these will extend the default theme
 						/* sans: 'Roboto', */
@@ -33,6 +33,10 @@ export default defineConfig({
 							{
 								name: 'Poppins',
 								weights: ['700', '400', '500']
+							},
+							{
+								name: 'sans-serif',
+								provider: 'none'
 							}
 						]
 					}

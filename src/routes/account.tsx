@@ -68,7 +68,7 @@ export default function Account() {
 				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20">
 					<div
 						class={clsx(
-							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
+							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-2 sm:pt-12 lg:pt-0',
 							side() === 'left' && '',
 							side() === 'right' && 'lg:bg-gray-1 transition-all duration-300'
 						)}

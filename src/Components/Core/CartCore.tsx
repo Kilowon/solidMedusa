@@ -77,10 +77,10 @@ export default function CartCore(props: CartCoreProps) {
 																props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
 															)}
 														>
-															<div class="flex flex-col items-center ">
+															<div class="flex flex-col items-center">
 																<Thumbnail
 																	thumbnail={item.thumbnail}
-																	size="full"
+																	variant="clothing"
 																/>
 																<div
 																	class={clsx(

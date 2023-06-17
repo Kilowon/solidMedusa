@@ -11,13 +11,13 @@ import {
 	setValues,
 	Form
 } from '@modular-forms/solid'
-import { createEffect, Show, createSignal } from 'solid-js'
+import { createEffect, Show, createSignal, Accessor } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
-import { Checkbox } from '~/Components/checkout_components/Checkbox'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
+import clsx from 'clsx'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -51,22 +51,57 @@ type PaymentForm = {
 	}
 }
 
+interface SideProps {
+	side: Accessor<string>
+}
+
 export default function Account() {
+	const [side, setSide] = createSignal('right')
+
+	createEffect(() => {
+		console.log(side())
+	})
 	return (
 		<div>
 			<Navigation />
-			<div class="sm:flex sm:h-100svh sm:justify-center sm:items-center">
-				<div class="lg:flex space-y-15 lg:space-y-0   lg:space-x-40">
-					<SignUp />
-					<span class="bg-gray-3 w-0.5 "></span>
-					<SignIn />
+			<div>
+				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20">
+					<div
+						class={clsx(
+							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
+							side() === 'left' && '',
+							side() === 'right' && 'lg:bg-gray-1 transition-all duration-300'
+						)}
+						onMouseOver={() => {
+							setSide('left')
+						}}
+						onBlur={() => {
+							setSide('left')
+						}}
+					>
+						<SignUp side={side} />
+					</div>
+					{/* <span class="hidden md:block bg-gray-6 md:w-0.5" /> */}
+					{/* 	<hr class="border-gray-400/50 my-2 mx-6 md:hidden" /> */}
+					<div
+						class={clsx(
+							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
+							side() === 'left' && 'lg:bg-gray-1 transition-all duration-300',
+							side() === 'right' && ''
+						)}
+						onMouseOver={() => {
+							setSide('right')
+						}}
+					>
+						<SignIn side={side} />
+					</div>
 				</div>
 			</div>
 		</div>
 	)
 }
 
-export function SignUp() {
+export function SignUp(props: SideProps) {
 	const [customerSignUp, { Form, Field }] = createForm<PaymentForm>()
 
 	const { medusa } = useGlobalContext()
@@ -104,10 +139,19 @@ export function SignUp() {
 	}))
 
 	return (
-		<div>
+		<div
+			class={clsx(
+				'',
+				props.side() === 'left' && 'none',
+				props.side() === 'right' && 'lg:blur-sm transition-all duration-300'
+			)}
+		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
-					<div class="text-xl font-500 font-poppins ml-2">I'm new here</div>
+					<div class="flex items-center">
+						<div class="i-ic-baseline-directions-run w-6 h-6 text-gray-5" />
+						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here</div>
+					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
 						<Show when={customerDelayPassed() === 'show'}>
@@ -178,7 +222,7 @@ export function SignUp() {
 	)
 }
 
-export function SignIn() {
+export function SignIn(props: SideProps) {
 	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
 
 	const { medusa } = useGlobalContext()
@@ -205,10 +249,19 @@ export function SignIn() {
 	}))
 
 	return (
-		<div>
+		<div
+			class={clsx(
+				'',
+				props.side() === 'left' && 'lg:blur-sm  transition-all duration-300',
+				props.side() === 'right' && 'none'
+			)}
+		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
-					<div class="text-xl font-500 font-poppins ml-2">Welcome back</div>
+					<div class="flex items-center">
+						<div class="i-ic-round-hiking h-6 w-6 text-gray-5" />
+						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">Welcome back</div>
+					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
 						<Show when={customerDelayPassed() === 'show'}>

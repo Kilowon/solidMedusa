@@ -39,6 +39,19 @@ export default function Root() {
 					name="description"
 					content="SolidJs-MedusaJs-Ecommerce-Starter"
 				/>
+				<Meta
+					name="robots"
+					content="index, follow"
+				/>
+				<Meta
+					name="keywords"
+					content="SolidJs, MedusaJs, Ecommerce, Starter"
+				/>
+				<Meta
+					name="author"
+					content="SolidJs-MedusaJs-Ecommerce-Starter"
+				/>
+
 				<Link
 					rel="icon"
 					href="/favicon.ico"

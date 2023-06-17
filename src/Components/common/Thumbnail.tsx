@@ -45,8 +45,8 @@ const ImageOrPlaceholder = ({
 		<div class="w-full h-full">
 			<Image
 				src={image}
-				height={332}
-				width={332}
+				height={300}
+				width={400}
 				alt="Thumbnail"
 				class="object-contain w-full h-full"
 			/>

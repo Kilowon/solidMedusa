@@ -31,11 +31,11 @@ export default function Root() {
 			<Head>
 				<Title>Store</Title>
 				<Meta charset="utf-8" />
-				<Meta
+				{/* <Meta
 					http-equiv="Content-Security-Policy"
 					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com
 					https://res.cloudinary.com/ https://solid.shauns.cool"
-				/>
+				/> */}
 
 				<Meta
 					name="viewport"

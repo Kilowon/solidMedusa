@@ -23,7 +23,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 						<Thumbnail
 							thumbnail={props.thumbnail}
 							title={props.title}
-							variant="wide"
+							variant="clothing"
 						/>
 						<div class="text-base ">
 							<div>

@@ -60,56 +60,50 @@ export default function Collection() {
 	}))
 
 	return (
-		<div>
-			<meta
-				http-equiv="Content-Security-Policy"
-				content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
-			/>
-			<main>
-				<Transition
-					onEnter={(el, done) => {
-						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-							duration: 250
-						})
-						a.finished.then(done)
-					}}
-					onExit={(el, done) => {
-						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-							duration: 0
-						})
-						a.finished.then(done)
-					}}
-				>
-					<div class="mx-1 sm:mx-auto sm:content-container sm:mt-16 font-poppins">
-						<Show when={queryCollection?.data?.products}>
-							<div class="mb-8">
-								<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
-								<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
-							</div>
-							<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-								<For each={queryCollection?.data?.products}>
-									{(product, index) => {
-										return (
-											<li>
-												<Presence initial>
-													<Rerun on={index}>
-														<Motion
-															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-														>
-															<ProductPreview {...product} />
-														</Motion>
-													</Rerun>
-												</Presence>
-											</li>
-										)
-									}}
-								</For>
-							</ul>
-						</Show>
-					</div>
-				</Transition>
-			</main>
-		</div>
+		<main>
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 250
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 0
+					})
+					a.finished.then(done)
+				}}
+			>
+				<div class="mx-1 sm:mx-auto sm:content-container sm:mt-16 font-poppins">
+					<Show when={queryCollection?.data?.products}>
+						<div class="mb-8">
+							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
+							<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
+						</div>
+						<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+							<For each={queryCollection?.data?.products}>
+								{(product, index) => {
+									return (
+										<li>
+											<Presence initial>
+												<Rerun on={index}>
+													<Motion
+														animate={{ opacity: [0, 1] }}
+														transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+													>
+														<ProductPreview {...product} />
+													</Motion>
+												</Rerun>
+											</Presence>
+										</li>
+									)
+								}}
+							</For>
+						</ul>
+					</Show>
+				</div>
+			</Transition>
+		</main>
 	)
 }

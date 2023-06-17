@@ -28,7 +28,7 @@ export default function ProductTemplate(props: {
 			}
 		>
 			<main>
-				<div class=" lg:flex lg:content-container lg:mt-20 ">
+				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
 						<ImageGallerySlidy
 							images={props.images}

@@ -51,7 +51,10 @@ export default function Root() {
 					name="author"
 					content="SolidJs-MedusaJs-Ecommerce-Starter"
 				/>
-
+				<meta
+					http-equiv="Content-Security-Policy"
+					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
+				/>
 				<Link
 					rel="icon"
 					href="/favicon.ico"

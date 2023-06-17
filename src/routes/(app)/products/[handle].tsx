@@ -26,10 +26,6 @@ export default function Products() {
 	return (
 		<div>
 			<Title>{queryProduct?.data?.products[0]?.title}</Title>
-			<meta
-				http-equiv="Content-Security-Policy"
-				content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
-			></meta>
 			<Meta
 				itemProp="description"
 				content={queryProduct?.data?.products[0]?.description}

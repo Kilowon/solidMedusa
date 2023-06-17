@@ -110,7 +110,7 @@ export default function Categories() {
 							when={parentCategories() && currentCategory()}
 							fallback={<div></div>}
 						>
-							<div class="mx-1 sm:mx-auto sm:content-container lg:py-12 font-poppins antialiased ">
+							<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased ">
 								<FlexCategories
 									parentCategories={parentCategories}
 									currentCategory={currentCategory}

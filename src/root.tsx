@@ -33,16 +33,10 @@ export default function Root() {
 				<Meta charset="utf-8" />
 				<Meta
 					http-equiv="Content-Security-Policy"
-					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
+					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com
+					https://res.cloudinary.com/ https://solid.shauns.cool"
 				/>
-				<Meta
-					http-equiv="Content-Security-Policy"
-					content="script-src https://solid.shauns.cool"
-				/>
-				<Meta
-					http-equiv="Content-Security-Policy"
-					content="script-src https://res.cloudinary.com/"
-				/>
+
 				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"

@@ -123,18 +123,18 @@ export default function Categories() {
 									<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
 										<For each={queryCategoryProducts.data?.products}>
 											{(product: any, index) => (
-												<Presence initial>
-													<Rerun on={index}>
-														<Motion
-															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-														>
-															<li>
+												<li>
+													<Presence initial>
+														<Rerun on={index}>
+															<Motion
+																animate={{ opacity: [0, 1] }}
+																transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+															>
 																<ProductPreview {...product} />
-															</li>
-														</Motion>
-													</Rerun>
-												</Presence>
+															</Motion>
+														</Rerun>
+													</Presence>
+												</li>
 											)}
 										</For>
 									</ul>

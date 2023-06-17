@@ -35,18 +35,18 @@ export default function Store() {
 						<For each={queryAllProducts?.data?.products}>
 							{(product, index) => {
 								return (
-									<Presence initial>
-										<Rerun on={index}>
-											<Motion
-												animate={{ opacity: [0, 1] }}
-												transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-											>
-												<li>
+									<li>
+										<Presence initial>
+											<Rerun on={index}>
+												<Motion
+													animate={{ opacity: [0, 1] }}
+													transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+												>
 													<ProductPreview {...product} />
-												</li>
-											</Motion>
-										</Rerun>
-									</Presence>
+												</Motion>
+											</Rerun>
+										</Presence>
+									</li>
 								)
 							}}
 						</For>

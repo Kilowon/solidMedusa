@@ -89,58 +89,64 @@ export default function Categories() {
 	})
 
 	return (
-		<ErrorBoundary>
-			<Show
-				when={currentCategory()}
-				fallback={<div></div>}
-			>
-				<Title>{currentCategory?.()[0]?.name}</Title>
-				<Meta
-					itemProp="description"
-					content={currentCategory?.()[0]?.handle}
-				/>
-				<Meta
-					itemProp="og:title"
-					content={currentCategory?.()[0]?.name}
-				/>
-
-				<div class="pt-4 lg:py-12 ">
+		<div>
+			<meta
+				http-equiv="Content-Security-Policy"
+				content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
+			/>
+			<main>
+				<ErrorBoundary>
 					<Show
-						when={parentCategories() && currentCategory()}
+						when={currentCategory()}
 						fallback={<div></div>}
 					>
-						<div class="mx-1 sm:mx-auto sm:content-container lg:py-12 font-poppins antialiased ">
-							<FlexCategories
-								parentCategories={parentCategories}
-								currentCategory={currentCategory}
-							/>
+						<Title>{currentCategory?.()[0]?.name}</Title>
+						<Meta
+							itemProp="description"
+							content={currentCategory?.()[0]?.handle}
+						/>
+						<Meta
+							itemProp="og:title"
+							content={currentCategory?.()[0]?.name}
+						/>
 
-							<Suspense fallback={<div>Loading...</div>}>
-								<Show
-									when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
-									fallback={<div></div>}
-								>
-									<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-										<For each={queryCategoryProducts.data?.products}>
-											{(product: any, index) => (
-												<li>
-													<Presence initial>
-														<Rerun on={index}>
-															<Motion
-																animate={{ opacity: [0, 1] }}
-																transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-															>
-																<ProductPreview {...product} />
-															</Motion>
-														</Rerun>
-													</Presence>
-												</li>
-											)}
-										</For>
-									</ul>
-								</Show>
-							</Suspense>
-							{/* <SingleLineSlider
+						<div class="pt-4 lg:py-12 ">
+							<Show
+								when={parentCategories() && currentCategory()}
+								fallback={<div></div>}
+							>
+								<div class="mx-1 sm:mx-auto sm:content-container lg:py-12 font-poppins antialiased ">
+									<FlexCategories
+										parentCategories={parentCategories}
+										currentCategory={currentCategory}
+									/>
+
+									<Suspense fallback={<div>Loading...</div>}>
+										<Show
+											when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
+											fallback={<div></div>}
+										>
+											<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+												<For each={queryCategoryProducts.data?.products}>
+													{(product: any, index) => (
+														<li>
+															<Presence initial>
+																<Rerun on={index}>
+																	<Motion
+																		animate={{ opacity: [0, 1] }}
+																		transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+																	>
+																		<ProductPreview {...product} />
+																	</Motion>
+																</Rerun>
+															</Presence>
+														</li>
+													)}
+												</For>
+											</ul>
+										</Show>
+									</Suspense>
+									{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}
 							setCurrentSlide={setCurrentSlide}
@@ -148,10 +154,12 @@ export default function Categories() {
 							loaded={loaded}
 							currentSlide={currentSlide}
 						/> */}
+								</div>
+							</Show>
 						</div>
 					</Show>
-				</div>
-			</Show>
-		</ErrorBoundary>
+				</ErrorBoundary>
+			</main>
+		</div>
 	)
 }

@@ -36,6 +36,14 @@ export default function Root() {
 					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
 				/>
 				<Meta
+					http-equiv="Content-Security-Policy"
+					content="script-src https://solid.shauns.cool"
+				/>
+				<Meta
+					http-equiv="Content-Security-Policy"
+					content="script-src https://res.cloudinary.com/"
+				/>
+				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
 				/>

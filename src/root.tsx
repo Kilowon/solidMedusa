@@ -32,6 +32,10 @@ export default function Root() {
 				<Title>Store</Title>
 				<Meta charset="utf-8" />
 				<Meta
+					http-equiv="Content-Security-Policy"
+					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
+				/>
+				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
 				/>
@@ -51,10 +55,7 @@ export default function Root() {
 					name="author"
 					content="SolidJs-MedusaJs-Ecommerce-Starter"
 				/>
-				<meta
-					http-equiv="Content-Security-Policy"
-					content="script-src https://medusa-public-images.s3.eu-west-1.amazonaws.com"
-				/>
+
 				<Link
 					rel="icon"
 					href="/favicon.ico"

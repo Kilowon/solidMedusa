@@ -22,8 +22,8 @@ export default function Store() {
 			})
 			return product
 		},
-		cacheTime: 15 * 60 * 1000,
-		staleTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000
+		//staleTime: 15 * 60 * 1000
 	}))
 
 	return (

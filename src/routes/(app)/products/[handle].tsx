@@ -1,7 +1,7 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { fetchProduct } from '~/Services/medusaAPI'
 import { useParams, Title, Meta } from 'solid-start'
-import { Suspense, createEffect } from 'solid-js'
+import { Suspense, createEffect, Show } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -19,8 +19,8 @@ export default function Products() {
 			const product = await fetchProduct(medusa, cart, params.handle)
 			return product
 		},
-		cacheTime: 25 * 60 * 1000,
-		staleTime: 25 * 60 * 1000
+
+		cacheTime: 25 * 60 * 1000
 	}))
 
 	return (
@@ -39,18 +39,20 @@ export default function Products() {
 				content={queryProduct?.data?.products[0]?.thumbnail}
 			/>
 			<main>
-				<StoreProvider product={queryProduct?.data?.products[0]}>
-					<ProductTemplate
-						images={queryProduct?.data?.products[0]?.images}
-						productInfo={queryProduct?.data?.products[0]}
-						params={params?.handle}
-						updateOptions={useStore().updateOptions}
-						options={useStore().options}
-						inStock={useStore().inStock}
-						variant={useStore().variant}
-						useStore={useStore}
-					/>
-				</StoreProvider>
+				<Show when={queryProduct?.data?.products[0]?.handle === params.handle}>
+					<StoreProvider product={queryProduct?.data?.products[0]}>
+						<ProductTemplate
+							images={queryProduct?.data?.products[0]?.images}
+							productInfo={queryProduct?.data?.products[0]}
+							params={params?.handle}
+							updateOptions={useStore().updateOptions}
+							options={useStore().options}
+							inStock={useStore().inStock}
+							variant={useStore().variant}
+							useStore={useStore}
+						/>
+					</StoreProvider>
+				</Show>
 			</main>
 		</div>
 	)

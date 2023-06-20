@@ -403,8 +403,8 @@ function ItemPrice(props: any) {
 			const response = await fetchProduct(medusa, cart, props.item.variant.product.handle)
 			return response
 		},
-		cacheTime: 15 * 60 * 1000,
-		staleTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000
+		//staleTime: 15 * 60 * 1000
 	}))
 
 	return (
@@ -479,8 +479,8 @@ function ItemOptions(props: any) {
 			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
 			return response
 		},
-		cacheTime: 15 * 60 * 1000,
-		staleTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000
+		//staleTime: 15 * 60 * 1000
 	}))
 	return (
 		<div>

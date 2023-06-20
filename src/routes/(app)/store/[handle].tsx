@@ -1,10 +1,11 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { Show, For } from 'solid-js'
+import { Show, For, createSignal, createEffect } from 'solid-js'
 import 'solid-slider/slider.css'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
+import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 export default function Store() {
 	const { medusa } = useGlobalContext()
@@ -34,18 +35,36 @@ export default function Store() {
 					<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  gap-4">
 						<For each={queryAllProducts?.data?.products}>
 							{(product, index) => {
+								let el: HTMLLIElement | undefined
+								const [isVisible, setIsVisible] = createSignal(false)
+								const [delay, setDelay] = createSignal(0)
+								const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
+
+								createEffect(() => {
+									if (visible()) {
+										setIsVisible(true)
+										setDelay((index() % 4) * 0.3)
+									}
+								})
+
 								return (
-									<li>
-										<Presence initial>
-											<Rerun on={index}>
-												<Motion
-													animate={{ opacity: [0, 1] }}
-													transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-												>
-													<ProductPreview {...product} />
-												</Motion>
-											</Rerun>
-										</Presence>
+									<li ref={el}>
+										<Show when={isVisible()}>
+											<Presence initial>
+												<Rerun on={index}>
+													<Motion
+														animate={{ opacity: [0, 1] }}
+														transition={{ duration: 0.5, delay: delay(), easing: 'ease-in-out' }}
+													>
+														<ProductPreview {...product} />
+													</Motion>
+												</Rerun>
+											</Presence>
+										</Show>
+
+										<Show when={!isVisible()}>
+											<div class="w-[191px] h-[275px]"></div>
+										</Show>
 									</li>
 								)
 							}}

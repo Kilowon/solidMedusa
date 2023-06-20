@@ -1,12 +1,13 @@
 import Navigation from '~/Components/layout/Navigation'
-import { createForm, email, required, minLength } from '@modular-forms/solid'
-import { createEffect, Show, createSignal, Accessor } from 'solid-js'
+import { createForm, email, required, minLength, setError } from '@modular-forms/solid'
+import { createEffect, Show, createSignal, Accessor, Suspense } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
+import { Image } from '@unpic/solid'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -41,49 +42,98 @@ type PaymentForm = {
 }
 
 interface SideProps {
-	side: Accessor<string>
+	side?: Accessor<string>
+	currentCustomer?: any
 }
 
 export default function Account() {
 	const [side, setSide] = createSignal('right')
 
+	const { medusa } = useGlobalContext()
+
+	const currentCustomer = createQuery(() => ({
+		queryKey: ['current_customer'],
+		queryFn: async function () {
+			const customer = await medusa?.auth?.getSession()
+			return customer
+		},
+		retry: 1
+	}))
+
+	createEffect(() => {
+		console.log(currentCustomer.isSuccess)
+	})
+
 	return (
-		<div>
+		<main>
 			<Navigation />
 			<div>
 				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20">
-					<div
-						class={clsx(
-							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-2 sm:pt-12 lg:pt-0',
-							side() === 'left' && '',
-							side() === 'right' && 'lg:bg-gray-1 transition-all duration-300'
-						)}
-						onMouseOver={() => {
-							setSide('left')
-						}}
-						onBlur={() => {
-							setSide('left')
-						}}
+					<Suspense
+						fallback={
+							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
+								<div class="flex flex-col items-center">
+									<Image
+										src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
+										alt="logo"
+										layout="constrained"
+										width={600}
+										height={600}
+										priority={true}
+										class="w-20 h-20 mt-35 md:mt-70"
+									/>
+									<div class="i-svg-spinners:bars-scale-fade" />
+								</div>
+							</section>
+						}
 					>
-						<SignUp side={side} />
-					</div>
-					{/* <span class="hidden md:block bg-gray-6 md:w-0.5" /> */}
-					{/* 	<hr class="border-gray-400/50 my-2 mx-6 md:hidden" /> */}
-					<div
-						class={clsx(
-							'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
-							side() === 'left' && 'lg:bg-gray-1 transition-all duration-300',
-							side() === 'right' && ''
-						)}
-						onMouseOver={() => {
-							setSide('right')
-						}}
-					>
-						<SignIn side={side} />
-					</div>
+						<Show when={!currentCustomer.isSuccess}>
+							<div
+								class={clsx(
+									'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-2 sm:pt-12 lg:pt-0',
+									side() === 'left' && '',
+									side() === 'right' && 'lg:bg-gray-1 transition-all duration-300'
+								)}
+								onMouseOver={() => {
+									setSide('left')
+								}}
+								onBlur={() => {
+									setSide('left')
+								}}
+							>
+								<SignUp
+									side={side}
+									currentCustomer={currentCustomer}
+								/>
+							</div>
+							{/* <span class="hidden md:block bg-gray-6 md:w-0.5" /> */}
+							{/* 	<hr class="border-gray-400/50 my-2 mx-6 md:hidden" /> */}
+							<div
+								class={clsx(
+									'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
+									side() === 'left' && 'lg:bg-gray-1 transition-all duration-600',
+									side() === 'right' && ''
+								)}
+								onMouseOver={() => {
+									setSide('right')
+								}}
+							>
+								<SignIn
+									side={side}
+									currentCustomer={currentCustomer}
+								/>
+							</div>
+						</Show>
+						<Show when={currentCustomer.isSuccess}>
+							<div class="flex flex-col items-center justify-center lg:w-full">
+								<div class="text-2xl font-500 font-poppins text-gray-6">Welcome back</div>
+								<div class="text-xl font-500 font-poppins text-gray-6">{currentCustomer?.data?.customer?.email}</div>
+							</div>
+						</Show>
+					</Suspense>
 				</div>
 			</div>
-		</div>
+		</main>
 	)
 }
 
@@ -109,6 +159,7 @@ export function SignUp(props: SideProps) {
 			createCustomer.refetch()
 			if (createCustomer.data()) {
 				queryCart.refetch()
+				props.currentCustomer.refetch()
 				console.log('customer created')
 			}
 		}
@@ -132,8 +183,8 @@ export function SignUp(props: SideProps) {
 		<div
 			class={clsx(
 				'',
-				props.side() === 'left' && 'none',
-				props.side() === 'right' && 'lg:blur-sm transition-all duration-300'
+				props.side?.() === 'left' && 'none',
+				props.side?.() === 'right' && 'lg:blur-sm transition-all duration-1000'
 			)}
 		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
@@ -214,6 +265,7 @@ export function SignIn(props: SideProps) {
 	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
 
 	const { medusa } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
 
@@ -221,6 +273,10 @@ export function SignIn(props: SideProps) {
 
 	function handleSubmit(values: PaymentForm) {
 		setEmailValue(values.email)
+		setPasswordValue(values.password)
+		if (emailValue() && passwordValue()) {
+			signInCustomer.refetch()
+		}
 	}
 
 	const signInCustomer = createQuery(() => ({
@@ -233,15 +289,22 @@ export function SignIn(props: SideProps) {
 
 			return customer
 		},
-		enabled: false
+		enabled: false,
+		onSuccess: () => {
+			queryCart.refetch()
+			props.currentCustomer.refetch()
+		},
+		onError: () => {
+			console.log('error')
+		}
 	}))
 
 	return (
 		<div
 			class={clsx(
 				'',
-				props.side() === 'left' && 'lg:blur-sm  transition-all duration-300',
-				props.side() === 'right' && 'none'
+				props.side?.() === 'left' && 'lg:blur-sm  transition-all duration-1000',
+				props.side?.() === 'right' && 'none'
 			)}
 		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
@@ -252,43 +315,25 @@ export function SignIn(props: SideProps) {
 					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
-						<Show when={customerDelayPassed() === 'show'}>
-							<Field
-								name="emailDelayFake"
-								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="email"
-										label="Email"
-										placeholder="example@email.com"
-										required
-									/>
-								)}
-							</Field>
-						</Show>
-						<Show when={customerDelayPassed() === 'hidden'}>
-							<Field
-								name="email"
-								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="email"
-										//description="We'll send your order confirmation here."
-										label="Email"
-										placeholder="example@email.com"
-										required
-									/>
-								)}
-							</Field>
-						</Show>
+
+						<Field
+							name="email"
+							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+						>
+							{(field, props) => (
+								<TextInput
+									{...props}
+									value={field.value}
+									error={field.error}
+									type="email"
+									//description="We'll send your order confirmation here."
+									label="Email"
+									placeholder="example@email.com"
+									required
+								/>
+							)}
+						</Field>
+
 						<Field
 							name="password"
 							validate={[
@@ -318,4 +363,8 @@ export function SignIn(props: SideProps) {
 			</Form>
 		</div>
 	)
+}
+
+export function Profile(props: SideProps) {
+	return <div>Profile</div>
 }

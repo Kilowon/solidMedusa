@@ -72,52 +72,26 @@ export default function ImageGallerySlidy(props: {
 						'--slidy-slide-height': '93%',
 						'--slidy-progress-thumb-color': '#363636',
 						'--slidy-height': '100%',
-						'--slidy-slide-bg-color': '#ffffff'
+						'--slidy-slide-bg-color': '#ffffff',
+						'--slidy-slide-object-fit': 'contain',
+						'--slidy-arrow-bg': '#ff',
+						'--slidy-arrow-icon-color': '#16293b',
+						'--slidy-arrow-size': '2.5rem'
 					}}
 				>
 					<Slidy
 						slides={slides()}
-						snap="center"
+						snap="end"
 						thumbnail={false}
-						easing={linear}
 						clamp={0}
 						loop={true}
 						// @ts-ignore
 						animation={fade}
-						arrows={() => (
-							<div class="absolute inset-0 flex items-center justify-between w-full h-full">
-								<button
-									data-step="-1"
-									class="absolute inset-y-0 left-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
-									aria-label="Previous slide"
-									onClick={() => {}}
-								>
-									<svg
-										class="w-8 h-8 fill-current"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-									</svg>
-								</button>
-								<button
-									data-step="1"
-									class="absolute inset-y-0 right-0 flex items-center justify-center w-16 h-full text-3xl text-gray-900 z-10 bg-gray-100/0"
-									aria-label="Next slide"
-								>
-									<svg
-										class="w-8 h-8 fill-current"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
-									</svg>
-								</button>
-							</div>
-						)}
 						background={false}
 						progress={true}
 						counter={false}
+						sensity={5}
+						gravity={0.5}
 					/>
 				</div>
 			</div>

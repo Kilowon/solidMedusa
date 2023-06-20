@@ -112,7 +112,7 @@ export default function Collection() {
 												</Presence>
 											</Show>
 											<Show when={!isVisible()}>
-												<div class="w-[191px] h-[275px]"></div>
+												<div class="w-[100px] h-[275px]"></div>
 											</Show>
 										</li>
 									)

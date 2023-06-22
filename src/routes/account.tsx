@@ -68,7 +68,7 @@ export default function Account() {
 		<main>
 			<Navigation />
 			<div>
-				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20">
+				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20 lg:mt-0">
 					<Suspense
 						fallback={
 							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
@@ -125,7 +125,7 @@ export default function Account() {
 							</div>
 						</Show>
 						<Show when={currentCustomer.isSuccess}>
-							<div class="flex flex-col items-center justify-center lg:w-full">
+							<div class="flex flex-col items-center justify-center lg:w-full lg:mt-20">
 								<div class="text-2xl font-500 font-poppins text-gray-6">Welcome back</div>
 								<div class="text-xl font-500 font-poppins text-gray-6">{currentCustomer?.data?.customer?.email}</div>
 							</div>
@@ -143,6 +143,8 @@ export function SignUp(props: SideProps) {
 	const { medusa } = useGlobalContext()
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
+	const [error, setError] = createSignal('hidden')
+	const [errorMessage, setErrorMessage] = createSignal('')
 
 	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
 
@@ -155,15 +157,39 @@ export function SignUp(props: SideProps) {
 	function handleSubmit(values: PaymentForm) {
 		setEmailValue(values.email)
 		setPasswordValue(values.password)
-		if (emailValue() && passwordValue()) {
-			createCustomer.refetch()
-			if (createCustomer.data()) {
-				queryCart.refetch()
-				props.currentCustomer.refetch()
-				console.log('customer created')
+		emailCheck.refetch()
+		console.log('emailcheck', emailCheck.isSuccess)
+		setTimeout(() => {
+			if (emailValue() && passwordValue() && emailCheck.isSuccess) {
+				createCustomer.refetch()
+				setTimeout(() => {
+					if (createCustomer.isSuccess) {
+						setError('hidden')
+						queryCart.refetch()
+						props.currentCustomer.refetch()
+						console.log('customer created')
+					}
+					if (createCustomer.failureReason) {
+						setError('active')
+						setErrorMessage(createCustomer.failureReason.message)
+					}
+				}, 500)
 			}
-		}
+			if (emailCheck.failureReason) {
+				setError('active')
+				setErrorMessage(emailCheck.failureReason.message)
+			}
+		}, 500)
 	}
+
+	const emailCheck = createQuery(() => ({
+		queryKey: ['customer_email_check', emailValue()],
+		queryFn: async function () {
+			const email = await medusa?.auth.exists(emailValue())
+			return email
+		},
+		enabled: false
+	}))
 
 	const createCustomer = createQuery(() => ({
 		queryKey: ['customer_signup', emailValue()],
@@ -189,6 +215,12 @@ export function SignUp(props: SideProps) {
 		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
+					<Show when={error() === 'active'}>
+						<div class="text-red-7">
+							<div>{errorMessage()}</div>
+							<div>This email is already in use please try to login</div>
+						</div>
+					</Show>
 					<div class="flex items-center">
 						<div class="i-ic-baseline-directions-run w-6 h-6 text-gray-5" />
 						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here</div>
@@ -268,6 +300,8 @@ export function SignIn(props: SideProps) {
 	const { queryCart } = useGlobalContext()
 	const [emailValue, setEmailValue] = createSignal('')
 	const [passwordValue, setPasswordValue] = createSignal('')
+	const [error, setError] = createSignal('hidden')
+	const [errorMessage, setErrorMessage] = createSignal('')
 
 	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
 
@@ -276,6 +310,17 @@ export function SignIn(props: SideProps) {
 		setPasswordValue(values.password)
 		if (emailValue() && passwordValue()) {
 			signInCustomer.refetch()
+			setTimeout(() => {
+				if (signInCustomer.isSuccess) {
+					setError('hidden')
+					queryCart.refetch()
+					props.currentCustomer.refetch()
+				}
+				if (signInCustomer.failureReason) {
+					setError('active')
+					setErrorMessage(signInCustomer.failureReason.message)
+				}
+			}, 500)
 		}
 	}
 
@@ -289,15 +334,7 @@ export function SignIn(props: SideProps) {
 
 			return customer
 		},
-		enabled: false,
-		onSuccess: (data: any) => {
-			console.log('success', data)
-			queryCart.refetch()
-			props.currentCustomer.refetch()
-		},
-		onError: (error: any) => {
-			console.log('error', error)
-		}
+		enabled: false
 	}))
 
 	return (
@@ -310,6 +347,12 @@ export function SignIn(props: SideProps) {
 		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
+					<Show when={error() === 'active'}>
+						<div class="flex flex-col text-red-7">
+							<div>{errorMessage()}</div>
+							<div>You may have entered the wrong email or password please try again</div>
+						</div>
+					</Show>
 					<div class="flex items-center">
 						<div class="i-ic-round-hiking h-6 w-6 text-gray-5" />
 						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">Welcome back</div>

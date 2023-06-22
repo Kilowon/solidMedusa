@@ -1,6 +1,8 @@
-import { createSignal, lazy, Suspense } from 'solid-js'
+import { createEffect, createSignal, lazy, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
+import { createQuery } from '@tanstack/solid-query'
+import { useGlobalContext } from '~/Context/Providers'
 
 //import CartDropdown from '~/Components/nav_components/CartDropdown'
 
@@ -29,6 +31,8 @@ const HamburgerDrawerNav = lazy(async () => {
 })
 
 export default function Navigation(props: any) {
+	const { medusa } = useGlobalContext()
+
 	const [stayOpen, setStayOpen] = createSignal(false)
 
 	const [cartDrawer, setCartDrawer] = createSignal({
@@ -39,6 +43,21 @@ export default function Navigation(props: any) {
 		menu: 'hidden' as const
 	})
 	const [accountStatus, setAccountStatus] = createSignal('inactive')
+
+	createEffect(() => {
+		if (currentCustomer.isSuccess) {
+			setAccountStatus('active')
+		}
+	})
+
+	const currentCustomer = createQuery(() => ({
+		queryKey: ['current_customer'],
+		queryFn: async function () {
+			const customer = await medusa?.auth?.getSession()
+			return customer
+		},
+		retry: 1
+	}))
 
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed text-gray-5">

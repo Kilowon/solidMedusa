@@ -775,7 +775,7 @@ export function Express() {
 				</div>
 				<div class="md:flex md:flex-row justify-center space-y-1 md:space-y-0 md:space-x-2">
 					<div
-						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-md  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
+						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-sm  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
 						title="Apple Pay"
 						role="button"
 						tabindex="0"
@@ -797,7 +797,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-b-sm rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-md p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
+						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-b-sm rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-sm p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
 						title="Amazon Pay"
 						role="button"
 						tabindex="0"

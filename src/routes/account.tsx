@@ -290,12 +290,13 @@ export function SignIn(props: SideProps) {
 			return customer
 		},
 		enabled: false,
-		onSuccess: () => {
+		onSuccess: (data: any) => {
+			console.log('success', data)
 			queryCart.refetch()
 			props.currentCustomer.refetch()
 		},
-		onError: () => {
-			console.log('error')
+		onError: (error: any) => {
+			console.log('error', error)
 		}
 	}))
 

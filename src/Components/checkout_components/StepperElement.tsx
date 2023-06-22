@@ -101,7 +101,7 @@ export function StepperElement(props: StepperProps) {
 						tabindex="0"
 						class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
 					>
-						<div class="  text-gray-400/70  dark:text-gray-200  hover:cursor-pointer relative">
+						<div class="  text-gray-400/50  dark:text-gray-200  hover:cursor-pointer relative">
 							<Icon icon={props.title} />
 						</div>
 					</span>

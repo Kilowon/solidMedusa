@@ -81,7 +81,7 @@ export default function ImageGallerySlidy(props: {
 				>
 					<Slidy
 						slides={slides()}
-						snap="end"
+						snap="center"
 						thumbnail={false}
 						clamp={0}
 						loop={true}

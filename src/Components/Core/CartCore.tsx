@@ -618,7 +618,7 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 					/>
 					<button
 						type="submit"
-						class="bg-gray-300 text-gray-8 px-3 py-1 rounded"
+						class="bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 text-gray-8 px-3 py-1 rounded"
 					>
 						Apply
 					</button>
@@ -681,7 +681,7 @@ export function GiftCardInput(props: PromoCodeInputProps) {
 					/>
 					<button
 						type="submit"
-						class="bg-gray-300 text-gray-8 px-3 py-1 rounded"
+						class="bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 text-gray-8 px-3 py-1 rounded"
 					>
 						Apply
 					</button>

@@ -1,4 +1,4 @@
-import { createEffect, createSignal, lazy, Suspense } from 'solid-js'
+import { onMount, createEffect, createSignal, lazy, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
@@ -45,8 +45,16 @@ export default function Navigation(props: any) {
 	const [accountStatus, setAccountStatus] = createSignal('inactive')
 
 	createEffect(() => {
-		if (currentCustomer.isSuccess) {
+		if (currentCustomer?.isSuccess) {
 			setAccountStatus('active')
+		}
+	})
+
+	onMount(() => {
+		if (!currentCustomer.isSuccess) {
+			setTimeout(() => {
+				currentCustomer.refetch()
+			}, 8000)
 		}
 	})
 
@@ -56,7 +64,8 @@ export default function Navigation(props: any) {
 			const customer = await medusa?.auth?.getSession()
 			return customer
 		},
-		retry: 1
+		retry: 0,
+		enabled: false
 	}))
 
 	return (

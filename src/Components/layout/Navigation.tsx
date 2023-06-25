@@ -44,30 +44,6 @@ export default function Navigation(props: any) {
 	})
 	const [accountStatus, setAccountStatus] = createSignal('inactive')
 
-	createEffect(() => {
-		if (currentCustomer?.isSuccess) {
-			setAccountStatus('active')
-		}
-	})
-
-	onMount(() => {
-		if (!currentCustomer.isSuccess) {
-			setTimeout(() => {
-				currentCustomer.refetch()
-			}, 8000)
-		}
-	})
-
-	const currentCustomer = createQuery(() => ({
-		queryKey: ['current_customer'],
-		queryFn: async function () {
-			const customer = await medusa?.auth?.getSession()
-			return customer
-		},
-		retry: 0,
-		enabled: false
-	}))
-
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
@@ -88,9 +64,34 @@ export default function Navigation(props: any) {
 		console.log(primaryData?.data?.data[0]?.title)
 	})
 
+	function hexToRgb(hex: any) {
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
+	}
+
 	return (
-		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
-			<header class="relative h-16 mx-auto  border-b border-transparent bg-normal text-text_5">
+		<div
+			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
+			style={{
+				'--normal': `${hexToRgb(primaryData?.data?.data[0]?.normal)}`,
+				'--normal_2': `${hexToRgb(primaryData?.data?.data[0]?.normal_2)}`,
+				'--normal_3': `${hexToRgb(primaryData?.data?.data[0]?.normal_3)}`,
+				'--normal_4': `${hexToRgb(primaryData?.data?.data[0]?.normal_4)}`,
+				'--surface': `${hexToRgb(primaryData?.data?.data[0]?.surface)}`,
+				'--text': `${hexToRgb(primaryData?.data?.data[0]?.Text_1)}`,
+				'--text_2': `${hexToRgb(primaryData?.data?.data[0]?.text_2)}`,
+				'--text_3': `${hexToRgb(primaryData?.data?.data[0]?.text_3)}`,
+				'--text_4': `${hexToRgb(primaryData?.data?.data[0]?.text_4)}`,
+				'--text_5': `${hexToRgb(primaryData?.data?.data[0]?.text_5)}`,
+				'--accent': `${hexToRgb(primaryData?.data?.data[0]?.accent)}`,
+				'--accent_3': `${hexToRgb(primaryData?.data?.data[0]?.accent_3)}`,
+				'--accent_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_2)}`,
+				'--accent_4': `${hexToRgb(primaryData?.data?.data[0]?.accent_4)}`,
+				'--accent_text': `${hexToRgb(primaryData?.data?.data[0]?.accent_text)}`,
+				'--accent_text_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_text_2)}`
+			}}
+		>
+			<header class="relative h-16 mx-auto  border-b border-transparent bg-normal text-text_2">
 				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<div class="xl:hidden">
@@ -116,10 +117,10 @@ export default function Navigation(props: any) {
 								<A
 									title="Home"
 									href="/"
-									class="text-regular md:text-2xl font-semibold font-poppins uppercase  "
+									class="text-regular md:text-2xl font-semibold font-poppins uppercase"
 								>
 									<div
-										title="Modern Edge"
+										title={primaryData?.data?.data[0]?.title}
 										class=" font-poppins uppercase"
 									>
 										{primaryData?.data?.data[0]?.title}

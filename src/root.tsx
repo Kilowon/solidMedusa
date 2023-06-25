@@ -27,7 +27,10 @@ const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query
 const queryClient = new QueryClient()
 export default function Root() {
 	return (
-		<Html lang="en">
+		<Html
+			lang="en"
+			class="overflow-y-scroll"
+		>
 			<Head>
 				<Title>Store</Title>
 				<Meta charset="utf-8" />

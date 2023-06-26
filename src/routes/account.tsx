@@ -8,6 +8,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
 import { Image } from '@unpic/solid'
+import { TransitionGroup } from 'solid-transition-group'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -68,7 +69,7 @@ export default function Account() {
 		<main>
 			<Navigation />
 			<div>
-				<div class="flex flex-col lg:flex-row   lg:w-full sm:mt-20 lg:mt-0">
+				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">
 					<Suspense
 						fallback={
 							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
@@ -125,9 +126,19 @@ export default function Account() {
 							</div>
 						</Show>
 						<Show when={currentCustomer.isSuccess}>
-							<div class="flex flex-col items-center justify-center lg:w-full lg:mt-20">
-								<div class="text-2xl font-500 font-poppins text-gray-6">Welcome back</div>
-								<div class="text-xl font-500 font-poppins text-gray-6">{currentCustomer?.data?.customer?.email}</div>
+							<div class=" w-full">
+								<div class="flex flex-col sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-4">
+									<div class="sm:flex items-center justify-between">
+										<div class="text-2xl font-400 font-poppins text-gray-6">Welcome back</div>
+										<div class="text-xs font-500 font-poppins text-gray-6">
+											Signed in as: {currentCustomer?.data?.customer?.email}
+										</div>
+									</div>
+									<div class="space-y-3">
+										<div>Account Informaion</div>
+										<ProductInformationTabs />
+									</div>
+								</div>
 							</div>
 						</Show>
 					</Suspense>
@@ -411,4 +422,325 @@ export function SignIn(props: SideProps) {
 
 export function Profile(props: SideProps) {
 	return <div>Profile</div>
+}
+
+export function ProductInformationTabs() {
+	const [activeTab, setActiveTab] = createSignal({
+		overview: 'active',
+		profile: 'inactive',
+		orders: 'inactive',
+		reviews: 'inactive',
+		wishlist: 'inactive'
+	})
+
+	return (
+		<div>
+			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+				<ul
+					class="flex -mb-px text-xs lg:text-base font-medium text-center space-x-0.5 md:space-x-4 lg:space-x-6 "
+					id="myTab"
+					data-tabs-toggle="#myTabContent"
+					role="tablist"
+				>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								activeTab().overview === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().overview === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="description-tab"
+							data-tabs-target="#description"
+							type="button"
+							role="tab"
+							aria-controls="description"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().overview === 'inactive') {
+									setActiveTab({
+										overview: 'active',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+									return
+								}
+								if (activeTab().overview === 'active') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+								}
+							}}
+						>
+							<div class="flex flex-col lg:flex-row justify-center items-center mb-2 sm:mb-0  ">
+								<div class="i-fluent-clipboard-text-ltr-24-regular text-lg text-gray-6 lg:mr-2 " />
+								Overview
+							</div>
+						</button>
+					</li>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33',
+								activeTab().profile === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().profile === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="profile-tab"
+							data-tabs-target="#profile"
+							type="button"
+							role="tab"
+							aria-controls="profile"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().profile === 'inactive') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'active',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+									return
+								}
+								if (activeTab().profile === 'active') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+								}
+							}}
+						>
+							<div class="flex flex-col lg:flex-row justify-center items-center ">
+								<div class="i-vaadin-clipboard-user text-lg bg-gray-6 lg:mr-2" />
+								Profile
+							</div>
+						</button>
+					</li>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								activeTab().orders === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().orders === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="orders-tab"
+							data-tabs-target="#orders"
+							type="button"
+							role="tab"
+							aria-controls="orders"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().orders === 'inactive') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'active',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+									return
+								}
+								if (activeTab().orders === 'active') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+								}
+							}}
+						>
+							{' '}
+							<div class="flex flex-col lg:flex-row justify-center items-center ">
+								<div class="i-ph-truck text-lg text-gray-6 lg:mr-2" />
+								Orders
+							</div>
+						</button>
+					</li>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31',
+								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="reviews-tab"
+							data-tabs-target="#reviews"
+							type="button"
+							role="tab"
+							aria-controls="reviews"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().reviews === 'inactive') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'active',
+										wishlist: 'inactive'
+									})
+									return
+								}
+								if (activeTab().reviews === 'active') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+								}
+							}}
+						>
+							<div class="flex flex-col sm:flex-row sm:space-x-1  lg:flex-row justify-center items-center">
+								<div class="i-ic-baseline-star-rate text-lg text-gray-6 lg:mr-2" />
+								<div>Reviews</div>
+							</div>
+						</button>
+					</li>
+					<li
+						class=""
+						role="presentation"
+					>
+						<button
+							class={clsx(
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								activeTab().wishlist === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+								activeTab().wishlist === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							)}
+							id="wishlist-tab"
+							data-tabs-target="#wishlist"
+							type="button"
+							role="tab"
+							aria-controls="wishlist"
+							aria-selected="false"
+							onClick={() => {
+								if (activeTab().wishlist === 'inactive') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'active'
+									})
+									return
+								}
+								if (activeTab().wishlist === 'active') {
+									setActiveTab({
+										overview: 'inactive',
+										profile: 'inactive',
+										orders: 'inactive',
+										reviews: 'inactive',
+										wishlist: 'inactive'
+									})
+								}
+							}}
+						>
+							{' '}
+							<div class="flex flex-col sm:flex-row sm:space-x-1  justify-center items-center">
+								<div class="i-fa6-regular-thumbs-up text-lg text-gray-6 lg:mr-2" />
+								<div>Wish List</div>
+							</div>
+						</button>
+					</li>
+				</ul>
+			</div>
+			<div class="text-sm h-full">
+				<TransitionGroup
+					onEnter={(el, done) => {
+						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+							duration: 250
+						})
+						a.finished.then(done)
+					}}
+					onExit={(el, done) => {
+						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+							duration: 0
+						})
+						a.finished.then(done)
+					}}
+				>
+					<Show when={activeTab().overview === 'active'}>
+						<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800', activeTab().overview === 'active' && '')}>
+							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
+								Disen
+							</p>
+						</div>
+					</Show>
+					<Show when={activeTab().profile === 'active'}>
+						<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6', activeTab().profile === 'active' && '')}>
+							<div>This en</div>
+						</div>
+					</Show>
+					<Show when={activeTab().orders === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm',
+								activeTab().orders === 'active' && ''
+							)}
+						>
+							<div>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div>Your orders</div>
+								</div>
+								<div class="text-gray-600 dark:text-gray-300">Order 1</div>
+							</div>
+						</div>
+					</Show>
+					<Show when={activeTab().reviews === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								activeTab().reviews === 'active' && ''
+							)}
+						>
+							<div>
+								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolore est deserunt amet dolores aliquam!
+								Delectus accusantium, quod tempore praesentium, voluptates culpa eaque et ullam consequatur placeat odio
+								excepturi quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum
+								<div class="space-y-3"></div>
+							</div>
+						</div>
+					</Show>
+					<Show when={activeTab().wishlist === 'active'}>
+						<div
+							class={clsx(
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								activeTab().wishlist === 'active' && ''
+							)}
+						>
+							Wishlist
+							<div>
+								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolore est deserunt amet dolores aliquam!
+								Delectus accusantium, quod tempore praesentium, voluptates culpa eaque et ullam consequatur placeat odio
+								excepturi quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum
+								<div class="space-y-3"></div>
+							</div>
+						</div>
+					</Show>
+				</TransitionGroup>
+			</div>
+		</div>
+	)
 }

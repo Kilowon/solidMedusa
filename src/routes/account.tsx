@@ -1,6 +1,6 @@
 import Navigation from '~/Components/layout/Navigation'
 import { createForm, email, required, minLength, setError } from '@modular-forms/solid'
-import { createEffect, Show, createSignal, Accessor, Suspense } from 'solid-js'
+import { createEffect, Show, createSignal, Accessor, Suspense, For } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
@@ -9,6 +9,7 @@ import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
 import { Image } from '@unpic/solid'
 import { TransitionGroup } from 'solid-transition-group'
+import { Customer } from '~/types/models'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -107,8 +108,7 @@ export default function Account() {
 									currentCustomer={currentCustomer}
 								/>
 							</div>
-							{/* <span class="hidden md:block bg-gray-6 md:w-0.5" /> */}
-							{/* 	<hr class="border-gray-400/50 my-2 mx-6 md:hidden" /> */}
+
 							<div
 								class={clsx(
 									'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
@@ -135,8 +135,8 @@ export default function Account() {
 										</div>
 									</div>
 									<div class="space-y-3">
-										<div>Account Informaion</div>
-										<ProductInformationTabs />
+										<div>Account Information</div>
+										<ProductInformationTabs currentCustomer={currentCustomer?.data?.customer} />
 									</div>
 								</div>
 							</div>
@@ -228,13 +228,13 @@ export function SignUp(props: SideProps) {
 				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
 					<Show when={error() === 'active'}>
 						<div class="text-red-7">
-							<div>{errorMessage()}</div>
-							<div>This email is already in use please try to login</div>
+							<div class="text-sm">{errorMessage()}</div>
+							<div class="text-sm">This email is already in use please try to login</div>
 						</div>
 					</Show>
 					<div class="flex items-center">
 						<div class="i-ic-baseline-directions-run w-6 h-6 text-gray-5" />
-						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here</div>
+						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here </div>
 					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
@@ -266,7 +266,7 @@ export function SignUp(props: SideProps) {
 										error={field.error}
 										type="email"
 										//description="We'll send your order confirmation here."
-										label="Email"
+										label="Email (sign up)"
 										placeholder="example@email.com"
 										required
 									/>
@@ -360,8 +360,8 @@ export function SignIn(props: SideProps) {
 				<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
 					<Show when={error() === 'active'}>
 						<div class="flex flex-col text-red-7">
-							<div>{errorMessage()}</div>
-							<div>You may have entered the wrong email or password please try again</div>
+							<div class="text-sm">{errorMessage()}</div>
+							<div class="text-sm">You may have entered the wrong email or password please try again</div>
 						</div>
 					</Show>
 					<div class="flex items-center">
@@ -382,7 +382,7 @@ export function SignIn(props: SideProps) {
 									error={field.error}
 									type="email"
 									//description="We'll send your order confirmation here."
-									label="Email"
+									label="Email (sign in)"
 									placeholder="example@email.com"
 									required
 								/>
@@ -424,7 +424,7 @@ export function Profile(props: SideProps) {
 	return <div>Profile</div>
 }
 
-export function ProductInformationTabs() {
+export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 	const [activeTab, setActiveTab] = createSignal({
 		overview: 'active',
 		profile: 'inactive',
@@ -437,7 +437,7 @@ export function ProductInformationTabs() {
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
 				<ul
-					class="flex -mb-px text-xs lg:text-base font-medium text-center space-x-0.5 md:space-x-4 lg:space-x-6 "
+					class="flex -mb-px text-xs lg:text-base font-medium text-center space-x-0.25 md:space-x-4 lg:space-x-6 "
 					id="myTab"
 					data-tabs-toggle="#myTabContent"
 					role="tablist"
@@ -448,7 +448,7 @@ export function ProductInformationTabs() {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
 								activeTab().overview === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().overview === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -480,7 +480,7 @@ export function ProductInformationTabs() {
 								}
 							}}
 						>
-							<div class="flex flex-col lg:flex-row justify-center items-center mb-2 sm:mb-0  ">
+							<div class="flex flex-col lg:flex-row justify-center items-center ">
 								<div class="i-fluent-clipboard-text-ltr-24-regular text-lg text-gray-6 lg:mr-2 " />
 								Overview
 							</div>
@@ -492,7 +492,7 @@ export function ProductInformationTabs() {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33 bg-white md:bg-gray-1',
 								activeTab().profile === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().profile === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -536,7 +536,7 @@ export function ProductInformationTabs() {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
 								activeTab().orders === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().orders === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -581,7 +581,7 @@ export function ProductInformationTabs() {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31',
+								'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
 								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -625,7 +625,7 @@ export function ProductInformationTabs() {
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
 								activeTab().wishlist === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().wishlist === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -682,9 +682,89 @@ export function ProductInformationTabs() {
 					}}
 				>
 					<Show when={activeTab().overview === 'active'}>
-						<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800', activeTab().overview === 'active' && '')}>
-							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
-								Disen
+						<div class={clsx('p-1 rounded-sm bg-gray-50 dark:bg-gray-800', activeTab().overview === 'active' && '')}>
+							<p class=" mb-3 text-gray-500 dark:text-gray-400">
+								<Show when={props.currentCustomer}>
+									<ul class="space-y-4 ">
+										<For each={props.currentCustomer?.orders}>
+											{(order: any) => {
+												return (
+													<li
+														class="flex sm:flex-row justify-between cursor-pointer bg-gray-6/5 p-1.5 rounded-sm hover:bg-gray-6/20"
+														onClick={() => {}}
+													>
+														<div>
+															<div class="text-sm">Order date:</div>
+															<div class="text-sm font-500 capitalize">
+																{new Date(order.created_at).toLocaleDateString('en-US', {
+																	month: 'long',
+																	day: 'numeric',
+																	year: 'numeric'
+																})}
+															</div>
+														</div>
+														<div class="hidden sm:block">
+															<div class="text-sm">Order number:</div>
+															<div class="text-sm">#{order.display_id}</div>
+														</div>
+														<div>
+															<div class="text-sm">Payment status:</div>
+															<div class="flex">
+																<div
+																	class={clsx(
+																		'flex items-center',
+																		order.payment_status === 'not_paid' && 'text-red-500',
+																		order.payment_status === 'awaiting' && 'text-gray-500',
+																		order.payment_status === 'captured' && 'text-green-500',
+																		order.payment_status === 'partially_refunded' && 'text-yellow-500',
+																		order.payment_status === 'refunded' && 'text-red-500',
+																		order.payment_status === 'canceled' && 'text-red-500',
+																		order.payment_status === 'requires_action' && 'text-yellow-500'
+																	)}
+																>
+																	<div class="i-material-symbols-circle mr-0.5 w-2.5" />
+																</div>
+																<div class="text-sm font-500 capitalize ">
+																	{order.payment_status === 'awaiting' ? 'Pending' : order.payment_status}
+																</div>
+															</div>
+														</div>
+														<div>
+															<div>
+																<div class="text-sm">Shipping status:</div>
+																<div class="flex">
+																	<div
+																		class={clsx(
+																			'text-sm flex items-center',
+																			order.fulfillment_status === 'not_fulfilled' && 'text-gray-500',
+																			order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
+																			order.fulfillment_status === 'fulfilled' && 'text-green-500',
+																			order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
+																			order.fulfillment_status === 'shipped' && 'text-green-500',
+																			order.fulfillment_status === 'partially_returned' && 'text-yellow-500',
+																			order.fulfillment_status === 'returned' && 'text-red-500',
+																			order.fulfillment_status === 'canceled' && 'text-red-500',
+																			order.fulfillment_status === 'requires_action' && 'text-yellow-500'
+																		)}
+																	>
+																		<div class="i-material-symbols-circle mr-0.5 w-2.5" />
+																	</div>
+																	<div class="font-500 capitalize">
+																		{order.fulfillment_status === 'not_fulfilled' ? 'Pending' : order.fulfillment_status}
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="hidden sm:block">
+															<div class="text-sm ">Order Items:</div>
+															<div class="text-sm">{order.items.length}</div>
+														</div>
+													</li>
+												)
+											}}
+										</For>
+									</ul>
+								</Show>
 							</p>
 						</div>
 					</Show>

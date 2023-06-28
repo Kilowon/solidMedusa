@@ -1,6 +1,8 @@
-import { lazy, Suspense, createEffect } from 'solid-js'
+import { lazy, Suspense, Show, createSignal, createEffect } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
+import { Motion, Presence } from '@motionone/solid'
+import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 const Navigation = lazy(() => import('~/Components/layout/Navigation'))
 const Footer = lazy(() => import('~/Components/layout/Footer'))
@@ -24,14 +26,21 @@ export default function Home() {
 		retry: 0
 	}))
 
-	createEffect(() => {
-		console.log(primaryData?.data?.data[0]?.title)
-	})
-
 	function hexToRgb(hex: any) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
 	}
+
+	let el: HTMLDivElement | undefined
+	const [isVisible, setIsVisible] = createSignal(false)
+	const [delay, setDelay] = createSignal(0.1)
+	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
+
+	createEffect(() => {
+		if (visible()) {
+			setIsVisible(true)
+		}
+	})
 
 	return (
 		<div
@@ -60,7 +69,21 @@ export default function Home() {
 			</Suspense>
 			<Outlet />
 			<Suspense>
-				<Footer />
+				<div ref={el}>
+					<Show when={isVisible()}>
+						<Presence initial>
+							<Motion
+								animate={{ opacity: [0, 1] }}
+								transition={{ duration: 0.2, delay: delay(), easing: 'ease-in-out' }}
+							>
+								<Footer />
+							</Motion>
+						</Presence>
+					</Show>
+					<Show when={!isVisible()}>
+						<div class="w-[100px] h-[10px]"></div>
+					</Show>
+				</div>
 			</Suspense>
 		</div>
 	)

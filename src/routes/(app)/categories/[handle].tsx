@@ -13,7 +13,7 @@ import { createVisibilityObserver } from '@solid-primitives/intersection-observe
 export default function Categories() {
 	const params = useParams()
 
-	const { cart } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
 	const queryCategories = createQuery(() => ({
@@ -32,7 +32,7 @@ export default function Categories() {
 		queryFn: async function () {
 			const product = await medusa?.products?.list({
 				category_id: currentCategoryId(),
-				cart_id: cart?.result?.cart?.id
+				cart_id: queryCart?.data?.cart?.id
 			})
 			return product
 		},

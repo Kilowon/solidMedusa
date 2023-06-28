@@ -395,12 +395,12 @@ function ItemQuantity(props: any) {
 import { fetchProduct } from '~/Services/medusaAPI'
 function ItemPrice(props: any) {
 	const { medusa } = useGlobalContext()
-	const { cart } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 
 	const queryLineItem = createQuery(() => ({
 		queryKey: ['CartCore-LineItem-Price', props.item.variant.product.handle],
 		queryFn: async function () {
-			const response = await fetchProduct(medusa, cart, props.item.variant.product.handle)
+			const response = await fetchProduct(medusa, queryCart, props.item.variant.product.handle)
 			return response
 		},
 		cacheTime: 15 * 60 * 1000

@@ -9,14 +9,14 @@ import { createQuery } from '@tanstack/solid-query'
 
 export default function Products() {
 	const { medusa } = useGlobalContext()
-	const { cart } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 
 	const params = useParams()
 
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
-			const product = await fetchProduct(medusa, cart, params.handle)
+			const product = await fetchProduct(medusa, queryCart, params.handle)
 			return product
 		},
 

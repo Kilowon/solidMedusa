@@ -32,7 +32,6 @@ export function StoreProvider(props: {
 	medusa?: Medusa | null | undefined
 	cart?: Cart
 	product?: Product
-	updateCart?: () => void
 	children: any
 }) {
 	const [options, setOptions] = createSignal({})
@@ -42,7 +41,7 @@ export function StoreProvider(props: {
 	const [product, setProduct] = createSignal(props.product)
 
 	const { queryCartRefetch } = useGlobalContext()
-	const { cart } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
 	createEffect(() => {
@@ -58,11 +57,11 @@ export function StoreProvider(props: {
 	}
 
 	function addItem(lineId: string, quantity: number) {
-		addLineItem(medusa, cart, lineId, quantity)
+		addLineItem(medusa, queryCart, lineId, quantity)
 	}
 
 	function deleteItem(lineId: string) {
-		deleteLineItem(medusa, cart, lineId)
+		deleteLineItem(medusa, queryCart, lineId)
 	}
 
 	function updateItem(lineId: string, quantity: number) {

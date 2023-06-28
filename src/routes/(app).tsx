@@ -20,6 +20,7 @@ export default function Home() {
 			const data = await response.json()
 			return data
 		},
+		cacheTime: 15 * 60 * 1000,
 		retry: 0
 	}))
 

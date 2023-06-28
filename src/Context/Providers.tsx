@@ -1,5 +1,5 @@
 import { isServer } from 'solid-js/web'
-import { createContext, useContext, createSignal, createResource, createEffect, createMemo } from 'solid-js'
+import { createContext, useContext, createSignal, createEffect, onMount } from 'solid-js'
 import { createRouteAction } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 
@@ -11,7 +11,6 @@ import { Cart } from '~/types/types'
 interface ContextProps {
 	medusa?: Medusa | null
 	cart?: Cart | null
-	updateCart?: () => void
 	queryCart?: Cart | null
 	queryCartRefetch?: () => void
 	setCurrentProductId?: (id: string) => void
@@ -80,9 +79,6 @@ async function getRequiredCart() {
 }
 
 export function GlobalContextProvider(props: any) {
-	const [cart, cartServerState]: Cart = createRouteAction(getRequiredCart)
-	const [fetching, setFetching] = createSignal(true)
-
 	///////////////////////////////////////////////////////////////////////////
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
@@ -131,26 +127,17 @@ export function GlobalContextProvider(props: any) {
 		//staleTime: 15 * 60 * 1000
 	}))
 
-	createEffect(() => {
+	onMount(() => {
 		if (!isServer) {
-			cartServerState()
 			fetchRegion()
 		}
 	})
 
-	createEffect(() => {
-		if (!isServer && cart?.result?.cart?.id !== undefined) {
-			fetchRegion()
-			localStorage.setItem('cart_id', cart?.result.cart.id)
-			setFetching(false)
+	onMount(() => {
+		if (!isServer && queryCart?.data?.cart?.id !== undefined) {
+			localStorage.setItem('cart_id', queryCart?.data.cart.id)
 		}
 	})
-
-	const updateCart = () => {
-		if (!cart.pending) {
-			cartServerState()
-		}
-	}
 
 	///////////////////////////////////////////////////////////////////////////
 	//TODO: Categories should be fetched when requested not on siteload
@@ -178,7 +165,7 @@ export function GlobalContextProvider(props: any) {
 		queryFn: async function () {
 			const product = await medusa.products.list({
 				category_id: currentCategoryId(),
-				cart_id: cart?.result?.cart?.id
+				cart_id: queryCart?.data?.cart?.id
 			})
 			return product
 		},
@@ -198,22 +185,24 @@ export function GlobalContextProvider(props: any) {
 			const product = await medusa.collections.list()
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
-		//enabled: false
+		cacheTime: 15 * 60 * 1000,
+		enabled: false
 	}))
 
 	const [collections, setCollections] = createSignal([])
 
-	createEffect(() => {
-		setCollections(queryCollections?.data)
-	}, [queryCollections])
+	onMount(() => {
+		queryCollections.refetch()
+
+		setTimeout(() => {
+			setCollections(queryCollections?.data)
+		}, 500)
+	})
 
 	return (
 		<GlobalContext.Provider
 			value={{
 				medusa,
-				cart: cart as Cart,
-				updateCart,
 				queryCart: queryCart as Cart,
 				queryCartRefetch,
 				queryByProductId,

@@ -8,7 +8,7 @@ import presetUno from '@unocss/preset-uno'
 export default defineConfig({
 	plugins: [
 		solid({
-			ssr: true
+			ssr: false
 		}),
 		unocssPlugin({
 			presets: [

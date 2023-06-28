@@ -10,6 +10,10 @@ import clsx from 'clsx'
 import { Image } from '@unpic/solid'
 import { TransitionGroup } from 'solid-transition-group'
 import { Customer } from '~/types/models'
+import { currencyFormat } from '~/lib/helpers/currency'
+import SignUp from '~/Components/account_components/SignUp'
+import SignIn from '~/Components/account_components/SignIn'
+import TabNav from '~/Components/account_components/TabNav'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -60,6 +64,16 @@ export default function Account() {
 			return customer
 		},
 		retry: 1
+	}))
+
+	const currentCustomerSignOut = createQuery(() => ({
+		queryKey: ['end_session'],
+		queryFn: async function () {
+			const customer = await medusa?.auth?.deleteSession()
+			return customer
+		},
+		retry: 0,
+		enabled: false
 	}))
 
 	createEffect(() => {
@@ -126,17 +140,48 @@ export default function Account() {
 							</div>
 						</Show>
 						<Show when={currentCustomer.isSuccess}>
-							<div class=" w-full">
-								<div class="flex flex-col sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-4">
+							<div class=" w-full max-h-90svh">
+								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10  ">
 									<div class="sm:flex items-center justify-between">
-										<div class="text-2xl font-400 font-poppins text-gray-6">Welcome back</div>
-										<div class="text-xs font-500 font-poppins text-gray-6">
-											Signed in as: {currentCustomer?.data?.customer?.email}
+										<div class="text-xl font-400 font-poppins text-gray-6 pl-1 sm:pl-0">Welcome back</div>
+										<div class="flex justify-between p-1">
+											<div class="text-xs font-500 font-poppins text-gray-6">
+												Signed in as: {currentCustomer?.data?.customer?.email}
+											</div>
+											<div
+												class="text-xs font-500 font-poppins sm:ml-4 underline cursor-pointer"
+												onClick={() => {
+													currentCustomerSignOut.refetch()
+													currentCustomer.refetch()
+												}}
+											>
+												sign out
+											</div>
 										</div>
 									</div>
-									<div class="space-y-3">
-										<div>Account Information</div>
+									<div class="space-y-3 flex-grow ">
+										<div class="">Account Information</div>
 										<ProductInformationTabs currentCustomer={currentCustomer?.data?.customer} />
+									</div>
+									<div class="mt-auto flex-shrink">
+										<div class="space-y-3">
+											<div>
+												<div class="flex items-center space-x-3 ">
+													<div class="i-wpf-faq w-6 h-6 text-gray-7" />
+													<div class="text-lg">Questions? </div>
+												</div>
+												<div class="text-sm">Please visit out FAQ section for more information</div>
+											</div>
+											<div>
+												<div class="flex items-center space-x-3">
+													<div class="i-mdi-email-edit-outline w-6 h-6 text-gray-7" />
+													<div class="text-lg">Something wrong? </div>
+												</div>
+												<div class="text-sm">
+													If you spotted something wrong with your order please contact us support@modernedge.com
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -148,524 +193,21 @@ export default function Account() {
 	)
 }
 
-export function SignUp(props: SideProps) {
-	const [customerSignUp, { Form, Field }] = createForm<PaymentForm>()
-	const { queryCart } = useGlobalContext()
-	const { medusa } = useGlobalContext()
-	const [emailValue, setEmailValue] = createSignal('')
-	const [passwordValue, setPasswordValue] = createSignal('')
-	const [error, setError] = createSignal('hidden')
-	const [errorMessage, setErrorMessage] = createSignal('')
-
-	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
-
-	createEffect(() => {
-		setTimeout(() => {
-			setCustomerDelayPassed('hidden')
-		}, 100)
-	})
-
-	function handleSubmit(values: PaymentForm) {
-		setEmailValue(values.email)
-		setPasswordValue(values.password)
-		emailCheck.refetch()
-		console.log('emailcheck', emailCheck.isSuccess)
-		setTimeout(() => {
-			if (emailValue() && passwordValue() && emailCheck.isSuccess) {
-				createCustomer.refetch()
-				setTimeout(() => {
-					if (createCustomer.isSuccess) {
-						setError('hidden')
-						queryCart.refetch()
-						props.currentCustomer.refetch()
-						console.log('customer created')
-					}
-					if (createCustomer.failureReason) {
-						setError('active')
-						setErrorMessage(createCustomer.failureReason.message)
-					}
-				}, 500)
-			}
-			if (emailCheck.failureReason) {
-				setError('active')
-				setErrorMessage(emailCheck.failureReason.message)
-			}
-		}, 500)
-	}
-
-	const emailCheck = createQuery(() => ({
-		queryKey: ['customer_email_check', emailValue()],
-		queryFn: async function () {
-			const email = await medusa?.auth.exists(emailValue())
-			return email
-		},
-		enabled: false
-	}))
-
-	const createCustomer = createQuery(() => ({
-		queryKey: ['customer_signup', emailValue()],
-		queryFn: async function () {
-			const customer = await medusa?.customers.create({
-				first_name: '',
-				last_name: '',
-				email: emailValue(),
-				password: passwordValue()
-			})
-			return customer
-		},
-		enabled: false
-	}))
-
-	return (
-		<div
-			class={clsx(
-				'',
-				props.side?.() === 'left' && 'none',
-				props.side?.() === 'right' && 'lg:blur-sm transition-all duration-1000'
-			)}
-		>
-			<Form onSubmit={values => handleSubmit(values) as any}>
-				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
-					<Show when={error() === 'active'}>
-						<div class="text-red-7">
-							<div class="text-sm">{errorMessage()}</div>
-							<div class="text-sm">This email is already in use please try to login</div>
-						</div>
-					</Show>
-					<div class="flex items-center">
-						<div class="i-ic-baseline-directions-run w-6 h-6 text-gray-5" />
-						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here </div>
-					</div>
-					<div class="">
-						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
-						<Show when={customerDelayPassed() === 'show'}>
-							<Field
-								name="emailDelayFake"
-								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										type="email"
-										label="Email"
-										placeholder="example@email.com"
-									/>
-								)}
-							</Field>
-						</Show>
-						<Show when={customerDelayPassed() === 'hidden'}>
-							<Field
-								name="email"
-								validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-							>
-								{(field, props) => (
-									<TextInput
-										{...props}
-										value={field.value}
-										error={field.error}
-										type="email"
-										//description="We'll send your order confirmation here."
-										label="Email (sign up)"
-										placeholder="example@email.com"
-										required
-									/>
-								)}
-							</Field>
-						</Show>
-						<Field
-							name="password"
-							validate={[
-								required('Please enter your password.'),
-								minLength(8, 'You password must have 8 characters or more.')
-							]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="password"
-									//description="Signup for an account to access your order history."
-									label="Password"
-									placeholder="********"
-								/>
-							)}
-						</Field>
-						<FormFooter of={customerSignUp} />
-					</div>
-					<FormHeader
-						of={customerSignUp}
-						heading=""
-					/>
-				</div>
-			</Form>
-		</div>
-	)
-}
-
-export function SignIn(props: SideProps) {
-	const [customerForm, { Form, Field }] = createForm<PaymentForm>()
-
-	const { medusa } = useGlobalContext()
-	const { queryCart } = useGlobalContext()
-	const [emailValue, setEmailValue] = createSignal('')
-	const [passwordValue, setPasswordValue] = createSignal('')
-	const [error, setError] = createSignal('hidden')
-	const [errorMessage, setErrorMessage] = createSignal('')
-
-	const [customerDelayPassed, setCustomerDelayPassed] = createSignal('show')
-
-	function handleSubmit(values: PaymentForm) {
-		setEmailValue(values.email)
-		setPasswordValue(values.password)
-		if (emailValue() && passwordValue()) {
-			signInCustomer.refetch()
-			setTimeout(() => {
-				if (signInCustomer.isSuccess) {
-					setError('hidden')
-					queryCart.refetch()
-					props.currentCustomer.refetch()
-				}
-				if (signInCustomer.failureReason) {
-					setError('active')
-					setErrorMessage(signInCustomer.failureReason.message)
-				}
-			}, 500)
-		}
-	}
-
-	const signInCustomer = createQuery(() => ({
-		queryKey: ['customer_signin', emailValue()],
-		queryFn: async function () {
-			const customer = await medusa?.auth.authenticate({
-				email: emailValue(),
-				password: passwordValue()
-			})
-
-			return customer
-		},
-		enabled: false
-	}))
-
-	return (
-		<div
-			class={clsx(
-				'',
-				props.side?.() === 'left' && 'lg:blur-sm  transition-all duration-1000',
-				props.side?.() === 'right' && 'none'
-			)}
-		>
-			<Form onSubmit={values => handleSubmit(values) as any}>
-				<div class="space-y-3 md:w-60vw   lg:w-30vw xl:w-25vw">
-					<Show when={error() === 'active'}>
-						<div class="flex flex-col text-red-7">
-							<div class="text-sm">{errorMessage()}</div>
-							<div class="text-sm">You may have entered the wrong email or password please try again</div>
-						</div>
-					</Show>
-					<div class="flex items-center">
-						<div class="i-ic-round-hiking h-6 w-6 text-gray-5" />
-						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">Welcome back</div>
-					</div>
-					<div class="">
-						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}
-
-						<Field
-							name="email"
-							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="email"
-									//description="We'll send your order confirmation here."
-									label="Email (sign in)"
-									placeholder="example@email.com"
-									required
-								/>
-							)}
-						</Field>
-
-						<Field
-							name="password"
-							validate={[
-								required('Please enter your password.'),
-								minLength(8, 'You password must have 8 characters or more.')
-							]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="password"
-									//description="Signup for an account to access your order history."
-									label="Password"
-									placeholder="********"
-								/>
-							)}
-						</Field>
-						<FormFooter of={customerForm} />
-					</div>
-					<FormHeader
-						of={customerForm}
-						heading=""
-					/>
-				</div>
-			</Form>
-		</div>
-	)
-}
-
-export function Profile(props: SideProps) {
-	return <div>Profile</div>
-}
-
 export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 	const [activeTab, setActiveTab] = createSignal({
-		overview: 'active',
+		overview: 'inactive',
 		profile: 'inactive',
 		orders: 'inactive',
-		reviews: 'inactive',
+		reviews: 'active',
 		wishlist: 'inactive'
 	})
 
 	return (
 		<div>
-			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-				<ul
-					class="flex -mb-px text-xs lg:text-base font-medium text-center space-x-0.25 md:space-x-4 lg:space-x-6 "
-					id="myTab"
-					data-tabs-toggle="#myTabContent"
-					role="tablist"
-				>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-								activeTab().overview === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().overview === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-							)}
-							id="description-tab"
-							data-tabs-target="#description"
-							type="button"
-							role="tab"
-							aria-controls="description"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().overview === 'inactive') {
-									setActiveTab({
-										overview: 'active',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-									return
-								}
-								if (activeTab().overview === 'active') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-								}
-							}}
-						>
-							<div class="flex flex-col lg:flex-row justify-center items-center ">
-								<div class="i-fluent-clipboard-text-ltr-24-regular text-lg text-gray-6 lg:mr-2 " />
-								Overview
-							</div>
-						</button>
-					</li>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33 bg-white md:bg-gray-1',
-								activeTab().profile === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().profile === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-							)}
-							id="profile-tab"
-							data-tabs-target="#profile"
-							type="button"
-							role="tab"
-							aria-controls="profile"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().profile === 'inactive') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'active',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-									return
-								}
-								if (activeTab().profile === 'active') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-								}
-							}}
-						>
-							<div class="flex flex-col lg:flex-row justify-center items-center ">
-								<div class="i-vaadin-clipboard-user text-lg bg-gray-6 lg:mr-2" />
-								Profile
-							</div>
-						</button>
-					</li>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-								activeTab().orders === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().orders === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-							)}
-							id="orders-tab"
-							data-tabs-target="#orders"
-							type="button"
-							role="tab"
-							aria-controls="orders"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().orders === 'inactive') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'active',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-									return
-								}
-								if (activeTab().orders === 'active') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-								}
-							}}
-						>
-							{' '}
-							<div class="flex flex-col lg:flex-row justify-center items-center ">
-								<div class="i-ph-truck text-lg text-gray-6 lg:mr-2" />
-								Orders
-							</div>
-						</button>
-					</li>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-							)}
-							id="reviews-tab"
-							data-tabs-target="#reviews"
-							type="button"
-							role="tab"
-							aria-controls="reviews"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().reviews === 'inactive') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'active',
-										wishlist: 'inactive'
-									})
-									return
-								}
-								if (activeTab().reviews === 'active') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-								}
-							}}
-						>
-							<div class="flex flex-col sm:flex-row sm:space-x-1  lg:flex-row justify-center items-center">
-								<div class="i-ic-baseline-star-rate text-lg text-gray-6 lg:mr-2" />
-								<div>Reviews</div>
-							</div>
-						</button>
-					</li>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-								activeTab().wishlist === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().wishlist === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-							)}
-							id="wishlist-tab"
-							data-tabs-target="#wishlist"
-							type="button"
-							role="tab"
-							aria-controls="wishlist"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().wishlist === 'inactive') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'active'
-									})
-									return
-								}
-								if (activeTab().wishlist === 'active') {
-									setActiveTab({
-										overview: 'inactive',
-										profile: 'inactive',
-										orders: 'inactive',
-										reviews: 'inactive',
-										wishlist: 'inactive'
-									})
-								}
-							}}
-						>
-							{' '}
-							<div class="flex flex-col sm:flex-row sm:space-x-1  justify-center items-center">
-								<div class="i-fa6-regular-thumbs-up text-lg text-gray-6 lg:mr-2" />
-								<div>Wish List</div>
-							</div>
-						</button>
-					</li>
-				</ul>
-			</div>
+			<TabNav
+				activeTab={activeTab}
+				setActiveTab={setActiveTab}
+			/>
 			<div class="text-sm h-full">
 				<TransitionGroup
 					onEnter={(el, done) => {
@@ -682,144 +224,326 @@ export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 					}}
 				>
 					<Show when={activeTab().overview === 'active'}>
-						<div class={clsx('p-1 rounded-sm bg-gray-50 dark:bg-gray-800', activeTab().overview === 'active' && '')}>
-							<p class=" mb-3 text-gray-500 dark:text-gray-400">
-								<Show when={props.currentCustomer}>
-									<ul class="space-y-4 ">
-										<For each={props.currentCustomer?.orders}>
-											{(order: any) => {
-												return (
-													<li
-														class="flex sm:flex-row justify-between cursor-pointer bg-gray-6/5 p-1.5 rounded-sm hover:bg-gray-6/20"
-														onClick={() => {}}
-													>
-														<div>
-															<div class="text-sm">Order date:</div>
-															<div class="text-sm font-500 capitalize">
-																{new Date(order.created_at).toLocaleDateString('en-US', {
-																	month: 'long',
-																	day: 'numeric',
-																	year: 'numeric'
-																})}
-															</div>
-														</div>
-														<div class="hidden sm:block">
-															<div class="text-sm">Order number:</div>
-															<div class="text-sm">#{order.display_id}</div>
-														</div>
-														<div>
-															<div class="text-sm">Payment status:</div>
-															<div class="flex">
-																<div
-																	class={clsx(
-																		'flex items-center',
-																		order.payment_status === 'not_paid' && 'text-red-500',
-																		order.payment_status === 'awaiting' && 'text-gray-500',
-																		order.payment_status === 'captured' && 'text-green-500',
-																		order.payment_status === 'partially_refunded' && 'text-yellow-500',
-																		order.payment_status === 'refunded' && 'text-red-500',
-																		order.payment_status === 'canceled' && 'text-red-500',
-																		order.payment_status === 'requires_action' && 'text-yellow-500'
-																	)}
-																>
-																	<div class="i-material-symbols-circle mr-0.5 w-2.5" />
-																</div>
-																<div class="text-sm font-500 capitalize ">
-																	{order.payment_status === 'awaiting' ? 'Pending' : order.payment_status}
-																</div>
-															</div>
-														</div>
-														<div>
-															<div>
-																<div class="text-sm">Shipping status:</div>
-																<div class="flex">
-																	<div
-																		class={clsx(
-																			'text-sm flex items-center',
-																			order.fulfillment_status === 'not_fulfilled' && 'text-gray-500',
-																			order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
-																			order.fulfillment_status === 'fulfilled' && 'text-green-500',
-																			order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
-																			order.fulfillment_status === 'shipped' && 'text-green-500',
-																			order.fulfillment_status === 'partially_returned' && 'text-yellow-500',
-																			order.fulfillment_status === 'returned' && 'text-red-500',
-																			order.fulfillment_status === 'canceled' && 'text-red-500',
-																			order.fulfillment_status === 'requires_action' && 'text-yellow-500'
-																		)}
-																	>
-																		<div class="i-material-symbols-circle mr-0.5 w-2.5" />
-																	</div>
-																	<div class="font-500 capitalize">
-																		{order.fulfillment_status === 'not_fulfilled' ? 'Pending' : order.fulfillment_status}
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="hidden sm:block">
-															<div class="text-sm ">Order Items:</div>
-															<div class="text-sm">{order.items.length}</div>
-														</div>
-													</li>
-												)
-											}}
-										</For>
-									</ul>
-								</Show>
-							</p>
-						</div>
+						<OverviewActiveTab currentCustomer={props.currentCustomer} />
 					</Show>
 					<Show when={activeTab().profile === 'active'}>
-						<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6', activeTab().profile === 'active' && '')}>
-							<div>This en</div>
-						</div>
+						<ProfileActiveTab currentCustomer={props.currentCustomer} />
 					</Show>
 					<Show when={activeTab().orders === 'active'}>
-						<div
-							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm',
-								activeTab().orders === 'active' && ''
-							)}
-						>
-							<div>
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div>Your orders</div>
-								</div>
-								<div class="text-gray-600 dark:text-gray-300">Order 1</div>
-							</div>
-						</div>
+						<OrdersActiveTab currentCustomer={props.currentCustomer} />
 					</Show>
 					<Show when={activeTab().reviews === 'active'}>
-						<div
-							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
-								activeTab().reviews === 'active' && ''
-							)}
-						>
-							<div>
-								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolore est deserunt amet dolores aliquam!
-								Delectus accusantium, quod tempore praesentium, voluptates culpa eaque et ullam consequatur placeat odio
-								excepturi quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum
-								<div class="space-y-3"></div>
-							</div>
-						</div>
+						<ReviewsActiveTab currentCustomer={props.currentCustomer} />
 					</Show>
 					<Show when={activeTab().wishlist === 'active'}>
-						<div
-							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
-								activeTab().wishlist === 'active' && ''
-							)}
-						>
-							Wishlist
-							<div>
-								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolore est deserunt amet dolores aliquam!
-								Delectus accusantium, quod tempore praesentium, voluptates culpa eaque et ullam consequatur placeat odio
-								excepturi quaerat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum
-								<div class="space-y-3"></div>
-							</div>
-						</div>
+						<WishListActiveTab currentCustomer={props.currentCustomer} />
 					</Show>
 				</TransitionGroup>
+			</div>
+		</div>
+	)
+}
+
+export function OverviewActiveTab(props: { currentCustomer: Customer }) {
+	return (
+		<div class="p-1 rounded-sm bg-gray-50 dark:bg-gray-800">
+			<p class=" mb-3 text-gray-500 dark:text-gray-400">
+				<Show when={props.currentCustomer?.orders}>
+					<div class="my-2 font-500">Recent orders</div>
+					<ul class="space-y-4 ">
+						<For each={props.currentCustomer?.orders}>
+							{(order: any) => {
+								return (
+									<li>
+										<div
+											class="flex sm:flex-row justify-between cursor-pointer p-1.5 rounded-sm hover:bg-gray-6/5"
+											onClick={() => {}}
+										>
+											<div>
+												<div class="text-sm">Order date:</div>
+												<div class="text-sm font-500 capitalize">
+													{new Date(order.created_at).toLocaleDateString('en-US', {
+														month: 'long',
+														day: 'numeric',
+														year: 'numeric'
+													})}
+												</div>
+											</div>
+											<div class="hidden sm:block">
+												<div class="text-sm">Order number:</div>
+												<div class="text-sm">#{order.display_id}</div>
+											</div>
+											<div>
+												<div class="text-sm">Payment status:</div>
+												<div class="flex">
+													<div
+														class={clsx(
+															'flex items-center',
+															order.payment_status === 'not_paid' && 'text-red-500',
+															order.payment_status === 'awaiting' && 'text-gray-500',
+															order.payment_status === 'captured' && 'text-green-500',
+															order.payment_status === 'partially_refunded' && 'text-yellow-500',
+															order.payment_status === 'refunded' && 'text-red-500',
+															order.payment_status === 'canceled' && 'text-red-500',
+															order.payment_status === 'requires_action' && 'text-yellow-500'
+														)}
+													>
+														<div class="i-material-symbols-circle mr-0.5 w-2.5" />
+													</div>
+													<div class="text-sm font-500 capitalize ">
+														{order.payment_status === 'awaiting' ? 'Pending' : order.payment_status}
+													</div>
+												</div>
+											</div>
+											<div>
+												<div>
+													<div class="text-sm">Shipping status:</div>
+													<div class="flex">
+														<div
+															class={clsx(
+																'text-sm flex items-center',
+																order.fulfillment_status === 'not_fulfilled' && 'text-gray-500',
+																order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
+																order.fulfillment_status === 'fulfilled' && 'text-blue-400',
+																order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
+																order.fulfillment_status === 'shipped' && 'text-green-500',
+																order.fulfillment_status === 'partially_returned' && 'text-yellow-500',
+																order.fulfillment_status === 'returned' && 'text-red-500',
+																order.fulfillment_status === 'canceled' && 'text-red-500',
+																order.fulfillment_status === 'requires_action' && 'text-yellow-500'
+															)}
+														>
+															<div class="i-material-symbols-circle mr-0.5 w-2.5" />
+														</div>
+														<div class="font-500 capitalize">
+															{order.fulfillment_status === 'not_fulfilled' ? 'Pending' : order.fulfillment_status}
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="hidden sm:block">
+												<div class="text-sm ">Order Items:</div>
+												<div class="text-sm">{order.items.length}</div>
+											</div>
+										</div>
+										<hr class="border-gray-400/40 my-2 mx-6" />
+									</li>
+								)
+							}}
+						</For>
+					</ul>
+				</Show>
+				<Show when={props.currentCustomer?.orders.length === 0}>
+					<div>No Orders Available</div>
+				</Show>
+			</p>
+		</div>
+	)
+}
+
+export function ProfileActiveTab(props: { currentCustomer: Customer }) {
+	return (
+		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6">
+			<div>Profile Active Tab</div>
+		</div>
+	)
+}
+
+export function OrdersActiveTab(props: { currentCustomer: Customer }) {
+	return (
+		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm">
+			<div>
+				<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+					<div>Orders</div>
+				</div>
+				<div class="text-gray-600 dark:text-gray-300">Order 1</div>
+			</div>
+		</div>
+	)
+}
+
+export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
+	let variantIds = new Set()
+
+	const [variantId, setVariantId] = createSignal(Array.from(variantIds).join(','))
+	const [reviewVariant, setReviewVariant] = createSignal('')
+
+	function handleVariantIdChange(e: any) {
+		const newVariantId = e.target.value
+		variantIds.add(newVariantId)
+		setVariantId(Array.from(variantIds).join(','))
+	}
+
+	const currentCustomerSignOut = createQuery(() => ({
+		queryKey: ['product_review_id', reviewVariant()],
+		queryFn: async function () {
+			const medusaURL = import.meta.env.VITE_PUBLIC_MEDUSA_BACKEND_URL
+			const variant = await fetch(`${medusaURL}/store/variants/${reviewVariant()}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => {
+				if (res.ok) {
+					return res.json()
+				} else {
+					throw new Error('Something went wrong')
+				}
+			})
+			return variant
+		},
+		retry: 0,
+		enabled: false
+	}))
+	return (
+		<div class="sm:p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm">
+			<Show when={props.currentCustomer?.orders}>
+				<div>Items that need a review:</div>
+				<ul class="space-y-2">
+					<For each={props.currentCustomer?.orders}>
+						{(order: any) => {
+							if (order?.fulfillment_status !== 'shipped') return
+							return (
+								<li>
+									<For each={order.items}>
+										{(item: any) => {
+											if (variantId() === item.variant_id) return
+
+											variantIds.add(item.variant_id)
+											handleVariantIdChange({ target: { value: item.variant_id } })
+
+											const [open, setOpen] = createSignal(false)
+											return (
+												<div class="flex items-center justify-center">
+													<div
+														class="grid grid-cols-9 space-x-1 text-sm font-500 text-gray-500 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
+														tabindex="0" // add tabindex attribute to make the div focusable
+													>
+														<Image
+															width={50}
+															height={50}
+															src={item.thumbnail}
+															alt={item.title}
+															class="-mb-px mr-2 rounded-md col-span-2 sm:col-span-1"
+														></Image>
+														<div class="max-w-[300px] col-span-4 sm:col-span-6 flex items-center">
+															<div class="line-clamp-2   ellipsis text-xs ">{item.title}</div>
+														</div>
+														<div class="col-span-2 flex items-center">{currencyFormat(Number(item.unit_price), 'US')}</div>
+													</div>
+													<div class=" sm:w-[20svw]">
+														<button
+															class="flex text-gray-5 bg-transparent hover:text-gray-8 "
+															onClick={() => {
+																setOpen(open => !open)
+																setReviewVariant(item.variant_id)
+																setTimeout(() => {
+																	currentCustomerSignOut.refetch()
+																}, 250)
+															}}
+															tabindex="0"
+														>
+															<div class="flex items-center space-x-1">
+																<div class="i-ic-outline-rate-review w-5 h-5" />
+																<div>Review</div>
+															</div>
+														</button>
+
+														{/* <!--Verically centered scrollable modal--> */}
+
+														<dialog
+															data-modal
+															open={open()}
+															id="dialog"
+															aria-hidden="true"
+															class="fixed top-0 left-0 right-0 z-50  overflow-x-hidden overflow-y-auto md:inset-0"
+															style="backdrop-filter: blur(50px)"
+														>
+															<div class="relative w-full max-w-2xl max-h-full">
+																{/*  <!-- Modal content --> */}
+																<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+																	{/*  <!-- Modal header --> */}
+																	<div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+																		<h3 class="text-xl font-semibold text-gray-900 dark:text-white">Review</h3>
+																		<button
+																			type="button"
+																			class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+																			data-modal-hide="defaultModal"
+																			onClick={() => {
+																				setOpen(open => !open)
+																			}}
+																		>
+																			<svg
+																				aria-hidden="true"
+																				class="w-5 h-5"
+																				fill="currentColor"
+																				viewBox="0 0 20 20"
+																				xmlns="http://www.w3.org/2000/svg"
+																			>
+																				<path
+																					fill-rule="evenodd"
+																					d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+																					clip-rule="evenodd"
+																				></path>
+																			</svg>
+																			<span class="sr-only">Close modal</span>
+																		</button>
+																	</div>
+																	{/*  <!-- Modal body --> */}
+																	<div class="p-6 space-y-6">
+																		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+																			With less than a month to go before the European Union enacts new consumer privacy laws for its
+																			citizens, companies around the world are updating their terms of service agreements to comply.
+																		</p>
+																		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+																			The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is
+																			meant to ensure a common set of data rights in the European Union. It requires organizations to
+																			notify users as soon as possible of high-risk data breaches that could personally affect them.
+																		</p>
+																	</div>
+																	{/*  <!-- Modal footer --> */}
+																	<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+																		<button
+																			data-modal-hide="defaultModal"
+																			type="button"
+																			class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+																		>
+																			I accept
+																		</button>
+																		<button
+																			data-modal-hide="defaultModal"
+																			type="button"
+																			class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+																		>
+																			Cancel
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</dialog>
+													</div>
+												</div>
+											)
+										}}
+									</For>
+								</li>
+							)
+						}}
+					</For>
+				</ul>
+			</Show>
+		</div>
+	)
+}
+
+export function WishListActiveTab(props: { currentCustomer: Customer }) {
+	return (
+		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm">
+			<div>
+				<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+					<div>Orders</div>
+				</div>
+				<div class="text-gray-600 dark:text-gray-300">Order 1</div>
 			</div>
 		</div>
 	)

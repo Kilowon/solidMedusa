@@ -16,7 +16,6 @@ export function Hero() {
 		>
 			<Show when={getWindowSize().width > 768}>
 				<div class="text-white absolute inset-0 z-10 flex flex-col  items-center text-center sm:text-left md:justify-end md:items-start md:p-32 font-poppins">
-					{/* 	
 					<h1 class="hidden  text-xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black md:flex items-baseline font-poppins font-400 z-2">
 						Embrace Modern Design
 					</h1>
@@ -30,7 +29,7 @@ export function Hero() {
 						<div class="text-xl md:text-5xl">
 							<div class="i-material-symbols-arrow-right-alt-rounded" />
 						</div>
-					</div> */}
+					</div>
 				</div>
 			</Show>
 			<Show when={getWindowSize().width > 768}>

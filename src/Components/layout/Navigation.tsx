@@ -58,7 +58,8 @@ export default function Navigation(props: any) {
 			return data
 		},
 		cacheTime: 15 * 60 * 1000,
-		retry: 0
+		retry: 0,
+		enabled: false
 	}))
 
 	createEffect(() => {

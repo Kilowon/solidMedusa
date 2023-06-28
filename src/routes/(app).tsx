@@ -1,8 +1,9 @@
-import { lazy, Suspense, Show, createSignal, createEffect } from 'solid-js'
+import { lazy, Suspense, Show, createSignal, createEffect, onMount } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { on } from 'events'
 
 const Navigation = lazy(() => import('~/Components/layout/Navigation'))
 const Footer = lazy(() => import('~/Components/layout/Footer'))
@@ -23,8 +24,13 @@ export default function Home() {
 			return data
 		},
 		cacheTime: 15 * 60 * 1000,
-		retry: 0
+		retry: 0,
+		enabled: false
 	}))
+
+	onMount(() => {
+		primaryData.refetch()
+	})
 
 	function hexToRgb(hex: any) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)

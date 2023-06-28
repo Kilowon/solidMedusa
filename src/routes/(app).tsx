@@ -33,7 +33,7 @@ export default function Home() {
 
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
-	const [delay, setDelay] = createSignal(0.1)
+	const [delay, setDelay] = createSignal(0.5)
 	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
 
 	createEffect(() => {
@@ -65,7 +65,16 @@ export default function Home() {
 			}}
 		>
 			<Suspense>
-				<Navigation />
+				<Show when={primaryData?.isFetched}>
+					<Presence initial>
+						<Motion
+							animate={{ opacity: [0, 1] }}
+							transition={{ duration: 0.01, easing: 'ease-in-out' }}
+						>
+							<Navigation />
+						</Motion>
+					</Presence>
+				</Show>
 			</Suspense>
 			<Outlet />
 			<Suspense>

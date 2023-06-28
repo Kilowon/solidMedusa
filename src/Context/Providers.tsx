@@ -78,14 +78,23 @@ async function getRequiredCart() {
 	}
 }
 
+const [firstRun, setFirstRun] = createSignal(true)
+
 export function GlobalContextProvider(props: any) {
 	///////////////////////////////////////////////////////////////////////////
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			await new Promise(r => setTimeout(r, 200))
-			const cart = await fetchSavedCart()
-			return cart
+			if (!firstRun()) {
+				await new Promise(r => setTimeout(r, 500))
+				const cart = await getRequiredCart()
+				return cart
+			}
+			if (firstRun()) {
+				setFirstRun(false)
+				const cart = await fetchSavedCart()
+				return cart
+			}
 		}
 	}))
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])

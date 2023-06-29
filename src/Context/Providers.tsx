@@ -86,9 +86,19 @@ export function GlobalContextProvider(props: any) {
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			await new Promise(r => setTimeout(r, 500))
-			const cart = await getRequiredCart()
-			return cart
+			if (!firstRun()) {
+				await new Promise(r => setTimeout(r, 500))
+				const cart = await getRequiredCart()
+				return cart
+			}
+
+			if (firstRun()) {
+				setFirstRun(false)
+				fetchRegion()
+				const cart = await getRequiredCart()
+
+				return cart
+			}
 		}
 	}))
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -129,12 +139,6 @@ export function GlobalContextProvider(props: any) {
 		cacheTime: 15 * 60 * 1000
 		//staleTime: 15 * 60 * 1000
 	}))
-
-	onMount(() => {
-		if (!isServer) {
-			fetchRegion()
-		}
-	})
 
 	onMount(() => {
 		if (!isServer && queryCart?.data?.cart?.id !== undefined) {

@@ -5,6 +5,7 @@ import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
+import clsx from 'clsx'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -112,7 +113,13 @@ export default function SignUp(props: SideProps) {
 	}))
 
 	return (
-		<div>
+		<div
+			class={clsx(
+				'',
+				props.side?.() === 'right' && 'lg:blur-sm  transition-all duration-1000',
+				props.side?.() === 'left' && 'none'
+			)}
+		>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<div class="space-y-3 md:w-60vw  lg:w-30vw xl:w-25vw">
 					<Show when={error() === 'active'}>

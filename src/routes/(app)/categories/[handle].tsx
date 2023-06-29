@@ -21,8 +21,8 @@ export default function Categories() {
 		queryFn: async function () {
 			const product = await medusa?.productCategories?.list({})
 			return product
-		}
-		//enabled: false
+		},
+		enabled: false
 	}))
 
 	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])

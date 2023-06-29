@@ -24,8 +24,9 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 		queryFn: async function () {
 			const product = await medusa?.productCategories.list({})
 			return product
-		}
-		//enabled: false
+		},
+		cacheTime: 15 * 60 * 1000,
+		enabled: false
 	}))
 
 	const [categories, categoriesServerState] = createSignal([])

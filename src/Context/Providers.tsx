@@ -7,6 +7,7 @@ import { createQuery } from '@tanstack/solid-query'
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
 import Medusa from '@medusajs/medusa-js'
 import { Cart } from '~/types/types'
+import { on } from 'events'
 
 interface ContextProps {
 	medusa?: Medusa | null
@@ -148,6 +149,28 @@ export function GlobalContextProvider(props: any) {
 		}
 	})
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	onMount(() => {
+		primaryData.refetch()
+	})
+
 	///////////////////////////////////////////////////////////////////////////
 	//TODO: Categories should be fetched when requested not on siteload
 	const queryCategories = createQuery(() => ({
@@ -155,8 +178,8 @@ export function GlobalContextProvider(props: any) {
 		queryFn: async function () {
 			const product = await medusa.productCategories.list({})
 			return product
-		}
-		//enabled: false
+		},
+		cacheTime: 15 * 60 * 1000
 	}))
 
 	const [categories, categoriesServerState] = createSignal([])

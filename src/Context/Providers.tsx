@@ -86,16 +86,9 @@ export function GlobalContextProvider(props: any) {
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			if (!firstRun()) {
-				await new Promise(r => setTimeout(r, 500))
-				const cart = await getRequiredCart()
-				return cart
-			}
-			if (firstRun()) {
-				setFirstRun(false)
-				const cart = await fetchSavedCart()
-				return cart
-			}
+			await new Promise(r => setTimeout(r, 500))
+			const cart = await getRequiredCart()
+			return cart
 		}
 	}))
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -152,11 +145,13 @@ export function GlobalContextProvider(props: any) {
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Accept: 'application/json'
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
 				}
 			})
 			const data = await response.json()

@@ -87,7 +87,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 							<h1 class="text-base md:text-xl lg:text-2xl font-500 text-gray-6 ">{currentFeatured()?.title}</h1>
 							<div class="text-xs lg:text-base  text-gray-5">{currentFeatured()?.metadata?.description}</div>
 						</div>
-						<ol class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+						<ol class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
 							<For each={queryCollection?.data?.products}>
 								{(product, index) => {
 									let el: HTMLLIElement | undefined

@@ -79,26 +79,14 @@ async function getRequiredCart() {
 	}
 }
 
-const [firstRun, setFirstRun] = createSignal(true)
-
 export function GlobalContextProvider(props: any) {
 	///////////////////////////////////////////////////////////////////////////
 	const queryCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			if (!firstRun()) {
-				await new Promise(r => setTimeout(r, 500))
-				const cart = await getRequiredCart()
-				return cart
-			}
-
-			if (firstRun()) {
-				setFirstRun(false)
-				fetchRegion()
-				const cart = await getRequiredCart()
-
-				return cart
-			}
+			await new Promise(r => setTimeout(r, 500))
+			const cart = await getRequiredCart()
+			return cart
 		}
 	}))
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -171,7 +159,7 @@ export function GlobalContextProvider(props: any) {
 	})
 
 	///////////////////////////////////////////////////////////////////////////
-	//TODO: Categories should be fetched when requested not on siteload
+
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {

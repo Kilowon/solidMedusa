@@ -31,7 +31,7 @@ export function Hero() {
 										return (
 											<A
 												href={`/categories/${category?.handle}`}
-												class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight"
+												class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight py-3"
 											>
 												{category?.name}
 											</A>
@@ -46,7 +46,7 @@ export function Hero() {
 										return (
 											<A
 												href={`/categories/${category?.handle}`}
-												class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight"
+												class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight py-3"
 											>
 												{category?.name}
 											</A>

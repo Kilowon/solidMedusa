@@ -11,10 +11,6 @@ export function Hero() {
 		getWindowSize().width
 	})
 
-	createEffect(() => {
-		console.log(rootCategories()[1].name)
-	})
-
 	return (
 		<div
 			class="h-[100svh] w-full top-0 left-0 z-0 bg-cover bg-center bg-no-repeat flex items-center md:items-end

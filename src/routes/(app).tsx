@@ -1,9 +1,8 @@
-import { lazy, Suspense, Show, createSignal, createEffect, onMount } from 'solid-js'
+import { lazy, Suspense, Show, createSignal, createEffect } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import { on } from 'events'
 
 const Navigation = lazy(() => import('~/Components/layout/Navigation'))
 const Footer = lazy(() => import('~/Components/layout/Footer'))
@@ -68,14 +67,7 @@ export default function Home() {
 		>
 			<Suspense>
 				<Show when={primaryData?.isFetched}>
-					<Presence initial>
-						<Motion
-							animate={{ opacity: [0, 1] }}
-							transition={{ duration: 0.01, easing: 'ease-in-out' }}
-						>
-							<Navigation />
-						</Motion>
-					</Presence>
+					<Navigation />
 				</Show>
 			</Suspense>
 			<Outlet />

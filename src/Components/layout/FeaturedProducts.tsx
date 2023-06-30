@@ -58,6 +58,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	const queryCollection = createQuery(() => ({
 		queryKey: ['featured', props.variant],
 		queryFn: async function () {
+			if (!queryCart?.data?.cart?.id) return
 			const product = await medusa?.products?.list({
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
@@ -70,6 +71,12 @@ export default function FeaturedProducts(props: FeaturedProps) {
 		refetchInterval: 15 * 60 * 1000,
 		enabled: false
 	}))
+
+	createEffect(() => {
+		if (!queryCollection?.data?.products[0]?.handle) {
+			queryCollection.refetch()
+		}
+	})
 
 	return (
 		<main>

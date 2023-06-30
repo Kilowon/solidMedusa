@@ -16,12 +16,18 @@ export default function Products() {
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
+			if (!queryCart?.data?.cart?.id) return
 			const product = await fetchProduct(medusa, queryCart, params.handle)
 			return product
 		},
-
 		cacheTime: 25 * 60 * 1000
 	}))
+
+	createEffect(() => {
+		if (!queryProduct?.data?.products[0]?.handle) {
+			queryProduct.refetch()
+		}
+	})
 
 	return (
 		<div>

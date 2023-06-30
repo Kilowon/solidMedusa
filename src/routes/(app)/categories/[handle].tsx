@@ -30,6 +30,7 @@ export default function Categories() {
 	const queryCategoryProducts = createQuery(() => ({
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
+			if (!queryCart?.data?.cart?.id) return
 			const product = await medusa?.products?.list({
 				category_id: currentCategoryId(),
 				cart_id: queryCart?.data?.cart?.id
@@ -39,6 +40,12 @@ export default function Categories() {
 		cacheTime: 15 * 60 * 1000
 		//enabled: false
 	}))
+
+	createEffect(() => {
+		if (!queryCategoryProducts?.data?.products[0]?.handle) {
+			queryCategoryProducts.refetch()
+		}
+	})
 
 	function filterCategories() {
 		return queryCategories?.data?.product_categories?.filter((category: any) => category.handle === params.handle)

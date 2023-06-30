@@ -14,6 +14,7 @@ export default function Store() {
 	const queryAllProducts = createQuery(() => ({
 		queryKey: ['all-products'],
 		queryFn: async function () {
+			if (!queryCart?.data?.cart?.id) return
 			const product = await medusa?.products?.list({
 				is_giftcard: false,
 				cart_id: queryCart?.data?.cart?.id,
@@ -25,6 +26,12 @@ export default function Store() {
 		cacheTime: 15 * 60 * 1000
 		//staleTime: 15 * 60 * 1000
 	}))
+
+	createEffect(() => {
+		if (!queryAllProducts?.data?.products[0]?.handle) {
+			queryAllProducts.refetch()
+		}
+	})
 
 	return (
 		<main>

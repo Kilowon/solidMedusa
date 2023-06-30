@@ -98,7 +98,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 								{(collection: any) => {
 									if (collection?.category_children?.length > 0) {
 										return (
-											<div class="flex justify-between space-x-0.5">
+											<div class="flex justify-between space-x-0.5 capitalize">
 												<A
 													class="w-2/3 bg-gray-1"
 													href={`/categories/${collection?.handle}`}
@@ -111,7 +111,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 												</A>
 
 												<button
-													class="flex w-1/3 py-1 justify-end bg-gray-1"
+													class="flex w-1/3 py-1 justify-end bg-gray-1 capitalize"
 													onClick={() => {
 														setSelectedRoot(getChildrenOfRoot(collection.category_children))
 														setBackButton('active')
@@ -125,7 +125,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 									if (collection?.category_children?.length === 0) {
 										return (
 											<li
-												class=" ml-2 w-full  text-gray-6"
+												class=" ml-2 w-full  text-gray-6 capitalize"
 												onClick={() => {
 													setBackButton('inactive')
 													props.setMenuDrawer({ menu: 'hidden' })
@@ -147,7 +147,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 							</For>
 
 							<div class="flex flex-col space-y-1 ">
-								<div class="text-base text-gray-5 bg-gray-2 p-2">
+								<div class="text-base text-gray-5 bg-gray-2 p-2 capitalize">
 									<A
 										href={`/store/Store`}
 										onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
@@ -161,7 +161,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 											if (collection?.metadata?.menu !== 'hidden')
 												return (
 													<div
-														class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5"
+														class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5 capitalize"
 														onClick={() => {
 															setBackButton('inactive')
 															props.setMenuDrawer({ menu: 'hidden' })

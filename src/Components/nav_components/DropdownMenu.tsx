@@ -107,7 +107,7 @@ export default function DropdownMenu(props: any) {
 																		<Suspense fallback={<div>Loading...</div>}>
 																			<li class="whitespace-nowrap space-y-4">
 																				<span class="flex border border-gray-3"></span>
-																				<div class="text-base text-gray-6 text-lg font-500">
+																				<div class="text-base text-gray-6 text-lg font-500 capitalize">
 																					<A
 																						href={`/categories/${collection.handle}`}
 																						onClick={() => setOpen(false)}
@@ -121,7 +121,7 @@ export default function DropdownMenu(props: any) {
 																							if (category.parent_category?.id === collection.id) {
 																								return (
 																									<Suspense fallback={<div>Loading...</div>}>
-																										<div class="text-gray-5">
+																										<div class="text-gray-5 capitalize">
 																											<A
 																												href={`/categories/${category.handle}`}
 																												onClick={() => setOpen(false)}
@@ -150,7 +150,7 @@ export default function DropdownMenu(props: any) {
 																		if (collection.category_children?.length === 0) {
 																			return (
 																				<Suspense fallback={<div>Loading...</div>}>
-																					<div>
+																					<div class="capitalize">
 																						<A
 																							href={`/categories/${collection.handle}`}
 																							onClick={() => setOpen(false)}

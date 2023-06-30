@@ -395,9 +395,9 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full',
+								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full bg-white lg:bg-gray-100',
 								activeTab().description === 'active' &&
-									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
+									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300 ',
 								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
 							id="description-tab"
@@ -428,7 +428,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-33',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-white lg:bg-gray-100',
 								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -460,7 +460,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31',
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-white lg:bg-gray-100',
 								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}
@@ -493,7 +493,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full',
+								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-white lg:bg-gray-100',
 								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
 								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
 							)}

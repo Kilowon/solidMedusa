@@ -31,10 +31,10 @@ export default function Home() {
 		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
 	}
 
-	let el: HTMLDivElement | undefined
+	let elb: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
 	const [delay, setDelay] = createSignal(0.5)
-	const visible = createVisibilityObserver({ threshold: 0.01 })(() => el)
+	const visible = createVisibilityObserver({ threshold: 0.1 })(() => elb)
 
 	createEffect(() => {
 		if (visible()) {
@@ -68,7 +68,7 @@ export default function Home() {
 
 			<Outlet />
 			<Suspense>
-				<div ref={el}>
+				<div ref={elb}>
 					<Show when={isVisible()}>
 						<Footer />
 					</Show>

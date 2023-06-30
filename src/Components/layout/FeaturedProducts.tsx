@@ -62,7 +62,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
 				collection_id: [currentFeatured()?.id],
-				limit: 4
+				limit: 20
 			})
 			return product
 		},
@@ -81,11 +81,19 @@ export default function FeaturedProducts(props: FeaturedProps) {
 					a.finished.then(done)
 				}}
 			>
-				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
+				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins ">
 					<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
-						<div class="mb-8">
-							<h1 class="text-base md:text-xl lg:text-2xl font-500 text-gray-6 ">{currentFeatured()?.title}</h1>
-							<div class="text-xs lg:text-base  text-gray-5">{currentFeatured()?.metadata?.description}</div>
+						<div class="content-container">
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+								<div class="flex flex-col justify-center">
+									<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
+										{currentFeatured()?.title}
+									</h1>
+									<div class="text-base md:text-xl lg:text-2xl text-gray-5 tracking-tighter">
+										{currentFeatured()?.metadata?.description}
+									</div>
+								</div>
+							</div>
 						</div>
 						<ol class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
 							<For each={queryCollection?.data?.products}>
@@ -101,6 +109,8 @@ export default function FeaturedProducts(props: FeaturedProps) {
 											setDelay((index() % 4) * 0.3)
 										}
 									})
+
+									if (index() > 8) return
 
 									return (
 										<li ref={el}>

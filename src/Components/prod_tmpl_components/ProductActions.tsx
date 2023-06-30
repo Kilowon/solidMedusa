@@ -545,7 +545,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 								//activeTab().description === 'inactive' && 'hidden'
 							)}
 						>
-							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces first-letter:text-xl first-letter:font-bold  dark:first-letter:text-gray-100">
+							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces   dark:first-letter:text-gray-100">
 								{props.productInfo.description}
 							</p>
 						</div>

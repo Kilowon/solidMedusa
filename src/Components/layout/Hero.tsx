@@ -60,7 +60,7 @@ export function Hero() {
 							href="/store/Store"
 							class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
 						>
-							Explore products
+							Explore our entire selection
 						</A>
 						<div class="text-xl md:text-5xl">
 							<div class="i-material-symbols-arrow-right-alt-rounded" />

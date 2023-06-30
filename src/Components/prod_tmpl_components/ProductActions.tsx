@@ -63,24 +63,50 @@ export default function ProductActions(props: {
 		}
 	})
 
-	/* createEffect(() => {
-		queryPostReview.refetch()
-	})
-
-	const queryPostReview = createQuery(() => ({
-		queryKey: ['reviews-send'],
+	const reviewData = createQuery(() => ({
+		queryKey: ['review_data'],
 		queryFn: async function () {
-			console.log('posting review', props.productInfo.id)
-			fetch(`http://localhost:9000/store/products/${props.productInfo.id}/reviews`, {
+			const response = await fetch(`https://direct.shauns.cool/items/Review`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		retry: 0
+	}))
+
+	const reviewMutate = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const reviewData = {
+				product_id: 'id',
+				user_title: 'Hello world!',
+				user_body: 'This is our first article',
+				user_rating: 5,
+				user_name: 'Shaun'
+			}
+
+			const response = await fetch(`https://direct.shauns.cool/items/Review`, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
 				},
-				body: JSON.stringify({ product_review: { rating: 4.5, review: 'test' } })
+				body: JSON.stringify(reviewData)
 			})
+
+			const data = await response.json()
+			return data
 		},
+		retry: 0,
 		enabled: false
-	})) */
+	}))
 
 	return (
 		<Show when={props.productInfo}>
@@ -104,7 +130,12 @@ export default function ProductActions(props: {
 				<div class="flex justify-between w-full lg:flex-col items-start text-black bg-white">
 					<div class="lg:space-y-2">
 						<div class="flex items-center space-x-2">
-							<div class="text-xl">
+							<div
+								class="text-xl"
+								onclick={() => {
+									reviewMutate.refetch()
+								}}
+							>
 								<StarIconRequest rating={rating()} />
 							</div>
 

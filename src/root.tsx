@@ -60,6 +60,10 @@ export default function Root() {
 					rel="icon"
 					href="/favicon.ico"
 				/>
+				<link
+					rel="preconnect"
+					href="https://direct.shauns.cool/items/Primary"
+				/>
 			</Head>
 			<Body>
 				<ErrorBoundary

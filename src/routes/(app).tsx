@@ -1,7 +1,6 @@
 import { lazy, Suspense, Show, createSignal, createEffect } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
-import { Motion, Presence } from '@motionone/solid'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 const Navigation = lazy(() => import('~/Components/layout/Navigation'))
@@ -35,7 +34,7 @@ export default function Home() {
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
 	const [delay, setDelay] = createSignal(0.5)
-	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
+	const visible = createVisibilityObserver({ threshold: 0.01 })(() => el)
 
 	createEffect(() => {
 		if (visible()) {
@@ -65,26 +64,16 @@ export default function Home() {
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_text_2)}`
 			}}
 		>
-			<Suspense>
-				<Show when={primaryData?.isFetched}>
-					<Navigation />
-				</Show>
-			</Suspense>
+			<Navigation />
+
 			<Outlet />
 			<Suspense>
 				<div ref={el}>
 					<Show when={isVisible()}>
-						<Presence initial>
-							<Motion
-								animate={{ opacity: [0, 1] }}
-								transition={{ duration: 0.2, delay: delay(), easing: 'ease-in-out' }}
-							>
-								<Footer />
-							</Motion>
-						</Presence>
+						<Footer />
 					</Show>
 					<Show when={!isVisible()}>
-						<div class="w-[100px] h-[10px]"></div>
+						<div class="w-[90svw] h-[872px]"></div>
 					</Show>
 				</div>
 			</Suspense>

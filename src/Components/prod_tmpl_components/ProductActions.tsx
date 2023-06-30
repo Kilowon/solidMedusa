@@ -540,12 +540,16 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					<Show when={activeTab().description === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800',
+								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-4',
 								activeTab().description === 'active' && ''
 								//activeTab().description === 'inactive' && 'hidden'
 							)}
 						>
-							<p class=" mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase whitespace-break-spaces   dark:first-letter:text-gray-100">
+							<div class="space-y-2">
+								<h1 class="tracking-tight  sm:text-lg">{props.productInfo?.title}</h1>
+								<h2 class="tracking-tight text-gray-6">{props.productInfo?.subtitle}</h2>
+							</div>
+							<p class=" mb-3 text-gray-500 dark:text-gray-400 whitespace-break-spaces   dark:first-letter:text-gray-100">
 								{props.productInfo.description}
 							</p>
 						</div>

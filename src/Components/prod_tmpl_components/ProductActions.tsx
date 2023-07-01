@@ -46,12 +46,16 @@ export default function ProductActions(props: {
 	function isProductPurchasable(): string {
 		const [selectedVariant] = createSignal(props.variant())
 
+		console.log('SELECTEDVARIANT', selectedVariant())
+
 		if (selectedVariant()) {
 			const variant = props.productInfo.variants.find(v => v.id === selectedVariant().id)
 			if (variant) {
+				console.log('VAR', variant.purchasable ? 'valid' : 'out-of-stock')
 				return variant.purchasable ? 'valid' : 'out-of-stock'
 			}
 		}
+		console.log('INVALID SELECTION')
 		return 'invalid'
 	}
 

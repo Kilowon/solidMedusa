@@ -21,7 +21,7 @@ import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { Image } from '@unpic/solid'
-
+//@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
 const queryClient = new QueryClient()

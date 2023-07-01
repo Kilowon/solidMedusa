@@ -25,7 +25,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 							title={props.title}
 							variant="clothing"
 						/>
-						<div class="text-base ">
+						<div class="text-base text-gray-600 font-500">
 							<div>
 								<div class="flex sm:block space-x-1 sm:space-x-0">
 									<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
@@ -53,7 +53,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										</div>
 									</Show>
 								</div>
-								<span class="text-sm font-500">{props.title}</span>
+								<span class="text-sm font-500 tracking-tight text-gray-6/80">{props.title}</span>
 							</div>
 						</div>
 					</div>

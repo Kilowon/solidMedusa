@@ -22,7 +22,7 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'google', // default provider
+					provider: 'fontshare', // default provider
 					fonts: {
 						// these will extend the default theme
 						/* sans: 'Roboto', */

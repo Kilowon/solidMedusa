@@ -76,7 +76,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	}))
 
 	createEffect(() => {
-		if (!currentFeatured()?.id) {
+		if (currentFeatured()?.id && queryCart?.data?.cart?.id) {
 			queryCollection.refetch()
 		}
 	})

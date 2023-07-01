@@ -68,14 +68,7 @@ export default function Home() {
 
 			<Outlet />
 			<Suspense>
-				<div ref={elb}>
-					<Show when={isVisible()}>
-						<Footer />
-					</Show>
-					<Show when={!isVisible()}>
-						<div class="w-[90svw] h-[872px]"></div>
-					</Show>
-				</div>
+				<Footer />
 			</Suspense>
 		</div>
 	)

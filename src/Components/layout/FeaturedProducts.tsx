@@ -1,5 +1,5 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { createSignal, Show, For, createEffect } from 'solid-js'
+import { createSignal, Show, For, createEffect, onMount } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { createQuery } from '@tanstack/solid-query'
@@ -7,6 +7,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { create } from 'domain'
 
 interface Collection {
 	id: string
@@ -20,7 +21,7 @@ interface Collection {
 }
 
 interface FeaturedProps {
-	variant?: 'hero' | 'menu' | 'footer'
+	variant?: 'hero' | 'hero2' | 'hero3' | 'menu' | 'footer' | 'footer2'
 }
 
 export default function FeaturedProducts(props: FeaturedProps) {
@@ -41,6 +42,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 					return collection.metadata.location === props.variant
 				})
 			}
+			if (currentFeatured() === featured) return
 			setCurrentFeatured(featured)
 			queryCollection.refetch()
 		}
@@ -58,6 +60,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	const queryCollection = createQuery(() => ({
 		queryKey: ['featured', props.variant],
 		queryFn: async function () {
+			if (!currentFeatured()?.id) return
 			if (!queryCart?.data?.cart?.id) return
 			const product = await medusa?.products?.list({
 				cart_id: queryCart?.data?.cart?.id,
@@ -73,7 +76,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	}))
 
 	createEffect(() => {
-		if (!queryCollection?.data?.products[0]?.handle) {
+		if (!currentFeatured()?.id) {
 			queryCollection.refetch()
 		}
 	})

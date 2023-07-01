@@ -24,21 +24,9 @@ export default function App() {
 			<Hero />
 			<div class="my-16">
 				<Suspense>
-					<div ref={el}>
-						<Show when={isVisible()}>
-							<Presence initial>
-								<Motion
-									animate={{ opacity: [0, 1] }}
-									transition={{ duration: 0.2, delay: delay(), easing: 'ease-in-out' }}
-								>
-									<FeaturedProducts variant="hero" />
-								</Motion>
-							</Presence>
-						</Show>
-						<Show when={!isVisible()}>
-							<div class="w-[100px] h-[10px]"></div>
-						</Show>
-					</div>
+					<FeaturedProducts variant="hero" />
+					<FeaturedProducts variant="hero2" />
+					<FeaturedProducts variant="hero3" />
 					<CallToAction />
 				</Suspense>
 			</div>

@@ -215,7 +215,7 @@ export function GlobalContextProvider(props: any) {
 
 		setTimeout(() => {
 			setCollections(queryCollections?.data)
-		}, 500)
+		}, 350)
 	})
 
 	return (

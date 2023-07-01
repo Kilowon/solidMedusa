@@ -48,11 +48,11 @@ export function CallToAction() {
 						<div class="flex items-center hover:underline">
 							<A
 								href="/store/Store"
-								class="text-base md:text-xl lg:text-2xl text-gray-4 hover:text-gray-7 tracking-tighter"
+								class="text-base md:text-xl lg:text-2xl text-gray-5 hover:text-gray-7 tracking-tighter"
 							>
 								Explore our entire selection
 							</A>
-							<div class="text-xl md:text-5xl text-gray-4 hover:text-gray-7">
+							<div class="text-xl md:text-5xl text-gray-5 hover:text-gray-7">
 								<div class="i-material-symbols-arrow-right-alt-rounded" />
 							</div>
 						</div>

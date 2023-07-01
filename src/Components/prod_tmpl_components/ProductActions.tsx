@@ -44,10 +44,11 @@ export default function ProductActions(props: {
 	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
 	// I am disabling the purchasable field for now
 	function isProductPurchasable(): string {
-		if (props.variant()) {
-			const variant = props.productInfo.variants.find(v => v.id === props.variant().id)
+		const [selectedVariant] = createSignal(props.variant())
+
+		if (selectedVariant()) {
+			const variant = props.productInfo.variants.find(v => v.id === selectedVariant().id)
 			if (variant) {
-				//return 'valid'
 				return variant.purchasable ? 'valid' : 'out-of-stock'
 			}
 		}
@@ -216,7 +217,7 @@ export default function ProductActions(props: {
 							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50disabled:hover:bg-gray-900 disabled:hover:text-white',
 							isProductPurchasable() === 'valid' && 'text-white bg-green-600 border-green-600 hover:bg-green-400',
 							isProductPurchasable() === 'invalid' && 'text-white bg-gray-600 border-gray-600',
-							isProductPurchasable() === 'out-of-stock' && 'text-white bg-yellow-600 border-gray-600'
+							isProductPurchasable() === 'out-of-stock' && 'text-white bg-gray-500 border-gray-600'
 						)}
 					>
 						{isProductPurchasable() === 'valid'

@@ -92,9 +92,9 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins ">
+					<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
 						<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
-							<div class="content-container">
+							<div class="content-container my-16 py-8 bg-gray-100">
 								<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 									<div class="flex flex-col justify-center">
 										<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
@@ -121,7 +121,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 											}
 										})
 
-										if (index() > 8) return
+										if (currentFeatured()?.metadata?.limit && index() > currentFeatured()?.metadata?.limit! - 1) return
 
 										return (
 											<li ref={el}>

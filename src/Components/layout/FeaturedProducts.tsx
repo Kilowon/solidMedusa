@@ -60,8 +60,8 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	const queryCollection = createQuery(() => ({
 		queryKey: ['featured', props.variant],
 		queryFn: async function () {
-			if (!currentFeatured()?.id) return
-			if (!queryCart?.data?.cart?.id) return
+			if (!currentFeatured()?.id) return null
+			if (!queryCart?.data?.cart?.id) return null
 			const product = await medusa?.products?.list({
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
@@ -83,70 +83,72 @@ export default function FeaturedProducts(props: FeaturedProps) {
 
 	return (
 		<main>
-			<Transition
-				onEnter={(el, done) => {
-					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 250
-					})
-					a.finished.then(done)
-				}}
-			>
-				<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins ">
-					<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
-						<div class="content-container">
-							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-								<div class="flex flex-col justify-center">
-									<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
-										{currentFeatured()?.title}
-									</h1>
-									<div class="text-base md:text-xl lg:text-2xl text-gray-5 tracking-tighter">
-										{currentFeatured()?.metadata?.description}
+			<Show when={currentFeatured()?.metadata.location === props.variant}>
+				<Transition
+					onEnter={(el, done) => {
+						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+							duration: 250
+						})
+						a.finished.then(done)
+					}}
+				>
+					<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins ">
+						<Show when={queryCollection?.data?.products && currentFeatured()?.title}>
+							<div class="content-container">
+								<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+									<div class="flex flex-col justify-center">
+										<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
+											{currentFeatured()?.title}
+										</h1>
+										<div class="text-base md:text-xl lg:text-2xl text-gray-5 tracking-tighter">
+											{currentFeatured()?.metadata?.description}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<ol class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
-							<For each={queryCollection?.data?.products}>
-								{(product, index) => {
-									let el: HTMLLIElement | undefined
-									const [isVisible, setIsVisible] = createSignal(false)
-									const [delay, setDelay] = createSignal(0)
-									const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
+							<ol class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
+								<For each={queryCollection?.data?.products}>
+									{(product, index) => {
+										let el: HTMLLIElement | undefined
+										const [isVisible, setIsVisible] = createSignal(false)
+										const [delay, setDelay] = createSignal(0)
+										const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
 
-									createEffect(() => {
-										if (visible()) {
-											setIsVisible(true)
-											setDelay((index() % 4) * 0.3)
-										}
-									})
+										createEffect(() => {
+											if (visible()) {
+												setIsVisible(true)
+												setDelay((index() % 4) * 0.3)
+											}
+										})
 
-									if (index() > 8) return
+										if (index() > 8) return
 
-									return (
-										<li ref={el}>
-											<Show when={isVisible()}>
-												<Presence initial>
-													<Rerun on={index}>
-														<Motion
-															animate={{ opacity: [0, 1] }}
-															transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-														>
-															<ProductPreview {...product} />
-														</Motion>
-													</Rerun>
-												</Presence>
-											</Show>
-											<Show when={!isVisible()}>
-												<div class="w-[100px] h-[275px]"></div>
-											</Show>
-										</li>
-									)
-								}}
-							</For>
-						</ol>
-					</Show>
-				</div>
-			</Transition>
+										return (
+											<li ref={el}>
+												<Show when={isVisible()}>
+													<Presence initial>
+														<Rerun on={index}>
+															<Motion
+																animate={{ opacity: [0, 1] }}
+																transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+															>
+																<ProductPreview {...product} />
+															</Motion>
+														</Rerun>
+													</Presence>
+												</Show>
+												<Show when={!isVisible()}>
+													<div class="w-[100px] h-[275px]"></div>
+												</Show>
+											</li>
+										)
+									}}
+								</For>
+							</ol>
+						</Show>
+					</div>
+				</Transition>
+			</Show>
 		</main>
 	)
 }

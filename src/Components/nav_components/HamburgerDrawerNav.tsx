@@ -97,6 +97,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 							<For each={selectedRoot()}>
 								{(collection: any) => {
 									if (collection?.category_children?.length > 0) {
+										console.log('children >', collection)
 										return (
 											<div class="flex justify-between space-x-0.5 capitalize">
 												<A
@@ -123,6 +124,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 										)
 									}
 									if (collection?.category_children?.length === 0) {
+										console.log('children 0', collection)
 										return (
 											<li
 												class=" ml-2 w-full  text-gray-6 capitalize"

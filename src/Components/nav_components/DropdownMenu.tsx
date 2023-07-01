@@ -101,24 +101,24 @@ export default function DropdownMenu(props: any) {
 												<Show when={rootCategories()}>
 													<ol class="flex flex-auto space-x-4 mt-2 ">
 														<For each={rootCategories()}>
-															{(collection: any) => {
-																if (collection.category_children?.length > 0) {
+															{(parentCategory: any) => {
+																if (parentCategory.category_children?.length > 0) {
 																	return (
 																		<Suspense fallback={<div>Loading...</div>}>
 																			<li class="whitespace-nowrap space-y-4">
 																				<span class="flex border border-gray-3"></span>
 																				<div class="text-base text-gray-6 text-lg font-500 capitalize">
 																					<A
-																						href={`/categories/${collection.handle}`}
+																						href={`/categories/${parentCategory.handle}`}
 																						onClick={() => setOpen(false)}
 																					>
-																						{collection.name}
+																						{parentCategory.name}
 																					</A>
 																				</div>
 																				<div class="space-y-2">
 																					<For each={categories()}>
 																						{(category: any) => {
-																							if (category.parent_category?.id === collection.id) {
+																							if (category.parent_category?.id === parentCategory.id) {
 																								return (
 																									<Suspense fallback={<div>Loading...</div>}>
 																										<div class="text-gray-5 capitalize">

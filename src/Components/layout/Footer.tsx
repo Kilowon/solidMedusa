@@ -34,7 +34,7 @@ export default function Footer() {
 
 export function CallToAction() {
 	return (
-		<div class="bg-gray-1 py-16">
+		<div class="bg-gray-1/50 py-16">
 			<div class="content-container">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div class="flex flex-col justify-center">

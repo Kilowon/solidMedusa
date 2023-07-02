@@ -88,46 +88,102 @@ export function Hero() {
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
 						<Show when={true}>
 							<div class="flex justify-between sm:block w-full px-10 sm:px-0">
-								<Motion.div
-									animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
-									exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
-								>
+								<Show when={getWindowSize().width > 768}>
+									<Motion.div
+										animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
+										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+									>
+										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+											<For each={rootCategories()}>
+												{(category, index) => {
+													if (index() >= 4) return
+													return (
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+														>
+															{category?.name}
+														</A>
+													)
+												}}
+											</For>
+										</div>
+									</Motion.div>
+								</Show>
+								<Show when={getWindowSize().width < 768}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
 										<For each={rootCategories()}>
 											{(category, index) => {
 												if (index() >= 4) return
 												return (
-													<A
-														href={`/categories/${category?.handle}`}
-														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+													<Motion.div
+														animate={{
+															opacity: [0, 1],
+															x: [-1500, 0],
+															transition: { duration: 2 + (index() - 4) * 0.1, easing: 'ease-out' }
+														}}
+														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
-														{category?.name}
-													</A>
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+														>
+															{category?.name}
+														</A>
+													</Motion.div>
 												)
 											}}
 										</For>
 									</div>
-								</Motion.div>
-								<Motion.div
-									animate={{ opacity: [0, 1], x: [-1500, 0], transition: { duration: 2, easing: 'ease-out' } }}
-									exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
-								>
+								</Show>
+								<Show when={getWindowSize().width > 768}>
+									<Motion.div
+										animate={{ opacity: [0, 1], x: [-1500, 0], transition: { duration: 2, easing: 'ease-out' } }}
+										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+									>
+										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+											<For each={rootCategories()}>
+												{(category, index) => {
+													if (index() < 4 || index() >= 8) return
+													return (
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+														>
+															{category?.name}
+														</A>
+													)
+												}}
+											</For>
+										</div>
+									</Motion.div>
+								</Show>
+								<Show when={getWindowSize().width < 768}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
 										<For each={rootCategories()}>
 											{(category, index) => {
 												if (index() < 4 || index() >= 8) return
 												return (
-													<A
-														href={`/categories/${category?.handle}`}
-														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+													<Motion.div
+														animate={{
+															opacity: [0, 1],
+															x: [1500, 0],
+															transition: { duration: 2 + (index() - 4) * 0.1, easing: 'ease-out' }
+														}}
+														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
-														{category?.name}
-													</A>
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+														>
+															{category?.name}
+														</A>
+													</Motion.div>
 												)
 											}}
 										</For>
 									</div>
-								</Motion.div>
+								</Show>
 							</div>
 						</Show>
 						<Motion.div

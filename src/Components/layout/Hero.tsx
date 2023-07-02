@@ -217,16 +217,14 @@ export function Hero() {
 				<Presence>
 					<Rerun on={imageCount()}>
 						<Motion.div
-							initial={{ opacity: 1, x: 0, transition: { duration: 0 } }}
-							animate={{ opacity: [0, 0, 1], transition: { duration: 3.0 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
 							exit={{ opacity: 0, transition: { duration: 1.0 } }}
 						>
 							<Image
-								src="https://res.cloudinary.com/contentdelivery/image/upload/v1682276307/MobileHero_uguc1l.webp"
-								width={getWindowSize().width}
-								height={getWindowSize().height}
+								src={heroImages[imageIndex()]}
+								layout="fullWidth"
 								priority={true}
-								class="object-cover object-right md:object-center h-full w-full z-0 absolute inset-0  filter brightness-65"
+								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
 								alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 							/>
 						</Motion.div>

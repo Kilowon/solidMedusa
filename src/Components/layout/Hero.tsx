@@ -19,7 +19,6 @@ export function Hero() {
 		'Collections',
 		'Edge'
 	]
-
 	let heroImages = [
 		'https://res.cloudinary.com/contentdelivery/image/upload/v1688320548/Hero_Couch2_fl2ido.webp',
 		'https://res.cloudinary.com/contentdelivery/image/upload/v1688323722/Hero_Couch3_twwlrw.webp',
@@ -177,7 +176,7 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
-							animate={{ opacity: [0, 1], x: [-2500, 0], transition: { duration: 3, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], x: [-2500, 0], transition: { duration: 2, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex items-center hover:underline">
@@ -208,8 +207,8 @@ export function Hero() {
 				<Presence>
 					<Rerun on={imageCount()}>
 						<Motion.div
-							animate={{ opacity: [0, 1], transition: { duration: 1.0 } }}
-							exit={{ opacity: 0, transition: { duration: 1.0 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
+							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image
 								src={heroImages[imageIndex()]}
@@ -236,7 +235,7 @@ export function Hero() {
 					<Rerun on={imageCount()}>
 						<Motion.div
 							animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
-							exit={{ opacity: 0, transition: { duration: 1.0 } }}
+							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image
 								src={heroImages[imageIndex()]}

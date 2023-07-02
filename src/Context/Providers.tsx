@@ -163,7 +163,7 @@ export function GlobalContextProvider(props: any) {
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
-			const product = await medusa.productCategories.list({})
+			const product = await medusa.productCategories.list({ limit: '200' })
 			return product
 		},
 		cacheTime: 15 * 60 * 1000

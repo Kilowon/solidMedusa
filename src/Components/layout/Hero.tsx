@@ -214,6 +214,15 @@ export function Hero() {
 				</Presence>
 			</Show>
 			<Show when={getWindowSize().width < 768}>
+				<div class="hidden">
+					<Image
+						src={heroImages[(imageIndex() + 1) % heroImages.length]}
+						layout="fullWidth"
+						priority={true}
+						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+					/>
+				</div>
 				<Presence>
 					<Rerun on={imageCount()}>
 						<Motion.div

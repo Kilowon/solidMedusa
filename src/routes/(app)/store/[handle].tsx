@@ -45,7 +45,7 @@ export default function Store() {
 								let el: HTMLLIElement | undefined
 								const [isVisible, setIsVisible] = createSignal(false)
 								const [delay, setDelay] = createSignal(0)
-								const visible = createVisibilityObserver({ threshold: 0.9 })(() => el)
+								const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
 
 								createEffect(() => {
 									if (visible()) {

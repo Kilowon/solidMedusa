@@ -93,7 +93,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 					}}
 				>
 					<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
-						<div class="content-container my-16 py-8 bg-gray-100">
+						<div class="content-container my-16 py-8 ">
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 								<div class="flex flex-col justify-center">
 									<h1 class="text-base md:text-lg lg:text-2xl font-500 text-gray-6 tracking-tighter  ">

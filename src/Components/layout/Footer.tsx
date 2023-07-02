@@ -38,21 +38,21 @@ export function CallToAction() {
 			<div class="content-container">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div class="flex flex-col justify-center">
-						<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
+						<h1 class="text-base md:text-lg lg:text-xl font-500 text-gray-6 tracking-tighter ">
 							Unleash Your Inner Explorer! With over 200+ items.
 						</h1>
-						<div class="text-base md:text-xl lg:text-2xl text-gray-5 tracking-tighter">
+						<div class="text-sm md:text-base lg:text-lg text-gray-5 tracking-tighter">
 							{' '}
 							Find the perfect piece that captures your imagination.
 						</div>
 						<div class="flex items-center hover:underline">
 							<A
 								href="/store/Store"
-								class="text-base md:text-xl lg:text-2xl text-gray-5 hover:text-gray-7 tracking-tighter"
+								class="text-base md:text-lg lg:text-xl text-gray-5 hover:text-gray-7 tracking-tighter"
 							>
 								Explore our entire selection
 							</A>
-							<div class="text-xl md:text-5xl text-gray-5 hover:text-gray-7">
+							<div class="text-xl md:text-3xl text-gray-5 hover:text-gray-7">
 								<div class="i-material-symbols-arrow-right-alt-rounded" />
 							</div>
 						</div>

@@ -96,10 +96,10 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						<div class="content-container my-16 py-8 bg-gray-100">
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 								<div class="flex flex-col justify-center">
-									<h1 class="text-xl md:text-3xl lg:text-4xl font-500 text-gray-6 tracking-tighter ">
+									<h1 class="text-base md:text-lg lg:text-2xl font-500 text-gray-6 tracking-tighter  ">
 										{currentFeatured()?.title}
 									</h1>
-									<div class="text-base md:text-xl lg:text-2xl text-gray-5 tracking-tighter">
+									<div class="text-sm md:text-base lg:text-lg text-gray-5 tracking-normal">
 										{currentFeatured()?.metadata?.description}
 									</div>
 								</div>

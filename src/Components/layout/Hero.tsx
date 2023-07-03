@@ -126,7 +126,7 @@ export function Hero() {
 													>
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize "
 														>
 															{category?.name}
 														</A>
@@ -222,7 +222,7 @@ export function Hero() {
 												animate={{ opacity: [0, 0, 0, 1], x: [-100, 0], transition: { duration: 1, easing: 'ease-out' } }}
 												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
 											>
-												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-400 z-2">{`${
+												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-400 font-500 text-blue-3 z-2">{`${
 													heroArray[currentIndex()]
 												}`}</h1>
 											</Motion.div>

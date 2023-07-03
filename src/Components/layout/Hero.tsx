@@ -79,7 +79,7 @@ export function Hero() {
 			class="h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
 		"
 		>
-			<div class="absolute bg-gray-8 w-[100svw] h-[100svh] top--5  z--40" />
+			<div class="absolute bg-gray-8 w-[100svw] h-[100svh] top--4.5  z--40" />
 			<Presence initial>
 				<Show when={rootCategories()}>
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">

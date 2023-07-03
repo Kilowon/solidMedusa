@@ -6,71 +6,63 @@ import { useGlobalContext } from '~/Context/Providers'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import clsx from 'clsx'
+import { createQuery } from '@tanstack/solid-query'
 
 export function Hero() {
-	let heroArray = [
-		'Design',
-		'Living',
-		'Creativity',
-		'Colors',
-		'Material',
-		'Lighting',
-		'Spaces',
-		'Comfort',
-		'Collections',
-		'Edge'
-	]
-	let heroImages = [
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688320548/Hero_Couch2_fl2ido.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688323722/Hero_Couch3_twwlrw.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688322936/Hero_Couch4_eq2jir.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688322935/Hero_Couch5_ti5dlt.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688322935/Hero_Couch6_pgqkmr.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688327533/Hero_Couch7_an2rap.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688323722/Hero_Couch8_cwlcr5.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688322936/Hero_Couch9_r62fmf.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1688322935/Hero_Couch10_hiupk2.webp',
-		'https://res.cloudinary.com/contentdelivery/image/upload/v1682174583/martin-pechy-bpg-ngqrPc8-unsplash_ctefbx.jpg'
-	]
-
 	const { rootCategories } = useGlobalContext()
 
-	const [currentIndex, setCurrentIndex] = createSignal(heroArray.length - 1)
-	const [count, setCount] = createSignal(heroArray.length - 1)
+	const heroData = createQuery(() => ({
+		queryKey: ['hero_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	const [currentIndex, setCurrentIndex] = createSignal(0)
+	const [count, setCount] = createSignal(0)
 	const [time, setTime] = createSignal(5000)
 	const [endWait, setEndWait] = createSignal(15000)
-	const [colorWheel, setColorWheel] = createSignal('maincolor')
+	const [totalLength, setTotalLength] = createSignal(0)
 
 	function heroCarousel() {
 		let interval: any
 		const startInterval = () => {
 			interval = setInterval(() => {
-				console.log(colorWheel(), currentIndex(), count())
-				if (currentIndex() === heroArray.length - 1) {
-					setColorWheel('herocolor')
-					clearInterval(interval) // clear the interval
-					setTimeout(() => {
-						setCount(0)
-						setCurrentIndex(0)
-
-						startInterval() // restart the interval
-					}, endWait())
-				}
-				if (currentIndex() < heroArray.length - 1) {
-					setColorWheel('maincolor')
-					setCount(p => ++p)
-					setCurrentIndex((currentIndex() + 1) % heroArray.length)
+				setCount(p => ++p)
+				setCurrentIndex(currentIndex() < totalLength() - 1 ? currentIndex() + 1 : 0)
+				if (currentIndex() === 0) {
+					clearInterval(interval)
+					setTimeout(startInterval, endWait())
 				}
 			}, time())
 		}
 		startInterval()
 	}
 
-	onMount(() => {
-		const timeout = setTimeout(() => {
-			heroCarousel()
-		}, 2000)
+	onMount(async () => {
+		const data = await heroData.refetch()
 
+		const timeout = setTimeout(() => {
+			if (data) {
+				setTime(heroData?.data?.data?.pause_between)
+				setEndWait(heroData?.data?.data?.init_hold)
+				setTotalLength(heroData?.data?.data?.hero_data?.length)
+				heroCarousel()
+			}
+		}, 2000)
 		onCleanup(() => clearTimeout(timeout))
 	})
 
@@ -81,9 +73,9 @@ export function Hero() {
 		>
 			<div class="absolute bg-gray-8 w-[100svw] h-[100svh] top--4.5  z--40" />
 			<Presence initial>
-				<Show when={rootCategories()}>
+				<Show when={heroData.isSuccess}>
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
-						<Show when={true}>
+						<Show when={rootCategories()}>
 							<div class="flex justify-between sm:block w-full px-10 sm:px-0">
 								<Show when={getWindowSize().width > 768}>
 									<Motion.div
@@ -202,7 +194,7 @@ export function Hero() {
 												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
 											>
 												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
-													heroArray[currentIndex()]
+													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>
 										</Rerun>
@@ -220,7 +212,7 @@ export function Hero() {
 												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
 											>
 												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-400 font-500 text-blue-3 z-2">{`${
-													heroArray[currentIndex()]
+													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>
 										</Rerun>
@@ -245,15 +237,15 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<div class="absolute bottom-4 left-4 flex space-x-2">
-							<For each={heroArray}>
+							<For each={heroData?.data?.data?.hero_data}>
 								{(item, index) => {
 									return (
 										<div>
 											<Show when={index() === currentIndex()}>
-												<div class="w-5 h-2 rounded-6 bg-blue-3" />
+												<div class="w-3 h-1.5 rounded-6 bg-blue-3" />
 											</Show>
 											<Show when={index() !== currentIndex()}>
-												<div class="w-5 h-2 rounded-6 bg-gray-3/30" />
+												<div class="w-3 h-1.5 rounded-6 bg-gray-3/30" />
 											</Show>
 										</div>
 									)
@@ -263,10 +255,10 @@ export function Hero() {
 					</div>
 				</Show>
 			</Presence>
-			<Show when={getWindowSize().width > 768}>
+			<Show when={getWindowSize().width > 768 && heroData.isSuccess}>
 				<div class="hidden">
 					<Image
-						src={heroImages[(currentIndex() + 1) % heroImages.length]}
+						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
 						layout="fullWidth"
 						priority={true}
 						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65 "
@@ -280,7 +272,7 @@ export function Hero() {
 							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image
-								src={heroImages[currentIndex()]}
+								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
 								layout="fullWidth"
 								priority={true}
 								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
@@ -290,10 +282,10 @@ export function Hero() {
 					</Rerun>
 				</Presence>
 			</Show>
-			<Show when={getWindowSize().width < 768}>
+			<Show when={getWindowSize().width < 768 && heroData.isSuccess}>
 				<div class="hidden">
 					<Image
-						src={heroImages[(currentIndex() + 1) % heroImages.length]}
+						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
 						layout="fullWidth"
 						priority={true}
 						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
@@ -307,7 +299,7 @@ export function Hero() {
 							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image
-								src={heroImages[currentIndex()]}
+								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
 								layout="fullWidth"
 								priority={true}
 								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"

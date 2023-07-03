@@ -100,7 +100,7 @@ export function Hero() {
 													return (
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
 														>
 															{category?.name}
 														</A>
@@ -141,14 +141,14 @@ export function Hero() {
 										animate={{ opacity: [0, 1], x: [-1500, 0], transition: { duration: 2, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 									>
-										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
 											<For each={rootCategories()}>
 												{(category, index) => {
 													if (index() < 4 || index() >= 8) return
 													return (
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
 														>
 															{category?.name}
 														</A>
@@ -204,7 +204,7 @@ export function Hero() {
 												animate={{ opacity: [1, 0, 1], y: [-300, 0], transition: { duration: 1.75 } }}
 												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
 											>
-												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-poppins font-400 z-2 absolute">{`${
+												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-700 text-blue-3 z-2 absolute">{`${
 													heroArray[currentIndex()]
 												}`}</h1>
 											</Motion.div>
@@ -222,7 +222,7 @@ export function Hero() {
 												animate={{ opacity: [0, 0, 0, 1], x: [-100, 0], transition: { duration: 1, easing: 'ease-out' } }}
 												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
 											>
-												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-poppins font-400 z-2">{`${
+												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-400 z-2">{`${
 													heroArray[currentIndex()]
 												}`}</h1>
 											</Motion.div>

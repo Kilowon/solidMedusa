@@ -189,7 +189,7 @@ export default function CartCore(props: CartCoreProps) {
 																		<button
 																			class="flex items-center gap-x-1 rounded p-1 bg-white"
 																			onClick={() => {
-																				deleteItem(item?.id), queryCartRefetch?.()
+																				deleteItem(item?.id)
 																			}}
 																		>
 																			<div class="i-ph-trash-duotone text-sm  text-gray-5  "></div>

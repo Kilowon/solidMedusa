@@ -7,11 +7,11 @@ import { Product } from '~/types/models'
 import { currencyFormat, findCheapestPrice } from '~/lib/helpers/currency'
 import { Accessor } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
+import { createQuery } from '@tanstack/solid-query'
 
 interface StoreContextValue {
 	deleteItem: (lineId: string) => void
 	getRegion: () => string | null
-	addItem: (lineId: string, quantity: number) => void
 	updateItem: (lineId: string, quantity: number) => void
 	getCart: () => string | null
 	deleteCart: () => void
@@ -39,6 +39,7 @@ export function StoreProvider(props: {
 	const [quantity, setQuantity] = createSignal(1)
 	const [maxQuantityMet, setMaxQuantityMet] = createSignal(false)
 	const [product, setProduct] = createSignal(props.product)
+	const [lineItemId, setLineItemId] = createSignal('')
 
 	const { queryCartRefetch } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
@@ -56,13 +57,23 @@ export function StoreProvider(props: {
 		return null
 	}
 
-	function addItem(lineId: string, quantity: number) {
-		addLineItem(medusa, queryCart, lineId, quantity)
+	function deleteItem(lineId: string) {
+		setLineItemId(lineId)
+		setTimeout(() => {
+			deleteLineItem.refetch()
+		}, 100)
 	}
 
-	function deleteItem(lineId: string) {
-		deleteLineItem(medusa, queryCart, lineId)
-	}
+	const deleteLineItem = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			const data = await medusa?.carts.lineItems.delete(queryCart?.data?.cart.id, lineItemId())
+			return data
+		},
+		enabled: false,
+		cacheTime: 0,
+		trys: 1
+	}))
 
 	function updateItem(lineId: string, quantity: number) {
 		updateLineItem(props.medusa, props.cart, lineId, quantity)
@@ -177,10 +188,21 @@ export function StoreProvider(props: {
 
 	function addToCart() {
 		if (variant()) {
-			addItem(variant()?.id as string, quantity())
-			queryCartRefetch?.()
+			addLineItem.refetch()
 		}
 	}
+
+	const addLineItem = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			const data = await medusa?.carts.lineItems.create(queryCart?.data?.cart.id, {
+				variant_id: variant()?.id,
+				quantity: quantity()
+			})
+			return data
+		},
+		enabled: false
+	}))
 
 	const increaseQuantity = () => {
 		const maxQuantity = variant()?.inventory_quantity || 0
@@ -206,7 +228,6 @@ export function StoreProvider(props: {
 		<StoreContext.Provider
 			value={{
 				getRegion,
-				addItem,
 				deleteItem,
 				updateItem,
 				getCart,

@@ -71,7 +71,7 @@ export function Hero() {
 			class="h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
 		"
 		>
-			<div class="absolute bg-gray-8 w-[100svw] h-[100svh] top--4.5  z--40" />
+			<div class="absolute bg-gray-8 w-[100%] h-[100%]   z--40" />
 			<Presence initial>
 				<Show when={heroData.isSuccess}>
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
@@ -180,7 +180,7 @@ export function Hero() {
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex flex-col sm:flex-row sm:space-x-6.5">
-								<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl drop-shadow-md shadow-black font-poppins font-400 z-2">
+								<h1 class="tracking-tighter text-[6.5vw]  xl:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2">
 									Embrace Modern
 								</h1>
 								<Show when={getWindowSize().width > 768}>
@@ -193,7 +193,7 @@ export function Hero() {
 												animate={{ opacity: [1, 0, 1], y: [-300, 0], transition: { duration: 1.75 } }}
 												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
 											>
-												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+												<h1 class="tracking-tighter text-[6.5vw]  xl:text-[6.5vw] mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>

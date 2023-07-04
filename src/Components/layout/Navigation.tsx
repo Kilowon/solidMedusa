@@ -71,22 +71,22 @@ export default function Navigation(props: any) {
 		<div
 			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
 			style={{
-				'--normal': `${hexToRgb(primaryData?.data?.data[0]?.normal)}`,
-				'--normal_2': `${hexToRgb(primaryData?.data?.data[0]?.normal_2)}`,
-				'--normal_3': `${hexToRgb(primaryData?.data?.data[0]?.normal_3)}`,
-				'--normal_4': `${hexToRgb(primaryData?.data?.data[0]?.normal_4)}`,
-				'--surface': `${hexToRgb(primaryData?.data?.data[0]?.surface)}`,
-				'--text': `${hexToRgb(primaryData?.data?.data[0]?.Text_1)}`,
-				'--text_2': `${hexToRgb(primaryData?.data?.data[0]?.text_2)}`,
-				'--text_3': `${hexToRgb(primaryData?.data?.data[0]?.text_3)}`,
-				'--text_4': `${hexToRgb(primaryData?.data?.data[0]?.text_4)}`,
-				'--text_5': `${hexToRgb(primaryData?.data?.data[0]?.text_5)}`,
-				'--accent': `${hexToRgb(primaryData?.data?.data[0]?.accent)}`,
-				'--accent_3': `${hexToRgb(primaryData?.data?.data[0]?.accent_3)}`,
-				'--accent_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_2)}`,
-				'--accent_4': `${hexToRgb(primaryData?.data?.data[0]?.accent_4)}`,
-				'--accent_text': `${hexToRgb(primaryData?.data?.data[0]?.accent_text)}`,
-				'--accent_text_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_text_2)}`
+				'--normal': `${hexToRgb(primaryData?.data?.data?.normal)}`,
+				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
+				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
+				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
+				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
+				'--text': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
+				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
+				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
+				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
+				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
+				'--accent': `${hexToRgb(primaryData?.data?.data?.accent)}`,
+				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
+				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
+				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_text': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
+				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
 			<header class="relative h-16 mx-auto  border-b border-transparent bg-normal text-text_2">
@@ -110,7 +110,7 @@ export default function Navigation(props: any) {
 						</div>
 					</div>
 					<Suspense>
-						<Show when={primaryData?.data?.data[0]?.title}>
+						<Show when={primaryData?.data?.data?.title}>
 							<div class="flex items-center h-full">
 								<A
 									title="Home"
@@ -118,10 +118,10 @@ export default function Navigation(props: any) {
 									class="text-regular md:text-2xl font-semibold font-poppins uppercase"
 								>
 									<div
-										title={primaryData?.data?.data[0]?.title}
+										title={primaryData?.data?.data?.title}
 										class=" font-poppins uppercase"
 									>
-										{primaryData?.data?.data[0]?.title}
+										{primaryData?.data?.data?.title}
 									</div>
 								</A>
 							</div>

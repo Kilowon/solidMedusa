@@ -46,22 +46,22 @@ export default function Home() {
 		<div
 			class="font-poppins"
 			style={{
-				'--normal': `${hexToRgb(primaryData?.data?.data[0]?.normal)}`,
-				'--normal_2': `${hexToRgb(primaryData?.data?.data[0]?.normal_2)}`,
-				'--normal_3': `${hexToRgb(primaryData?.data?.data[0]?.normal_3)}`,
-				'--normal_4': `${hexToRgb(primaryData?.data?.data[0]?.normal_4)}`,
-				'--surface': `${hexToRgb(primaryData?.data?.data[0]?.surface)}`,
-				'--text': `${hexToRgb(primaryData?.data?.data[0]?.Text_1)}`,
-				'--text_2': `${hexToRgb(primaryData?.data?.data[0]?.text_2)}`,
-				'--text_3': `${hexToRgb(primaryData?.data?.data[0]?.text_3)}`,
-				'--text_4': `${hexToRgb(primaryData?.data?.data[0]?.text_4)}`,
-				'--text_5': `${hexToRgb(primaryData?.data?.data[0]?.text_5)}`,
-				'--accent': `${hexToRgb(primaryData?.data?.data[0]?.accent)}`,
-				'--accent_3': `${hexToRgb(primaryData?.data?.data[0]?.accent_3)}`,
-				'--accent_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_2)}`,
-				'--accent_4': `${hexToRgb(primaryData?.data?.data[0]?.accent_4)}`,
-				'--accent_text': `${hexToRgb(primaryData?.data?.data[0]?.accent_text)}`,
-				'--accent_text_2': `${hexToRgb(primaryData?.data?.data[0]?.accent_text_2)}`
+				'--normal': `${hexToRgb(primaryData?.data?.data?.normal)}`,
+				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
+				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
+				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
+				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
+				'--text': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
+				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
+				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
+				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
+				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
+				'--accent': `${hexToRgb(primaryData?.data?.data?.accent)}`,
+				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
+				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
+				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_text': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
+				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
 			<Navigation />

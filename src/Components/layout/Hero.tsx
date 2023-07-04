@@ -77,7 +77,7 @@ export function Hero() {
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
 						<Show when={rootCategories()}>
 							<div class="flex justify-between sm:block w-[95svw] overflow-hidden">
-								<Show when={getWindowSize().width > 768}>
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
 										animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
@@ -99,7 +99,7 @@ export function Hero() {
 										</div>
 									</Motion.div>
 								</Show>
-								<Show when={getWindowSize().width < 768}>
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu1 === true}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
 										<For each={rootCategories()}>
 											{(category, index) => {
@@ -125,7 +125,7 @@ export function Hero() {
 										</For>
 									</div>
 								</Show>
-								<Show when={getWindowSize().width > 768}>
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
 									<Motion.div
 										animate={{ opacity: [0, 1], x: [-1500, 0], transition: { duration: 2, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
@@ -147,7 +147,7 @@ export function Hero() {
 										</div>
 									</Motion.div>
 								</Show>
-								<Show when={getWindowSize().width < 768}>
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu2 === true}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 sm:mb-5">
 										<For each={rootCategories()}>
 											{(category, index) => {
@@ -180,10 +180,14 @@ export function Hero() {
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
-								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
-									{heroData?.data?.data?.static_callout}
-								</h1>
-								<Show when={getWindowSize().width > 768}>
+								<Show when={true}>
+									<Show when={heroData?.data?.data?.static1 === true}>
+										<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
+											{heroData?.data?.data?.static_callout}
+										</h1>
+									</Show>
+								</Show>
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
 									<Presence
 										initial={false}
 										exitBeforeEnter
@@ -200,7 +204,7 @@ export function Hero() {
 										</Rerun>
 									</Presence>
 								</Show>
-								<Show when={getWindowSize().width < 768}>
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
 									<Presence
 										initial={true}
 										exitBeforeEnter

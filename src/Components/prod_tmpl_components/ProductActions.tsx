@@ -1,4 +1,4 @@
-import { JSX, For, Show, createEffect, createMemo, createSignal } from 'solid-js'
+import { JSX, For, Show, createEffect, createMemo, createSignal, onMount } from 'solid-js'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
@@ -386,6 +386,25 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 		reviews: 'inactive'
 	})
 
+	const productData = createQuery(() => ({
+		queryKey: ['product_tab_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`https://direct.shauns.cool/items/Product_Page`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0
+	}))
+
 	return (
 		<div>
 			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -619,6 +638,11 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 									)}
 								</div>
 							</div>
+							<Show when={productData?.data?.data?.product_info_toggle === true}>
+								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div>{productData?.data?.data?.product_info_tab}</div>
+								</div>
+							</Show>
 						</div>
 					</Show>
 					<Show when={activeTab().shipping === 'active'}>
@@ -629,34 +653,33 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 								//activeTab().shipping === 'inactive' && 'hidden'
 							)}
 						>
-							<div>
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div class="i-mdi-truck-fast-outline text-2xl" />
-									<div>Fast delivery:</div>
+							<Show when={productData?.data?.data?.delivery_toggle === true}>
+								<div>
+									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+										<div class="i-mdi-truck-fast-outline text-2xl" />
+										<div>{productData?.data?.data?.delivery_title}</div>
+									</div>
+									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.delivery_body}</div>
 								</div>
-								<div class="text-gray-600 dark:text-gray-300">
-									Your package will arrive in 3-5 business days at your pick up location or in the comfort of your home.
+							</Show>
+							<Show when={productData?.data?.data?.exchanges_toggle === true}>
+								<div>
+									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+										<div class="i-subway-round-arrow-2 text-xl" />
+										<div>{productData?.data?.data?.exchanges_title}</div>
+									</div>
+									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.exchanges_body}</div>
 								</div>
-							</div>
-							<div>
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div class="i-subway-round-arrow-2 text-xl" />
-									<div>Simple exchanges:</div>
+							</Show>
+							<Show when={productData?.data?.data?.returns_toggle === true}>
+								<div>
+									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+										<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
+										<div>{productData?.data?.data?.returns_title}</div>
+									</div>
+									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.returns_body}</div>
 								</div>
-								<div class="text-gray-600 dark:text-gray-300">
-									Is your order not quite right? No worries - we'll make it right with simple exchanges.
-								</div>
-							</div>
-							<div>
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
-									<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
-									<div>Easy returns:</div>
-								</div>
-								<div class="text-gray-600 dark:text-gray-300">
-									Just return your product and we'll refund your money. No questions asked – we'll do our best to make sure your
-									return is hassle-free.
-								</div>
-							</div>
+							</Show>
 						</div>
 					</Show>
 					<Show when={activeTab().reviews === 'active'}>

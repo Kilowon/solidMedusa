@@ -109,7 +109,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															x: [-1500, 0],
-															transition: { duration: 2 + (index() - 4) * 0.1, easing: 'ease-out' }
+															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -157,7 +157,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															x: [1500, 0],
-															transition: { duration: 2 + (index() - 4) * 0.1, easing: 'ease-out' }
+															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -176,7 +176,7 @@ export function Hero() {
 							</div>
 						</Show>
 						<Motion.div
-							animate={{ opacity: [0, 1], x: [-2000, 0], transition: { duration: 2.5, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], x: [-2000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
@@ -221,7 +221,7 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
-							animate={{ opacity: [0, 1], x: [-2500, 0], transition: { duration: 2, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], x: [-2500, 0], transition: { duration: 1, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex items-center hover:underline">

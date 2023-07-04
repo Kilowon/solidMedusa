@@ -71,12 +71,12 @@ export function Hero() {
 			class="h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
 		"
 		>
-			<div class="absolute bg-gray-8 w-[100%] h-[100%]   z--40" />
+			<div class="absolute bg-gray-8 w-[100%] h-[100%] top-0 left-0 z--40" />
 			<Presence initial>
 				<Show when={heroData.isSuccess}>
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
 						<Show when={rootCategories()}>
-							<div class="flex justify-between sm:block w-full px-10 sm:px-0">
+							<div class="flex justify-between sm:block w-full overflow-hidden">
 								<Show when={getWindowSize().width > 768}>
 									<Motion.div
 										animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
@@ -115,7 +115,7 @@ export function Hero() {
 													>
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize "
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize  "
 														>
 															{category?.name}
 														</A>
@@ -137,7 +137,7 @@ export function Hero() {
 													return (
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3 "
 														>
 															{category?.name}
 														</A>
@@ -163,7 +163,7 @@ export function Hero() {
 													>
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize"
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize "
 														>
 															{category?.name}
 														</A>
@@ -179,9 +179,9 @@ export function Hero() {
 							animate={{ opacity: [0, 1], x: [-2000, 0], transition: { duration: 2.5, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
-							<div class="flex flex-col sm:flex-row sm:space-x-6.5">
-								<h1 class="tracking-tighter text-[6.5vw]  xl:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2">
-									Embrace Modern
+							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
+								<h1 class="tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words ">
+									{heroData?.data?.data?.static_callout}
 								</h1>
 								<Show when={getWindowSize().width > 768}>
 									<Presence
@@ -193,7 +193,7 @@ export function Hero() {
 												animate={{ opacity: [1, 0, 1], y: [-300, 0], transition: { duration: 1.75 } }}
 												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
 											>
-												<h1 class="tracking-tighter text-[6.5vw]  xl:text-[6.5vw] mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+												<h1 class="tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>
@@ -208,10 +208,10 @@ export function Hero() {
 										<Rerun on={count()}>
 											<Motion.div
 												initial={{ opacity: 1, x: 0, transition: { duration: 0 } }}
-												animate={{ opacity: [0, 0, 0, 1], x: [-100, 0], transition: { duration: 1, easing: 'ease-out' } }}
+												animate={{ opacity: [0, 0, 0, 1], x: [-100, -3], transition: { duration: 1, easing: 'ease-out' } }}
 												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
 											>
-												<h1 class="tracking-tighter text-6xl md:text-6xl lg:text-7xl xl:text-9xl mb-4 drop-shadow-md shadow-black font-400 font-500 text-blue-3 z-2">{`${
+												<h1 class="tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>
@@ -229,7 +229,7 @@ export function Hero() {
 									href="/store/Store"
 									class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
 								>
-									Explore our entire selection
+									{heroData?.data?.data?.call_to_action}
 								</A>
 								<div class="text-xl md:text-5xl">
 									<div class="i-material-symbols-arrow-right-alt-rounded" />

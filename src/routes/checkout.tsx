@@ -376,7 +376,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-16 right-0 h-full w-[100vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-16 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

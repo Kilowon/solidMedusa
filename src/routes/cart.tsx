@@ -8,7 +8,7 @@ export default function Cart(props: any) {
 	return (
 		<div>
 			<Header />
-			<div class="sm:content-container sm:mt-10">
+			<div class="content-container sm:mt-10">
 				<CartCore variant="primary" />
 			</div>
 			<FeaturedProducts variant="footer" />

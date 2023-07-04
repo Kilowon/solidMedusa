@@ -96,6 +96,7 @@ export default function CartCore(props: CartCoreProps) {
 																		<ItemQuantity
 																			item={item}
 																			cart={queryCart?.data?.cart}
+																			variant={props.variant}
 																		/>
 																	</Show>
 																</div>
@@ -128,6 +129,7 @@ export default function CartCore(props: CartCoreProps) {
 																		<ItemOptions
 																			item={item}
 																			cart={queryCart?.data?.cart}
+																			variant={props.variant}
 																		/>
 																	</div>
 																</div>
@@ -171,6 +173,7 @@ export default function CartCore(props: CartCoreProps) {
 																			<ItemPrice
 																				item={item}
 																				cart={queryCart?.data?.cart}
+																				variant={props.variant}
 																			/>
 																		</div>
 																	</div>
@@ -189,8 +192,8 @@ export default function CartCore(props: CartCoreProps) {
 																				deleteItem(item?.id), queryCartRefetch?.()
 																			}}
 																		>
-																			<div class="i-ph-trash-duotone text-sm lg:text-base text-gray-5  "></div>
-																			<span class="text-sm lg:text-base ">Remove</span>
+																			<div class="i-ph-trash-duotone text-sm  text-gray-5  "></div>
+																			<span class="text-xs ">Remove</span>
 																		</button>
 																	</div>
 																</div>
@@ -219,7 +222,7 @@ export default function CartCore(props: CartCoreProps) {
 											<div class={'i-tabler-chevron-down text-3xl  '} />
 										</div>
 										<div class="flex justify-between items-center">
-											<span class=" font-normal">
+											<span class=" font-500 text-xs">
 												Item Subtotal {'('}
 												{totalItemsInCart(queryCart?.data?.cart?.items)}
 												{queryCart?.data?.cart?.items.length > 1 ? ' items' : ' item'}
@@ -233,17 +236,21 @@ export default function CartCore(props: CartCoreProps) {
 									<PromoCodeInput
 										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
 										cart={queryCart?.data?.cart}
+										variant={props.variant}
 									/>
 									<GiftCardInput
 										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
 										cart={queryCart?.data?.cart}
+										variant={props.variant}
 									/>
-									<div class="flex justify-between items-center">
-										<span class=" font-semibold">Shipping</span>
-										<span class="text-large-semi">
-											{currencyFormat(Number(queryCart?.data?.cart?.shipping_total || 0), queryCart?.data?.cart?.region)}
-										</span>
-									</div>
+									<Show when={queryCart?.data?.cart?.shipping_total > 0}>
+										<div class="flex justify-between items-center">
+											<span class=" font-500 text-xs">Shipping</span>
+											<span class="text-sm">
+												{currencyFormat(Number(queryCart?.data?.cart?.shipping_total || 0), queryCart?.data?.cart?.region)}
+											</span>
+										</div>
+									</Show>
 									<Show when={queryCart?.data?.cart?.tax_total > 0}>
 										<div class="flex justify-between items-center">
 											<span class=" font-semibold">Tax</span>
@@ -252,9 +259,9 @@ export default function CartCore(props: CartCoreProps) {
 											</span>
 										</div>
 									</Show>
-									<div class="flex justify-between items-center bg-[#E5E5E5] border border-gray-5 p-1.75">
-										<span class=" text-lg font-semibold">Total</span>
-										<span class=" text-lg font-semibold">
+									<div class="flex justify-between items-center text-gray-8 bg-[#E5E5E5] border border-gray-5 p-1.75">
+										<span class=" text-sm font-400">Total</span>
+										<span class=" text-sm font-500">
 											{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}
 										</span>
 									</div>
@@ -287,7 +294,7 @@ export default function CartCore(props: CartCoreProps) {
 												</A>
 											</Show>
 										</div>
-										<span class=" font-semibold underline flex items-center justify-center">save for later</span>
+										<span class=" font-500 text-gray-8 underline flex items-center justify-center">save for later</span>
 									</Show>
 								</div>
 							</div>
@@ -332,7 +339,7 @@ export default function CartCore(props: CartCoreProps) {
 	)
 }
 
-function ItemQuantity(props: any) {
+function ItemQuantity(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 
 	const [quantity, setQuantity] = createSignal()
@@ -358,7 +365,7 @@ function ItemQuantity(props: any) {
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<button
-				class="flex items-center justify-center text-lg bg-white"
+				class="flex items-center justify-center w-5 h-5 bg-white"
 				onKeyDown={e => {
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity - 1)
@@ -372,9 +379,9 @@ function ItemQuantity(props: any) {
 					}}
 				/>
 			</button>
-			<span class="flex items-center justify-center text-lg font-semibold">{props.item?.quantity}</span>
+			<span class="flex items-center justify-center text-sm font-500">{props.item?.quantity}</span>
 			<button
-				class="flex items-center justify-center text-lg bg-white"
+				class="flex items-center justify-center w-5 bg-white"
 				onKeyDown={e => {
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity + 1)
@@ -393,7 +400,7 @@ function ItemQuantity(props: any) {
 }
 
 import { fetchProduct } from '~/Services/medusaAPI'
-function ItemPrice(props: any) {
+function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
@@ -470,7 +477,7 @@ function ItemPrice(props: any) {
 	)
 }
 
-function ItemOptions(props: any) {
+function ItemOptions(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 
 	const queryLineItem = createQuery(() => ({
@@ -576,6 +583,7 @@ export function LineItemPrice(props: LineItemPriceProps) {
 interface PromoCodeInputProps {
 	onSubmit: (promoCode: string) => void
 	cart: any
+	variant: CartCoreProps['variant']
 }
 
 export function PromoCodeInput(props: PromoCodeInputProps) {
@@ -614,11 +622,18 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 						value={promoCode()}
 						onInput={(e: any) => setPromoCode(e.target.value)}
 						placeholder="Enter promo code"
-						class="border border-gray-300 rounded px-2 py-1"
+						class="border border-gray-300 rounded px-2 py-1 text-xs"
 					/>
 					<button
 						type="submit"
-						class="bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 text-gray-8 px-3 py-1 rounded"
+						class={clsx(
+							'"bg-[#E5E5E5] border  hover:border-sky-500 text-gray-8 px-3 py-1 rounded text-xs',
+							props.variant === 'primary' && 'text-sm',
+							props.variant === 'checkout' && '',
+							props.variant === 'panel' && '',
+							props.variant === 'mobile-checkout' && '',
+							props.variant === 'mobile-panel' && ''
+						)}
 					>
 						Apply
 					</button>
@@ -677,11 +692,18 @@ export function GiftCardInput(props: PromoCodeInputProps) {
 						value={giftCard()}
 						onInput={(e: any) => setGiftCard(e.target.value)}
 						placeholder="Enter gift card code"
-						class="border border-gray-300 rounded px-2 py-1"
+						class="border border-gray-300 rounded px-2 py-1 text-xs"
 					/>
 					<button
 						type="submit"
-						class="bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 text-gray-8 px-3 py-1 rounded"
+						class={clsx(
+							'"bg-[#E5E5E5] border  hover:border-sky-500 text-gray-8 px-3 py-1 rounded text-xs',
+							props.variant === 'primary' && 'text-sm',
+							props.variant === 'checkout' && '',
+							props.variant === 'panel' && '',
+							props.variant === 'mobile-checkout' && '',
+							props.variant === 'mobile-panel' && ''
+						)}
 					>
 						Apply
 					</button>

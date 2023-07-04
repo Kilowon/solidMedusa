@@ -180,7 +180,7 @@ export function Hero() {
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
-								<h1 class="tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words ">
+								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
 									{heroData?.data?.data?.static_callout}
 								</h1>
 								<Show when={getWindowSize().width > 768}>
@@ -193,7 +193,7 @@ export function Hero() {
 												animate={{ opacity: [1, 0, 1], y: [-300, 0], transition: { duration: 1.75 } }}
 												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
 											>
-												<h1 class="tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>
@@ -211,7 +211,7 @@ export function Hero() {
 												animate={{ opacity: [0, 0, 0, 1], x: [-100, -3], transition: { duration: 1, easing: 'ease-out' } }}
 												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
 											>
-												<h1 class="tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
 												}`}</h1>
 											</Motion.div>

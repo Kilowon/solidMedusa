@@ -115,7 +115,7 @@ export function Hero() {
 													>
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize  "
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex  "
 														>
 															{category?.name}
 														</A>
@@ -148,7 +148,7 @@ export function Hero() {
 									</Motion.div>
 								</Show>
 								<Show when={getWindowSize().width < 768}>
-									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 sm:mb-5">
 										<For each={rootCategories()}>
 											{(category, index) => {
 												if (index() < 4 || index() >= 8) return
@@ -163,7 +163,7 @@ export function Hero() {
 													>
 														<A
 															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize "
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex justify-end "
 														>
 															{category?.name}
 														</A>

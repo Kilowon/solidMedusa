@@ -43,7 +43,14 @@ export default function DropdownMenu(props: any) {
 						role="button"
 						tabindex="0"
 						onClick={() => setOpen(true)}
-						onkeypress={() => setOpen(true)}
+						onKeyDown={e => {
+							if (e.key === 'Enter') {
+								return setOpen(true)
+							}
+							if (e.key === 'Escape') {
+								return setOpen(false)
+							}
+						}}
 					>
 						<div class="i-ic-round-menu  w-7 h-7 ml-2" />
 					</div>
@@ -87,6 +94,11 @@ export default function DropdownMenu(props: any) {
 																			<A
 																				href={`/collections/${collection.handle}`}
 																				onClick={() => setOpen(false)}
+																				onKeyDown={e => {
+																					if (e.key === 'Escape') {
+																						return setOpen(false)
+																					}
+																				}}
 																			>
 																				Shop {collection.title}
 																			</A>
@@ -111,6 +123,11 @@ export default function DropdownMenu(props: any) {
 																					<A
 																						href={`/categories/${parentCategory.handle}`}
 																						onClick={() => setOpen(false)}
+																						onKeyDown={e => {
+																							if (e.key === 'Escape') {
+																								return setOpen(false)
+																							}
+																						}}
 																					>
 																						{parentCategory.name}
 																					</A>
@@ -125,6 +142,11 @@ export default function DropdownMenu(props: any) {
 																											<A
 																												href={`/categories/${category.handle}`}
 																												onClick={() => setOpen(false)}
+																												onKeyDown={e => {
+																													if (e.key === 'Escape') {
+																														return setOpen(false)
+																													}
+																												}}
 																											>
 																												{category.name}
 																											</A>

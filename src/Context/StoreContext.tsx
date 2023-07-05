@@ -72,7 +72,7 @@ export function StoreProvider(props: {
 		},
 		enabled: false,
 		cacheTime: 0,
-		trys: 1
+		retry: 0
 	}))
 
 	function updateItem(lineId: string, quantity: number) {
@@ -201,7 +201,9 @@ export function StoreProvider(props: {
 			})
 			return data
 		},
-		enabled: false
+		enabled: false,
+		cacheTime: 0,
+		retry: 0
 	}))
 
 	const increaseQuantity = () => {

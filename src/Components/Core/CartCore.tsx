@@ -7,11 +7,30 @@ import { useStore } from '~/Context/StoreContext'
 import { createQuery } from '@tanstack/solid-query'
 import { getProductInfo } from '~/Services/medusaAPI'
 import { isServer } from 'solid-js/web'
+import { LineItem, Region } from '~/types/models'
+import { CalculatedVariant } from '~/types/medusa'
+import { getPercentageDiff } from '~/lib/util'
+import { currencyFormat } from '~/lib/helpers/currency'
+import { fetchProduct } from '~/Services/medusaAPI'
+import { ProductVariant } from '~/types/models'
 
 interface CartCoreProps {
 	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout' | 'mobile-panel'
 	cart?: any
 	setCartDrawer?: any
+}
+
+type LineItemOptionsProps = { variant: ProductVariant }
+
+type LineItemPriceProps = {
+	item: Omit<LineItem, 'beforeInsert'>
+	region: Region
+	style?: 'default' | 'tight'
+}
+interface PromoCodeInputProps {
+	onSubmit: (promoCode: string) => void
+	cart: any
+	variant: CartCoreProps['variant']
 }
 
 export function totalItemsInCart(items: any) {
@@ -339,7 +358,7 @@ export default function CartCore(props: CartCoreProps) {
 	)
 }
 
-function ItemQuantity(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
+export function ItemQuantity(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 
 	const [quantity, setQuantity] = createSignal()
@@ -359,7 +378,9 @@ function ItemQuantity(props: { cart: any; item: any; variant: CartCoreProps['var
 			})
 			return response
 		},
-		enabled: false
+		enabled: false,
+		cacheTime: 0,
+		retry: 0
 	}))
 
 	return (
@@ -399,8 +420,7 @@ function ItemQuantity(props: { cart: any; item: any; variant: CartCoreProps['var
 	)
 }
 
-import { fetchProduct } from '~/Services/medusaAPI'
-function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
+export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
@@ -477,7 +497,7 @@ function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps['varian
 	)
 }
 
-function ItemOptions(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
+export function ItemOptions(props: { cart: any; item: any; variant: CartCoreProps['variant'] }) {
 	const { medusa } = useGlobalContext()
 
 	const queryLineItem = createQuery(() => ({
@@ -521,9 +541,7 @@ function ItemOptions(props: { cart: any; item: any; variant: CartCoreProps['vari
 	)
 }
 
-import { ProductVariant } from '~/types/models'
-type LineItemOptionsProps = { variant: ProductVariant }
-export function LineItemOptions(props: LineItemOptionsProps) {
+/* export function LineItemOptions(props: LineItemOptionsProps) {
 	return (
 		<div class="text-sm text-gray-700">
 			<For each={props.variant?.options}>
@@ -542,16 +560,6 @@ export function LineItemOptions(props: LineItemOptionsProps) {
 	)
 }
 
-import { LineItem, Region } from '~/types/models'
-import { CalculatedVariant } from '~/types/medusa'
-import { getPercentageDiff } from '~/lib/util'
-import { currencyFormat } from '~/lib/helpers/currency'
-
-type LineItemPriceProps = {
-	item: Omit<LineItem, 'beforeInsert'>
-	region: Region
-	style?: 'default' | 'tight'
-}
 export function LineItemPrice(props: LineItemPriceProps) {
 	const originalPrice = (props.item.variant as CalculatedVariant).original_price * props.item?.quantity
 	const hasReducedPrice = (props.item.total || 0) < originalPrice
@@ -578,13 +586,7 @@ export function LineItemPrice(props: LineItemPriceProps) {
 			)}
 		</div>
 	)
-}
-
-interface PromoCodeInputProps {
-	onSubmit: (promoCode: string) => void
-	cart: any
-	variant: CartCoreProps['variant']
-}
+} */
 
 export function PromoCodeInput(props: PromoCodeInputProps) {
 	const [promoCode, setPromoCode] = createSignal('')

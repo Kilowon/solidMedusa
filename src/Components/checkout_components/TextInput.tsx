@@ -18,6 +18,7 @@ type TextInputProps = {
 	label?: string
 	error?: string
 	padding?: 'none'
+	onFocus?: () => void
 }
 
 /**

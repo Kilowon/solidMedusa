@@ -113,13 +113,11 @@ export default function Account() {
 								onMouseOver={() => {
 									setSide('left')
 								}}
-								onBlur={() => {
-									setSide('left')
-								}}
 							>
 								<SignUp
 									side={side}
 									currentCustomer={currentCustomer}
+									setSide={setSide}
 								/>
 							</div>
 
@@ -136,6 +134,7 @@ export default function Account() {
 								<SignIn
 									side={side}
 									currentCustomer={currentCustomer}
+									setSide={setSide}
 								/>
 							</div>
 						</Show>

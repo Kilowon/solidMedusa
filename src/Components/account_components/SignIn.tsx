@@ -42,6 +42,7 @@ type PaymentForm = {
 interface SideProps {
 	side?: Accessor<string>
 	currentCustomer?: any
+	setSide?: (side: string) => void
 }
 
 export default function SignIn(props: SideProps) {
@@ -115,9 +116,9 @@ export default function SignIn(props: SideProps) {
 							name="email"
 							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
 						>
-							{(field, props) => (
+							{(field, fieldprops) => (
 								<TextInput
-									{...props}
+									{...fieldprops}
 									value={field.value}
 									error={field.error}
 									type="email"
@@ -125,6 +126,7 @@ export default function SignIn(props: SideProps) {
 									label="Email (sign in)"
 									placeholder="example@email.com"
 									required
+									onFocus={() => props.setSide?.('right')}
 								/>
 							)}
 						</Field>
@@ -136,15 +138,17 @@ export default function SignIn(props: SideProps) {
 								minLength(8, 'You password must have 8 characters or more.')
 							]}
 						>
-							{(field, props) => (
+							{(field, fieldprops) => (
 								<TextInput
-									{...props}
+									{...fieldprops}
 									value={field.value}
 									error={field.error}
 									type="password"
 									//description="Signup for an account to access your order history."
 									label="Password"
 									placeholder="********"
+									required
+									onFocus={() => props.setSide?.('right')}
 								/>
 							)}
 						</Field>

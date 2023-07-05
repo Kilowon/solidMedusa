@@ -291,7 +291,8 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 			return 'viable'
 		}
 
-		let couldBeViable = false
+		const [couldBe, setCouldBe] = createSignal(false)
+		//let couldBeViable = false
 
 		// Iterate through the options array inside each variant array
 		for (const variant of productInfo.variants) {
@@ -303,13 +304,14 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 				if (selectedOptions.every((selectedOption: string) => variantOptions.includes(selectedOption))) {
 					return 'viable'
 				} else {
-					couldBeViable = true
+					//couldBeViable = true
+					setCouldBe(true)
 				}
 			}
 		}
 
 		// Return 'could-viable' if the option is not viable but could be selected based on other selections
-		return couldBeViable ? 'could-viable' : 'not-viable'
+		return couldBe() ? 'could-viable' : 'not-viable'
 	}
 
 	function updateOption(newOption: Record<string, string>) {
@@ -347,16 +349,16 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {
-							const isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
+							let isSelected = createMemo(() => current()[option.id] === v, [current()[option.id], v])
 							//@ts-ignore
-							const selectedOptions = createMemo<string[]>(() => {
-								const currentObj = current()
+							let selectedOptions = createMemo<string[]>(() => {
+								let currentObj = current()
 								if (Object.keys(currentObj).length === 0) {
 									return []
 								}
 								return Object.values(currentObj).filter(value => value !== undefined)
 							})
-							const viable = createMemo(() => isOptionViable(v, selectedOptions()), [current()])
+							let viable = createMemo(() => isOptionViable(v, selectedOptions()), [current()])
 
 							return (
 								<button

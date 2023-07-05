@@ -94,7 +94,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<aside class="mx-1 sm:mx-auto sm:content-container-wide sm:my-16 font-poppins grid md:grid-cols-3 lg:grid-cols-5">
+					<div class="mx-1 sm:mx-auto sm:content-container-wide sm:my-16 font-poppins grid md:grid-cols-3 lg:grid-cols-5">
 						<Show when={queryCollection?.data?.products}>
 							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
 								<header class=" col-start-1 col-span-2 lg:col-span-1 grid justify-self-center content-center space-y-4">
@@ -152,7 +152,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 								</For>
 							</ol>
 						</Show>
-					</aside>
+					</div>
 				</Transition>
 			</Show>
 		</section>

@@ -47,6 +47,9 @@ export default defineConfig({
 				{
 					'content-container': 'max-w-[1440px] w-full mx-auto px-8'
 				},
+				{
+					'content-container-wide': 'max-w-[1800px] w-full mx-auto px-8'
+				},
 				['root', 'selector-[:root]:[--normal:0,200,0]'],
 				['root', 'selector-[:root]:[--normal_2:0,200,0]'],
 				['root', 'selector-[:root]:[--normal_3:0,200,0]'],

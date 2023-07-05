@@ -7,7 +7,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import { create } from 'domain'
+import clsx from 'clsx'
 
 interface Collection {
 	id: string
@@ -16,6 +16,8 @@ interface Collection {
 		description: string
 		location: 'hero' | 'menu' | 'footer'
 		limit: number
+		sub_title_top: string
+		sub_title_bottom: string
 	}
 	// add any other properties here
 }
@@ -82,7 +84,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 	})
 
 	return (
-		<main>
+		<section>
 			<Show when={currentFeatured()?.metadata.location === props.variant}>
 				<Transition
 					onEnter={(el, done) => {
@@ -92,21 +94,25 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class="mx-1 sm:mx-auto sm:content-container sm:my-16 font-poppins">
-						<div class="content-container my-16 py-8 ">
-							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-								<div class="flex flex-col justify-center">
-									<h1 class="text-base md:text-lg lg:text-2xl font-500 text-gray-6 tracking-tighter  ">
-										{currentFeatured()?.title}
-									</h1>
-									<div class="text-sm md:text-base lg:text-lg text-gray-5 tracking-normal">
-										{currentFeatured()?.metadata?.description}
-									</div>
-								</div>
-							</div>
-						</div>
+					<aside class="mx-1 sm:mx-auto sm:content-container-wide sm:my-16 font-poppins grid md:grid-cols-3 lg:grid-cols-5">
 						<Show when={queryCollection?.data?.products}>
-							<ol class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
+							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
+								<header class=" col-start-1 col-span-2 lg:col-span-1 grid justify-self-center content-center space-y-4">
+									<div class="space-y-1">
+										<h2 class=" text-sm md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+											{currentFeatured()?.metadata?.sub_title_top}
+										</h2>
+										<h1 class=" text-base md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter">
+											{currentFeatured()?.title}
+										</h1>
+										<h2 class=" text-sm md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+											{currentFeatured()?.metadata?.sub_title_bottom}
+										</h2>
+									</div>
+									<p class="text-sm md:text-base  lg:text-base text-gray-5 tracking-normal">
+										{currentFeatured()?.metadata?.description}
+									</p>
+								</header>
 								<For each={queryCollection?.data?.products}>
 									{(product, index) => {
 										let el: HTMLLIElement | undefined
@@ -146,9 +152,9 @@ export default function FeaturedProducts(props: FeaturedProps) {
 								</For>
 							</ol>
 						</Show>
-					</div>
+					</aside>
 				</Transition>
 			</Show>
-		</main>
+		</section>
 	)
 }

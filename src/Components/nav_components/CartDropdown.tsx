@@ -2,7 +2,6 @@ import { createEffect, createSignal, Show, lazy, Suspense } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { Transition } from 'solid-transition-group'
 import { useStore } from '~/Context/StoreContext'
-import { isServer } from 'solid-js/web'
 
 const CartCore = lazy(() => import('../Core/CartCore'))
 
@@ -15,17 +14,13 @@ export function totalItemsInCart(items: any) {
 }
 
 export default function CartDropdown(props: any) {
-	const [open, setOpen] = createSignal(false)
-
 	const { queryCart } = useGlobalContext()
-	const { queryCartRefetch } = useGlobalContext()
-	const { deleteItem } = useStore()
 
-	const [cart, setCart] = createSignal(queryCart.data?.cart)
+	const [open, setOpen] = createSignal(false)
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
 
 	createEffect(() => {
-		if (!isServer || queryCart.data !== undefined) {
+		if (queryCart.isSuccess) {
 			setItems(queryCart?.data?.cart?.items)
 		}
 	}, [queryCart])
@@ -92,7 +87,7 @@ export default function CartDropdown(props: any) {
 				}}
 			>
 				<Suspense>
-					<Show when={open() && items() !== undefined && isServer === false}>
+					<Show when={open() && queryCart.isSuccess}>
 						<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
 							<CartCore variant="panel" />
 						</div>

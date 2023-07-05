@@ -76,7 +76,7 @@ export function Hero() {
 				<Show when={heroData.isSuccess}>
 					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
 						<Show when={rootCategories()}>
-							<div class="flex justify-between sm:block w-[95svw] overflow-hidden">
+							<div class="flex justify-between sm:block w-[100vw] w-[100svw] overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
 										animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}

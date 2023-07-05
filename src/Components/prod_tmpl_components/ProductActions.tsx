@@ -48,7 +48,8 @@ export default function ProductActions(props: {
 		if (selectedVariant()) {
 			const variant = props.productInfo.variants.find(v => v.id === selectedVariant().id)
 			if (variant) {
-				return variant.purchasable ? 'valid' : 'out-of-stock'
+				//return variant.purchasable ? 'valid' : 'out-of-stock'
+				return 'valid'
 			}
 		}
 
@@ -247,7 +248,6 @@ export default function ProductActions(props: {
 
 export const onlyUnique = (value: unknown, index: number, self: unknown[]) => self.indexOf(value) === index
 
-//TODO: Need Hook to update the option selection
 export function OptionSelect({ option, current, updateOptions, title }: OptionSelectProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
 
@@ -281,7 +281,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 		</Show>
 	)
 }
-//TODO: Needs to be more explicit with 'not-viable'
+
 export function OptionSelectViable({ option, current, updateOptions, title, productInfo }: OptionSelectViableProps) {
 	const filteredOptions = option.values.map((v: any) => v.value).filter(onlyUnique)
 

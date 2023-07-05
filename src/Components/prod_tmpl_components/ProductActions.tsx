@@ -43,7 +43,7 @@ export default function ProductActions(props: {
 
 	//TODO: The current server is out of sync with the develepment server and lacks the purchasable field
 	// I am disabling the purchasable field for now
-	function isProductPurchasable(): string {
+	const isProductPurchasable = createMemo(() => {
 		const [selectedVariant] = createSignal(props.variant())
 
 		if (selectedVariant()) {
@@ -54,7 +54,7 @@ export default function ProductActions(props: {
 		}
 
 		return 'invalid'
-	}
+	})
 
 	createEffect(() => {
 		console.log(isProductPurchasable(), 'variant', props.variant())

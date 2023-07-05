@@ -45,7 +45,6 @@ export default function ProductActions(props: {
 	// I am disabling the purchasable field for now
 	const isProductPurchasable = createMemo(() => {
 		const [selectedVariant] = createSignal(props.variant())
-
 		if (selectedVariant()) {
 			const variant = props.productInfo.variants.find(v => v.id === selectedVariant().id)
 			if (variant) {
@@ -231,6 +230,9 @@ export default function ProductActions(props: {
 						{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
 						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
 					</button>
+				</div>
+				<div>
+					isPurchase:{isProductPurchasable()} variant:{props.variant()?.id}
 				</div>
 				<div>
 					<ProductInformationTabs

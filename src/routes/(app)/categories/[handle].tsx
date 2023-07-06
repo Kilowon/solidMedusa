@@ -118,20 +118,14 @@ export default function Categories() {
 						/>
 
 						<div class="pt-4 lg:py-12 ">
-							<Show
-								when={parentCategories() && currentCategory()}
-								fallback={<div class="w-[100px] h-[275px] bg-gray-8"></div>}
-							>
+							<Show when={parentCategories() && currentCategory()}>
 								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased  ">
 									<FlexCategories
 										parentCategories={parentCategories}
 										currentCategory={currentCategory}
 									/>
 
-									<Show
-										when={queryCategoryProducts.isSuccess}
-										fallback={<div class="w-[100px] h-[275px] bg-purple-8"></div>}
-									>
+									<Show when={queryCategoryProducts.isSuccess}>
 										<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
 											<For each={queryCategoryProducts.data?.products}>
 												{(product: any, index) => {
@@ -149,10 +143,7 @@ export default function Categories() {
 
 													return (
 														<li ref={el}>
-															<Show
-																when={isVisible()}
-																fallback={<div class="w-[100px] h-[275px] bg-red"></div>}
-															>
+															<Show when={index() > 7 || isVisible()}>
 																<Presence initial>
 																	<Rerun on={index}>
 																		<Motion
@@ -165,7 +156,7 @@ export default function Categories() {
 																</Presence>
 															</Show>
 															<Show when={!isVisible()}>
-																<div class="w-[100px] h-[275px] bg-blue"></div>
+																<div class="w-[100px] h-[275px]"></div>
 															</Show>
 														</li>
 													)

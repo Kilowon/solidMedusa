@@ -48,8 +48,8 @@ export default function ProductActions(props: {
 		if (selectedVariant()) {
 			const variant = props.productInfo.variants.find(v => v.id === selectedVariant().id)
 			if (variant) {
-				//return variant.purchasable ? 'valid' : 'out-of-stock'
-				return 'valid'
+				return variant.purchasable ? 'valid' : 'out-of-stock'
+				//return 'valid'
 			}
 		}
 
@@ -363,6 +363,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 							return (
 								<button
 									onClick={() => {
+										console.log('OPTION', v)
 										updateOption({ [option.id]: v })
 									}}
 									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {

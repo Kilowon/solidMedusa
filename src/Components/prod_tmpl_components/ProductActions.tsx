@@ -57,7 +57,7 @@ export default function ProductActions(props: {
 	})
 
 	createEffect(() => {
-		console.log(isProductPurchasable(), 'variant', props.variant())
+		console.log(isProductPurchasable(), 'variant ProductActions', props.variant())
 	})
 
 	createEffect(() => {

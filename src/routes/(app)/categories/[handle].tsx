@@ -100,8 +100,8 @@ export default function Categories() {
 	})
 
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<main class="min-h-[100vh]">
+		<main class="min-h-[100vh]">
+			<Suspense fallback={<div>Loading...</div>}>
 				<ErrorBoundary>
 					<Show
 						when={currentCategory()}
@@ -186,7 +186,7 @@ export default function Categories() {
 						</div>
 					</Show>
 				</ErrorBoundary>
-			</main>
-		</Suspense>
+			</Suspense>
+		</main>
 	)
 }

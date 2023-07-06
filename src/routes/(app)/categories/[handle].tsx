@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta, ErrorBoundary } from 'solid-start'
-import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
+import { createEffect, createSignal, Show, For, Suspense, onMount } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
 import { SingleLineSlider } from '~/Components/common/ProductSlider'
@@ -41,11 +41,17 @@ export default function Categories() {
 		//enabled: false
 	}))
 
+	let refreshKey = 0
+
+	onMount(() => {
+		refreshKey++
+	})
+
 	createEffect(() => {
-		if (!queryCategoryProducts?.data?.products[0]?.handle) {
+		if (!queryCategoryProducts?.data?.products[0]?.handle || refreshKey > 0) {
 			queryCategoryProducts.refetch()
 		}
-	})
+	}, [params.handle, refreshKey])
 
 	function filterCategories() {
 		return queryCategories?.data?.product_categories?.filter((category: any) => category.handle === params.handle)

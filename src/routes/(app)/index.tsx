@@ -20,7 +20,7 @@ export default function App() {
 	})
 
 	return (
-		<main>
+		<main class="min-h-[100vh]">
 			<Hero />
 			<div class="my-16">
 				<Suspense>

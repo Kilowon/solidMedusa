@@ -34,7 +34,7 @@ export default function Store() {
 	})
 
 	return (
-		<main>
+		<main class="min-h-[100vh]">
 			<div class="mx-1 sm:mx-auto sm:content-container mt-5 sm:mt-25 font-poppins space-y-5">
 				<div class="text-gray-6 font-500 text-base lg:text-2xl">Shop everything in the store</div>
 

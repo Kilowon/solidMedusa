@@ -8,6 +8,7 @@ import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 import clsx from 'clsx'
+import { getWindowSize } from '@solid-primitives/resize-observer'
 
 interface Collection {
 	id: string
@@ -18,6 +19,7 @@ interface Collection {
 		limit: number
 		sub_title_top: string
 		sub_title_bottom: string
+		mobile_limit: number
 	}
 	// add any other properties here
 }
@@ -94,22 +96,22 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class="mx-1 sm:mx-auto sm:content-container-wide sm:my-16 font-poppins grid md:grid-cols-3 lg:grid-cols-5">
+					<div class="mx-1 sm:mx-auto sm:content-container-wide my-16 font-poppins grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
 						<Show when={queryCollection?.data?.products}>
 							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-								<header class=" col-start-1 col-span-2 lg:col-span-1 grid justify-self-center content-center space-y-4">
+								<header class="col-span-1 lg:col-span-1 grid justify-self-center content-center space-y-4">
 									<div class="space-y-1">
-										<h2 class=" text-sm md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
 											{currentFeatured()?.metadata?.sub_title_top}
 										</h2>
-										<h1 class=" text-base md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter">
+										<h1 class=" text-sm md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter">
 											{currentFeatured()?.title}
 										</h1>
-										<h2 class=" text-sm md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
 											{currentFeatured()?.metadata?.sub_title_bottom}
 										</h2>
 									</div>
-									<p class="text-sm md:text-base  lg:text-base text-gray-5 tracking-normal">
+									<p class="text-xs md:text-base  lg:text-base text-gray-5 tracking-normal">
 										{currentFeatured()?.metadata?.description}
 									</p>
 								</header>
@@ -127,8 +129,17 @@ export default function FeaturedProducts(props: FeaturedProps) {
 											}
 										})
 
-										if (currentFeatured()?.metadata?.limit && index() > currentFeatured()?.metadata?.limit! - 1) return
+										if (
+											getWindowSize().width > 460 &&
+											currentFeatured()?.metadata?.limit &&
+											index() > Number(currentFeatured()?.metadata?.limit) - 1
+										) {
+											return
+										}
 
+										if (getWindowSize().width < 460 && index() > Number(currentFeatured()?.metadata?.mobile_limit) - 1) {
+											return
+										}
 										return (
 											<li ref={el}>
 												<Show when={isVisible()}>

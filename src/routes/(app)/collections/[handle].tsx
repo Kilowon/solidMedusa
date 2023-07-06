@@ -61,7 +61,7 @@ export default function Collection() {
 	}))
 
 	return (
-		<main>
+		<main class="min-h-[100vh]">
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {

@@ -95,7 +95,7 @@ export default function Categories() {
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<main>
+			<main class="min-h-[100vh]">
 				<ErrorBoundary>
 					<Show
 						when={currentCategory()}
@@ -116,7 +116,7 @@ export default function Categories() {
 								when={parentCategories() && currentCategory()}
 								fallback={<div class="w-[100px] h-[275px] bg-gray-8"></div>}
 							>
-								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased ">
+								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased  ">
 									<FlexCategories
 										parentCategories={parentCategories}
 										currentCategory={currentCategory}

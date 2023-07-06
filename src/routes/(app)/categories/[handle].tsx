@@ -94,24 +94,24 @@ export default function Categories() {
 	})
 
 	return (
-		<main>
-			<ErrorBoundary>
-				<Show
-					when={currentCategory()}
-					fallback={<div></div>}
-				>
-					<Title>{currentCategory?.()[0]?.name}</Title>
-					<Meta
-						itemProp="description"
-						content={currentCategory?.()[0]?.handle}
-					/>
-					<Meta
-						itemProp="og:title"
-						content={currentCategory?.()[0]?.name}
-					/>
+		<Suspense fallback={<div>Loading...</div>}>
+			<main>
+				<ErrorBoundary>
+					<Show
+						when={currentCategory()}
+						fallback={<div></div>}
+					>
+						<Title>{currentCategory?.()[0]?.name}</Title>
+						<Meta
+							itemProp="description"
+							content={currentCategory?.()[0]?.handle}
+						/>
+						<Meta
+							itemProp="og:title"
+							content={currentCategory?.()[0]?.name}
+						/>
 
-					<div class="pt-4 lg:py-12 ">
-						<Suspense fallback={<div>Loading...</div>}>
+						<div class="pt-4 lg:py-12 ">
 							<Show
 								when={parentCategories() && currentCategory()}
 								fallback={<div class="w-[100px] h-[275px] bg-gray-8"></div>}
@@ -177,10 +177,10 @@ export default function Categories() {
 						/> */}
 								</div>
 							</Show>
-						</Suspense>
-					</div>
-				</Show>
-			</ErrorBoundary>
-		</main>
+						</div>
+					</Show>
+				</ErrorBoundary>
+			</main>
+		</Suspense>
 	)
 }

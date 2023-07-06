@@ -47,7 +47,7 @@ export default function Categories() {
 	})
 
 	createEffect(() => {
-		if (!queryCategoryProducts?.data?.products[0]?.handle || !queryCategoryProducts?.data?.products[0]?.handle) {
+		if (!queryCategoryProducts?.data?.products[0]?.handle || queryCategoryProducts.data?.products?.length === undefined) {
 			queryCategoryProducts.refetch()
 		}
 	})

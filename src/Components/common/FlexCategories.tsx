@@ -39,7 +39,7 @@ export function FlexCategories(props: any) {
 					</Show>
 				</ol>
 
-				<ol class="grid grid-cols-2 md:grid-cols-4 gap-1.5">
+				<ol class="grid grid-cols-2 gap-1.5 md:flex md:flex-row md:flex-wrap">
 					<Show when={props.currentCategory?.()[0]?.category_children}>
 						<TransitionGroup
 							onEnter={(el, done) => {

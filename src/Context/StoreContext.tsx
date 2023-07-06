@@ -8,6 +8,7 @@ import { currencyFormat, findCheapestPrice } from '~/lib/helpers/currency'
 import { Accessor } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
+import { create } from 'domain'
 
 interface StoreContextValue {
 	deleteItem: (lineId: string) => void
@@ -44,6 +45,10 @@ export function StoreProvider(props: {
 	const { queryCartRefetch } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
+
+	createEffect(() => {
+		console.log('OPTIONS', options())
+	})
 
 	createEffect(() => {
 		setProduct(props.product)
@@ -101,9 +106,9 @@ export function StoreProvider(props: {
 		})
 	}
 
-	function variantId(variant: any) {
+	/* function variantId(variant: any) {
 		return variant.id
-	}
+	} */
 
 	createEffect(() => {
 		// initialize the option state
@@ -146,7 +151,7 @@ export function StoreProvider(props: {
 		}
 
 		return product()?.variants.find(v => v.id === variantId)
-	}, [options, variantRecord, product()?.variants])
+	}, [options(), variantRecord(), product()?.variants])
 
 	createEffect(() => {}, [variant])
 	// if product only has one variant, then select it
@@ -156,7 +161,7 @@ export function StoreProvider(props: {
 		}
 	}, [props.product?.variants, variantRecord])
 
-	const disabled = createMemo(() => {
+	/* const disabled = createMemo(() => {
 		return !variant
 	}, [variant()])
 
@@ -170,7 +175,7 @@ export function StoreProvider(props: {
 			// if no variant is selected, or we couldn't find a price for the region/currency
 			return 'N/A'
 		}
-	}, [variant, props.product?.variants, props.cart])
+	}, [variant, props.product?.variants, props.cart]) */
 
 	function canBuy(variant: ProductVariant) {
 		return variant.inventory_quantity > 0 || variant.allow_backorder === true

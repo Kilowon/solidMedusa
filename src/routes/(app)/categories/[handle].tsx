@@ -19,7 +19,7 @@ export default function Categories() {
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
-			const product = await medusa?.productCategories?.list({})
+			const product = await medusa?.productCategories?.list({ limit: 200 })
 			return product
 		},
 		enabled: false
@@ -122,47 +122,51 @@ export default function Categories() {
 										currentCategory={currentCategory}
 									/>
 
-									<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-										<For each={queryCategoryProducts.data?.products}>
-											{(product: any, index) => {
-												let el: HTMLLIElement | undefined
-												const [isVisible, setIsVisible] = createSignal(false)
-												const [delay, setDelay] = createSignal(0)
-												const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
+									<Show
+										when={queryCategoryProducts.isSuccess}
+										fallback={<div class="w-[100px] h-[275px] bg-purple-8"></div>}
+									>
+										<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+											<For each={queryCategoryProducts.data?.products}>
+												{(product: any, index) => {
+													let el: HTMLLIElement | undefined
+													const [isVisible, setIsVisible] = createSignal(false)
+													const [delay, setDelay] = createSignal(0)
+													const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
 
-												createEffect(() => {
-													if (visible()) {
-														setIsVisible(true)
-														setDelay((index() % 4) * 0.3)
-													}
-												})
+													createEffect(() => {
+														if (visible()) {
+															setIsVisible(true)
+															setDelay((index() % 4) * 0.3)
+														}
+													})
 
-												return (
-													<li ref={el}>
-														<Show
-															when={isVisible()}
-															fallback={<div class="w-[100px] h-[275px] bg-red"></div>}
-														>
-															<Presence initial>
-																<Rerun on={index}>
-																	<Motion
-																		animate={{ opacity: [0, 1] }}
-																		transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-																	>
-																		<ProductPreview {...product} />
-																	</Motion>
-																</Rerun>
-															</Presence>
-														</Show>
-														<Show when={!isVisible()}>
-															<div class="w-[100px] h-[275px] bg-blue"></div>
-														</Show>
-													</li>
-												)
-											}}
-										</For>
-									</ul>
-
+													return (
+														<li ref={el}>
+															<Show
+																when={isVisible()}
+																fallback={<div class="w-[100px] h-[275px] bg-red"></div>}
+															>
+																<Presence initial>
+																	<Rerun on={index}>
+																		<Motion
+																			animate={{ opacity: [0, 1] }}
+																			transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+																		>
+																			<ProductPreview {...product} />
+																		</Motion>
+																	</Rerun>
+																</Presence>
+															</Show>
+															<Show when={!isVisible()}>
+																<div class="w-[100px] h-[275px] bg-blue"></div>
+															</Show>
+														</li>
+													)
+												}}
+											</For>
+										</ul>
+									</Show>
 									{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}

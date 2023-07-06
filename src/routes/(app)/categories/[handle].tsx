@@ -120,7 +120,7 @@ export default function Categories() {
 
 									<Show
 										when={queryCategoryProducts.data?.products?.length > 0}
-										fallback={<div></div>}
+										fallback={<div class="w-[100px] h-[275px] bg-purple-8"></div>}
 									>
 										<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
 											<For each={queryCategoryProducts.data?.products}>
@@ -139,7 +139,10 @@ export default function Categories() {
 
 													return (
 														<li ref={el}>
-															<Show when={isVisible()}>
+															<Show
+																when={isVisible()}
+																fallback={<div class="w-[100px] h-[275px] bg-red"></div>}
+															>
 																<Presence initial>
 																	<Rerun on={index}>
 																		<Motion
@@ -152,7 +155,7 @@ export default function Categories() {
 																</Presence>
 															</Show>
 															<Show when={!isVisible()}>
-																<div class="w-[100px] h-[275px]"></div>
+																<div class="w-[100px] h-[275px] bg-blue"></div>
 															</Show>
 														</li>
 													)

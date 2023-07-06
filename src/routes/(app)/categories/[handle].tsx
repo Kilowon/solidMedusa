@@ -119,7 +119,7 @@ export default function Categories() {
 
 								<Suspense fallback={<div>Loading...</div>}>
 									<Show
-										when={queryCategoryProducts.isFetched && queryCategoryProducts.data?.products?.length > 0}
+										when={queryCategoryProducts.data?.products?.length > 0}
 										fallback={<div></div>}
 									>
 										<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">

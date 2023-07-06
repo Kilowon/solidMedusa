@@ -1,14 +1,15 @@
 import { Show, For } from 'solid-js'
 import { A } from 'solid-start'
 import { TransitionGroup } from 'solid-transition-group'
+import clsx from 'clsx'
 
 export function FlexCategories(props: any) {
 	return (
 		<div class="flex flex-col  mb-16 ">
 			<span class="text-xs md:text-base text-gray-600 mb-6">Shop By Category</span>
 			<div class=" flex flex-row text-sm lg:text-2xl text-gray-900 ">
-				<ol class="flex flex-row">
-					<Show when={props.parentCategories()}>
+				<Show when={props.parentCategories()}>
+					<ol class="flex flex-row">
 						<TransitionGroup
 							onEnter={(el, done) => {
 								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -36,11 +37,16 @@ export function FlexCategories(props: any) {
 								)}
 							</For>
 						</TransitionGroup>
-					</Show>
-				</ol>
+					</ol>
+				</Show>
 
-				<ol class="grid grid-cols-2 gap-1.5 md:flex md:flex-row md:flex-wrap">
-					<Show when={props.currentCategory?.()[0]?.category_children}>
+				<Show when={props.currentCategory?.()[0]?.category_children}>
+					<ol
+						class={clsx(
+							'grid grid-cols-2 gap-1.5 md:flex md:flex-row md:flex-wrap',
+							props.currentCategory?.()[0]?.category_children?.length < 4 && 'flex flex-row flex-wrap'
+						)}
+					>
 						<TransitionGroup
 							onEnter={(el, done) => {
 								const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -66,8 +72,8 @@ export function FlexCategories(props: any) {
 								)}
 							</For>
 						</TransitionGroup>
-					</Show>
-				</ol>
+					</ol>
+				</Show>
 			</div>
 		</div>
 	)

@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta, ErrorBoundary } from 'solid-start'
-import { createEffect, createSignal, Show, For, Suspense, onMount } from 'solid-js'
+import { createEffect, createSignal, Show, For, Suspense, onMount, untrack } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
 import { SingleLineSlider } from '~/Components/common/ProductSlider'
@@ -9,6 +9,7 @@ import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { on } from 'events'
 
 export default function Categories() {
 	const params = useParams()
@@ -36,15 +37,10 @@ export default function Categories() {
 				category_id: currentCategoryId(),
 				cart_id: queryCart?.data?.cart?.id
 			})
+			setCategory(filterCategories())
 			return product
-		},
-		cacheTime: 15 * 60 * 1000,
-		enabled: false
+		}
 	}))
-
-	onMount(() => {
-		queryCategoryProducts.refetch()
-	})
 
 	createEffect(() => {
 		if (!queryCategoryProducts?.data?.products[0]?.handle || queryCategoryProducts.data?.products?.length === undefined) {
@@ -60,12 +56,20 @@ export default function Categories() {
 	const [currentCategory, setCategory] = createSignal(filterCategories())
 
 	createEffect(() => {
-		if (!filterCategories()) return
 		setCategory(filterCategories())
+		console.log('run SET CATEGORY')
+	})
 
-		if (!currentCategory()) return
+	createEffect(() => {
+		if (currentCategory?.()) {
+			updateCurrentCategoryId()
+			console.log('run UPDATE CURRENT CATEGORY ID')
+		}
+	})
+
+	function updateCurrentCategoryId() {
 		setCurrentCategoryId?.(currentCategory().map((category: any) => category.id))
-	}, [params.handle])
+	}
 
 	const [parentCategories, setParentCategories] = createSignal([])
 
@@ -87,12 +91,12 @@ export default function Categories() {
 	}
 
 	createEffect(() => {
-		if (!queryCategories?.data?.product_categories) return
-		getParentCategories(queryCategories?.data?.product_categories, params)
-	}, [currentCategory?.()])
-
-	createEffect(() => {
-		console.log('categoryProducts', queryCategoryProducts.data?.products?.length)
+		if (currentCategory?.()) {
+			if (queryCategories.isSuccess) {
+				getParentCategories(queryCategories?.data?.product_categories, params)
+				console.log('run  GET PARENT CATEGORIES')
+			}
+		}
 	})
 
 	return (

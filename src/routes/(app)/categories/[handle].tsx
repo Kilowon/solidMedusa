@@ -37,21 +37,19 @@ export default function Categories() {
 			})
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
-		//enabled: false
+		cacheTime: 15 * 60 * 1000,
+		enabled: false
 	}))
 
-	let refreshKey = 0
-
 	onMount(() => {
-		refreshKey++
+		queryCategoryProducts.refetch()
 	})
 
 	createEffect(() => {
-		if (!queryCategoryProducts?.data?.products[0]?.handle || refreshKey > 0) {
+		if (!queryCategoryProducts?.data?.products[0]?.handle) {
 			queryCategoryProducts.refetch()
 		}
-	}, [params.handle, refreshKey])
+	})
 
 	function filterCategories() {
 		return queryCategories?.data?.product_categories?.filter((category: any) => category.handle === params.handle)

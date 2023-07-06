@@ -31,6 +31,7 @@ export default function Categories() {
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
 			if (!queryCart?.data?.cart?.id) return
+			if (!currentCategoryId()) return
 			const product = await medusa?.products?.list({
 				category_id: currentCategoryId(),
 				cart_id: queryCart?.data?.cart?.id
@@ -132,7 +133,7 @@ export default function Categories() {
 													let el: HTMLLIElement | undefined
 													const [isVisible, setIsVisible] = createSignal(false)
 													const [delay, setDelay] = createSignal(0)
-													const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
+													const visible = createVisibilityObserver({ threshold: 0.2 })(() => el)
 
 													createEffect(() => {
 														if (visible()) {

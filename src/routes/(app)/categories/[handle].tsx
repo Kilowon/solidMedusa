@@ -47,12 +47,13 @@ export default function Categories() {
 	})
 
 	createEffect(() => {
-		if (!queryCategoryProducts?.data?.products[0]?.handle) {
+		if (!queryCategoryProducts?.data?.products[0]?.handle || !queryCategoryProducts?.data?.products[0]?.handle) {
 			queryCategoryProducts.refetch()
 		}
 	})
 
 	function filterCategories() {
+		if (!queryCategories?.data?.product_categories) return
 		return queryCategories?.data?.product_categories?.filter((category: any) => category.handle === params.handle)
 	}
 

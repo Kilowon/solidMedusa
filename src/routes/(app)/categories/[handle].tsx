@@ -57,13 +57,11 @@ export default function Categories() {
 
 	createEffect(() => {
 		setCategory(filterCategories())
-		console.log('run SET CATEGORY')
 	})
 
 	createEffect(() => {
 		if (currentCategory?.()) {
 			updateCurrentCategoryId()
-			console.log('run UPDATE CURRENT CATEGORY ID')
 		}
 	})
 
@@ -94,7 +92,6 @@ export default function Categories() {
 		if (currentCategory?.()) {
 			if (queryCategories.isSuccess) {
 				getParentCategories(queryCategories?.data?.product_categories, params)
-				console.log('run  GET PARENT CATEGORIES')
 			}
 		}
 	})

@@ -169,14 +169,6 @@ export function GlobalContextProvider(props: any) {
 		cacheTime: 15 * 60 * 1000
 	}))
 
-	const [categories, categoriesServerState] = createSignal([])
-
-	const [rootCategories, setRootCategories] = createSignal([])
-	createEffect(() => {
-		categoriesServerState(queryCategories.data?.product_categories)
-		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
-	}, [queryCategories])
-
 	const [categoryProducts, setCategoryProducts] = createSignal([])
 
 	const queryCollections = createQuery(() => ({

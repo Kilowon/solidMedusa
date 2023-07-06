@@ -78,7 +78,7 @@ export default function Categories() {
 
 		while (parentCategories[parentCategories.length - 1]?.parent_category) {
 			const parentCategory = categories.find(
-				(category: any) => category.name === parentCategories?.[parentCategories.length - 1]?.parent_category?.name
+				(category: any) => category.id === parentCategories?.[parentCategories.length - 1]?.parent_category?.id
 			)
 			parentCategories.push(parentCategory)
 		}

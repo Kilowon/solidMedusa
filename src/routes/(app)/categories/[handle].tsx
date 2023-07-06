@@ -107,17 +107,17 @@ export default function Categories() {
 					/>
 
 					<div class="pt-4 lg:py-12 ">
-						<Show
-							when={parentCategories() && currentCategory()}
-							fallback={<div class="w-[100px] h-[275px]"></div>}
-						>
-							<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased ">
-								<FlexCategories
-									parentCategories={parentCategories}
-									currentCategory={currentCategory}
-								/>
+						<Suspense fallback={<div>Loading...</div>}>
+							<Show
+								when={parentCategories() && currentCategory()}
+								fallback={<div class="w-[100px] h-[275px] bg-gray-8"></div>}
+							>
+								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased ">
+									<FlexCategories
+										parentCategories={parentCategories}
+										currentCategory={currentCategory}
+									/>
 
-								<Suspense fallback={<div>Loading...</div>}>
 									<Show
 										when={queryCategoryProducts.data?.products?.length > 0}
 										fallback={<div></div>}
@@ -160,8 +160,7 @@ export default function Categories() {
 											</For>
 										</ul>
 									</Show>
-								</Suspense>
-								{/* <SingleLineSlider
+									{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}
 							setCurrentSlide={setCurrentSlide}
@@ -169,8 +168,9 @@ export default function Categories() {
 							loaded={loaded}
 							currentSlide={currentSlide}
 						/> */}
-							</div>
-						</Show>
+								</div>
+							</Show>
+						</Suspense>
 					</div>
 				</Show>
 			</ErrorBoundary>

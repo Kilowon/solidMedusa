@@ -19,41 +19,43 @@ const ProductPreview = (props: ProductPreviewProps) => {
 		<Suspense>
 			<Show when={props.title}>
 				<A href={`/products/${props.handle}`}>
-					<div onClick={props.handleClick}>
+					<div
+						onClick={props.handleClick}
+						class="space-y-1 bg-transparent "
+					>
 						<Thumbnail
 							thumbnail={props.thumbnail}
 							title={props.title}
 							variant="clothing"
 						/>
-						<div class="text-xs sm:text-base text-gray-600 font-500">
-							<div>
-								<div class="flex sm:block space-x-1 sm:space-x-0">
-									<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
-										<div class="">
-											{props.variants?.[0]?.original_price
-												? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+						<div class=" flex flex-col justify-end text-xs sm:text-base text-gray-600 font-500 space-y-1 min-h-[52px] lg:min-h-[68px]">
+							<p class="text-xs sm:text-sm font-500 tracking-tight text-gray-6/80 text-balance">{props.title}</p>
+
+							<div class="items-end flex sm:block space-x-1 sm:space-x-0">
+								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
+									<div class="">
+										{props.variants?.[0]?.original_price
+											? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+											: ''}
+									</div>
+								</Show>
+								<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
+									<div class="line-through ">
+										{props.variants?.[0]?.original_price
+											? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
+											: ''}
+									</div>
+									<div class="flex sm:block space-x-1 sm:space-x-0">
+										<div class=" text-red-7 ">
+											{props.variants?.[0]?.calculated_price
+												? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
 												: ''}
 										</div>
-									</Show>
-									<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-										<div class="line-through ">
-											{props.variants?.[0]?.original_price
-												? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
-												: ''}
-										</div>
-										<div class="flex sm:block space-x-1 sm:space-x-0">
-											<div class=" text-red-7 ">
-												{props.variants?.[0]?.calculated_price
-													? currencyFormat(Number(props.variants?.[0]?.calculated_price), 'USD')
-													: ''}
-											</div>
-											<span class="text-xs text-red-700 sm:text-white font-semibold sm:bg-red-700 rounded-lg flex justify-center items-center  uppercase max-w-10">
-												sale
-											</span>
-										</div>
-									</Show>
-								</div>
-								<span class="text-xs sm:text-sm font-500 tracking-tight text-gray-6/80">{props.title}</span>
+										<span class="text-xs text-red-700 sm:text-white font-semibold sm:bg-red-700 rounded-lg flex justify-center items-center  uppercase max-w-10">
+											sale
+										</span>
+									</div>
+								</Show>
 							</div>
 						</div>
 					</div>

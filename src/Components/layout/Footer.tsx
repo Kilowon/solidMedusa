@@ -38,10 +38,10 @@ export function CallToAction() {
 			<div class="content-container">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div class="flex flex-col justify-center">
-						<h1 class="text-base md:text-lg lg:text-xl font-500 text-gray-6 tracking-tighter ">
+						<h1 class="text-base md:text-lg lg:text-xl font-500 text-gray-6 tracking-tighter text-balance ">
 							Unleash Your Inner Explorer! With over 200+ items.
 						</h1>
-						<div class="text-sm md:text-base lg:text-lg text-gray-5 tracking-tighter">
+						<div class="text-sm md:text-base lg:text-lg text-gray-5 tracking-tighter text-balance">
 							{' '}
 							Find the perfect piece that captures your imagination.
 						</div>

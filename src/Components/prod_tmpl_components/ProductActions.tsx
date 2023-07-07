@@ -154,7 +154,7 @@ export default function ProductActions(props: {
 
 							<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
 						</div>
-						<h3 class=" md:text-2xl font-semibold">{props.productInfo?.title}</h3>
+						<h3 class=" md:text-2xl font-semibold text-balance">{props.productInfo?.title}</h3>
 					</div>
 					<div>
 						<Show when={currentVariant()?.original_price}>
@@ -581,8 +581,8 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 							)}
 						>
 							<div class="space-y-2">
-								<h1 class="tracking-tight  sm:text-lg">{props.productInfo?.title}</h1>
-								<h2 class="tracking-tight text-gray-6">{props.productInfo?.subtitle}</h2>
+								<h1 class="tracking-tight  sm:text-lg text-balance">{props.productInfo?.title}</h1>
+								<h2 class="tracking-tight text-gray-6 text-balance">{props.productInfo?.subtitle}</h2>
 							</div>
 							<p class=" mb-3 text-gray-500 dark:text-gray-400 whitespace-break-spaces   dark:first-letter:text-gray-100">
 								{props.productInfo.description}

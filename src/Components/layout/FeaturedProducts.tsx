@@ -99,22 +99,22 @@ export default function FeaturedProducts(props: FeaturedProps) {
 					<div class="mx-1 sm:mx-auto sm:content-container-wide my-16 font-poppins grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
 						<Show when={queryCollection?.data?.products}>
 							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-								<header class="col-span-1 lg:col-span-1 grid justify-self-center content-center space-y-4">
+								<div class="col-span-1 lg:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
 									<div class="space-y-1">
-										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_top}
 										</h2>
-										<h1 class=" text-sm md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter">
+										<h1 class=" text-sm md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter text-balance">
 											{currentFeatured()?.title}
 										</h1>
-										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter">
+										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_bottom}
 										</h2>
 									</div>
-									<p class="text-xs md:text-base  lg:text-base text-gray-5 tracking-normal">
+									<p class="text-xs md:text-base  lg:text-base text-gray-5 tracking-normal text-balance">
 										{currentFeatured()?.metadata?.description}
 									</p>
-								</header>
+								</div>
 								<For each={queryCollection?.data?.products}>
 									{(product, index) => {
 										let el: HTMLLIElement | undefined

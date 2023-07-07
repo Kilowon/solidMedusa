@@ -50,6 +50,7 @@ export default defineConfig({
 				{
 					'content-container-wide': 'max-w-[1800px] w-full mx-auto px-8'
 				},
+
 				['root', 'selector-[:root]:[--normal:0,200,0]'],
 				['root', 'selector-[:root]:[--normal_2:0,200,0]'],
 				['root', 'selector-[:root]:[--normal_3:0,200,0]'],
@@ -88,6 +89,12 @@ export default defineConfig({
 					'height-fill',
 					{
 						['height']: '-webkit-fill-available'
+					}
+				],
+				[
+					'text-balance',
+					{
+						['text-wrap']: 'balance'
 					}
 				],
 				[

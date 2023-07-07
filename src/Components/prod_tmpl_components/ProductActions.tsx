@@ -35,6 +35,11 @@ export default function ProductActions(props: {
 	useStore: any
 }): JSX.Element {
 	const { addToCart } = useStore()
+	const { variant } = useStore()
+
+	createEffect(() => {
+		console.log('VARIENT PRO ACT', variant())
+	})
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 	const [rating, setRating] = createSignal(4.5)

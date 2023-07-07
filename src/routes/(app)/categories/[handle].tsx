@@ -17,6 +17,24 @@ export default function Categories() {
 	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
@@ -31,15 +49,14 @@ export default function Categories() {
 	const queryCategoryProducts = createQuery(() => ({
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
-			if (!queryCart?.data?.cart?.id) return
-			if (!currentCategoryId()) return
 			const product = await medusa?.products?.list({
 				category_id: currentCategoryId(),
 				cart_id: queryCart?.data?.cart?.id
 			})
 			setCategory(filterCategories())
 			return product
-		}
+		},
+		enabled: !!currentCategoryId() && !!queryCart?.data?.cart?.id
 	}))
 
 	createEffect(() => {
@@ -147,7 +164,10 @@ export default function Categories() {
 																			animate={{ opacity: [0, 1] }}
 																			transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
 																		>
-																			<ProductPreview {...product} />
+																			<ProductPreview
+																				{...product}
+																				wish={primaryData?.data?.data?.category_wish}
+																			/>
 																		</Motion>
 																	</Rerun>
 																</Presence>

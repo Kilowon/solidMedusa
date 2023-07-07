@@ -70,12 +70,30 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				cart_id: queryCart?.data?.cart?.id,
 				region_id: queryCart?.data?.cart?.region_id,
 				collection_id: [currentFeatured()?.id],
-				limit: 20
+				limit: 50
 			})
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
 		refetchInterval: 15 * 60 * 1000,
+		enabled: false
+	}))
+
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
 		enabled: false
 	}))
 
@@ -96,31 +114,35 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class="mx-1 sm:mx-auto sm:content-container-wide my-16 font-poppins grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+					<div class="mx-1 sm:mx-auto sm:content-container-wide my-16 font-poppins grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
 						<Show when={queryCollection?.data?.products}>
-							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-								<div class="col-span-1 lg:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4">
+								<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
 									<div class="space-y-1">
-										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter text-balance">
+										<h2 class=" text-xs   xl:text-base font-500  text-gray-6 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_top}
 										</h2>
-										<h1 class=" text-sm md:text-base lg:text-[1.2svw] font-500 text-gray-6 tracking-tighter text-balance">
+										<h1 class=" text-sm  xl:text-[1.2svw] font-500 text-gray-6 tracking-tighter text-balance">
 											{currentFeatured()?.title}
 										</h1>
-										<h2 class=" text-xs md:text-base  lg:text-base font-500 text-gray-6/80 tracking-tighter text-balance">
+										<h2 class=" text-xs   xl:text-sm font-500 text-gray-6/80 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_bottom}
 										</h2>
 									</div>
-									<p class="text-xs md:text-base  lg:text-base text-gray-5 tracking-normal text-balance">
+									<p class="text-xs xl:text-sm text-gray-5 tracking-normal text-balance">
 										{currentFeatured()?.metadata?.description}
 									</p>
-								</div>
+								</li>
 								<For each={queryCollection?.data?.products}>
 									{(product, index) => {
 										let el: HTMLLIElement | undefined
 										const [isVisible, setIsVisible] = createSignal(false)
 										const [delay, setDelay] = createSignal(0)
 										const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
+										console.log(
+											(getWindowSize().width > 1023 && index() >= 4) ||
+												(getWindowSize().width > 1023 && index() < 5 && index() % 5 === 0)
+										)
 
 										createEffect(() => {
 											if (visible()) {
@@ -128,18 +150,25 @@ export default function FeaturedProducts(props: FeaturedProps) {
 												setDelay((index() % 4) * 0.3)
 											}
 										})
-
 										if (
-											getWindowSize().width > 460 &&
-											currentFeatured()?.metadata?.limit &&
-											index() > Number(currentFeatured()?.metadata?.limit) - 1
+											getWindowSize().width < 1280 &&
+											getWindowSize().width > 639 &&
+											index() >= 3 &&
+											queryCollection?.data?.products?.length < 6
 										) {
+											console.log('SHORT', index())
 											return
 										}
 
-										if (getWindowSize().width < 460 && index() > Number(currentFeatured()?.metadata?.mobile_limit) - 1) {
+										if (getWindowSize().width < 639 && (index() - 1) % 2 === 0) {
+											console.log('here', index())
 											return
 										}
+										if (getWindowSize().width > 1280 && index() >= 4 && queryCollection?.data?.products?.length < 7) {
+											console.log('here', index())
+											return
+										}
+
 										return (
 											<li ref={el}>
 												<Show when={isVisible()}>
@@ -149,7 +178,10 @@ export default function FeaturedProducts(props: FeaturedProps) {
 																animate={{ opacity: [0, 1] }}
 																transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
 															>
-																<ProductPreview {...product} />
+																<ProductPreview
+																	{...product}
+																	wish={primaryData?.data?.data?.product_wish}
+																/>
 															</Motion>
 														</Rerun>
 													</Presence>

@@ -48,7 +48,7 @@ export default defineConfig({
 					'content-container': 'max-w-[1440px] w-full mx-auto px-8'
 				},
 				{
-					'content-container-wide': 'max-w-[1800px] w-full mx-auto px-8'
+					'content-container-wide': 'max-w-[80vw] w-full mx-auto px-8'
 				},
 
 				['root', 'selector-[:root]:[--normal:0,200,0]'],
@@ -66,7 +66,8 @@ export default defineConfig({
 				['root', 'selector-[:root]:[--accent_3:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_4:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_text:0,200,0]'],
-				['root', 'selector-[:root]:[--accent_text_2:0,200,0]']
+				['root', 'selector-[:root]:[--accent_text_2:0,200,0]'],
+				['root', 'selector-[:root]:[--hero_text_1:0,200,0]']
 			],
 			rules: [
 				[
@@ -125,7 +126,8 @@ export default defineConfig({
 					accent_3: 'rgb(var(--accent_3))',
 					accent_4: 'rgb(var(--accent_4))',
 					accenttext: 'rgb(var(--accent_text))',
-					accenttext_2: 'rgb(var(--accent_text_2))'
+					accenttext_2: 'rgb(var(--accent_text_2))',
+					hero_text_1: 'rgb(var(--hero_text_1))'
 				}
 			}
 		})

@@ -12,7 +12,7 @@ export type ThumbnailProps = {
 	images?: MedusaImage[] | null
 	size?: string | 'small' | 'medium' | 'large' | 'full'
 	title?: string | null
-	variant?: 'wide' | 'clothing' | 'tall'
+	variant?: 'wide' | 'default' | 'tall'
 }
 
 export function Thumbnail(props: ThumbnailProps) {
@@ -22,7 +22,7 @@ export function Thumbnail(props: ThumbnailProps) {
 		<div
 			class={clsx(
 				'relative aspect-[100/75]',
-				props.variant === 'clothing' && 'aspect-[29/34]',
+				props.variant === 'default' && 'aspect-[29/34]',
 				props.variant === 'tall' && 'aspect-[75/100]',
 				props.variant === 'wide' && 'aspect-[100/75]'
 			)}

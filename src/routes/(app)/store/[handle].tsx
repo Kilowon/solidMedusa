@@ -11,6 +11,24 @@ export default function Store() {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	const queryAllProducts = createQuery(() => ({
 		queryKey: ['all-products'],
 		queryFn: async function () {
@@ -63,7 +81,10 @@ export default function Store() {
 														animate={{ opacity: [0, 1] }}
 														transition={{ duration: 0.5, delay: delay(), easing: 'ease-in-out' }}
 													>
-														<ProductPreview {...product} />
+														<ProductPreview
+															{...product}
+															wish={primaryData?.data?.data?.store_wish}
+														/>
 													</Motion>
 												</Rerun>
 											</Presence>

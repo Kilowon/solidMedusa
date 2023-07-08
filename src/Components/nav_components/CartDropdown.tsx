@@ -21,7 +21,9 @@ export default function CartDropdown(props: any) {
 	function handleOnClick(e: Event) {
 		const target = e.target as HTMLElement
 		if (target.classList.contains('i-ion-cart-outline')) {
-			setOpen(!open())
+			setTimeout(() => {
+				setOpen(!open())
+			}, 200)
 		}
 	}
 

@@ -33,8 +33,6 @@ export default function DropdownMenu(props: any) {
 			<div
 				class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400  font-poppins
 			"
-				onMouseOver={() => setOpen(true)}
-				onMouseLeave={() => setOpen(false)}
 			>
 				<div>
 					<div
@@ -42,7 +40,6 @@ export default function DropdownMenu(props: any) {
 						title="Main Menu"
 						role="button"
 						tabindex="0"
-						onClick={() => setOpen(true)}
 						onKeyDown={e => {
 							if (e.key === 'Enter') {
 								return setOpen(true)
@@ -52,7 +49,14 @@ export default function DropdownMenu(props: any) {
 							}
 						}}
 					>
-						<div class="i-ic-round-menu  w-7 h-7 ml-2" />
+						<div
+							class="i-ic-round-menu  w-7 h-7 ml-2"
+							onclick={e => {
+								e.stopPropagation()
+								setOpen(true)
+								console.log(open())
+							}}
+						/>
 					</div>
 				</div>
 				<Transition
@@ -71,7 +75,10 @@ export default function DropdownMenu(props: any) {
 				>
 					<Show when={open()}>
 						<Suspense fallback={<div>Loading...</div>}>
-							<div class="bg-white absolute top-full w-full inset-x-0 z-30 mx-auto px-8">
+							<div
+								class="bg-white absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
+								/* onMouseLeave={() => setOpen(false)} */
+							>
 								<div class="relative py-4">
 									<div class="flex items-start  mx-auto px-8 ">
 										<div class="flex flex-col ">
@@ -79,7 +86,7 @@ export default function DropdownMenu(props: any) {
 												<div class="text-base bg-gray-5 text-white  p-2">
 													<A
 														href={`/store/Store`}
-														onClick={() => setOpen(false)}
+														//onClick={() => setOpen(false)}
 													>
 														Shop All Our Items
 													</A>
@@ -93,10 +100,11 @@ export default function DropdownMenu(props: any) {
 																		<div class="text-base bg-gray-5/70 text-white  p-2 rounded-0.5">
 																			<A
 																				href={`/collections/${collection.handle}`}
-																				onClick={() => setOpen(false)}
+																				//onClick={() => setOpen(false)}
 																				onKeyDown={e => {
 																					if (e.key === 'Escape') {
 																						return setOpen(false)
+																						console.log(open())
 																					}
 																				}}
 																			>
@@ -122,10 +130,11 @@ export default function DropdownMenu(props: any) {
 																				<div class="text-base text-gray-6 text-lg font-500 capitalize">
 																					<A
 																						href={`/categories/${parentCategory.handle}`}
-																						onClick={() => setOpen(false)}
+																						//onClick={() => setOpen(false)}
 																						onKeyDown={e => {
 																							if (e.key === 'Escape') {
 																								return setOpen(false)
+																								console.log(open())
 																							}
 																						}}
 																					>
@@ -141,10 +150,11 @@ export default function DropdownMenu(props: any) {
 																										<div class="text-gray-5 capitalize">
 																											<A
 																												href={`/categories/${category.handle}`}
-																												onClick={() => setOpen(false)}
+																												//onClick={() => setOpen(false)}
 																												onKeyDown={e => {
 																													if (e.key === 'Escape') {
 																														return setOpen(false)
+																														console.log(open())
 																													}
 																												}}
 																											>
@@ -175,7 +185,7 @@ export default function DropdownMenu(props: any) {
 																					<div class="capitalize">
 																						<A
 																							href={`/categories/${collection.handle}`}
-																							onClick={() => setOpen(false)}
+																							//onClick={() => setOpen(false)}
 																						>
 																							{collection.name}
 																						</A>

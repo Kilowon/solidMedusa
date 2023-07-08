@@ -99,7 +99,7 @@ export default function CartCore(props: CartCoreProps) {
 															<div class="flex flex-col items-center">
 																<Thumbnail
 																	thumbnail={item.thumbnail}
-																	variant="clothing"
+																	variant="default"
 																/>
 																<div
 																	class={clsx(
@@ -370,6 +370,17 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 		}
 	}
 
+	const queryLineItem = createQuery(() => ({
+		queryKey: ['CartCore-LineItem-Options', props.item?.id],
+		queryFn: async function () {
+			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
+			return response
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	const mutateLineItemQuanity = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
@@ -382,7 +393,9 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 		cacheTime: 0,
 		retry: 0
 	}))
-
+	createEffect(() => {
+		console.log('VAR', queryLineItem?.data?.product?.variants)
+	})
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<button
@@ -394,7 +407,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				}}
 			>
 				<div
-					class="i-mdi-minus-circle text-gray-5"
+					class={clsx('i-mdi-minus-circle text-gray-5', props.item.quantity === props.item.variant && 'text-gray-2')}
 					onclick={() => {
 						handleQuanity(props.item.quantity - 1)
 					}}
@@ -411,7 +424,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 			>
 				<div
 					class="i-mdi-plus-circle text-gray-5"
-					onClick={() => {
+					onClick={e => {
 						handleQuanity(props.item.quantity + 1)
 					}}
 				/>

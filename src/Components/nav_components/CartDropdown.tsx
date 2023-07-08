@@ -17,35 +17,16 @@ export default function CartDropdown(props: any) {
 	const { queryCart } = useGlobalContext()
 
 	const [open, setOpen] = createSignal(false)
-	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
-
-	createEffect(() => {
-		if (queryCart.isSuccess) {
-			setItems(queryCart?.data?.cart?.items)
-		}
-	}, [queryCart])
 
 	function handleOnClick(e: Event) {
 		const target = e.target as HTMLElement
 		if (target.classList.contains('i-ion-cart-outline')) {
-			props.setStayOpen(!props.stayOpen())
+			setOpen(!open())
 		}
-	}
-
-	function handleOnMouseOver() {
-		if (props.stayOpen()) return
-		setOpen(true)
-	}
-
-	function handleOnMouseLeave() {
-		if (props.stayOpen()) return
-		setOpen(false)
 	}
 
 	return (
 		<div
-			onMouseOver={() => handleOnMouseOver()}
-			onMouseLeave={() => handleOnMouseLeave()}
 			onClick={e => handleOnClick(e)}
 			onKeyDown={e => {
 				if (e.key === 'Enter') {
@@ -59,16 +40,14 @@ export default function CartDropdown(props: any) {
 			role="button"
 			tabindex="0"
 		>
-			<div
-				class={props.stayOpen() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}
-			>
+			<div class={open() ? 'flex text-2xl p-5 text-amber-5 h-full relative' : 'flex text-2xl p-5 h-full relative '}>
 				<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
 				<div
 					class={
-						'w-5 h-5 absolute top-3 right-3 bg-gray-5 text-xs text-white font-semibold flex items-center justify-center rounded-full'
+						'w-5 h-5 absolute top-3 right-3 bg-text_2 text-xs text-white font-500 flex items-center justify-center rounded-full'
 					}
 				>
-					{totalItemsInCart(items())}
+					{totalItemsInCart(queryCart?.data?.cart?.items)}
 				</div>
 			</div>
 
@@ -87,7 +66,7 @@ export default function CartDropdown(props: any) {
 				}}
 			>
 				<Suspense>
-					<Show when={open() && queryCart.isSuccess}>
+					<Show when={open()}>
 						<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
 							<CartCore variant="panel" />
 						</div>

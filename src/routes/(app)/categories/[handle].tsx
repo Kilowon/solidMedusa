@@ -140,7 +140,7 @@ export default function Categories() {
 									/>
 
 									<Show when={queryCategoryProducts.isSuccess}>
-										<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+										<ul class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
 											<For each={queryCategoryProducts.data?.products}>
 												{(product: any, index) => {
 													let el: HTMLLIElement | undefined

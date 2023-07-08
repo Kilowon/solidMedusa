@@ -82,7 +82,7 @@ export default function Collection() {
 							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
 							<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
 						</div>
-						<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+						<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
 							<For each={queryCollection?.data?.products}>
 								{(product, index) => {
 									let el: HTMLLIElement | undefined

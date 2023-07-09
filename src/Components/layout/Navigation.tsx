@@ -1,9 +1,9 @@
-import { onMount, createEffect, createSignal, lazy, Suspense, Show } from 'solid-js'
+import { onMount, createEffect, createSignal, lazy, Suspense, SuspenseList, Show } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
-
+import { Image } from '@unpic/solid'
 //import CartDropdown from '~/Components/nav_components/CartDropdown'
 
 const CartDropdown = lazy(async () => {
@@ -62,6 +62,10 @@ export default function Navigation(props: any) {
 		enabled: false
 	}))
 
+	createEffect(() => {
+		console.log(primaryData?.data?.data?.title_icon)
+	})
+
 	function hexToRgb(hex: any) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
@@ -71,99 +75,109 @@ export default function Navigation(props: any) {
 		<div
 			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
 			style={{
-				'--normal': `${hexToRgb(primaryData?.data?.data?.normal)}`,
+				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
 				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
 				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
 				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
-				'--text': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
+				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
 				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
 				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
 				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
 				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
-				'--accent': `${hexToRgb(primaryData?.data?.data?.accent)}`,
+				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
 				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
 				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
 				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
-				'--accent_text': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
+				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
-			<header class="relative h-16 mx-auto  border-b border-transparent bg-normal text-text_2">
-				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
-					<div class="flex-1 basis-0 h-full flex items-center">
-						<div class="xl:hidden">
-							<Suspense>
-								<HamburgerDrawerNav
-									menuDrawer={menuDrawer}
-									setMenuDrawer={setMenuDrawer}
-								/>
-							</Suspense>
+			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
+				<Suspense>
+					<nav class="flex items-center justify-between w-full h-full text-sm  relative">
+						<div class="flex-1 basis-0 h-full flex items-center">
+							<div class="xl:hidden">
+								<Suspense>
+									<HamburgerDrawerNav
+										menuDrawer={menuDrawer}
+										setMenuDrawer={setMenuDrawer}
+									/>
+								</Suspense>
+							</div>
+							<div class="hidden xl:block h-full ml-2">
+								<Suspense>
+									<DropdownMenu
+										collection={props.collection}
+										product={props.product}
+									/>
+								</Suspense>
+							</div>
 						</div>
-						<div class="hidden xl:block h-full ml-2">
-							<Suspense>
-								<DropdownMenu
-									collection={props.collection}
-									product={props.product}
-								/>
-							</Suspense>
-						</div>
-					</div>
-					<Suspense>
-						<Show when={primaryData?.data?.data?.title}>
-							<div class="flex items-center h-full">
+						<Suspense>
+							<div class="flex items-center">
 								<A
 									title="Home"
 									href="/"
-									class="text-regular md:text-2xl font-semibold font-poppins uppercase"
+									class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
 								>
-									<div
-										title={primaryData?.data?.data?.title}
-										class=" font-poppins uppercase"
-									>
-										{primaryData?.data?.data?.title}
-									</div>
+									<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
+										<Image
+											src={primaryData?.data?.data?.title_icon}
+											alt={primaryData?.data?.data?.title}
+											height={50}
+											width={100}
+										/>
+									</Show>
+									<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
+										<div
+											title={primaryData?.data?.data?.title}
+											class=" font-poppins uppercase"
+										>
+											{primaryData?.data?.data?.title}
+										</div>
+									</Show>
 								</A>
 							</div>
-						</Show>
-					</Suspense>
-					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
-						<div class="flex items-center mr-4 ">
-							<A
-								class="hover:cursor-pointer"
-								href="/account"
-								title="account info"
-								role="button"
-								tabindex="0"
-							>
-								<div
-									class={clsx(
-										'h-7 w-7',
-										accountStatus() === 'inactive' && 'i-la-user-plus',
-										accountStatus() === 'active' && 'i-la-user-check'
-									)}
-								/>
-							</A>
+						</Suspense>
+						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
+							<div class="flex items-center mr-4 ">
+								<A
+									class="hover:cursor-pointer"
+									href="/account"
+									title="account info"
+									role="button"
+									tabindex="0"
+								>
+									<div
+										class={clsx(
+											'h-7 w-7',
+											accountStatus() === 'inactive' && 'i-la-user-plus',
+											accountStatus() === 'active' && 'i-la-user-check'
+										)}
+									/>
+								</A>
+							</div>
+							<div class="hidden xl:block">
+								<Suspense>
+									<CartDropdown
+										cart={props.cart}
+										stayOpen={stayOpen}
+										setStayOpen={setStayOpen}
+									/>
+								</Suspense>
+							</div>
+							<div class="block xl:hidden ">
+								<Suspense fallback={<div></div>}>
+									<CartDrawerNav
+										cartDrawer={cartDrawer}
+										setCartDrawer={setCartDrawer}
+									/>
+								</Suspense>
+							</div>
 						</div>
-						<div class="hidden xl:block">
-							<Suspense>
-								<CartDropdown
-									cart={props.cart}
-									stayOpen={stayOpen}
-									setStayOpen={setStayOpen}
-								/>
-							</Suspense>
-						</div>
-						<div class="block xl:hidden ">
-							<Suspense>
-								<CartDrawerNav
-									cartDrawer={cartDrawer}
-									setCartDrawer={setCartDrawer}
-								/>
-							</Suspense>
-						</div>
-					</div>
-				</nav>
+					</nav>
+				</Suspense>
 			</header>
 		</div>
 	)

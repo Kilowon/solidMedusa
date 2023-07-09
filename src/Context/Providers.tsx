@@ -177,10 +177,29 @@ export function GlobalContextProvider(props: any) {
 		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
 	}, [queryCategories])
 
+	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])
+
+	const queryCategoryProducts = createQuery(() => ({
+		queryKey: ['categories_products', currentCategoryId()],
+		queryFn: async function () {
+			const product = await medusa.products.list({
+				category_id: currentCategoryId(),
+				cart_id: queryCart?.data?.cart?.id
+			})
+			return product
+		},
+		cacheTime: 15 * 60 * 1000
+		//enabled: false
+	}))
+
 	const [categoryProducts, setCategoryProducts] = createSignal([])
 
+	createEffect(() => {
+		setCategoryProducts(queryCategoryProducts.data?.products)
+	}, [queryCategoryProducts, currentCategoryId])
+
 	const queryCollections = createQuery(() => ({
-		queryKey: ['collections'],
+		queryKey: ['collections', currentCategoryId()],
 		queryFn: async function () {
 			const product = await medusa.collections.list()
 			return product
@@ -209,6 +228,7 @@ export function GlobalContextProvider(props: any) {
 				setCurrentProductId,
 				rootCategories,
 				categories,
+				setCurrentCategoryId,
 				categoryProducts,
 				setCategoryProducts,
 				collections

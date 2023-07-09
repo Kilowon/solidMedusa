@@ -83,7 +83,7 @@ export default function Categories() {
 	})
 
 	function updateCurrentCategoryId() {
-		setCurrentCategoryId?.(currentCategory().map((category: any) => category.id))
+		setCurrentCategoryId?.(currentCategory()?.map((category: any) => category.id))
 	}
 
 	const [parentCategories, setParentCategories] = createSignal([])
@@ -140,7 +140,7 @@ export default function Categories() {
 									/>
 
 									<Show when={queryCategoryProducts.isSuccess}>
-										<ul class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+										<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-x-4 gap-y-16">
 											<For each={queryCategoryProducts.data?.products}>
 												{(product: any, index) => {
 													let el: HTMLLIElement | undefined
@@ -167,6 +167,7 @@ export default function Categories() {
 																			<ProductPreview
 																				{...product}
 																				wish={primaryData?.data?.data?.category_wish}
+																				tag={primaryData?.data?.data?.category_tag}
 																			/>
 																		</Motion>
 																	</Rerun>

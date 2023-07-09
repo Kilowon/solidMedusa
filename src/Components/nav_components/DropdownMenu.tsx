@@ -53,7 +53,7 @@ export default function DropdownMenu(props: any) {
 							class="i-ic-round-menu  w-7 h-7 ml-2"
 							onclick={e => {
 								e.stopPropagation()
-								setOpen(true)
+								setOpen(!open())
 								console.log(open())
 							}}
 						/>
@@ -76,14 +76,14 @@ export default function DropdownMenu(props: any) {
 					<Show when={open()}>
 						<Suspense fallback={<div>Loading...</div>}>
 							<div
-								class="bg-white absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
+								class=" bg-normal_2 absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
 								/* onMouseLeave={() => setOpen(false)} */
 							>
 								<div class="relative py-4">
 									<div class="flex items-start  mx-auto px-8 ">
-										<div class="flex flex-col ">
+										<div class="flex flex-col space-y-8 ">
 											<div class="flex space-x-12 ">
-												<div class="text-base bg-gray-5 text-white  p-2">
+												<div class="text-base  bg-text_1 text-normal_2 rounded-0.5  p-2">
 													<A
 														href={`/store/Store`}
 														//onClick={() => setOpen(false)}
@@ -97,10 +97,14 @@ export default function DropdownMenu(props: any) {
 															if (collection?.metadata?.menu !== 'hidden')
 																return (
 																	<Suspense fallback={<div>Loading...</div>}>
-																		<div class="text-base bg-gray-5/70 text-white  p-2 rounded-0.5">
+																		<div class="text-base bg-text_3 text-normal_2  p-2 rounded-0.5">
 																			<A
 																				href={`/collections/${collection.handle}`}
-																				//onClick={() => setOpen(false)}
+																				onClick={e => {
+																					e.stopPropagation()
+
+																					setOpen(false)
+																				}}
 																				onKeyDown={e => {
 																					if (e.key === 'Escape') {
 																						return setOpen(false)
@@ -117,20 +121,24 @@ export default function DropdownMenu(props: any) {
 													</For>
 												</Show>
 											</div>
+											<hr class="border-text_4/50 my-2 mx-6" />
 											<div class="flex items-start">
 												<Show when={rootCategories()}>
-													<ol class="flex flex-auto space-x-4 mt-2 ">
+													<ol class="flex flex-auto space-x-6 mt-2 ">
 														<For each={rootCategories()}>
 															{(parentCategory: any) => {
 																if (parentCategory.category_children?.length > 0) {
 																	return (
 																		<Suspense fallback={<div>Loading...</div>}>
 																			<li class="whitespace-nowrap space-y-4">
-																				<span class="flex border border-gray-3"></span>
-																				<div class="text-base text-gray-6 text-lg font-500 capitalize">
+																				<div class="text-base text-text_2 text-lg font-500 capitalize">
 																					<A
 																						href={`/categories/${parentCategory.handle}`}
-																						//onClick={() => setOpen(false)}
+																						onClick={e => {
+																							e.stopPropagation()
+
+																							setOpen(false)
+																						}}
 																						onKeyDown={e => {
 																							if (e.key === 'Escape') {
 																								return setOpen(false)
@@ -147,10 +155,14 @@ export default function DropdownMenu(props: any) {
 																							if (category.parent_category?.id === parentCategory.id) {
 																								return (
 																									<Suspense fallback={<div>Loading...</div>}>
-																										<div class="text-gray-5 capitalize">
+																										<div class="text-text_3/85 capitalize">
 																											<A
 																												href={`/categories/${category.handle}`}
-																												//onClick={() => setOpen(false)}
+																												onClick={e => {
+																													e.stopPropagation()
+
+																													setOpen(false)
+																												}}
 																												onKeyDown={e => {
 																													if (e.key === 'Escape') {
 																														return setOpen(false)
@@ -174,9 +186,8 @@ export default function DropdownMenu(props: any) {
 															}}
 														</For>
 
-														<li class="flex flex-col whitespace-nowrap space-y-5">
-															<span class="flex border border-gray-3"></span>
-															<div class="text-base text-gray-6 font-500 space-y-2">
+														<li class="flex flex-col whitespace-nowrap ">
+															<div class="text-base text-text_2 font-500 space-y-3">
 																<For each={rootCategories()}>
 																	{(collection: any) => {
 																		if (collection.category_children?.length === 0) {

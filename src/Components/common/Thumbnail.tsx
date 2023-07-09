@@ -12,7 +12,7 @@ export type ThumbnailProps = {
 	images?: MedusaImage[] | null
 	size?: string | 'small' | 'medium' | 'large' | 'full'
 	title?: string | null
-	variant?: 'wide' | 'default' | 'tall'
+	variant?: 'wide' | 'default' | 'tall' | 'default_cart'
 }
 
 export function Thumbnail(props: ThumbnailProps) {
@@ -31,6 +31,7 @@ export function Thumbnail(props: ThumbnailProps) {
 				title={props.title}
 				image={initialImage}
 				size={props.size}
+				variant={props.variant}
 			/>
 		</div>
 	)
@@ -39,16 +40,18 @@ export function Thumbnail(props: ThumbnailProps) {
 const ImageOrPlaceholder = ({
 	image,
 	size,
-	title
-}: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'>) => {
+	title,
+	variant
+}: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'> &
+	Pick<ThumbnailProps, 'variant'>) => {
 	return image ? (
 		<div class="w-full h-full">
 			<Image
 				src={image}
-				height={422}
-				width={360}
+				height={variant === 'default_cart' ? 50 : 422}
+				width={variant === 'default_cart' ? 42 : 360}
 				alt="Thumbnail"
-				class="object-contain w-full h-full"
+				class={variant === 'default_cart' ? 'object-contain w-full h-full' : 'object-cover w-full h-full'}
 			/>
 		</div>
 	) : (

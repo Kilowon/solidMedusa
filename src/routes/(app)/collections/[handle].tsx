@@ -14,6 +14,10 @@ interface Collection {
 	title: string
 	metadata: {
 		description: string
+		location: 'hero' | 'menu' | 'footer'
+		limit: number
+		sub_title_top: string
+		sub_title_bottom: string
 	}
 	// add any other properties here
 }
@@ -76,13 +80,25 @@ export default function Collection() {
 					a.finished.then(done)
 				}}
 			>
-				<div class="mx-1 sm:mx-auto sm:content-container sm:mt-16 font-poppins">
+				<div class=" sm:content-container font-poppins ">
 					<Show when={queryCollection?.data?.products}>
-						<div class="mb-8">
-							<h1 class="text-base md:text-xl lg:text-3xl font-bold   text-gray-6 ">{currentCollection()?.title}</h1>
-							<div class="text-xs lg:text-base  text-gray-5">{currentCollection()?.metadata?.description}</div>
-						</div>
-						<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 my-20">
+							<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+								<div class="space-y-1">
+									<h2 class=" text-xs   xl:text-base font-500   text-text_2 tracking-tighter text-balance">
+										{currentCollection()?.metadata?.sub_title_top}
+									</h2>
+									<h1 class=" text-sm  xl:text-[1.2svw] font-500  text-text_1 tracking-tighter text-balance">
+										{currentCollection()?.title}
+									</h1>
+									<h2 class=" text-xs   xl:text-sm font-500  text-text_2 tracking-tighter text-balance">
+										{currentCollection()?.metadata?.sub_title_bottom}
+									</h2>
+								</div>
+								<p class="text-xs xl:text-sm  text-text_3  tracking-normal text-balance">
+									{currentCollection()?.metadata?.description}
+								</p>
+							</li>
 							<For each={queryCollection?.data?.products}>
 								{(product, index) => {
 									let el: HTMLLIElement | undefined
@@ -118,7 +134,7 @@ export default function Collection() {
 									)
 								}}
 							</For>
-						</ul>
+						</ol>
 					</Show>
 				</div>
 			</Transition>

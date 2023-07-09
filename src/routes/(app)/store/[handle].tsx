@@ -54,10 +54,18 @@ export default function Store() {
 	return (
 		<main class="min-h-[100vh]">
 			<div class="mx-1 sm:mx-auto sm:content-container mt-5 sm:mt-25 font-poppins space-y-5">
-				<div class="text-gray-6 font-500 text-base lg:text-2xl">Shop everything in the store</div>
-
 				<Show when={queryAllProducts?.data?.products}>
-					<ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  gap-4">
+					<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 my-20">
+						<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+							<div class="space-y-1">
+								<h1 class=" text-sm  xl:text-[1.2svw] font-500  text-text_1 tracking-tighter text-balance">
+									{primaryData?.data?.data?.everything_title}
+								</h1>
+							</div>
+							<p class="text-xs xl:text-sm  text-text_3  tracking-normal text-balance">
+								{primaryData?.data?.data?.everything_subtitle}
+							</p>
+						</li>
 						<For each={queryAllProducts?.data?.products}>
 							{(product, index) => {
 								let el: HTMLLIElement | undefined
@@ -84,6 +92,7 @@ export default function Store() {
 														<ProductPreview
 															{...product}
 															wish={primaryData?.data?.data?.store_wish}
+															tag={primaryData?.data?.data?.store_tag}
 														/>
 													</Motion>
 												</Rerun>
@@ -97,7 +106,7 @@ export default function Store() {
 								)
 							}}
 						</For>
-					</ul>
+					</ol>
 				</Show>
 			</div>
 		</main>

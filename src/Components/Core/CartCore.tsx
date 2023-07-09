@@ -49,6 +49,7 @@ export default function CartCore(props: CartCoreProps) {
 	const [sortedItems, setSortedItems] = createSignal(null)
 
 	createEffect(() => {
+		if (!queryCart?.data?.cart?.items) return
 		const sorted = queryCart?.data?.cart?.items?.sort((a: any, b: any) => {
 			return a.created_at > b.created_at ? -1 : 1
 		})
@@ -56,21 +57,21 @@ export default function CartCore(props: CartCoreProps) {
 	})
 
 	return (
-		<div class=" text-sm text-gray-5 z-50">
+		<Suspense fallback={<div>Loading...</div>}>
 			<Show when={isServer === false && queryCart?.data?.cart?.items && sortedItems()}>
-				<ErrorBoundary fallback={(err, reset) => <div onClick={reset}>Error: {err.toString()}</div>}>
-					<Suspense fallback={<div>Loading...</div>}>
-						<Show when={queryCart?.data?.cart?.items?.length > 0}>
-							<div
-								class={clsx(
-									'',
-									props.variant === 'primary' && 'lg:flex lg:space-x-10',
-									props.variant === 'checkout' && '',
-									props.variant === 'panel' && '',
-									props.variant === 'mobile-checkout' && '',
-									props.variant === 'mobile-panel' && ''
-								)}
-							>
+				<div class=" text-sm text-text_3 z-50">
+					<Show when={queryCart?.data?.cart?.items?.length > 0}>
+						<div
+							class={clsx(
+								'',
+								props.variant === 'primary' && 'lg:flex lg:space-x-10',
+								props.variant === 'checkout' && '',
+								props.variant === 'panel' && '',
+								props.variant === 'mobile-checkout' && '',
+								props.variant === 'mobile-panel' && ''
+							)}
+						>
+							<Suspense fallback={<div>Loading...</div>}>
 								<ol
 									class={clsx(
 										'overflow-y-scroll  scrollbar-hide ',
@@ -83,27 +84,120 @@ export default function CartCore(props: CartCoreProps) {
 								>
 									<For each={sortedItems()}>
 										{item => (
-											<Suspense fallback={<div>Loading...</div>}>
-												<Show when={item.variant.product}>
-													<li>
+											<Show when={item.variant.product}>
+												<li>
+													<div
+														class={clsx(
+															'grid gap-x-3',
+															props.variant === 'primary' && 'grid-cols-[100px_1fr]',
+															props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
+															props.variant === 'panel' && 'grid-cols-[70px_1fr]',
+															props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
+															props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
+														)}
+													>
+														<div class="flex flex-col items-center ">
+															<Thumbnail
+																thumbnail={item.thumbnail}
+																variant="default_cart"
+															/>
+															<div
+																class={clsx(
+																	'',
+																	props.variant === 'primary' && '',
+																	props.variant === 'checkout' && 'hidden',
+																	props.variant === 'panel' && '',
+																	props.variant === 'mobile-checkout' && 'hidden',
+																	props.variant === 'mobile-panel' && ''
+																)}
+															>
+																<Show when={isServer === false}>
+																	<ItemQuantity
+																		item={item}
+																		cart={queryCart?.data?.cart}
+																		variant={props.variant}
+																	/>
+																</Show>
+															</div>
+														</div>
 														<div
 															class={clsx(
-																'grid gap-x-3',
-																props.variant === 'primary' && 'grid-cols-[100px_1fr]',
-																props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
-																props.variant === 'panel' && 'grid-cols-[70px_1fr]',
-																props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
-																props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
+																'grid grid-cols-2',
+																props.variant === 'primary' && 'lg:flex lg:justify-between',
+																props.variant === 'checkout' && '',
+																props.variant === 'panel' && '',
+																props.variant === 'mobile-checkout' && '',
+																props.variant === 'mobile-panel' && ''
 															)}
 														>
-															<div class="flex flex-col items-center">
-																<Thumbnail
-																	thumbnail={item.thumbnail}
-																	variant="default"
-																/>
+															<div class="flex items-start justify-between">
+																<div>
+																	<div
+																		class={clsx(
+																			'font-semibold line-clamp-2 text-ellipsis',
+																			props.variant === 'primary' && 'md:text-lg',
+																			props.variant === 'checkout' && 'text-xs',
+																			props.variant === 'panel' && 'text-xs',
+																			props.variant === 'mobile-checkout' && 'text-xs',
+																			props.variant === 'mobile-panel' && 'text-xs'
+																		)}
+																	>
+																		<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
+																	</div>
+
+																	<ItemOptions
+																		item={item}
+																		cart={queryCart?.data?.cart}
+																		variant={props.variant}
+																	/>
+																</div>
+															</div>
+
+															<div
+																class={clsx(
+																	'space-y-12',
+																	props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
+																	props.variant === 'checkout' && ' text-sm',
+																	props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
+																	props.variant === 'mobile-checkout' && ' text-sm',
+																	props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
+																)}
+															>
 																<div
 																	class={clsx(
 																		'',
+																		props.variant === 'primary' && '',
+																		props.variant === 'checkout' && 'grid grid-cols-2',
+																		props.variant === 'panel' && '',
+																		props.variant === 'mobile-checkout' && 'grid grid-cols-2',
+																		props.variant === 'mobile-panel' && ''
+																	)}
+																>
+																	<div>
+																		<span
+																			class={clsx(
+																				'',
+																				props.variant === 'primary' && 'hidden',
+																				props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																				props.variant === 'panel' && 'hidden',
+																				props.variant === 'mobile-checkout' &&
+																					'flex items-center justify-center mt-2 text-sm font-semibold',
+																				props.variant === 'mobile-panel' && 'hidden'
+																			)}
+																		>
+																			Qty: {item?.quantity}
+																		</span>
+																	</div>
+																	<div class="flex items-center justify-end ">
+																		<ItemPrice
+																			item={item}
+																			cart={queryCart?.data?.cart}
+																			variant={props.variant}
+																		/>
+																	</div>
+																</div>
+																<div
+																	class={clsx(
 																		props.variant === 'primary' && '',
 																		props.variant === 'checkout' && 'hidden',
 																		props.variant === 'panel' && '',
@@ -111,250 +205,153 @@ export default function CartCore(props: CartCoreProps) {
 																		props.variant === 'mobile-panel' && ''
 																	)}
 																>
-																	<Show when={isServer === false}>
-																		<ItemQuantity
-																			item={item}
-																			cart={queryCart?.data?.cart}
-																			variant={props.variant}
-																		/>
-																	</Show>
+																	<button
+																		class="flex items-center gap-x-1 rounded p-1 bg-normal_1"
+																		onClick={() => {
+																			deleteItem(item?.id)
+																		}}
+																	>
+																		<div class="i-ph-trash-duotone text-sm  text-gray-5  "></div>
+																		<span class="text-xs ">Remove</span>
+																	</button>
 																</div>
 															</div>
-															<div
-																class={clsx(
-																	'grid grid-cols-2',
-																	props.variant === 'primary' && 'lg:flex lg:justify-between',
-																	props.variant === 'checkout' && '',
-																	props.variant === 'panel' && '',
-																	props.variant === 'mobile-checkout' && '',
-																	props.variant === 'mobile-panel' && ''
-																)}
-															>
-																<div class="flex items-start justify-between">
-																	<div>
-																		<div
-																			class={clsx(
-																				'font-semibold line-clamp-2 text-ellipsis',
-																				props.variant === 'primary' && 'md:text-lg',
-																				props.variant === 'checkout' && 'text-xs',
-																				props.variant === 'panel' && 'text-xs',
-																				props.variant === 'mobile-checkout' && 'text-xs',
-																				props.variant === 'mobile-panel' && 'text-xs'
-																			)}
-																		>
-																			<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
-																		</div>
-
-																		<ItemOptions
-																			item={item}
-																			cart={queryCart?.data?.cart}
-																			variant={props.variant}
-																		/>
-																	</div>
-																</div>
-
-																<div
-																	class={clsx(
-																		'space-y-12',
-																		props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
-																		props.variant === 'checkout' && ' text-sm',
-																		props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
-																		props.variant === 'mobile-checkout' && ' text-sm',
-																		props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
-																	)}
-																>
-																	<div
-																		class={clsx(
-																			'',
-																			props.variant === 'primary' && '',
-																			props.variant === 'checkout' && 'grid grid-cols-2',
-																			props.variant === 'panel' && '',
-																			props.variant === 'mobile-checkout' && 'grid grid-cols-2',
-																			props.variant === 'mobile-panel' && ''
-																		)}
-																	>
-																		<div>
-																			<span
-																				class={clsx(
-																					'',
-																					props.variant === 'primary' && 'hidden',
-																					props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
-																					props.variant === 'panel' && 'hidden',
-																					props.variant === 'mobile-checkout' &&
-																						'flex items-center justify-center mt-2 text-sm font-semibold',
-																					props.variant === 'mobile-panel' && 'hidden'
-																				)}
-																			>
-																				Qty: {item?.quantity}
-																			</span>
-																		</div>
-																		<div class="flex items-center justify-end ">
-																			<ItemPrice
-																				item={item}
-																				cart={queryCart?.data?.cart}
-																				variant={props.variant}
-																			/>
-																		</div>
-																	</div>
-																	<div
-																		class={clsx(
-																			props.variant === 'primary' && '',
-																			props.variant === 'checkout' && 'hidden',
-																			props.variant === 'panel' && '',
-																			props.variant === 'mobile-checkout' && 'hidden',
-																			props.variant === 'mobile-panel' && ''
-																		)}
-																	>
-																		<button
-																			class="flex items-center gap-x-1 rounded p-1 bg-white"
-																			onClick={() => {
-																				deleteItem(item?.id)
-																			}}
-																		>
-																			<div class="i-ph-trash-duotone text-sm  text-gray-5  "></div>
-																			<span class="text-xs ">Remove</span>
-																		</button>
-																	</div>
-																</div>
-															</div>
-														</div>{' '}
-														<hr class="border-gray-400/50 my-2 mx-6" />
-													</li>
-												</Show>
-											</Suspense>
+														</div>
+													</div>{' '}
+													<hr class="border-gray-400/50 my-2 mx-6" />
+												</li>
+											</Show>
 										)}
 									</For>
 								</ol>
+							</Suspense>
 
-								<div
-									class={clsx(
-										'flex flex-col gap-y-1 text-sm',
-										props.variant === 'primary' && 'lg:w-1/3 lg:sticky lg:top-20 lg:self-start lg:mt-2',
-										props.variant === 'checkout' && '',
-										props.variant === 'panel' && '',
-										props.variant === 'mobile-checkout' && '',
-										props.variant === 'mobile-panel' && ''
-									)}
-								>
-									<div class="flex flex-col justify-start">
-										<div class="flex justify-center bg-gray-2">
-											<div class={'i-tabler-chevron-down text-3xl  '} />
-										</div>
-										<div class="flex justify-between items-center">
-											<span class=" font-500 text-xs">
-												Item Subtotal {'('}
-												{totalItemsInCart(queryCart?.data?.cart?.items)}
-												{queryCart?.data?.cart?.items.length > 1 ? ' items' : ' item'}
-												{')'}
-											</span>
-											<span class="text-large-semi">
-												{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
-											</span>
-										</div>
+							<div
+								class={clsx(
+									'flex flex-col gap-y-1 text-sm',
+									props.variant === 'primary' && 'lg:w-1/3 lg:sticky lg:top-20 lg:self-start lg:mt-2',
+									props.variant === 'checkout' && '',
+									props.variant === 'panel' && '',
+									props.variant === 'mobile-checkout' && '',
+									props.variant === 'mobile-panel' && ''
+								)}
+							>
+								<div class="flex flex-col justify-start">
+									<div class="flex justify-center bg-gray-2">
+										<div class={'i-tabler-chevron-down text-3xl  '} />
 									</div>
-									<PromoCodeInput
-										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
-										cart={queryCart?.data?.cart}
-										variant={props.variant}
-									/>
-									<GiftCardInput
-										onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
-										cart={queryCart?.data?.cart}
-										variant={props.variant}
-									/>
-									<Show when={queryCart?.data?.cart?.shipping_total > 0}>
-										<div class="flex justify-between items-center">
-											<span class=" font-500 text-xs">Shipping</span>
-											<span class="text-sm">
-												{currencyFormat(Number(queryCart?.data?.cart?.shipping_total || 0), queryCart?.data?.cart?.region)}
-											</span>
-										</div>
-									</Show>
-									<Show when={queryCart?.data?.cart?.tax_total > 0}>
-										<div class="flex justify-between items-center">
-											<span class=" font-semibold">Tax</span>
-											<span class="text-large-semi">
-												{currencyFormat(Number(queryCart?.data?.cart?.tax_total || 0), queryCart?.data?.cart?.region)}
-											</span>
-										</div>
-									</Show>
-									<div class="flex justify-between items-center text-gray-8 bg-[#E5E5E5] border border-gray-5 p-1.75">
-										<span class=" text-sm font-400">Total</span>
-										<span class=" text-sm font-500">
-											{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}
+									<div class="flex justify-between items-center">
+										<span class=" font-500 text-xs">
+											Item Subtotal {'('}
+											{totalItemsInCart(queryCart?.data?.cart?.items)}
+											{queryCart?.data?.cart?.items.length > 1 ? ' items' : ' item'}
+											{')'}
+										</span>
+										<span class="text-large-semi">
+											{currencyFormat(Number(queryCart?.data?.cart?.subtotal || 0), queryCart?.data?.cart?.region)}
 										</span>
 									</div>
-									<Show when={props.variant === 'panel' || 'mobile-panel'}>
-										<div>
-											<Show when={props.variant === 'primary' || props.variant === 'panel' || props.variant === 'mobile-panel'}>
-												<A href="/checkout">
-													<button
-														class={clsx(
-															'w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-green-600 border-green-600 hover:bg-white hover:text-gray-900  disabled:hover:bg-gray-900 disabled:hover:text-white',
-															props.variant === 'primary' && '',
-															props.variant === 'checkout' && 'hidden',
-															props.variant === 'panel' && '',
-															props.variant === 'mobile-checkout' && 'hidden',
-															props.variant === 'mobile-panel' && ''
-														)}
-													>
-														SECURE CHECKOUT
-													</button>
-												</A>
-											</Show>
-											<Show when={props.variant !== 'primary'}>
-												<A href="/cart">
-													<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white">
-														<Show when={props.variant === 'checkout' || props.variant === 'mobile-checkout'}>
-															Make Changes to Your Order
-														</Show>
-														<Show when={props.variant === 'panel' || props.variant === 'mobile-panel'}>View Cart</Show>
-													</button>
-												</A>
-											</Show>
-										</div>
-										<span class=" font-500 text-gray-8 underline flex items-center justify-center">save for later</span>
-									</Show>
 								</div>
-							</div>
-						</Show>
-					</Suspense>
-
-					<Suspense fallback={<div>Loading...</div>}>
-						<Show when={queryCart?.data?.cart?.items?.length === 0}>
-							<div>
-								<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
-									<div class="bg-gray-6 text-sm font-poppins flex items-center justify-center w-6 h-6 rounded-full text-white">
-										<span>0</span>
+								<PromoCodeInput
+									onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
+									cart={queryCart?.data?.cart}
+									variant={props.variant}
+								/>
+								<GiftCardInput
+									onSubmit={promoCode => console.log('Promo code submitted:', promoCode)}
+									cart={queryCart?.data?.cart}
+									variant={props.variant}
+								/>
+								<Show when={queryCart?.data?.cart?.shipping_total > 0}>
+									<div class="flex justify-between items-center">
+										<span class=" font-500 text-xs">Shipping</span>
+										<span class="text-sm">
+											{currencyFormat(Number(queryCart?.data?.cart?.shipping_total || 0), queryCart?.data?.cart?.region)}
+										</span>
 									</div>
-									<span>Your shopping bag is empty.</span>
+								</Show>
+								<Show when={queryCart?.data?.cart?.tax_total > 0}>
+									<div class="flex justify-between items-center">
+										<span class=" font-semibold">Tax</span>
+										<span class="text-large-semi">
+											{currencyFormat(Number(queryCart?.data?.cart?.tax_total || 0), queryCart?.data?.cart?.region)}
+										</span>
+									</div>
+								</Show>
+								<div class="flex justify-between items-center text-text_1 bg-surface rounded-0.5 p-1.75 my-2">
+									<span class=" text-sm font-400">Total</span>
+									<span class=" text-sm font-500">
+										{currencyFormat(Number(queryCart?.data?.cart?.total || 0), queryCart?.data?.cart?.region)}
+									</span>
+								</div>
+								<Show when={props.variant === 'panel' || 'mobile-panel'}>
 									<div>
-										<A href="/store/Store">
-											<span class="sr-only">Go to all products page</span>
-											<Show when={props.variant === 'mobile-panel'}>
-												<div
-													onClick={() => {
-														props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
-													}}
-													class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-600 disabled:hover:bg-gray-600 disabled:hover:text-white"
+										<Show when={props.variant === 'primary' || props.variant === 'panel' || props.variant === 'mobile-panel'}>
+											<A href="/checkout">
+												<button
+													class={clsx(
+														'w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-accent_2 border-accent_2 hover:bg-normal_1 hover:text-text_1 focus:bg-normal_1 focus:text-text_1',
+														props.variant === 'primary' && '',
+														props.variant === 'checkout' && 'hidden',
+														props.variant === 'panel' && '',
+														props.variant === 'mobile-checkout' && 'hidden',
+														props.variant === 'mobile-panel' && ''
+													)}
 												>
-													Explore products
-												</div>
-											</Show>
-											<Show when={props.variant === 'panel'}>
-												<div class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-gray-600 border-gray-600 hover:bg-white hover:text-gray-600 disabled:hover:bg-gray-600 disabled:hover:text-white">
-													Explore products
-												</div>
-											</Show>
-										</A>
+													SECURE CHECKOUT
+												</button>
+											</A>
+										</Show>
+										<Show when={props.variant !== 'primary'}>
+											<A href="/cart">
+												<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-text_2 hover:border-text_2 focus:border-text_2 hover:bg-normal_1 focus:bg-normal_1 hover:text-text_1 focus:text-text_1 ">
+													<Show when={props.variant === 'checkout' || props.variant === 'mobile-checkout'}>
+														Make Changes to Your Order
+													</Show>
+													<Show when={props.variant === 'panel' || props.variant === 'mobile-panel'}>View Cart</Show>
+												</button>
+											</A>
+										</Show>
 									</div>
+									<span class=" font-500 text-text_1 underline flex items-center justify-center">save for later</span>
+								</Show>
+							</div>
+						</div>
+					</Show>
+
+					<Show when={queryCart?.data?.cart?.items?.length === 0}>
+						<div>
+							<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
+								<div class="bg-text_2 text-sm font-poppins flex items-center justify-center w-6 h-6 rounded-full text-normal_1">
+									<span>0</span>
+								</div>
+								<span>Your shopping bag is empty.</span>
+								<div>
+									<A href="/store/Store">
+										<span class="sr-only">Go to all products page</span>
+										<Show when={props.variant === 'mobile-panel'}>
+											<div
+												onClick={() => {
+													props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
+												}}
+												class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 border-text_2 hover:bg-normal_1 hover:text-text_2 "
+											>
+												Explore products
+											</div>
+										</Show>
+										<Show when={props.variant === 'panel'}>
+											<div class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 border-text_2 hover:bg-normal_1 hover:text-text_2 ">
+												Explore products
+											</div>
+										</Show>
+									</A>
 								</div>
 							</div>
-						</Show>
-					</Suspense>
-				</ErrorBoundary>
+						</div>
+					</Show>
+				</div>
 			</Show>
-		</div>
+		</Suspense>
 	)
 }
 
@@ -399,7 +396,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<button
-				class="flex items-center justify-center w-5 h-5 bg-white"
+				class="flex items-center justify-center w-5 h-5 bg-normal_1"
 				onKeyDown={e => {
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity - 1)
@@ -407,15 +404,15 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				}}
 			>
 				<div
-					class={clsx('i-mdi-minus-circle text-gray-5', props.item.quantity === props.item.variant && 'text-gray-2')}
+					class={clsx('i-mdi-minus-circle text-text_3', props.item.quantity === props.item.variant && 'text-normal_2')}
 					onclick={() => {
 						handleQuanity(props.item.quantity - 1)
 					}}
 				/>
 			</button>
-			<span class="flex items-center justify-center text-sm font-500">{props.item?.quantity}</span>
+			<span class="flex items-center justify-center text-sm text-text_3 font-500">{props.item?.quantity}</span>
 			<button
-				class="flex items-center justify-center w-5 bg-white"
+				class="flex items-center justify-center w-5 bg-normal_1"
 				onKeyDown={e => {
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity + 1)
@@ -423,7 +420,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				}}
 			>
 				<div
-					class="i-mdi-plus-circle text-gray-5"
+					class="i-mdi-plus-circle text-text_3"
 					onClick={e => {
 						handleQuanity(props.item.quantity + 1)
 					}}
@@ -458,7 +455,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 									<div class="flex flex-col">
 										<span
 											class={clsx(
-												'line-through text-gray-700',
+												'line-through text-text_1',
 												props.variant === 'primary' && 'text-lg ',
 												props.variant === 'checkout' && 'text-sm ',
 												props.variant === 'panel' && 'text-sm',
@@ -471,7 +468,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 
 										<span
 											class={clsx(
-												'text-red-700',
+												'text-accent_3',
 												props.variant === 'primary' && 'text-lg',
 												props.variant === 'checkout' && 'text-sm',
 												props.variant === 'panel' && 'text-sm',
@@ -481,7 +478,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										>
 											{currencyFormat(Number(variant.calculated_price), props.cart?.region)}
 										</span>
-										<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase min-w-10 ">
+										<span class="text-xs text-text_5 font-500 bg-accent_3 rounded-sm flex justify-center uppercase min-w-10 ">
 											sale
 										</span>
 									</div>
@@ -490,7 +487,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 								return (
 									<span
 										class={clsx(
-											' text-gray-700',
+											' text-text_1',
 											props.variant === 'primary' && 'text-lg ',
 											props.variant === 'checkout' && 'text-sm ',
 											props.variant === 'panel' && 'text-sm',
@@ -642,7 +639,7 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 					<button
 						type="submit"
 						class={clsx(
-							'"bg-[#E5E5E5] border  hover:border-sky-500 text-gray-8 px-3 py-1 rounded text-xs',
+							'"bg-normal_1 border  hover:border-sky-500 text-text_1 px-3 py-1 rounded text-xs',
 							props.variant === 'primary' && 'text-sm',
 							props.variant === 'checkout' && '',
 							props.variant === 'panel' && '',
@@ -655,7 +652,7 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 				</form>
 			</Show>
 			<Show when={props.cart.discounts.length > 0}>
-				<div class="flex justify-between text-red-7">
+				<div class="flex justify-between text-text_1 text-xs">
 					<div class="flex space-x-2">
 						<div>Promo code: {props?.cart?.discounts[0]?.code}</div>
 						<div>
@@ -712,7 +709,7 @@ export function GiftCardInput(props: PromoCodeInputProps) {
 					<button
 						type="submit"
 						class={clsx(
-							'"bg-[#E5E5E5] border  hover:border-sky-500 text-gray-8 px-3 py-1 rounded text-xs',
+							'"bg-normal_1 border  hover:border-sky-500 text-text_1 px-3 py-1 rounded text-xs',
 							props.variant === 'primary' && 'text-sm',
 							props.variant === 'checkout' && '',
 							props.variant === 'panel' && '',
@@ -725,7 +722,7 @@ export function GiftCardInput(props: PromoCodeInputProps) {
 				</form>
 			</Show>
 			<Show when={props?.cart?.gift_card_total > 0}>
-				<div class="flex justify-between text-gray-6">
+				<div class="flex justify-between text-text_2 text-xs">
 					<div class="flex space-x-2">
 						<div class="text-xs">{props?.cart?.gift_cards[0]?.code}</div>
 						<div class="text-xs">

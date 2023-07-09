@@ -64,8 +64,8 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 				<div class="i-ic-round-menu w-7 h-7 ml-2" />
 			</div>
 			<div
-				class={`fixed inset-0 bg-white/30 z-200 transition-all duration-250 ease-in-out ${
-					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none'
+				class={`fixed inset-0 bg-normal_2/30 backdrop-blur-6px z-200 transition-all duration-250 ease-in-out ${
+					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none bg-normal_2/60'
 				}`}
 				onClick={event => {
 					if (event.target === event.currentTarget) {
@@ -74,16 +74,24 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 				}}
 			>
 				<div
-					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-white z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 ${
+					class="i-ph-x-bold absolute right-3 top-4 w-5 h-5"
+					onClick={event => {
+						if (event.target === event.currentTarget) {
+							props.setMenuDrawer({ menu: 'hidden' })
+						}
+					}}
+				/>
+				<div
+					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-normal_1 z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 ${
 						props.menuDrawer().menu === 'active' ? '' : ''
 					}`}
 					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()?.length > 0}>
-						<ol class=" text-xl space-y-2 h-[120vh] ">
+						<ol class=" text-base font-500 space-y-2 h-[120vh] ">
 							<Show when={backButton() === 'active'}>
 								<button
-									class="flex space-x-2 items-center w-full py-1"
+									class="flex space-x-2 items-center w-full py-1 bg-normal_1"
 									onClick={() => {
 										setSelectedRoot(rootCategories())
 										setBackButton('inactive')
@@ -93,31 +101,50 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 									<li class=" ml-2">Back</li>
 								</button>
 							</Show>
-
 							<For each={selectedRoot()}>
-								{(collection: any) => {
-									if (collection?.category_children?.length > 0) {
+								{(collection: any, index) => {
+									console.log('COL', collection)
+									if (collection?.parent_category_id !== null && index() === 0) {
 										return (
 											<div class="flex justify-between space-x-0.5 capitalize">
 												<A
-													class="w-2/3 bg-gray-1"
-													href={`/categories/${collection?.handle}`}
+													class="w-2/3 "
+													href={`/categories/${collection?.parent_category?.handle}`}
 													onClick={() => {
 														setBackButton('inactive')
 														props.setMenuDrawer({ menu: 'hidden' })
 													}}
 												>
-													<li class=" ml-2">{collection.name}</li>
+													<li class=" ml-2">Shop All {collection?.parent_category?.name}</li>
 												</A>
-
+											</div>
+										)
+									}
+								}}
+							</For>
+							<For each={selectedRoot()}>
+								{(collection: any) => {
+									if (collection?.category_children?.length > 0) {
+										return (
+											<div class="flex justify-between space-x-0.5 capitalize">
 												<button
-													class="flex w-1/3 py-1 justify-end bg-gray-1 capitalize"
+													class="flex w-2/3 py-1 justify-start capitalize bg-normal_1"
 													onClick={() => {
 														setSelectedRoot(getChildrenOfRoot(collection.category_children))
 														setBackButton('active')
 													}}
 												>
-													<div class="i-octicon-chevron-right-12 text-2xl " />
+													<li class=" ml-2 ">{collection.name}</li>
+												</button>
+
+												<button
+													class="flex w-1/3 py-1 justify-end capitalize bg-normal_1"
+													onClick={() => {
+														setSelectedRoot(getChildrenOfRoot(collection.category_children))
+														setBackButton('active')
+													}}
+												>
+													<div class="i-octicon-chevron-right-12 w-4 h-4 " />
 												</button>
 											</div>
 										)
@@ -125,7 +152,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 									if (collection?.category_children?.length === 0) {
 										return (
 											<li
-												class=" ml-2 w-full  text-gray-6 capitalize"
+												class=" ml-2 w-full  text-text_2 capitalize"
 												onClick={() => {
 													setBackButton('inactive')
 													props.setMenuDrawer({ menu: 'hidden' })
@@ -146,8 +173,8 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 								}}
 							</For>
 
-							<div class="flex flex-col space-y-1 ">
-								<div class="text-base text-gray-5 bg-gray-2 p-2 capitalize">
+							<div class="flex flex-col space-y-0.5 ">
+								<div class="text-base font-500 text-text_2  p-2 capitalize">
 									<A
 										href={`/store/Store`}
 										onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
@@ -161,7 +188,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 											if (collection?.metadata?.menu !== 'hidden')
 												return (
 													<div
-														class="text-base text-gray-5 bg-gray-2   p-2 rounded-0.5 capitalize"
+														class="text-base font-500 text-text_2 bg-normal_3   p-2 rounded-0.5 capitalize"
 														onClick={() => {
 															setBackButton('inactive')
 															props.setMenuDrawer({ menu: 'hidden' })

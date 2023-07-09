@@ -76,23 +76,25 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										</div>
 									</Show>
 								</div>
-								<Show when={props?.tags.length && props.tag === true}>
+								<Show when={props.tag === true}>
 									<ul class="flex space-x-0.5 ml-0.5 w-full justify-end">
 										<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
 											<div class="text-xs text-accent_3 bg-accent_3 rounded-sm flex justify-center items-center  uppercase  text-accenttext_1  rounded-sm font-400 max-h-4 lg:max-h-5 p-0.5 lg:p-1 tracking-tight">
 												sale
 											</div>
 										</Show>
-										<For each={props?.tags}>
-											{(tag: any, index) => {
-												if (index() < 1)
-													return (
-														<div class="capitalize flex justify-center items-center bg-accent_1  text-accenttext_1  rounded-sm text-xs font-400 max-h-4 lg:max-h-5 p-0.5 lg:p-1 tracking-tight">
-															{tag.value}
-														</div>
-													)
-											}}
-										</For>
+										<Show when={props?.tags.length}>
+											<For each={props?.tags}>
+												{(tag: any, index) => {
+													if (index() < 1)
+														return (
+															<div class="capitalize flex justify-center items-center bg-accent_1  text-accenttext_1  rounded-sm text-xs font-400 max-h-4 lg:max-h-5 p-0.5 lg:p-1 tracking-tight">
+																{tag.value}
+															</div>
+														)
+												}}
+											</For>
+										</Show>
 									</ul>
 								</Show>
 							</div>

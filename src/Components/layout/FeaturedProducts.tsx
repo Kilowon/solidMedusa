@@ -116,8 +116,8 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				>
 					<div class=" sm:content-container font-poppins ">
 						<Show when={queryCollection?.data?.products}>
-							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-16 my-32">
-								<li class="col-span-2 sm:col-span-1 grid  content-center space-y-4 text-balance max-w-60">
+							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16 my-32">
+								<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
 									<div class="space-y-1">
 										<h2 class=" text-xs   xl:text-base font-500   text-text_2 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_top}

@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { Image } from '@unpic/solid'
+import { getWindowSize } from '@solid-primitives/resize-observer'
 //import CartDropdown from '~/Components/nav_components/CartDropdown'
 
 const CartDropdown = lazy(async () => {
@@ -97,22 +98,25 @@ export default function Navigation(props: any) {
 				<Suspense>
 					<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 						<div class="flex-1 basis-0 h-full flex items-center">
-							<div class="xl:hidden">
-								<Suspense>
+							<Suspense>
+								<Show when={getWindowSize().width < 1279}>
 									<HamburgerDrawerNav
 										menuDrawer={menuDrawer}
 										setMenuDrawer={setMenuDrawer}
 									/>
-								</Suspense>
-							</div>
-							<div class="hidden xl:block h-full ml-2">
-								<Suspense>
-									<DropdownMenu
-										collection={props.collection}
-										product={props.product}
-									/>
-								</Suspense>
-							</div>
+								</Show>
+							</Suspense>
+
+							<Suspense>
+								<Show when={getWindowSize().width > 1279}>
+									<div class=" h-full ml-2">
+										<DropdownMenu
+											collection={props.collection}
+											product={props.product}
+										/>
+									</div>
+								</Show>
+							</Suspense>
 						</div>
 						<Suspense>
 							<div class="flex items-center">
@@ -158,23 +162,25 @@ export default function Navigation(props: any) {
 									/>
 								</A>
 							</div>
-							<div class="hidden xl:block">
-								<Suspense>
-									<CartDropdown
-										cart={props.cart}
-										stayOpen={stayOpen}
-										setStayOpen={setStayOpen}
-									/>
-								</Suspense>
-							</div>
-							<div class="block xl:hidden ">
-								<Suspense fallback={<div></div>}>
+							<Suspense>
+								<Show when={getWindowSize().width > 1279}>
+									<div class="hidden xl:block">
+										<CartDropdown
+											cart={props.cart}
+											stayOpen={stayOpen}
+											setStayOpen={setStayOpen}
+										/>
+									</div>
+								</Show>
+							</Suspense>
+							<Suspense>
+								<Show when={getWindowSize().width < 1279}>
 									<CartDrawerNav
 										cartDrawer={cartDrawer}
 										setCartDrawer={setCartDrawer}
 									/>
-								</Suspense>
-							</div>
+								</Show>
+							</Suspense>
 						</div>
 					</nav>
 				</Suspense>

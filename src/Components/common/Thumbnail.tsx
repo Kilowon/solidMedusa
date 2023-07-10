@@ -45,17 +45,17 @@ const ImageOrPlaceholder = ({
 }: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'> &
 	Pick<ThumbnailProps, 'variant'>) => {
 	return image ? (
-		<div class="w-full h-full">
+		<div class="w-full ">
 			<Image
 				src={image}
 				height={variant === 'default_cart' ? 100 : 422}
 				width={variant === 'default_cart' ? 84 : 360}
 				alt="Thumbnail"
-				class={variant === 'default_cart' ? 'object-contain w-full h-full' : 'object-cover w-full h-full'}
+				class={variant === 'default_cart' ? 'object-contain w-full' : 'object-cover w-full h-full'}
 			/>
 		</div>
 	) : (
-		<div class="w-full h-full absolute inset-0 border-blueGray flex items-center justify-center ">
+		<div class="w-full  absolute inset-0 border-blueGray flex items-center justify-center ">
 			<PlaceholderImage title={title} />
 		</div>
 	)

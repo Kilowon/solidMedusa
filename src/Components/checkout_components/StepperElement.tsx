@@ -64,8 +64,8 @@ export function StepperElement(props: StepperProps) {
 	return (
 		<>
 			<Show when={props.elementState === 'active'}>
-				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-blue-800">
-					<div class="flex items-center justify-center w-11 h-11 bg-sky-500 rounded-full lg:h-13 lg:w-13 dark:bg-blue-300 shrink-0  z-01 ">
+				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-normal_3/80 after:border-4 after:inline-block">
+					<div class="flex items-center justify-center w-11 h-11 bg-accent_5 rounded-full lg:h-13 lg:w-13 shrink-0 z-01 ">
 						<span
 							onMouseDown={() => handleClick(props.title)}
 							onKeyDown={event => {
@@ -77,9 +77,9 @@ export function StepperElement(props: StepperProps) {
 							title={props.title}
 							role="button"
 							tabindex="0"
-							class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0 z-1"
+							class="flex items-center justify-center w-10 h-10 bg-surface rounded-full lg:h-12 lg:w-12 shrink-0 z-1"
 						>
-							<div class="text-sky-500 dark:text-sky-300 animate-pulse z-1">
+							<div class="text-accent_5 animate-pulse z-1">
 								<Icon icon={props.title} />
 							</div>
 						</span>
@@ -87,8 +87,8 @@ export function StepperElement(props: StepperProps) {
 				</li>
 			</Show>
 			<Show when={props.elementState === 'complete'}>
-				<li class="relative flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-gray-700">
-					<div class="i-ic-twotone-check-circle absolute top-0 left-0 lg:left-0 w-10 h-10 lg:w-12 lg:h-12 text-green-6/70 text-xl" />
+				<li class="relative flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-surface  after:border-4 after:inline-block">
+					{/* <div class="i-ic-twotone-check-circle absolute top-0 left-0 lg:left-0 w-10 h-10 lg:w-12 lg:h-12 text-green-6/70 text-xl" /> */}
 					<span
 						onMouseDown={() => handleClick(props.title)}
 						onKeyDown={event => {
@@ -99,18 +99,18 @@ export function StepperElement(props: StepperProps) {
 						title={props.title}
 						role="button"
 						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0"
+						class="flex items-center justify-center w-10 h-10 bg-surface rounded-full lg:h-12 lg:w-12 shrink-0"
 					>
-						<div class="  text-gray-400/50  dark:text-gray-200  hover:cursor-pointer relative">
+						<div class="  text-accent_5 hover:cursor-pointer relative">
 							<Icon icon={props.title} />
 						</div>
 					</span>
 				</li>
 			</Show>
 			<Show when={props.elementState === 'queued'}>
-				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-[#E5E5E5] after:border-4 after:inline-block dark:after:border-gray-700">
-					<span class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-						<div class=" text-gray-500  dark:text-gray-200 ">
+				<li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-normal_3/80 after:border-4 after:inline-block ">
+					<span class="flex items-center justify-center w-10 h-10 bg-normal_3/80 rounded-full lg:h-12 lg:w-12 shrink-0">
+						<div class=" text-text_2/40   ">
 							<Icon icon={props.title} />
 						</div>
 					</span>
@@ -118,7 +118,7 @@ export function StepperElement(props: StepperProps) {
 			</Show>
 			<Show when={props.elementState === 'active-end'}>
 				<li class="flex items-center">
-					<div class="flex items-center justify-center w-11 h-11 bg-sky-500 rounded-full lg:h-13 lg:w-13 dark:bg-blue-300 shrink-0  z-01 ">
+					<div class="flex items-center justify-center w-11 h-11 bg-accent_5 rounded-full lg:h-13 lg:w-13 shrink-0  z-01 ">
 						<span
 							onMouseDown={() => handleClick(props.title)}
 							onKeyDown={event => {
@@ -129,9 +129,9 @@ export function StepperElement(props: StepperProps) {
 							title={props.title}
 							role="button"
 							tabindex="0"
-							class="flex items-center justify-center w-10 h-10 bg-sky-200 rounded-full lg:h-12 lg:w-12 dark:bg-sky-800 shrink-0 z-1"
+							class="flex items-center justify-center w-10 h-10 bg-surface rounded-full lg:h-12 lg:w-12 shrink-0 z-1"
 						>
-							<div class=" text-sky-500  dark:text-sky-300 hover:cursor-pointer animate-pulse z-1">
+							<div class=" text-accent_5 hover:cursor-pointer animate-pulse z-1">
 								<Icon icon={props.title} />
 							</div>
 						</span>
@@ -140,8 +140,8 @@ export function StepperElement(props: StepperProps) {
 			</Show>
 			<Show when={props.elementState === 'queued-end'}>
 				<li class="flex items-center">
-					<span class="flex items-center justify-center w-10 h-10 bg-[#E5E5E5] rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-						<div class=" text-gray-500  dark:text-gray-200 ">
+					<span class="flex items-center justify-center w-10 h-10 bg-normal_3/80 rounded-full lg:h-12 lg:w-12  shrink-0">
+						<div class=" text-text_2/40">
 							<Icon icon={props.title} />
 						</div>
 					</span>

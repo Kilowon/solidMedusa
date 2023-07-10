@@ -211,14 +211,14 @@ export default function CartCore(props: CartCoreProps) {
 																			deleteItem(item?.id)
 																		}}
 																	>
-																		<div class="i-ph-trash-duotone text-sm  text-gray-5  "></div>
+																		<div class="i-ph-trash-duotone text-sm  text-text_3  "></div>
 																		<span class="text-xs ">Remove</span>
 																	</button>
 																</div>
 															</div>
 														</div>
 													</div>{' '}
-													<hr class="border-gray-400/50 my-2 mx-6" />
+													<hr class="border-text_5 my-2 mx-6" />
 												</li>
 											</Show>
 										)}
@@ -290,7 +290,7 @@ export default function CartCore(props: CartCoreProps) {
 											<A href="/checkout">
 												<button
 													class={clsx(
-														'w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-accent_2 border-accent_2 hover:bg-normal_1 hover:text-text_1 focus:bg-normal_1 focus:text-text_1',
+														'w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-accent_2 border-accent_2 hover:bg-normal_1 hover:text-text_1 focus:bg-normal_1 focus:text-text_1',
 														props.variant === 'primary' && '',
 														props.variant === 'checkout' && 'hidden',
 														props.variant === 'panel' && '',
@@ -304,7 +304,7 @@ export default function CartCore(props: CartCoreProps) {
 										</Show>
 										<Show when={props.variant !== 'primary'}>
 											<A href="/cart">
-												<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-white bg-text_2 hover:border-text_2 focus:border-text_2 hover:bg-normal_1 focus:bg-normal_1 hover:text-text_1 focus:text-text_1 ">
+												<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 hover:border-text_2 focus:border-text_2 hover:bg-normal_1 focus:bg-normal_1 hover:text-text_1 focus:text-text_1 ">
 													<Show when={props.variant === 'checkout' || props.variant === 'mobile-checkout'}>
 														Make Changes to Your Order
 													</Show>
@@ -478,7 +478,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										>
 											{currencyFormat(Number(variant.calculated_price), props.cart?.region)}
 										</span>
-										<span class="text-xs text-text_5 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px] ">
+										<span class="text-xs text-accenttext_1 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px] ">
 											sale
 										</span>
 									</div>
@@ -647,7 +647,7 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 							props.variant === 'mobile-panel' && ''
 						)}
 					>
-						Apply
+						Applyte
 					</button>
 				</form>
 			</Show>

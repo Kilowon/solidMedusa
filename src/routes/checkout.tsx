@@ -205,10 +205,6 @@ export default function CheckoutPage() {
 	})
 
 	createEffect(() => {
-		console.log(showForm())
-	})
-
-	createEffect(() => {
 		if (showForm().customer === 'active') {
 			setTimeout(() => {
 				setCustomerDelayPassed(true)
@@ -216,8 +212,51 @@ export default function CheckoutPage() {
 		}
 	})
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	function hexToRgb(hex: any) {
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
+	}
 	return (
-		<div class=" text-gray-6">
+		<div
+			class=" text-text_2"
+			style={{
+				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
+				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
+				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
+				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
+				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
+				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
+				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
+				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
+				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
+				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
+				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
+				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
+				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
+				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
+				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
+				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
+			}}
+		>
 			<Title>Checkout</Title>
 			<CartDrawer
 				mobileDrawer={mobileDrawer}
@@ -239,7 +278,7 @@ export default function CheckoutPage() {
 			<div class="md:flex md:content-container lg:h-[80vh]">
 				<div class="md:content-container lg:w-[700px] lg:space-y-12 mx-2">
 					<div
-						class="hidden lg:block sticky top-12 z-101 bg-white/80 h-12 mx-2 "
+						class="hidden lg:block sticky top-12 z-101 bg-transparent h-12 mx-2 "
 						style="backdrop-filter: blur(10px)"
 					>
 						<Stepper
@@ -314,7 +353,7 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 	return (
 		<div>
 			<header>
-				<nav class="flex items-center justify-between h-16 text-gray-5">
+				<nav class="flex items-center justify-between h-16 text-text_2">
 					<div class="flex items-center ">
 						<div class="i-fa-solid-lock  ml-4.5 text-base lg:text-sm" />
 						<div class="hidden lg:block  lg:ml-3 "> Secure Checkout </div>
@@ -330,7 +369,7 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 					</div>
 					<div class="flex">
 						<div
-							class="i-ion-cart-outline bg-gray-5 text-2xl lg:hidden mr-4 "
+							class="i-ion-cart-outline bg-text_2 text-2xl lg:hidden mr-4 "
 							onClick={() =>
 								props.setMobileDrawer({
 									checkout: 'hidden',
@@ -368,7 +407,7 @@ export function CartDrawer(props: any) {
 				}}
 			>
 				<div
-					class="i-ph-x-bold text-gray-5 w-6 h-6 absolute top-5 right-4"
+					class="i-ph-x-bold text-text_2 w-6 h-6 absolute top-5 right-4"
 					onClick={event => {
 						if (event.target === event.currentTarget) {
 							props.setMobileDrawer({ cart: 'hidden', checkout: 'active' })
@@ -626,11 +665,14 @@ export function Stepper(props: StepperProps) {
 export function Express() {
 	return (
 		<div class="m-1 md:m-2 space-y-1 md:space-y-3 ">
-			<div class=" text-lg md:text-2xl font-medium text-slate-700 dark:text-slate-200 md:text-2xl  ">Express Checkout</div>
+			<div class="flex space-x-2 items-center">
+				<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
+				<div class="  font-500 text-text_2 text-xs tracking-tighter ">Select any option below</div>
+			</div>
 			<div class=" space-y-1 md:space-y-2 ">
 				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
 					<div
-						class="flex flex-col items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-t-sm rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500  md:w-1/2  "
+						class="flex flex-col items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-t-sm rounded-b-sm md:rounded-l-sm md:rounded-r-0 p-2 bg-normal_1 hover:bg-normal_2 border border-normal_4 hover:border-accent_5  md:w-1/2  "
 						title="PayPal"
 						role="button"
 						tabindex="0"
@@ -674,7 +716,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-r-sm md:rounded-l-0  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2  "
+						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-r-sm md:rounded-l-0  p-2 bg-normal_1 hover:bg-normal_2 border border-normal_4 hover:border-accent_5 md:w-1/2  "
 						title="Google Pay"
 						role="button"
 						tabindex="0"
@@ -775,7 +817,7 @@ export function Express() {
 				</div>
 				<div class="md:flex md:flex-row justify-center space-y-1 md:space-y-0 md:space-x-2">
 					<div
-						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-sm  p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2 "
+						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-sm md:rounded-l-sm md:rounded-tr-0 md:rounded-bl-sm  p-2 bg-normal_1 hover:bg-normal_2 border border-normal_4 hover:border-accent_5 md:w-1/2 "
 						title="Apple Pay"
 						role="button"
 						tabindex="0"
@@ -797,7 +839,7 @@ export function Express() {
 						</svg>
 					</div>
 					<div
-						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-b-sm rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-sm p-2 bg-[#E5E5E5] border border-sky-500/50 hover:border-sky-500 md:w-1/2   "
+						class="flex flex-col justify-center items-center h-[44px] md:h-[66px]  hover:cursor-pointer rounded-b-sm rounded-t-sm md:rounded-sm md:rounded-tl-0 md:rounded-br-sm p-2 bg-normal_1 hover:bg-normal_2 border border-normal_4 hover:border-accent_5 md:w-1/2   "
 						title="Amazon Pay"
 						role="button"
 						tabindex="0"
@@ -1441,7 +1483,6 @@ export function Carrier(props: CarrierProps) {
 
 	async function handleSubmit(values: any) {
 		if (optionId() === null) return
-		console.log('VALUES', optionId())
 
 		mutateCarriers.refetch()
 		setTimeout(() => {
@@ -1599,7 +1640,7 @@ export function Carrier(props: CarrierProps) {
 									/>
 									<label
 										for={option?.id}
-										class="grid grid-cols-3 items-center justify-between w-full p-2 text-gray-500 bg-[#E5E5E5] border border-gray-200 rounded-md cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-sky-500 peer-checked:border-sky-600 peer-checked:text-sky-600 peer-checked:border-2 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+										class="grid grid-cols-3 items-center justify-between w-full p-2 text-text_4 bg-normal_1 border border-normal_4 rounded-md cursor-pointer peer-checked:border-accent_5 peer-checked:text-accent_5 peer-checked:border-2 hover:text-accent_5 hover:bg-normal_1"
 									>
 										<div class="block ">
 											<div class="w-full text-lg font-semibold">${(option?.amount / 100).toFixed(2)}</div>
@@ -1610,7 +1651,7 @@ export function Carrier(props: CarrierProps) {
 										</div>
 										<div class=" flex flex-col  ml-4 md:justify-self-center">
 											<div class=" flex item-center justify-center">{option?.metadata?.estimate}</div>
-											<div class=" flex item-center justify-center peer-checked:border-blue-600 peer-checked:text-blue-600">
+											<div class=" flex item-center justify-center peer-checked:border-accent_5 peer-checked:text-accent_5">
 												<div class="i-ic-twotone-local-shipping w-5 h-5" />
 												<svg
 													aria-hidden="true"

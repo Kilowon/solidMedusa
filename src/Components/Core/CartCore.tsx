@@ -90,7 +90,7 @@ export default function CartCore(props: CartCoreProps) {
 														class={clsx(
 															'grid gap-x-3',
 															props.variant === 'primary' && 'grid-cols-[100px_1fr]',
-															props.variant === 'checkout' && 'grid-cols-[30px_1fr]',
+															props.variant === 'checkout' && 'grid-cols-[55px_1fr]',
 															props.variant === 'panel' && 'grid-cols-[70px_1fr]',
 															props.variant === 'mobile-checkout' && 'grid-cols-[30px_1fr]',
 															props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'

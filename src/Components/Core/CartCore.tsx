@@ -647,7 +647,7 @@ export function PromoCodeInput(props: PromoCodeInputProps) {
 							props.variant === 'mobile-panel' && ''
 						)}
 					>
-						Applyte
+						Apply
 					</button>
 				</form>
 			</Show>

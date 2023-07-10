@@ -140,7 +140,7 @@ export default function Navigation(props: any) {
 							</A>
 						</div>
 
-						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-0 xl:mr-4 ">
+						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 							<div class="flex items-center mr-4 ">
 								<A
 									class="hover:cursor-pointer"

@@ -155,12 +155,12 @@ export default function CartCore(props: CartCoreProps) {
 
 															<div
 																class={clsx(
-																	'space-y-12',
-																	props.variant === 'primary' && 'flex flex-col items-end text-lg space-y-12',
+																	'',
+																	props.variant === 'primary' && 'flex flex-col items-end text-lg justify-between',
 																	props.variant === 'checkout' && ' text-sm',
-																	props.variant === 'panel' && 'flex flex-col items-end text-sm space-y-12',
+																	props.variant === 'panel' && 'flex flex-col items-end text-sm justify-between',
 																	props.variant === 'mobile-checkout' && ' text-sm',
-																	props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm space-y-12'
+																	props.variant === 'mobile-panel' && 'flex flex-col items-end text-sm justify-between'
 																)}
 															>
 																<div
@@ -452,7 +452,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 						if (variant.id === props.item.variant_id) {
 							if (variant.prices.length > 1) {
 								return (
-									<div class="flex flex-col">
+									<div class="flex flex-col justify-end items-end">
 										<span
 											class={clsx(
 												'line-through text-text_1',
@@ -478,7 +478,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										>
 											{currencyFormat(Number(variant.calculated_price), props.cart?.region)}
 										</span>
-										<span class="text-xs text-text_5 font-500 bg-accent_3 rounded-sm flex justify-center uppercase min-w-10 ">
+										<span class="text-xs text-text_5 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px] ">
 											sale
 										</span>
 									</div>

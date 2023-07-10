@@ -48,8 +48,8 @@ const ImageOrPlaceholder = ({
 		<div class="w-full h-full">
 			<Image
 				src={image}
-				height={variant === 'default_cart' ? 50 : 422}
-				width={variant === 'default_cart' ? 42 : 360}
+				height={variant === 'default_cart' ? 100 : 422}
+				width={variant === 'default_cart' ? 84 : 360}
 				alt="Thumbnail"
 				class={variant === 'default_cart' ? 'object-contain w-full h-full' : 'object-cover w-full h-full'}
 			/>

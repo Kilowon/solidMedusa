@@ -358,7 +358,7 @@ export function CartDrawer(props: any) {
 	return (
 		<div>
 			<div
-				class={`fixed inset-0 bg-white/70 z-200 transition-all duration-250 ease-in-out ${
+				class={`fixed inset-0 bg-white/70 z-200 transition-all duration-250 ease-in-out backdrop-blur-2 ${
 					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				onClick={event => {
@@ -376,7 +376,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-16 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-16 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

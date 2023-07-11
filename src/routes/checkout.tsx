@@ -664,11 +664,8 @@ export function Stepper(props: StepperProps) {
 
 export function Express() {
 	return (
-		<div class="m-1 md:m-2 space-y-1 md:space-y-3 ">
-			<div class="flex space-x-2 items-center">
-				<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
-				<div class="  font-500 text-text_2 text-xs tracking-tighter ">Select any option below</div>
-			</div>
+		<div class="m-1 md:m-2 space-y-3 md:space-y-3 ">
+			<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
 			<div class=" space-y-1 md:space-y-2 ">
 				<div class="md:flex md:flex-row justify-center  space-y-1 md:space-y-0 md:space-x-2 ">
 					<div

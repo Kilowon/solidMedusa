@@ -80,7 +80,7 @@ export default function Collection() {
 					a.finished.then(done)
 				}}
 			>
-				<div class=" sm:content-container font-poppins ">
+				<div class="mx-1 sm:mx-auto sm:content-container font-poppins ">
 					<Show when={queryCollection?.data?.products}>
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 my-20">
 							<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">

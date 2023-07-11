@@ -114,10 +114,10 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class=" sm:content-container font-poppins ">
+					<div class="mx-1 sm:mx-auto sm:content-container font-poppins ">
 						<Show when={queryCollection?.data?.products}>
 							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16 my-32">
-								<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
+								<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
 									<div class="space-y-1">
 										<h2 class=" text-xs  xl:text-base font-500  text-text_2 tracking-tighter text-balance">
 											{currentFeatured()?.metadata?.sub_title_top}
@@ -139,10 +139,6 @@ export default function FeaturedProducts(props: FeaturedProps) {
 										const [isVisible, setIsVisible] = createSignal(false)
 										const [delay, setDelay] = createSignal(0)
 										const visible = createVisibilityObserver({ threshold: 0.3 })(() => el)
-										console.log(
-											(getWindowSize().width > 1023 && index() >= 4) ||
-												(getWindowSize().width > 1023 && index() < 5 && index() % 5 === 0)
-										)
 
 										createEffect(() => {
 											if (visible()) {
@@ -159,11 +155,11 @@ export default function FeaturedProducts(props: FeaturedProps) {
 											console.log('SHORT', index())
 											return
 										}
-
+										/* 
 										if (getWindowSize().width < 639 && (index() - 1) % 2 === 0) {
 											console.log('here', index())
 											return
-										}
+										} */
 										if (getWindowSize().width > 1280 && index() >= 4 && queryCollection?.data?.products?.length < 7) {
 											console.log('here', index())
 											return

@@ -53,7 +53,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 						/>
 						<div class=" flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 ">
 							<div class="flex justify-between">
-								<div class="flex space-x-1 text-xs lg:text-base font-500 tracking-tight ">
+								<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight ">
 									<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 										<div class="">
 											{props.variants?.[0]?.original_price
@@ -79,7 +79,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 								<Show when={props.tag === true}>
 									<ul class="flex space-x-0.5 ml-0.5 w-full justify-end">
 										<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-											<div class="text-xs text-accent_3 bg-accent_3 rounded-sm flex justify-center items-center  uppercase  text-accenttext_1  rounded-sm font-400 max-h-4 lg:max-h-5 p-0.5 lg:p-1 tracking-tight">
+											<div class="text-xs text-accenttext_1 bg-accent_3 rounded-sm flex justify-center items-center  uppercase  text-accenttext_1  rounded-sm font-400 max-h-4 lg:max-h-5 p-0.5 lg:p-1 tracking-tight">
 												sale
 											</div>
 										</Show>
@@ -117,7 +117,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										/>
 									</div>
 								</Show>
-								<p class="text-xs lg:text-sm font-500 tracking-tight text-text_3 text-balance">{props.title}</p>
+								<p class="text-xs xl:text-sm font-500 tracking-tight text-text_3 text-balance">{props.title}</p>
 							</div>
 						</div>
 					</div>

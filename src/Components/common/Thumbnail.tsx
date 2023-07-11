@@ -45,7 +45,7 @@ const ImageOrPlaceholder = ({
 }: Pick<ThumbnailProps, 'size'> & { image?: string } & Pick<ThumbnailProps, 'title'> &
 	Pick<ThumbnailProps, 'variant'>) => {
 	return image ? (
-		<div class="w-full ">
+		<div class="w-full h-full">
 			<Image
 				src={image}
 				height={variant === 'default_cart' ? 100 : 422}

@@ -44,7 +44,7 @@ export default function Home() {
 
 	return (
 		<div
-			class="font-poppins"
+			class="font-poppins  overflow-x-hidden"
 			style={{
 				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,

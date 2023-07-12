@@ -74,12 +74,12 @@ export function Hero() {
 			<div class="absolute bg-gray-8 w-[100%] h-[100%] top-0 left-0 z--40" />
 			<Presence initial>
 				<Show when={heroData.isSuccess}>
-					<div class="text-white z-10 flex flex-col items-start mb-20 md:ml-10">
+					<div class="text-white z-10 flex flex-col items-start  ">
 						<Show when={rootCategories()}>
-							<div class="flex justify-between sm:block w-[100vw] w-[100svw] overflow-hidden">
+							<div class="flex justify-between sm:block w-100% overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 1.5, easing: 'ease-out' } }}
+										animate={{ opacity: [0, 1], x: [-1000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
@@ -108,7 +108,7 @@ export function Hero() {
 													<Motion.div
 														animate={{
 															opacity: [0, 1],
-															/* x: [-1500, 0], */
+															x: [-1500, 0],
 															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
@@ -127,7 +127,7 @@ export function Hero() {
 								</Show>
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 2, easing: 'ease-out' } }}
+										animate={{ opacity: [0, 1], x: [-1500, 0], transition: { duration: 2, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
@@ -156,7 +156,7 @@ export function Hero() {
 													<Motion.div
 														animate={{
 															opacity: [0, 1],
-															/* x: [1500, 0], */
+															x: [1500, 0],
 															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
@@ -176,7 +176,7 @@ export function Hero() {
 							</div>
 						</Show>
 						<Motion.div
-							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 1.5, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], x: [-2000, 0], transition: { duration: 1.5, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
@@ -225,7 +225,7 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
-							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 1, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], x: [-2500, 0], transition: { duration: 1, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex items-center hover:underline">

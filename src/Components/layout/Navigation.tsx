@@ -74,7 +74,7 @@ export default function Navigation(props: any) {
 
 	return (
 		<div
-			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
+			class="sticky top-0 inset-x-0 z-50 group !fixed"
 			style={{
 				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,

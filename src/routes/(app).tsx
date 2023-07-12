@@ -44,7 +44,7 @@ export default function Home() {
 
 	return (
 		<div
-			class="font-poppins  overflow-x-hidden"
+			class="font-poppins"
 			style={{
 				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
@@ -60,6 +60,7 @@ export default function Home() {
 				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
 				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
 				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
 				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}

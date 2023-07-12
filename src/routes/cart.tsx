@@ -43,6 +43,7 @@ export default function Cart(props: any) {
 				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
 				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
 				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
 				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}

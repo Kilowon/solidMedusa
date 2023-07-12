@@ -153,14 +153,26 @@ export default function Navigation(props: any) {
 							</div>
 
 							<Show when={getWindowSize().width > 1279}>
-								<CartDropdown
+								{/* <CartDropdown
 									cart={props.cart}
 									stayOpen={stayOpen}
 									setStayOpen={setStayOpen}
-								/>
+								/> */}
 							</Show>
 
 							<Show when={getWindowSize().width < 1279}>
+								<div
+									class="relative"
+									title="Cart"
+									role="button"
+									tabindex="0"
+									onClick={() => setCartDrawer({ cart: 'active', checkout: 'active' })}
+								>
+									<div class="i-ion-cart-outline h-7 w-7" />
+									<div class="absolute top--1 right--1 w-4 h-4 text-normal_1 text-xs flex items-center justify-center bg-text_2 rounded-full">
+										5
+									</div>
+								</div>
 								<CartDrawerNav
 									cartDrawer={cartDrawer}
 									setCartDrawer={setCartDrawer}

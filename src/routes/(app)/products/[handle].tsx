@@ -44,7 +44,7 @@ export default function Products() {
 				itemProp="image"
 				content={queryProduct?.data?.products[0]?.thumbnail}
 			/>
-			<main class="">
+			<main class="min-h-[100vh]">
 				<Show when={queryProduct?.data?.products[0]?.handle === params.handle}>
 					<StoreProvider product={queryProduct?.data?.products[0]}>
 						<ProductTemplate

@@ -120,16 +120,8 @@ export default function Navigation(props: any) {
 							<A
 								title="Home"
 								href="/"
-								class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
+								class="text-regular md:text-2xl font-semibold font-poppins uppercase  "
 							>
-								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-									<Image
-										src={primaryData?.data?.data?.title_icon}
-										alt={primaryData?.data?.data?.title}
-										height={50}
-										width={100}
-									/>
-								</Show>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
@@ -141,7 +133,7 @@ export default function Navigation(props: any) {
 							</A>
 						</div>
 
-						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
+						<div class="flex items-center  h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 							<div class="flex items-center mr-4 ">
 								<A
 									class="hover:cursor-pointer"

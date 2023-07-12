@@ -41,9 +41,14 @@ const medusa = useMedusa()
 
 //TODO: The region is set to the US region this should be changed to a region that is chosen by the user or by IP address location
 async function fetchRegion(): Promise<any> {
+	if (!isServer && localStorage.getItem('cart_reg_id') !== null) {
+		return localStorage.getItem('cart_reg_id')
+	}
+
 	const region = await medusa.regions.list().then(({ regions }: any) => {
 		return regions[0]
 	})
+
 	if (!isServer) {
 		localStorage.setItem('cart_reg_id', region?.id)
 	}
@@ -51,12 +56,14 @@ async function fetchRegion(): Promise<any> {
 	return region
 }
 
-//const [useCart, setCart] = createSignal<Cart>(newCart())
+const [saveCart, setSaveCart] = createSignal<Cart>(null)
 
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
 	const cart = await medusa.carts.create({ region_id: region.id })
-	return cart
+	setSaveCart(cart)
+	localStorage.setItem('cart_id', saveCart()?.cart?.id)
+	return saveCart()
 }
 
 async function fetchSavedCart(): Promise<Cart> {
@@ -71,7 +78,7 @@ async function fetchSavedCart(): Promise<Cart> {
 }
 
 async function getRequiredCart() {
-	const cartId = localStorage.getItem('cart_id')
+	let cartId = localStorage.getItem('cart_id')
 	if (cartId !== undefined && cartId !== null) {
 		return fetchSavedCart()
 	} else {
@@ -81,18 +88,32 @@ async function getRequiredCart() {
 
 export function GlobalContextProvider(props: any) {
 	///////////////////////////////////////////////////////////////////////////
-	const queryCart = createQuery(() => ({
+	const queryNewCart = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: async function () {
-			await new Promise(r => setTimeout(r, 500))
-			const cart = await getRequiredCart()
+			const cart = await fetchNewCart()
+			console.log('RAN NEW CART')
 			return cart
-		}
+		},
+		retry: 0,
+		enabled: localStorage.getItem('cart_id') === null
 	}))
+
+	const querySavedCart = createQuery(() => ({
+		queryKey: ['cart'],
+		queryFn: async function () {
+			const cart = await fetchSavedCart()
+			console.log('RAN SAVED CART')
+			return cart
+		},
+		retry: 0,
+		enabled: localStorage.getItem('cart_id') !== null && !queryNewCart.isSuccess
+	}))
+
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
 
 	createEffect(() => {
-		if (!queryCart.isPending && queryCart.isSuccess) {
+		if (!querySavedCart.isPending && querySavedCart.isSuccess) {
 			const next = queue()[0]
 			if (next) {
 				setQueue(queue().slice(1))
@@ -108,10 +129,10 @@ export function GlobalContextProvider(props: any) {
 	}
 
 	function queryCartRefetch() {
-		if (queryCart.isPending) {
-			addToQueue(queryCart.refetch)
+		if (querySavedCart.isPending) {
+			addToQueue(querySavedCart.refetch)
 		} else {
-			queryCart.refetch()
+			querySavedCart.refetch()
 		}
 	}
 
@@ -128,11 +149,11 @@ export function GlobalContextProvider(props: any) {
 		//staleTime: 15 * 60 * 1000
 	}))
 
-	onMount(() => {
+	/* 	onMount(() => {
 		if (!isServer && queryCart?.data?.cart?.id !== undefined) {
 			localStorage.setItem('cart_id', queryCart?.data.cart.id)
 		}
-	})
+	}) */
 
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
@@ -184,7 +205,7 @@ export function GlobalContextProvider(props: any) {
 		queryFn: async function () {
 			const product = await medusa.products.list({
 				category_id: currentCategoryId(),
-				cart_id: queryCart?.data?.cart?.id
+				cart_id: querySavedCart?.data?.cart?.id
 			})
 			return product
 		},
@@ -222,7 +243,7 @@ export function GlobalContextProvider(props: any) {
 		<GlobalContext.Provider
 			value={{
 				medusa,
-				queryCart: queryCart as Cart,
+				queryCart: querySavedCart as Cart,
 				queryCartRefetch,
 				queryByProductId,
 				setCurrentProductId,

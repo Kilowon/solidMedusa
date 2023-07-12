@@ -51,7 +51,7 @@ const ImageOrPlaceholder = ({
 				height={variant === 'default_cart' ? 100 : 422}
 				width={variant === 'default_cart' ? 84 : 360}
 				alt="Thumbnail"
-				class={variant === 'default_cart' ? 'object-contain w-full' : 'object-cover w-full h-full'}
+				class={variant === 'default_cart' ? 'object-contain w-full h-full' : 'object-cover w-full h-full'}
 			/>
 		</div>
 	) : (

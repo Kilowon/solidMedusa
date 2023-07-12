@@ -53,7 +53,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 						/>
 						<div class=" flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 ">
 							<div class="flex justify-between">
-								<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight ">
+								<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight relative">
 									<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 										<div class="">
 											{props.variants?.[0]?.original_price
@@ -62,11 +62,11 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										</div>
 									</Show>
 									<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-										{/* <div class="line-through ">
+										<div class="line-through text-[10px] absolute top--4 left-1">
 											{props.variants?.[0]?.original_price
 												? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
 												: ''}
-										</div> */}
+										</div>
 										<div class="flex justify-between ">
 											<div class=" text-accent_3 ">
 												{props.variants?.[0]?.calculated_price

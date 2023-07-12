@@ -15,7 +15,7 @@ export default function FooterCTA() {
 	})
 	return (
 		<div class=" w-full">
-			<div class=" py-16">
+			<div class=" ">
 				<div>
 					<Suspense>
 						<FeaturedProducts variant="footer" />

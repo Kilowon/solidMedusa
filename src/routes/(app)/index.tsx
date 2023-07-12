@@ -20,9 +20,9 @@ export default function App() {
 	})
 
 	return (
-		<main class="min-h-[100vh] overflow-x-hidden">
+		<main class="min-h-[100vh] ">
 			<Hero />
-			<div class="my-16">
+			<div class="">
 				<Suspense>
 					<FeaturedProducts variant="hero" />
 					<FeaturedProducts variant="hero2" />

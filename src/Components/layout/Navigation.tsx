@@ -74,7 +74,7 @@ export default function Navigation(props: any) {
 
 	return (
 		<div
-			class="sticky top-0 inset-x-0 z-50 group !fixed"
+			class="sticky top-0 inset-x-0 z-50 group sm:!fixed max-w-[100svw]"
 			style={{
 				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
@@ -122,14 +122,14 @@ export default function Navigation(props: any) {
 								href="/"
 								class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
 							>
-								{/* <Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
+								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
 									<Image
 										src={primaryData?.data?.data?.title_icon}
 										alt={primaryData?.data?.data?.title}
 										height={50}
 										width={100}
 									/>
-								</Show> */}
+								</Show>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
@@ -160,13 +160,13 @@ export default function Navigation(props: any) {
 								</A>
 							</div>
 
-							{/* <Show when={getWindowSize().width > 1279}>
+							<Show when={getWindowSize().width > 1279}>
 								<CartDropdown
 									cart={props.cart}
 									stayOpen={stayOpen}
 									setStayOpen={setStayOpen}
 								/>
-							</Show> */}
+							</Show>
 
 							<Show when={getWindowSize().width < 1279}>
 								<CartDrawerNav

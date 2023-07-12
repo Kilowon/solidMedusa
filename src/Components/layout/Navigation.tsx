@@ -74,7 +74,7 @@ export default function Navigation(props: any) {
 
 	return (
 		<div
-			class="sticky top-0 inset-x-0 z-50 group sm:!fixed max-w-[100svw]"
+			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
 			style={{
 				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
 				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
@@ -120,8 +120,16 @@ export default function Navigation(props: any) {
 							<A
 								title="Home"
 								href="/"
-								class="text-regular md:text-2xl font-semibold font-poppins uppercase  "
+								class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
 							>
+								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
+									<Image
+										src={primaryData?.data?.data?.title_icon}
+										alt={primaryData?.data?.data?.title}
+										height={50}
+										width={100}
+									/>
+								</Show>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
@@ -133,7 +141,7 @@ export default function Navigation(props: any) {
 							</A>
 						</div>
 
-						<div class="flex items-center  h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
+						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 							<div class="flex items-center mr-4 ">
 								<A
 									class="hover:cursor-pointer"
@@ -153,26 +161,14 @@ export default function Navigation(props: any) {
 							</div>
 
 							<Show when={getWindowSize().width > 1279}>
-								{/* <CartDropdown
+								<CartDropdown
 									cart={props.cart}
 									stayOpen={stayOpen}
 									setStayOpen={setStayOpen}
-								/> */}
+								/>
 							</Show>
 
 							<Show when={getWindowSize().width < 1279}>
-								<div
-									class="relative"
-									title="Cart"
-									role="button"
-									tabindex="0"
-									onClick={() => setCartDrawer({ cart: 'active', checkout: 'active' })}
-								>
-									<div class="i-ion-cart-outline h-7 w-7" />
-									<div class="absolute top--1 right--1 w-4 h-4 text-normal_1 text-xs flex items-center justify-center bg-text_2 rounded-full">
-										5
-									</div>
-								</div>
 								<CartDrawerNav
 									cartDrawer={cartDrawer}
 									setCartDrawer={setCartDrawer}

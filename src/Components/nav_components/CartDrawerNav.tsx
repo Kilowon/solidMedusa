@@ -24,7 +24,7 @@ export default function CartDrawerNav(props: any) {
 
 	return (
 		<div>
-			{/* <div
+			<div
 				class="flex items-center rounded-full xl:hidden z-1 relative"
 				style="position: fixed; top: 0.85vh; right: -0.5rem; width: 3.75rem; height: 3rem;"
 				title="Cart"
@@ -36,7 +36,7 @@ export default function CartDrawerNav(props: any) {
 				<div class="absolute top-1.5 left-5.8 w-4 h-4 text-normal_1 text-xs flex items-center justify-center bg-text_2 rounded-full">
 					{totalItemsInCart(items())}
 				</div>
-			</div> */}
+			</div>
 			<div
 				class={`fixed inset-0 bg-normal_2/50 backdrop-blur-6px z-200 transition-all duration-250 ease-in-out ${
 					props.cartDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'

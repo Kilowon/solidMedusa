@@ -21,12 +21,12 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh] ">
-			<Hero />
+			{/* <Hero /> */}
 
 			<div class="">
-				<FeaturedProducts variant="hero" />
+				{/* <FeaturedProducts variant="hero" />
 				<FeaturedProducts variant="hero2" />
-				<FeaturedProducts variant="hero3" />
+				<FeaturedProducts variant="hero3" /> */}
 			</div>
 		</main>
 	)

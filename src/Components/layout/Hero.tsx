@@ -76,7 +76,7 @@ export function Hero() {
 							<div class="flex justify-between sm:block w-100% overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 1.5, easing: 'ease-out' } }}
+										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
@@ -106,7 +106,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															/* x: [-1500, 0], */
-															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
+															transition: { duration: 0.5 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -124,7 +124,7 @@ export function Hero() {
 								</Show>
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 2, easing: 'ease-out' } }}
+										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
 										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
@@ -154,7 +154,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															x: [1500, 0],
-															transition: { duration: 1 + (index() - 4) * 0.1, easing: 'ease-out' }
+															transition: { duration: 0.5 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -222,7 +222,7 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
-							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 1, easing: 'ease-out' } }}
+							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
 							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 						>
 							<div class="flex items-center hover:underline">
@@ -269,7 +269,7 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
-							animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.5 } }}
 							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image
@@ -296,7 +296,7 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
-							animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.5 } }}
 							exit={{ opacity: 0, transition: { duration: 0.5 } }}
 						>
 							<Image

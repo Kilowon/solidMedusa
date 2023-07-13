@@ -58,7 +58,8 @@ export default function FeaturedProducts(props: FeaturedProps) {
 			const collection = medusa?.collections?.list()
 			return collection
 		},
-		cacheTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000,
+		enabled: false
 	}))
 
 	const queryCollection = createQuery(() => ({

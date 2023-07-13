@@ -62,26 +62,24 @@ async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
 	const cart = await medusa.carts.create({ region_id: region.id })
 	setSaveCart(cart)
-	localStorage.setItem('cart_id', saveCart()?.cart?.id)
+	if (!isServer) {
+		localStorage.setItem('cart_id', saveCart()?.cart?.id)
+	}
 	return saveCart()
 }
 
 async function fetchSavedCart(): Promise<Cart> {
-	try {
-		const cartId = localStorage.getItem('cart_id')!
-		const cart = await medusa.carts.retrieve(cartId)
-		return cart
-	} catch (e) {
-		console.log(e)
-		return fetchNewCart()
+	if (!isServer) {
+		try {
+			const cartId = localStorage.getItem('cart_id')!
+			const cart = await medusa.carts.retrieve(cartId)
+			return cart
+		} catch (e) {
+			console.log(e)
+			return fetchNewCart()
+		}
 	}
-}
-
-async function getRequiredCart() {
-	let cartId = localStorage.getItem('cart_id')
-	if (cartId !== undefined && cartId !== null) {
-		return fetchSavedCart()
-	} else {
+	if (isServer) {
 		return fetchNewCart()
 	}
 }
@@ -96,7 +94,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: localStorage.getItem('cart_id') === null
+		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false
 	}))
 
 	const querySavedCart = createQuery(() => ({
@@ -107,7 +105,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: localStorage.getItem('cart_id') !== null && !queryNewCart.isSuccess
+		enabled: isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : true
 	}))
 
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -176,8 +174,29 @@ export function GlobalContextProvider(props: any) {
 		enabled: false
 	}))
 
+	const heroData = createQuery(() => ({
+		queryKey: ['hero_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	onMount(() => {
 		primaryData.refetch()
+		heroData.refetch()
 	})
 
 	///////////////////////////////////////////////////////////////////////////
@@ -221,7 +240,7 @@ export function GlobalContextProvider(props: any) {
 	}, [queryCategoryProducts, currentCategoryId])
 
 	const queryCollections = createQuery(() => ({
-		queryKey: ['collections', currentCategoryId()],
+		queryKey: ['collections-list'],
 		queryFn: async function () {
 			const product = await medusa.collections.list()
 			return product

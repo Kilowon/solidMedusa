@@ -53,7 +53,7 @@ export function Hero() {
 	}
 
 	onMount(async () => {
-		const data = await heroData.refetch()
+		const data = await heroData.data
 
 		const timeout = setTimeout(() => {
 			if (data) {

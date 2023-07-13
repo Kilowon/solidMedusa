@@ -288,7 +288,7 @@ export function Hero() {
 					<Image
 						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
 						layout="fullWidth"
-						priority={true}
+						priority={false}
 						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
 						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 					/>

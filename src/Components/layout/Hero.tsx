@@ -106,7 +106,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															/* x: [-1500, 0], */
-															transition: { duration: 0.5 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
+															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -154,7 +154,7 @@ export function Hero() {
 														animate={{
 															opacity: [0, 1],
 															x: [1500, 0],
-															transition: { duration: 0.5 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
+															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
 														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
 													>
@@ -269,8 +269,8 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
-							animate={{ opacity: [0.3, 1], transition: { duration: 0.5 } }}
-							exit={{ opacity: 0, transition: { duration: 0.5 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
+							exit={{ opacity: 0, transition: { duration: 0.1 } }}
 						>
 							<Image
 								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
@@ -296,8 +296,8 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
-							animate={{ opacity: [0.3, 1], transition: { duration: 0.5 } }}
-							exit={{ opacity: 0, transition: { duration: 0.5 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
+							exit={{ opacity: 0, transition: { duration: 0.1 } }}
 						>
 							<Image
 								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}

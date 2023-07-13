@@ -145,7 +145,8 @@ export function GlobalContextProvider(props: any) {
 			const product = await medusa.products.retrieve(currentProductId())
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000,
+		enabled: false
 		//staleTime: 15 * 60 * 1000
 	}))
 

@@ -7,28 +7,28 @@ import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { Motion, Presence } from '@motionone/solid'
 
-const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
-
+/* const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
+ */
 /* const CartDropdown = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDropdown')
 }) */
 
-const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
+/* const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav')) */
 
 /* const CartDrawerNav = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDrawerNav')
 }) */
 
-const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
+/* const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu')) */
 
 /* const DropdownMenu = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/DropdownMenu')
 }) */
 
-const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
+/* const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav')) */
 
 /* const HamburgerDrawerNav = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
@@ -72,7 +72,7 @@ export default function Navigation(props: any) {
 			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
 				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
-						<Suspense>
+						{/* <Suspense>
 							<Show when={getWindowSize().width < 1279}>
 								<Presence initial>
 									<Motion
@@ -86,8 +86,8 @@ export default function Navigation(props: any) {
 									</Motion>
 								</Presence>
 							</Show>
-						</Suspense>
-						<Suspense>
+						</Suspense> */}
+						{/* <Suspense>
 							<Show when={getWindowSize().width > 1279}>
 								<Presence initial>
 									<Motion
@@ -103,7 +103,7 @@ export default function Navigation(props: any) {
 									</Motion>
 								</Presence>
 							</Show>
-						</Suspense>
+						</Suspense> */}
 					</div>
 
 					<div class="flex items-center">
@@ -112,7 +112,7 @@ export default function Navigation(props: any) {
 							href="/"
 							class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
 						>
-							<Suspense>
+							{/* <Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
 									<Presence initial>
 										<Motion
@@ -128,7 +128,7 @@ export default function Navigation(props: any) {
 										</Motion>
 									</Presence>
 								</Show>
-							</Suspense>
+							</Suspense> */}
 							<Suspense fallback={<div class=" font-poppins uppercase">Loading...</div>}>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<Presence initial>
@@ -151,7 +151,7 @@ export default function Navigation(props: any) {
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 						<div class="flex items-center mr-4 ">
-							<Show when={true}>
+							{/* <Show when={true}>
 								<Presence initial>
 									<Motion
 										animate={{ opacity: [0, 1] }}
@@ -174,9 +174,9 @@ export default function Navigation(props: any) {
 										</A>
 									</Motion>
 								</Presence>
-							</Show>
+							</Show> */}
 						</div>
-						<Suspense>
+						{/* <Suspense>
 							<Show when={getWindowSize().width > 1279}>
 								<Presence initial>
 									<Motion
@@ -191,8 +191,8 @@ export default function Navigation(props: any) {
 									</Motion>
 								</Presence>
 							</Show>
-						</Suspense>
-						<Suspense>
+						</Suspense> */}
+						{/* <Suspense>
 							<Show when={getWindowSize().width < 1279}>
 								<Presence initial>
 									<Motion
@@ -206,7 +206,7 @@ export default function Navigation(props: any) {
 									</Motion>
 								</Presence>
 							</Show>
-						</Suspense>
+						</Suspense> */}
 					</div>
 				</nav>
 			</header>

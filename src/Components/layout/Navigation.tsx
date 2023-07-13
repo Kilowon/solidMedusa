@@ -5,31 +5,35 @@ import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
-//import CartDropdown from '~/Components/nav_components/CartDropdown'
+import { Motion, Presence } from '@motionone/solid'
 
-const CartDropdown = lazy(async () => {
+const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
+
+/* const CartDropdown = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDropdown')
-})
+}) */
 
-//const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
+const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
 
-const CartDrawerNav = lazy(async () => {
+/* const CartDrawerNav = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/CartDrawerNav')
-})
+}) */
 
-//const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
+const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
 
-const DropdownMenu = lazy(async () => {
+/* const DropdownMenu = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/DropdownMenu')
-})
+}) */
 
-const HamburgerDrawerNav = lazy(async () => {
+const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
+
+/* const HamburgerDrawerNav = lazy(async () => {
 	await new Promise(r => setTimeout(r, 0))
 	return import('~/Components/nav_components/HamburgerDrawerNav')
-})
+}) */
 
 export default function Navigation(props: any) {
 	const { medusa } = useGlobalContext()
@@ -63,15 +67,6 @@ export default function Navigation(props: any) {
 		enabled: false
 	}))
 
-	createEffect(() => {
-		console.log(primaryData?.data?.data?.title_icon)
-	})
-
-	function hexToRgb(hex: any) {
-		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
-	}
-
 	return (
 		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
 			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
@@ -79,20 +74,34 @@ export default function Navigation(props: any) {
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<Suspense>
 							<Show when={getWindowSize().width < 1279}>
-								<HamburgerDrawerNav
-									menuDrawer={menuDrawer}
-									setMenuDrawer={setMenuDrawer}
-								/>
+								<Presence initial>
+									<Motion
+										animate={{ opacity: [0, 1] }}
+										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+									>
+										<HamburgerDrawerNav
+											menuDrawer={menuDrawer}
+											setMenuDrawer={setMenuDrawer}
+										/>
+									</Motion>
+								</Presence>
 							</Show>
 						</Suspense>
 						<Suspense>
 							<Show when={getWindowSize().width > 1279}>
-								<div class=" h-full ml-2">
-									<DropdownMenu
-										collection={props.collection}
-										product={props.product}
-									/>
-								</div>
+								<Presence initial>
+									<Motion
+										animate={{ opacity: [0, 1] }}
+										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+									>
+										<div class=" h-full ml-2">
+											<DropdownMenu
+												collection={props.collection}
+												product={props.product}
+											/>
+										</div>
+									</Motion>
+								</Presence>
 							</Show>
 						</Suspense>
 					</div>
@@ -105,22 +114,36 @@ export default function Navigation(props: any) {
 						>
 							<Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-									<Image
-										src={primaryData?.data?.data?.title_icon}
-										alt={primaryData?.data?.data?.title}
-										height={50}
-										width={100}
-									/>
+									<Presence initial>
+										<Motion
+											animate={{ opacity: [0, 1] }}
+											transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+										>
+											<Image
+												src={primaryData?.data?.data?.title_icon}
+												alt={primaryData?.data?.data?.title}
+												height={50}
+												width={100}
+											/>
+										</Motion>
+									</Presence>
 								</Show>
 							</Suspense>
 							<Suspense fallback={<div class=" font-poppins uppercase">Loading...</div>}>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
-									<div
-										title={primaryData?.data?.data?.title}
-										class=" font-poppins uppercase"
-									>
-										{primaryData?.data?.data?.title}
-									</div>
+									<Presence initial>
+										<Motion
+											animate={{ opacity: [0, 1] }}
+											transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+										>
+											<div
+												title={primaryData?.data?.data?.title}
+												class=" font-poppins uppercase"
+											>
+												{primaryData?.data?.data?.title}
+											</div>
+										</Motion>
+									</Presence>
 								</Show>
 							</Suspense>
 						</A>
@@ -128,37 +151,60 @@ export default function Navigation(props: any) {
 
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 						<div class="flex items-center mr-4 ">
-							<A
-								class="hover:cursor-pointer"
-								href="/account"
-								title="account info"
-								role="button"
-								tabindex="0"
-							>
-								<div
-									class={clsx(
-										'h-7 w-7',
-										accountStatus() === 'inactive' && 'i-la-user-plus',
-										accountStatus() === 'active' && 'i-la-user-check'
-									)}
-								/>
-							</A>
+							<Show when={true}>
+								<Presence initial>
+									<Motion
+										animate={{ opacity: [0, 1] }}
+										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+									>
+										<A
+											class="hover:cursor-pointer"
+											href="/account"
+											title="account info"
+											role="button"
+											tabindex="0"
+										>
+											<div
+												class={clsx(
+													'h-7 w-7',
+													accountStatus() === 'inactive' && 'i-la-user-plus',
+													accountStatus() === 'active' && 'i-la-user-check'
+												)}
+											/>
+										</A>
+									</Motion>
+								</Presence>
+							</Show>
 						</div>
 						<Suspense>
 							<Show when={getWindowSize().width > 1279}>
-								<CartDropdown
-									cart={props.cart}
-									stayOpen={stayOpen}
-									setStayOpen={setStayOpen}
-								/>
+								<Presence initial>
+									<Motion
+										animate={{ opacity: [0, 1] }}
+										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+									>
+										<CartDropdown
+											cart={props.cart}
+											stayOpen={stayOpen}
+											setStayOpen={setStayOpen}
+										/>
+									</Motion>
+								</Presence>
 							</Show>
 						</Suspense>
 						<Suspense>
 							<Show when={getWindowSize().width < 1279}>
-								<CartDrawerNav
-									cartDrawer={cartDrawer}
-									setCartDrawer={setCartDrawer}
-								/>
+								<Presence initial>
+									<Motion
+										animate={{ opacity: [0, 1] }}
+										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
+									>
+										<CartDrawerNav
+											cartDrawer={cartDrawer}
+											setCartDrawer={setCartDrawer}
+										/>
+									</Motion>
+								</Presence>
 							</Show>
 						</Suspense>
 					</div>

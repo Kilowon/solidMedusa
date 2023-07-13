@@ -243,6 +243,7 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['collections-list'],
 		queryFn: async function () {
 			const product = await medusa.collections.list()
+			setCollections(product)
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
@@ -254,9 +255,9 @@ export function GlobalContextProvider(props: any) {
 	onMount(() => {
 		queryCollections.refetch()
 
-		setTimeout(() => {
+		/* setTimeout(() => {
 			setCollections(queryCollections?.data)
-		}, 350)
+		}, 350) */
 	})
 
 	return (

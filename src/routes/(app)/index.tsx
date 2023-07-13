@@ -21,7 +21,9 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh] ">
-			<Hero />
+			<Suspense>
+				<Hero />
+			</Suspense>
 			<div class="">
 				<Suspense>
 					<FeaturedProducts variant="hero" />

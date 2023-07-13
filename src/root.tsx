@@ -33,8 +33,9 @@ export default function Root() {
 		>
 			<Head>
 				<Title>Store</Title>
+				Strict-Transport-Security: max-age=63072000; includeSubDomains; preload X-Content-Type-Options: nosniff
+				X-Frame-Options: DENY X-XSS-Protection: 1; mode=block
 				<Meta charset="utf-8" />
-
 				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
@@ -55,7 +56,6 @@ export default function Root() {
 					name="author"
 					content="SolidJs-MedusaJs-Ecommerce-Starter"
 				/>
-
 				<Link
 					rel="icon"
 					href="/favicon.ico"

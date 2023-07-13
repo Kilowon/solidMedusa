@@ -62,10 +62,6 @@ export default function ProductActions(props: {
 	})
 
 	createEffect(() => {
-		console.log(isProductPurchasable(), 'variant ProductActions', props.variant())
-	})
-
-	createEffect(() => {
 		if (props.variant()?.id) {
 			const variant = props.productInfo.variants.find(v => v.id === props.variant()?.id)
 			setCurrentVariant(variant || props.productInfo.variants[0])
@@ -237,9 +233,7 @@ export default function ProductActions(props: {
 						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
 					</button>
 				</div>
-				<div>
-					isPurchase:{isProductPurchasable()} variant:{props.variant()?.id}
-				</div>
+
 				<div>
 					<ProductInformationTabs
 						productInfo={props.productInfo}

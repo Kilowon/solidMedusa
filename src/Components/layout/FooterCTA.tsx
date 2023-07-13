@@ -17,7 +17,9 @@ export default function FooterCTA() {
 		<div class=" w-full">
 			<div class=" ">
 				<div>
-					<FeaturedProducts variant="footer" />
+					<Suspense fallback={<div>FOOTER</div>}>
+						<FeaturedProducts variant="footer" />
+					</Suspense>
 				</div>
 			</div>
 		</div>

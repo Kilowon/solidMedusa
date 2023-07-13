@@ -33,8 +33,27 @@ export default function Root() {
 		>
 			<Head>
 				<Title>Store</Title>
-				Strict-Transport-Security: max-age=63072000; includeSubDomains; preload X-Content-Type-Options: nosniff
-				X-Frame-Options: DENY X-XSS-Protection: 1; mode=block
+
+				<Meta
+					http-equiv="Strict-Transport-Security"
+					content="max-age=63072000 includeSubDomains"
+				/>
+				<Meta
+					http-equiv="X-Content-Type-Options"
+					content="nosniff"
+				/>
+				<Meta
+					http-equiv="X-Frame-Options"
+					content="DENY"
+				/>
+				<Meta
+					http-equiv="X-XSS-Protection"
+					content="1; mode=block"
+				/>
+				<Meta
+					http-equiv="Content-Security-Policy"
+					content="default-src https: data: "
+				/>
 				<Meta charset="utf-8" />
 				<Meta
 					name="viewport"

@@ -78,7 +78,7 @@ export default function Root() {
 						<SolidQueryDevtools />
 						<GlobalContextProvider>
 							<StoreProvider>
-								<Suspense
+								{/* <Suspense
 									fallback={
 										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
 											<div class="flex flex-col items-center">
@@ -95,7 +95,8 @@ export default function Root() {
 											</div>
 										</section>
 									}
-								>
+								> */}
+								<Suspense fallback={<div class="flex flex-col items-center">Loading...</div>}>
 									<Routes>
 										<FileRoutes />
 									</Routes>

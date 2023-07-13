@@ -67,13 +67,11 @@ export default function CartDropdown(props: any) {
 					a.finished.then(done)
 				}}
 			>
-				<Suspense>
-					<Show when={open()}>
-						<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
-							<CartCore variant="panel" />
-						</div>
-					</Show>
-				</Suspense>
+				<Show when={open()}>
+					<div class="bg-white absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm text-gray-7 z-10 mx-auto px-8">
+						<CartCore variant="panel" />
+					</div>
+				</Show>
 			</Transition>
 		</div>
 	)

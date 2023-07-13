@@ -76,8 +76,8 @@ export function Hero() {
 							<div class="flex justify-between sm:block w-100% overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
-										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+										exit={{ opacity: 0, /* y: [0, 150] */ transition: { duration: 0.1 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
 											<For each={rootCategories()}>
@@ -108,7 +108,7 @@ export function Hero() {
 															/* x: [-1500, 0], */
 															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
-														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
 													>
 														<A
 															href={`/categories/${category?.handle}`}
@@ -124,8 +124,8 @@ export function Hero() {
 								</Show>
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
 									<Motion.div
-										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
-										exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+										exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
 									>
 										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
 											<For each={rootCategories()}>
@@ -153,10 +153,10 @@ export function Hero() {
 													<Motion.div
 														animate={{
 															opacity: [0, 1],
-															x: [1500, 0],
+															/* x: [1500, 0], */
 															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
 														}}
-														exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
 													>
 														<A
 															href={`/categories/${category?.handle}`}
@@ -173,8 +173,8 @@ export function Hero() {
 							</div>
 						</Show>
 						<Motion.div
-							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 1.5, easing: 'ease-out' } }}
-							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+							exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
 						>
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
 								<Show when={true}>
@@ -191,8 +191,8 @@ export function Hero() {
 									>
 										<Rerun on={count()}>
 											<Motion.div
-												animate={{ opacity: [1, 0, 1], y: [-300, 0], transition: { duration: 1.75 } }}
-												exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5, easing: 'ease-out' } }}
+												animate={{ opacity: [1, 0, 1], /*  y: [-300, 0], */ transition: { duration: 0.1 } }}
+												exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 											>
 												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
@@ -209,8 +209,8 @@ export function Hero() {
 										<Rerun on={count()}>
 											<Motion.div
 												initial={{ opacity: 1, x: 0, transition: { duration: 0 } }}
-												animate={{ opacity: [0, 0, 0, 1], x: [-100, -3], transition: { duration: 1, easing: 'ease-out' } }}
-												exit={{ opacity: 0, x: [0, 300], transition: { duration: 0.5 } }}
+												animate={{ opacity: [0, 0, 0, 1], /*  x: [-100, -3], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+												exit={{ opacity: 0, /* x: [0, 300], */ transition: { duration: 0.1 } }}
 											>
 												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
 													heroData?.data?.data?.hero_data[currentIndex()].title
@@ -222,8 +222,8 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
-							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.5, easing: 'ease-out' } }}
-							exit={{ opacity: 0, y: [0, 150], transition: { duration: 0.5 } }}
+							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+							exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
 						>
 							<div class="flex items-center hover:underline">
 								<A

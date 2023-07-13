@@ -99,21 +99,24 @@ export default function Navigation(props: any) {
 				<Suspense fallback={<div>Loading...</div>}>
 					<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 						<div class="flex-1 basis-0 h-full flex items-center">
-							<Show when={getWindowSize().width < 1279}>
-								<HamburgerDrawerNav
-									menuDrawer={menuDrawer}
-									setMenuDrawer={setMenuDrawer}
-								/>
-							</Show>
-
-							<Show when={getWindowSize().width > 1279}>
-								<div class=" h-full ml-2">
-									<DropdownMenu
-										collection={props.collection}
-										product={props.product}
+							<Suspense>
+								<Show when={getWindowSize().width < 1279}>
+									<HamburgerDrawerNav
+										menuDrawer={menuDrawer}
+										setMenuDrawer={setMenuDrawer}
 									/>
-								</div>
-							</Show>
+								</Show>
+							</Suspense>
+							<Suspense>
+								<Show when={getWindowSize().width > 1279}>
+									<div class=" h-full ml-2">
+										<DropdownMenu
+											collection={props.collection}
+											product={props.product}
+										/>
+									</div>
+								</Show>
+							</Suspense>
 						</div>
 
 						<div class="flex items-center">
@@ -122,22 +125,26 @@ export default function Navigation(props: any) {
 								href="/"
 								class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
 							>
-								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-									<Image
-										src={primaryData?.data?.data?.title_icon}
-										alt={primaryData?.data?.data?.title}
-										height={50}
-										width={100}
-									/>
-								</Show>
-								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
-									<div
-										title={primaryData?.data?.data?.title}
-										class=" font-poppins uppercase"
-									>
-										{primaryData?.data?.data?.title}
-									</div>
-								</Show>
+								<Suspense>
+									<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
+										<Image
+											src={primaryData?.data?.data?.title_icon}
+											alt={primaryData?.data?.data?.title}
+											height={50}
+											width={100}
+										/>
+									</Show>
+								</Suspense>
+								<Suspense>
+									<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
+										<div
+											title={primaryData?.data?.data?.title}
+											class=" font-poppins uppercase"
+										>
+											{primaryData?.data?.data?.title}
+										</div>
+									</Show>
+								</Suspense>
 							</A>
 						</div>
 
@@ -159,21 +166,23 @@ export default function Navigation(props: any) {
 									/>
 								</A>
 							</div>
-
-							<Show when={getWindowSize().width > 1279}>
-								<CartDropdown
-									cart={props.cart}
-									stayOpen={stayOpen}
-									setStayOpen={setStayOpen}
-								/>
-							</Show>
-
-							<Show when={getWindowSize().width < 1279}>
-								<CartDrawerNav
-									cartDrawer={cartDrawer}
-									setCartDrawer={setCartDrawer}
-								/>
-							</Show>
+							<Suspense>
+								<Show when={getWindowSize().width > 1279}>
+									<CartDropdown
+										cart={props.cart}
+										stayOpen={stayOpen}
+										setStayOpen={setStayOpen}
+									/>
+								</Show>
+							</Suspense>
+							<Suspense>
+								<Show when={getWindowSize().width < 1279}>
+									<CartDrawerNav
+										cartDrawer={cartDrawer}
+										setCartDrawer={setCartDrawer}
+									/>
+								</Show>
+							</Suspense>
 						</div>
 					</nav>
 				</Suspense>

@@ -29,196 +29,184 @@ export default function DropdownMenu(props: any) {
 	}, [queryCategories])
 
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<div
-				class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400  font-poppins
+		<div
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400  font-poppins
 			"
-			>
-				<div>
-					<div
-						class="hover:cursor-pointer"
-						title="Main Menu"
-						role="button"
-						tabindex="0"
-						onKeyDown={e => {
-							if (e.key === 'Enter') {
-								return setOpen(true)
-							}
-							if (e.key === 'Escape') {
-								return setOpen(false)
-							}
-						}}
-					>
-						<div
-							class="i-ic-round-menu  w-7 h-7 ml-2"
-							onclick={e => {
-								e.stopPropagation()
-								setOpen(!open())
-								console.log(open())
-							}}
-						/>
-					</div>
-				</div>
-				<Transition
-					onEnter={(el, done) => {
-						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-							duration: 150
-						})
-						a.finished.then(done)
-					}}
-					onExit={(el, done) => {
-						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-							duration: 200
-						})
-						a.finished.then(done)
+		>
+			<div>
+				<div
+					class="hover:cursor-pointer"
+					title="Main Menu"
+					role="button"
+					tabindex="0"
+					onKeyDown={e => {
+						if (e.key === 'Enter') {
+							return setOpen(true)
+						}
+						if (e.key === 'Escape') {
+							return setOpen(false)
+						}
 					}}
 				>
-					<Show when={open()}>
-						<Suspense fallback={<div>Loading...</div>}>
-							<div
-								class=" bg-normal_2 absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
-								/* onMouseLeave={() => setOpen(false)} */
-							>
-								<div class="relative py-4">
-									<div class="flex items-start  mx-auto px-8 ">
-										<div class="flex flex-col space-y-8 ">
-											<div class="flex space-x-12 ">
-												<div class="text-base  bg-text_1 text-normal_2 rounded-0.5  p-2">
-													<A
-														href={`/store/Store`}
-														//onClick={() => setOpen(false)}
-													>
-														Shop All Our Items
-													</A>
-												</div>
-												<Show when={collections()?.collections}>
-													<For each={collections()?.collections}>
-														{collection => {
-															if (collection?.metadata?.menu !== 'hidden')
-																return (
-																	<Suspense fallback={<div>Loading...</div>}>
-																		<div class="text-base bg-text_3 text-normal_2  p-2 rounded-0.5">
-																			<A
-																				href={`/collections/${collection.handle}`}
-																				onClick={e => {
-																					e.stopPropagation()
+					<div
+						class="i-ic-round-menu  w-7 h-7 ml-2"
+						onclick={e => {
+							e.stopPropagation()
+							setOpen(!open())
+							console.log(open())
+						}}
+					/>
+				</div>
+			</div>
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 150
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 200
+					})
+					a.finished.then(done)
+				}}
+			>
+				<Show when={open()}>
+					<div
+						class=" bg-normal_2 absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
+						/* onMouseLeave={() => setOpen(false)} */
+					>
+						<div class="relative py-4">
+							<div class="flex items-start  mx-auto px-8 ">
+								<div class="flex flex-col space-y-8 ">
+									<div class="flex space-x-12 ">
+										<div class="text-base  bg-text_1 text-normal_2 rounded-0.5  p-2">
+											<A
+												href={`/store/Store`}
+												//onClick={() => setOpen(false)}
+											>
+												Shop All Our Items
+											</A>
+										</div>
+										<Show when={collections()?.collections}>
+											<For each={collections()?.collections}>
+												{collection => {
+													if (collection?.metadata?.menu !== 'hidden')
+														return (
+															<div class="text-base bg-text_3 text-normal_2  p-2 rounded-0.5">
+																<A
+																	href={`/collections/${collection.handle}`}
+																	onClick={e => {
+																		e.stopPropagation()
 
-																					setOpen(false)
-																				}}
-																				onKeyDown={e => {
-																					if (e.key === 'Escape') {
-																						return setOpen(false)
-																						console.log(open())
-																					}
-																				}}
+																		setOpen(false)
+																	}}
+																	onKeyDown={e => {
+																		if (e.key === 'Escape') {
+																			return setOpen(false)
+																			console.log(open())
+																		}
+																	}}
+																>
+																	Shop {collection.title}
+																</A>
+															</div>
+														)
+												}}
+											</For>
+										</Show>
+									</div>
+									<hr class="border-text_4/50 my-2 mx-6" />
+									<div class="flex items-start">
+										<Show when={rootCategories()}>
+											<ol class="flex flex-auto space-x-6 mt-2 ">
+												<For each={rootCategories()}>
+													{(parentCategory: any) => {
+														if (parentCategory.category_children?.length > 0) {
+															return (
+																<li class="whitespace-nowrap space-y-4">
+																	<div class="text-base text-text_2 text-lg font-500 capitalize">
+																		<A
+																			href={`/categories/${parentCategory.handle}`}
+																			onClick={e => {
+																				e.stopPropagation()
+
+																				setOpen(false)
+																			}}
+																			onKeyDown={e => {
+																				if (e.key === 'Escape') {
+																					return setOpen(false)
+																					console.log(open())
+																				}
+																			}}
+																		>
+																			{parentCategory.name}
+																		</A>
+																	</div>
+																	<div class="space-y-2">
+																		<For each={categories()}>
+																			{(category: any) => {
+																				if (category.parent_category?.id === parentCategory.id) {
+																					return (
+																						<div class="text-text_3/85 capitalize">
+																							<A
+																								href={`/categories/${category.handle}`}
+																								onClick={e => {
+																									e.stopPropagation()
+
+																									setOpen(false)
+																								}}
+																								onKeyDown={e => {
+																									if (e.key === 'Escape') {
+																										return setOpen(false)
+																										console.log(open())
+																									}
+																								}}
+																							>
+																								{category.name}
+																							</A>
+																						</div>
+																					)
+																				}
+																			}}
+																		</For>
+																	</div>
+																</li>
+															)
+														}
+													}}
+												</For>
+
+												<li class="flex flex-col whitespace-nowrap ">
+													<div class="text-base text-text_2 font-500 space-y-3">
+														<For each={rootCategories()}>
+															{(collection: any) => {
+																if (collection.category_children?.length === 0) {
+																	return (
+																		<div class="capitalize">
+																			<A
+																				href={`/categories/${collection.handle}`}
+																				//onClick={() => setOpen(false)}
 																			>
-																				Shop {collection.title}
+																				{collection.name}
 																			</A>
 																		</div>
-																	</Suspense>
-																)
-														}}
-													</For>
-												</Show>
-											</div>
-											<hr class="border-text_4/50 my-2 mx-6" />
-											<div class="flex items-start">
-												<Show when={rootCategories()}>
-													<ol class="flex flex-auto space-x-6 mt-2 ">
-														<For each={rootCategories()}>
-															{(parentCategory: any) => {
-																if (parentCategory.category_children?.length > 0) {
-																	return (
-																		<Suspense fallback={<div>Loading...</div>}>
-																			<li class="whitespace-nowrap space-y-4">
-																				<div class="text-base text-text_2 text-lg font-500 capitalize">
-																					<A
-																						href={`/categories/${parentCategory.handle}`}
-																						onClick={e => {
-																							e.stopPropagation()
-
-																							setOpen(false)
-																						}}
-																						onKeyDown={e => {
-																							if (e.key === 'Escape') {
-																								return setOpen(false)
-																								console.log(open())
-																							}
-																						}}
-																					>
-																						{parentCategory.name}
-																					</A>
-																				</div>
-																				<div class="space-y-2">
-																					<For each={categories()}>
-																						{(category: any) => {
-																							if (category.parent_category?.id === parentCategory.id) {
-																								return (
-																									<Suspense fallback={<div>Loading...</div>}>
-																										<div class="text-text_3/85 capitalize">
-																											<A
-																												href={`/categories/${category.handle}`}
-																												onClick={e => {
-																													e.stopPropagation()
-
-																													setOpen(false)
-																												}}
-																												onKeyDown={e => {
-																													if (e.key === 'Escape') {
-																														return setOpen(false)
-																														console.log(open())
-																													}
-																												}}
-																											>
-																												{category.name}
-																											</A>
-																										</div>
-																									</Suspense>
-																								)
-																							}
-																						}}
-																					</For>
-																				</div>
-																			</li>
-																		</Suspense>
 																	)
 																}
 															}}
 														</For>
-
-														<li class="flex flex-col whitespace-nowrap ">
-															<div class="text-base text-text_2 font-500 space-y-3">
-																<For each={rootCategories()}>
-																	{(collection: any) => {
-																		if (collection.category_children?.length === 0) {
-																			return (
-																				<Suspense fallback={<div>Loading...</div>}>
-																					<div class="capitalize">
-																						<A
-																							href={`/categories/${collection.handle}`}
-																							//onClick={() => setOpen(false)}
-																						>
-																							{collection.name}
-																						</A>
-																					</div>
-																				</Suspense>
-																			)
-																		}
-																	}}
-																</For>
-															</div>
-														</li>
-													</ol>
-												</Show>
-											</div>
-										</div>
+													</div>
+												</li>
+											</ol>
+										</Show>
 									</div>
 								</div>
 							</div>
-						</Suspense>
-					</Show>
-				</Transition>
-			</div>
-		</Suspense>
+						</div>
+					</div>
+				</Show>
+			</Transition>
+		</div>
 	)
 }

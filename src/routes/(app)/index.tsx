@@ -21,15 +21,12 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh] ">
-			<Suspense>
-				<Hero />
-			</Suspense>
+			<Hero />
+
 			<div class="">
-				<Suspense>
-					<FeaturedProducts variant="hero" />
-					<FeaturedProducts variant="hero2" />
-					<FeaturedProducts variant="hero3" />
-				</Suspense>
+				<FeaturedProducts variant="hero" />
+				<FeaturedProducts variant="hero2" />
+				<FeaturedProducts variant="hero3" />
 			</div>
 		</main>
 	)

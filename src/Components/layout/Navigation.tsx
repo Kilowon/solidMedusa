@@ -73,119 +73,96 @@ export default function Navigation(props: any) {
 	}
 
 	return (
-		<div
-			class="sticky top-0 inset-x-0 z-50 group sm:!fixed"
-			style={{
-				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
-				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
-				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
-				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
-				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
-				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
-				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
-				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
-				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
-				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
-				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
-				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
-				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
-				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
-				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
-				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
-				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
-			}}
-		>
+		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
 			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
-				<Suspense fallback={<div>Loading...</div>}>
-					<nav class="flex items-center justify-between w-full h-full text-sm  relative">
-						<div class="flex-1 basis-0 h-full flex items-center">
+				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
+					<div class="flex-1 basis-0 h-full flex items-center">
+						<Suspense>
+							<Show when={getWindowSize().width < 1279}>
+								<HamburgerDrawerNav
+									menuDrawer={menuDrawer}
+									setMenuDrawer={setMenuDrawer}
+								/>
+							</Show>
+						</Suspense>
+						<Suspense>
+							<Show when={getWindowSize().width > 1279}>
+								<div class=" h-full ml-2">
+									<DropdownMenu
+										collection={props.collection}
+										product={props.product}
+									/>
+								</div>
+							</Show>
+						</Suspense>
+					</div>
+
+					<div class="flex items-center">
+						<A
+							title="Home"
+							href="/"
+							class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
+						>
 							<Suspense>
-								<Show when={getWindowSize().width < 1279}>
-									<HamburgerDrawerNav
-										menuDrawer={menuDrawer}
-										setMenuDrawer={setMenuDrawer}
+								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
+									<Image
+										src={primaryData?.data?.data?.title_icon}
+										alt={primaryData?.data?.data?.title}
+										height={50}
+										width={100}
 									/>
 								</Show>
 							</Suspense>
-							<Suspense>
-								<Show when={getWindowSize().width > 1279}>
-									<div class=" h-full ml-2">
-										<DropdownMenu
-											collection={props.collection}
-											product={props.product}
-										/>
+							<Suspense fallback={<div class=" font-poppins uppercase">Loading...</div>}>
+								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
+									<div
+										title={primaryData?.data?.data?.title}
+										class=" font-poppins uppercase"
+									>
+										{primaryData?.data?.data?.title}
 									</div>
 								</Show>
 							</Suspense>
-						</div>
+						</A>
+					</div>
 
-						<div class="flex items-center">
+					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
+						<div class="flex items-center mr-4 ">
 							<A
-								title="Home"
-								href="/"
-								class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
+								class="hover:cursor-pointer"
+								href="/account"
+								title="account info"
+								role="button"
+								tabindex="0"
 							>
-								<Suspense>
-									<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-										<Image
-											src={primaryData?.data?.data?.title_icon}
-											alt={primaryData?.data?.data?.title}
-											height={50}
-											width={100}
-										/>
-									</Show>
-								</Suspense>
-								<Suspense>
-									<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
-										<div
-											title={primaryData?.data?.data?.title}
-											class=" font-poppins uppercase"
-										>
-											{primaryData?.data?.data?.title}
-										</div>
-									</Show>
-								</Suspense>
+								<div
+									class={clsx(
+										'h-7 w-7',
+										accountStatus() === 'inactive' && 'i-la-user-plus',
+										accountStatus() === 'active' && 'i-la-user-check'
+									)}
+								/>
 							</A>
 						</div>
-
-						<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
-							<div class="flex items-center mr-4 ">
-								<A
-									class="hover:cursor-pointer"
-									href="/account"
-									title="account info"
-									role="button"
-									tabindex="0"
-								>
-									<div
-										class={clsx(
-											'h-7 w-7',
-											accountStatus() === 'inactive' && 'i-la-user-plus',
-											accountStatus() === 'active' && 'i-la-user-check'
-										)}
-									/>
-								</A>
-							</div>
-							<Suspense>
-								<Show when={getWindowSize().width > 1279}>
-									<CartDropdown
-										cart={props.cart}
-										stayOpen={stayOpen}
-										setStayOpen={setStayOpen}
-									/>
-								</Show>
-							</Suspense>
-							<Suspense>
-								<Show when={getWindowSize().width < 1279}>
-									<CartDrawerNav
-										cartDrawer={cartDrawer}
-										setCartDrawer={setCartDrawer}
-									/>
-								</Show>
-							</Suspense>
-						</div>
-					</nav>
-				</Suspense>
+						<Suspense>
+							<Show when={getWindowSize().width > 1279}>
+								<CartDropdown
+									cart={props.cart}
+									stayOpen={stayOpen}
+									setStayOpen={setStayOpen}
+								/>
+							</Show>
+						</Suspense>
+						<Suspense>
+							<Show when={getWindowSize().width < 1279}>
+								<CartDrawerNav
+									cartDrawer={cartDrawer}
+									setCartDrawer={setCartDrawer}
+								/>
+							</Show>
+						</Suspense>
+					</div>
+				</nav>
 			</header>
 		</div>
 	)

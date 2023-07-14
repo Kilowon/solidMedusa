@@ -75,27 +75,21 @@ export function Hero() {
 						<Show when={rootCategories()}>
 							<div class="flex justify-between sm:block w-100% overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
-									<Motion.div
-										initial={{ opacity: 1 }}
-										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-										exit={{ opacity: 0, /* y: [0, 150] */ transition: { duration: 0.1 } }}
-									>
-										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
-											<For each={rootCategories()}>
-												{(category, index) => {
-													if (index() >= 4) return
-													return (
-														<A
-															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
-														>
-															{category?.name}
-														</A>
-													)
-												}}
-											</For>
-										</div>
-									</Motion.div>
+									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+										<For each={rootCategories()}>
+											{(category, index) => {
+												if (index() >= 4) return
+												return (
+													<A
+														href={`/categories/${category?.handle}`}
+														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
+													>
+														{category?.name}
+													</A>
+												)
+											}}
+										</For>
+									</div>
 								</Show>
 								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu1 === true}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
@@ -103,49 +97,33 @@ export function Hero() {
 											{(category, index) => {
 												if (index() >= 4) return
 												return (
-													<Motion.div
-														initial={{ opacity: 1 }}
-														animate={{
-															opacity: [0, 1],
-															/* x: [-1500, 0], */
-															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
-														}}
-														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
+													<A
+														href={`/categories/${category?.handle}`}
+														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex  "
 													>
-														<A
-															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex  "
-														>
-															{category?.name}
-														</A>
-													</Motion.div>
+														{category?.name}
+													</A>
 												)
 											}}
 										</For>
 									</div>
 								</Show>
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
-									<Motion.div
-										initial={{ opacity: 1 }}
-										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-										exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
-									>
-										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
-											<For each={rootCategories()}>
-												{(category, index) => {
-													if (index() < 4 || index() >= 8) return
-													return (
-														<A
-															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3 "
-														>
-															{category?.name}
-														</A>
-													)
-												}}
-											</For>
-										</div>
-									</Motion.div>
+									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
+										<For each={rootCategories()}>
+											{(category, index) => {
+												if (index() < 4 || index() >= 8) return
+												return (
+													<A
+														href={`/categories/${category?.handle}`}
+														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3 "
+													>
+														{category?.name}
+													</A>
+												)
+											}}
+										</For>
+									</div>
 								</Show>
 								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu2 === true}>
 									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 sm:mb-5">
@@ -153,22 +131,12 @@ export function Hero() {
 											{(category, index) => {
 												if (index() < 4 || index() >= 8) return
 												return (
-													<Motion.div
-														initial={{ opacity: 1 }}
-														animate={{
-															opacity: [0, 1],
-															/* x: [1500, 0], */
-															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
-														}}
-														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
+													<A
+														href={`/categories/${category?.handle}`}
+														class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex justify-end "
 													>
-														<A
-															href={`/categories/${category?.handle}`}
-															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex justify-end "
-														>
-															{category?.name}
-														</A>
-													</Motion.div>
+														{category?.name}
+													</A>
 												)
 											}}
 										</For>
@@ -176,74 +144,65 @@ export function Hero() {
 								</Show>
 							</div>
 						</Show>
-						<Motion.div
-							initial={{ opacity: 1 }}
-							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-							exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
-						>
-							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
-								<Show when={true}>
-									<Show when={heroData?.data?.data?.static1 === true}>
-										<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black  font-400 z-2  break-words whitespace-break-spaces">
-											{heroData?.data?.data?.static_callout}
-										</h1>
-									</Show>
+
+						<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
+							<Show when={true}>
+								<Show when={heroData?.data?.data?.static1 === true}>
+									<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black  font-400 z-2  break-words whitespace-break-spaces">
+										{heroData?.data?.data?.static_callout}
+									</h1>
 								</Show>
-								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
-									<Presence
-										initial={false}
-										exitBeforeEnter
-									>
-										<Rerun on={count()}>
-											<Motion.div
-												initial={{ opacity: 1 }}
-												animate={{ opacity: [1, 0, 1], /*  y: [-300, 0], */ transition: { duration: 0.1 } }}
-												exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-											>
-												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2 drop-shadow-md shadow-black font-700 z-2">{`${
-													heroData?.data?.data?.hero_data[currentIndex()].title
-												}`}</h1>
-											</Motion.div>
-										</Rerun>
-									</Presence>
-								</Show>
-								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
-									<Presence
-										initial={true}
-										exitBeforeEnter
-									>
-										<Rerun on={count()}>
-											<Motion.div
-												initial={{ opacity: 1 }}
-												animate={{ opacity: [0, 0, 0, 1], /*  x: [-100, -3], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-												exit={{ opacity: 0, /* x: [0, 300], */ transition: { duration: 0.1 } }}
-											>
-												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
-													heroData?.data?.data?.hero_data[currentIndex()].title
-												}`}</h1>
-											</Motion.div>
-										</Rerun>
-									</Presence>
-								</Show>
-							</div>
-						</Motion.div>
-						<Motion.div
-							initial={{ opacity: 1 }}
-							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
-							exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
-						>
-							<div class="flex items-center hover:underline">
-								<A
-									href="/store/Store"
-									class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
+							</Show>
+							<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
+								<Presence
+									initial={false}
+									exitBeforeEnter
 								>
-									{heroData?.data?.data?.call_to_action}
-								</A>
-								<div class="text-xl md:text-5xl">
-									<div class="i-material-symbols-arrow-right-alt-rounded" />
-								</div>
+									<Rerun on={count()}>
+										<Motion.div
+											initial={{ opacity: 1 }}
+											animate={{ opacity: [1, 0, 1], /*  y: [-300, 0], */ transition: { duration: 0.0 } }}
+											exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.0, easing: 'ease-out' } }}
+										>
+											<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2 drop-shadow-md shadow-black font-700 z-2">{`${
+												heroData?.data?.data?.hero_data[currentIndex()].title
+											}`}</h1>
+										</Motion.div>
+									</Rerun>
+								</Presence>
+							</Show>
+							<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
+								<Presence
+									initial={true}
+									exitBeforeEnter
+								>
+									<Rerun on={count()}>
+										<Motion.div
+											initial={{ opacity: 1 }}
+											animate={{ opacity: [0, 0, 0, 1], /*  x: [-100, -3], */ transition: { duration: 0.0, easing: 'ease-out' } }}
+											exit={{ opacity: 0, /* x: [0, 300], */ transition: { duration: 0.0 } }}
+										>
+											<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+												heroData?.data?.data?.hero_data[currentIndex()].title
+											}`}</h1>
+										</Motion.div>
+									</Rerun>
+								</Presence>
+							</Show>
+						</div>
+
+						<div class="flex items-center hover:underline">
+							<A
+								href="/store/Store"
+								class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
+							>
+								{heroData?.data?.data?.call_to_action}
+							</A>
+							<div class="text-xl md:text-5xl">
+								<div class="i-material-symbols-arrow-right-alt-rounded" />
 							</div>
-						</Motion.div>
+						</div>
+
 						<div class="absolute bottom-4 left-4 flex space-x-2">
 							<For each={heroData?.data?.data?.hero_data}>
 								{(item, index) => {
@@ -277,8 +236,8 @@ export function Hero() {
 					<Rerun on={count()}>
 						<Motion.div
 							initial={{ opacity: 1 }}
-							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
-							exit={{ opacity: 0, transition: { duration: 0.1 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.0 } }}
+							exit={{ opacity: 0, transition: { duration: 0.0 } }}
 						>
 							<Image
 								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
@@ -305,8 +264,8 @@ export function Hero() {
 					<Rerun on={count()}>
 						<Motion.div
 							initial={{ opacity: 1 }}
-							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
-							exit={{ opacity: 0, transition: { duration: 0.1 } }}
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.0 } }}
+							exit={{ opacity: 0, transition: { duration: 0.0 } }}
 						>
 							<Image
 								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}

@@ -101,9 +101,9 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl font-400">
-											<div class="flex flex-col items-center font-500">
-												<Image
+										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
+											<div class="flex flex-col items-center">
+												{/* <Image
 													src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
 													alt="logo"
 													layout="constrained"
@@ -112,7 +112,10 @@ export default function Root() {
 													priority={true}
 													class="w-20 h-20 mt-35 md:mt-70"
 												/>
-												<div class="i-svg-spinners:bars-scale-fade font-700" />
+												<div class="i-svg-spinners:bars-scale-fade font-700" /> */}
+												<div class="font-400">Loading.</div>
+												<div class="font-500">{`Loading..`}</div>
+												<div class="font-700">Loading...</div>
 											</div>
 										</section>
 									}

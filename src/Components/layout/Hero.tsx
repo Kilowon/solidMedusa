@@ -81,12 +81,12 @@ export function Hero() {
 								</Show>
 							</Show>
 							<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
-								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2 drop-shadow-md shadow-black font-700 z-2">{`${
+								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2  z-2">{`${
 									heroData?.data?.data?.hero_data[currentIndex()].title
 								}`}</h1>
 							</Show>
 							<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
-								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3  z-2">{`${
 									heroData?.data?.data?.hero_data[currentIndex()].title
 								}`}</h1>
 							</Show>
@@ -124,16 +124,6 @@ export function Hero() {
 				</Show>
 			</Presence>
 			<Show when={getWindowSize().width > 768 && heroData.isSuccess}>
-				<div class="hidden">
-					<Image
-						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
-						layout="fullWidth"
-						priority={false}
-						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65 "
-						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-					/>
-				</div>
-
 				<Image
 					src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
 					layout="fullWidth"
@@ -143,16 +133,6 @@ export function Hero() {
 				/>
 			</Show>
 			<Show when={getWindowSize().width < 768 && heroData.isSuccess}>
-				<div class="hidden">
-					<Image
-						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
-						layout="fullWidth"
-						priority={false}
-						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
-						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-					/>
-				</div>
-
 				<Image
 					src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
 					layout="fullWidth"

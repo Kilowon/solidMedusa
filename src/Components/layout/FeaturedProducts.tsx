@@ -9,6 +9,7 @@ import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 import { getWindowSize } from '@solid-primitives/resize-observer'
+import { setPriority } from 'os'
 
 interface Collection {
 	id: string
@@ -87,7 +88,8 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Accept: 'application/json'
+					Accept: 'application/json',
+					setPriority: 'low'
 				}
 			})
 			const data = await response.json()

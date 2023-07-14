@@ -21,6 +21,7 @@ import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { Image } from '@unpic/solid'
+
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
@@ -31,7 +32,8 @@ export default function Root() {
 			lang="en"
 			class="overflow-y-scroll"
 		>
-			<Meta
+			<Head>
+				{/* <Meta
 				http-equiv="Strict-Transport-Security"
 				content="max-age=63072000 includeSubDomains"
 			/>
@@ -50,10 +52,10 @@ export default function Root() {
 			<Meta
 				http-equiv="Content-Security-Policy"
 				content="default-src https: data: "
-			/>
-			<Head>
+			/> */}
 				<Title>Store</Title>
 				<Meta charset="utf-8" />
+
 				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
@@ -78,6 +80,7 @@ export default function Root() {
 					rel="icon"
 					href="/favicon.ico"
 				/>
+
 				<link
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"

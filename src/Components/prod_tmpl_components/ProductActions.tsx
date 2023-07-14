@@ -134,7 +134,7 @@ export default function ProductActions(props: {
 				}}
 			/>
 			<div class="flex flex-col space-y-4 font-poppins mx-2">
-				<div class="flex justify-between w-full lg:flex-col items-start text-black bg-white">
+				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
 						<div class="flex items-center space-x-2">
 							<div
@@ -146,11 +146,11 @@ export default function ProductActions(props: {
 								<StarIconRequest rating={rating()} />
 							</div>
 
-							<div class="text-gray-500 dark:text-gray-400">|</div>
+							<div class="text-text_2 ">|</div>
 
-							<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
+							<div class="text-text_2 underline ">45 reviews</div>
 						</div>
-						<h3 class=" md:text-2xl font-semibold text-balance">{props.productInfo?.title}</h3>
+						<h3 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h3>
 					</div>
 					<div>
 						<Show when={currentVariant()?.original_price}>
@@ -163,10 +163,10 @@ export default function ProductActions(props: {
 									<span class="text-xl line-through font-semibold">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
-									<span class="text-xl text-red-7 font-semibold ">
+									<span class="text-xl text-accent_3 font-semibold ">
 										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
 									</span>
-									<span class="text-xs text-white font-semibold bg-red-700 rounded-lg flex justify-center uppercase w-15 ">
+									<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
 										on sale
 									</span>
 								</div>
@@ -220,10 +220,10 @@ export default function ProductActions(props: {
 						}}
 						disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
 						class={clsx(
-							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50disabled:hover:bg-gray-900 disabled:hover:text-white',
-							isProductPurchasable() === 'valid' && 'text-white bg-green-600 border-green-600 hover:bg-green-400',
-							isProductPurchasable() === 'invalid' && 'text-white bg-gray-600 border-gray-600',
-							isProductPurchasable() === 'out-of-stock' && 'text-white bg-gray-500 border-gray-600'
+							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
+							isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
+							isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_4 border-text_1',
+							isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
 						)}
 					>
 						{isProductPurchasable() === 'valid'
@@ -253,7 +253,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<span class="text-sm md:text-base font-semibold">Select {title}</span>
+				<span class="text-sm md:text-base font-500 text-text_2">Select {title}</span>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{value => {
@@ -264,9 +264,12 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 										updateOptions({ [option.id]: value })
 									}}
 									class={clsx(
-										'border-gray-200 border text-xs min-h-8 px-0.5 rounded-sm min-w-12 max-w-fit transition-all duration-200',
+										' border text-xs min-h-8 px-1 rounded-sm min-w-12 max-w-fit transition-all duration-200 capitalize',
 										{
-											'border-gray-5 text-gray-8': isSelected()
+											'border-text_3 text-text_1 bg-normal_1 font-500': isSelected()
+										},
+										{
+											' text-text_4 bg-surface font-400': !isSelected()
 										}
 									)}
 								>
@@ -344,7 +347,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<span class="text-sm md:text-base font-semibold">Select {title}</span>
+				<span class="text-xs md:text-sm font-500 text-text_2 tracking-tight">Select {title}:</span>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {
@@ -365,11 +368,14 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 										console.log('OPTION', v)
 										updateOption({ [option.id]: v })
 									}}
-									class={clsx('border-gray-200 border text-xs h-8 min-w-12 rounded-sm max-w-18 transition-all duration-200', {
-										'border-gray-5 text-gray-8': isSelected(),
-										'bg-gray-200 text-gray-400 line-through': viable() === 'not-viable',
-										'bg-gray-200 text-gray-400 ': viable() === 'could-viable'
-									})}
+									class={clsx(
+										'text-xs min-h-8 px-1 rounded-sm min-w-12 max-w-fit transition-all duration-200 tracking-tight capitalize',
+										{
+											'border border-1 border-text_3 text-text_1 font-500': isSelected(),
+											'bg-surface text-text_4 line-through font-400': viable() === 'not-viable',
+											'bg-surface text-text_4 font-400 ': viable() === 'could-viable'
+										}
+									)}
 								>
 									{v}
 								</button>
@@ -425,9 +431,8 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 						<button
 							class={clsx(
 								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full bg-white lg:bg-gray-100',
-								activeTab().description === 'active' &&
-									' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300 ',
-								activeTab().description === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+								activeTab().description === 'active' && ' border-gray-600 text-text_2 ',
+								activeTab().description === 'inactive' && 'hover:text-text_3 hover:border-gray-300'
 							)}
 							id="description-tab"
 							data-tabs-target="#description"

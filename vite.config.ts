@@ -4,8 +4,10 @@ import { defineConfig } from 'vite'
 import presetIcons from '@unocss/preset-icons'
 import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
+import Unfonts from 'unplugin-fonts/vite'
 
 export default defineConfig({
+	assetsInclude: ['**/*.ttf'],
 	plugins: [
 		solid({
 			ssr: false
@@ -22,14 +24,13 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'fontshare', // default provider
+					/* provider: 'google', */ // default provider
 					fonts: {
 						// these will extend the default theme
-						/* sans: 'Roboto', */
+						/* sans: 'Roboto' */
 						/* mono: ['Fira Code', 'Fira Mono:400,700'], */
 						// custom ones
-
-						poppins: [
+						/* poppins: [
 							{
 								name: 'Poppins',
 								weights: ['700', '400', '500']
@@ -38,7 +39,7 @@ export default defineConfig({
 								name: 'sans-serif',
 								provider: 'none'
 							}
-						]
+						] */
 					}
 				})
 			],

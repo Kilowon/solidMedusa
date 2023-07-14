@@ -86,10 +86,11 @@ export default function FeaturedProducts(props: FeaturedProps) {
 		queryFn: async function () {
 			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
 				method: 'GET',
+
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',
-					setPriority: 'low'
+					priority: 'low'
 				}
 			})
 			const data = await response.json()

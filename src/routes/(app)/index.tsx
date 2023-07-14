@@ -1,8 +1,6 @@
 import { Hero } from '~/Components/layout/Hero'
-import { lazy, Suspense, Show, createSignal, createEffect, For } from 'solid-js'
-import { A } from 'solid-start'
-import { createQuery } from '@tanstack/solid-query'
-import { Motion, Presence } from '@motionone/solid'
+import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
+
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))

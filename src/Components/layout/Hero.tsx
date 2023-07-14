@@ -1,11 +1,11 @@
-import { Show, For, createEffect, createSignal, createMemo, onCleanup, onMount } from 'solid-js'
+import { Show, For, createSignal, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
-import clsx from 'clsx'
+
 import { createQuery } from '@tanstack/solid-query'
 
 export function Hero() {
@@ -72,38 +72,171 @@ export function Hero() {
 			<Presence initial>
 				<Show when={heroData.isSuccess}>
 					<div class="text-white z-10 flex flex-col items-start mb-20  ">
-						<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
-							<Show when={true}>
-								<Show when={heroData?.data?.data?.static1 === true}>
-									<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
-										{heroData?.data?.data?.static_callout}
-									</h1>
+						<Show when={rootCategories()}>
+							<div class="flex justify-between sm:block w-100% overflow-hidden">
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
+									<Motion.div
+										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+										exit={{ opacity: 0, /* y: [0, 150] */ transition: { duration: 0.1 } }}
+									>
+										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+											<For each={rootCategories()}>
+												{(category, index) => {
+													if (index() >= 4) return
+													return (
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3"
+														>
+															{category?.name}
+														</A>
+													)
+												}}
+											</For>
+										</div>
+									</Motion.div>
 								</Show>
-							</Show>
-							<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
-								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2  z-2">{`${
-									heroData?.data?.data?.hero_data[currentIndex()].title
-								}`}</h1>
-							</Show>
-							<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
-								<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3  z-2">{`${
-									heroData?.data?.data?.hero_data[currentIndex()].title
-								}`}</h1>
-							</Show>
-						</div>
-
-						<div class="flex items-center hover:underline">
-							<A
-								href="/store/Store"
-								class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
-							>
-								{heroData?.data?.data?.call_to_action}
-							</A>
-							<div class="text-xl md:text-5xl">
-								<div class="i-material-symbols-arrow-right-alt-rounded" />
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu1 === true}>
+									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5">
+										<For each={rootCategories()}>
+											{(category, index) => {
+												if (index() >= 4) return
+												return (
+													<Motion.div
+														animate={{
+															opacity: [0, 1],
+															/* x: [-1500, 0], */
+															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
+														}}
+														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
+													>
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex  "
+														>
+															{category?.name}
+														</A>
+													</Motion.div>
+												)
+											}}
+										</For>
+									</div>
+								</Show>
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
+									<Motion.div
+										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+										exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
+									>
+										<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 mb-5 ">
+											<For each={rootCategories()}>
+												{(category, index) => {
+													if (index() < 4 || index() >= 8) return
+													return (
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize hover:text-blue-3 "
+														>
+															{category?.name}
+														</A>
+													)
+												}}
+											</For>
+										</div>
+									</Motion.div>
+								</Show>
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.menu2 === true}>
+									<div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 lg:space-x-6 sm:mb-5">
+										<For each={rootCategories()}>
+											{(category, index) => {
+												if (index() < 4 || index() >= 8) return
+												return (
+													<Motion.div
+														animate={{
+															opacity: [0, 1],
+															/* x: [1500, 0], */
+															transition: { duration: 0.1 /* + (index() - 4) * 0.1 */, easing: 'ease-out' }
+														}}
+														exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
+													>
+														<A
+															href={`/categories/${category?.handle}`}
+															class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight cursor-pointer tracking-tight p-1 capitalize flex justify-end "
+														>
+															{category?.name}
+														</A>
+													</Motion.div>
+												)
+											}}
+										</For>
+									</div>
+								</Show>
 							</div>
-						</div>
-
+						</Show>
+						<Motion.div
+							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+							exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
+						>
+							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
+								<Show when={true}>
+									<Show when={heroData?.data?.data?.static1 === true}>
+										<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
+											{heroData?.data?.data?.static_callout}
+										</h1>
+									</Show>
+								</Show>
+								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.dynamic1 === true}>
+									<Presence
+										initial={false}
+										exitBeforeEnter
+									>
+										<Rerun on={count()}>
+											<Motion.div
+												animate={{ opacity: [1, 0, 1], /*  y: [-300, 0], */ transition: { duration: 0.1 } }}
+												exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+											>
+												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-accenttext_2 drop-shadow-md shadow-black font-700 z-2">{`${
+													heroData?.data?.data?.hero_data[currentIndex()].title
+												}`}</h1>
+											</Motion.div>
+										</Rerun>
+									</Presence>
+								</Show>
+								<Show when={getWindowSize().width < 768 && heroData?.data?.data?.dynamic1 === true}>
+									<Presence
+										initial={true}
+										exitBeforeEnter
+									>
+										<Rerun on={count()}>
+											<Motion.div
+												initial={{ opacity: 1, x: 0, transition: { duration: 0 } }}
+												animate={{ opacity: [0, 0, 0, 1], /*  x: [-100, -3], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+												exit={{ opacity: 0, /* x: [0, 300], */ transition: { duration: 0.1 } }}
+											>
+												<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw]   mb-4 text-blue-3 drop-shadow-md shadow-black font-700 z-2">{`${
+													heroData?.data?.data?.hero_data[currentIndex()].title
+												}`}</h1>
+											</Motion.div>
+										</Rerun>
+									</Presence>
+								</Show>
+							</div>
+						</Motion.div>
+						<Motion.div
+							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
+							exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
+						>
+							<div class="flex items-center hover:underline">
+								<A
+									href="/store/Store"
+									class="text-base sm:text-xl xl:text-4xl z-2 tracking-tight"
+								>
+									{heroData?.data?.data?.call_to_action}
+								</A>
+								<div class="text-xl md:text-5xl">
+									<div class="i-material-symbols-arrow-right-alt-rounded" />
+								</div>
+							</div>
+						</Motion.div>
 						<div class="absolute bottom-4 left-4 flex space-x-2">
 							<For each={heroData?.data?.data?.hero_data}>
 								{(item, index) => {
@@ -124,22 +257,58 @@ export function Hero() {
 				</Show>
 			</Presence>
 			<Show when={getWindowSize().width > 768 && heroData.isSuccess}>
-				<Image
-					src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
-					layout="fullWidth"
-					priority={true}
-					class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
-					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-				/>
+				<div class="hidden">
+					<Image
+						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
+						layout="fullWidth"
+						priority={false}
+						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65 "
+						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+					/>
+				</div>
+				<Presence>
+					<Rerun on={count()}>
+						<Motion.div
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
+							exit={{ opacity: 0, transition: { duration: 0.1 } }}
+						>
+							<Image
+								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
+								layout="fullWidth"
+								priority={true}
+								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+								alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+							/>
+						</Motion.div>
+					</Rerun>
+				</Presence>
 			</Show>
 			<Show when={getWindowSize().width < 768 && heroData.isSuccess}>
-				<Image
-					src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
-					layout="fullWidth"
-					priority={true}
-					class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
-					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-				/>
+				<div class="hidden">
+					<Image
+						src={heroData?.data?.data?.hero_data?.[(currentIndex() + 1) % heroData?.data?.data?.hero_data?.length]?.image}
+						layout="fullWidth"
+						priority={false}
+						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+					/>
+				</div>
+				<Presence>
+					<Rerun on={count()}>
+						<Motion.div
+							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
+							exit={{ opacity: 0, transition: { duration: 0.1 } }}
+						>
+							<Image
+								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
+								layout="fullWidth"
+								priority={true}
+								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+								alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+							/>
+						</Motion.div>
+					</Rerun>
+				</Presence>
 			</Show>
 		</div>
 	)

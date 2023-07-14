@@ -1,5 +1,5 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { createSignal, Show, For, createEffect, onMount } from 'solid-js'
+import { createSignal, Show, For, createEffect } from 'solid-js'
 import 'solid-slider/slider.css'
 import { Transition } from 'solid-transition-group'
 import { createQuery } from '@tanstack/solid-query'
@@ -7,7 +7,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import clsx from 'clsx'
+
 import { getWindowSize } from '@solid-primitives/resize-observer'
 
 interface Collection {

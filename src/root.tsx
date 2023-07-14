@@ -103,7 +103,7 @@ export default function Root() {
 									fallback={
 										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
 											<div class="flex flex-col items-center">
-												{/* <Image
+												<Image
 													src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
 													alt="logo"
 													layout="constrained"
@@ -112,8 +112,7 @@ export default function Root() {
 													priority={true}
 													class="w-20 h-20 mt-35 md:mt-70"
 												/>
-												<div class="i-svg-spinners:bars-scale-fade" /> */}
-												LOADING...
+												<div class="i-svg-spinners:bars-scale-fade" />
 											</div>
 										</section>
 									}

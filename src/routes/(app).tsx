@@ -1,4 +1,4 @@
-import { lazy, Suspense, Show, createSignal, createEffect } from 'solid-js'
+import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'

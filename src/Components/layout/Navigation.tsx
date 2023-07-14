@@ -1,39 +1,18 @@
-import { onMount, createEffect, createSignal, lazy, Suspense, SuspenseList, Show } from 'solid-js'
+import { createSignal, lazy, Suspense, Show } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { Motion, Presence } from '@motionone/solid'
 
 const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
 
-/* const CartDropdown = lazy(async () => {
-	await new Promise(r => setTimeout(r, 0))
-	return import('~/Components/nav_components/CartDropdown')
-}) */
-
 const CartDrawerNav = lazy(() => import('~/Components/nav_components/CartDrawerNav'))
-
-/* const CartDrawerNav = lazy(async () => {
-	await new Promise(r => setTimeout(r, 0))
-	return import('~/Components/nav_components/CartDrawerNav')
-}) */
 
 const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu'))
 
-/* const DropdownMenu = lazy(async () => {
-	await new Promise(r => setTimeout(r, 0))
-	return import('~/Components/nav_components/DropdownMenu')
-}) */
-
 const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
-
-/* const HamburgerDrawerNav = lazy(async () => {
-	await new Promise(r => setTimeout(r, 0))
-	return import('~/Components/nav_components/HamburgerDrawerNav')
-}) */
 
 export default function Navigation(props: any) {
 	const { medusa } = useGlobalContext()
@@ -74,34 +53,20 @@ export default function Navigation(props: any) {
 					<div class="flex-1 basis-0 h-full flex items-center">
 						<Suspense>
 							<Show when={getWindowSize().width < 1279}>
-								<Presence initial>
-									<Motion
-										animate={{ opacity: [0, 1] }}
-										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-									>
-										<HamburgerDrawerNav
-											menuDrawer={menuDrawer}
-											setMenuDrawer={setMenuDrawer}
-										/>
-									</Motion>
-								</Presence>
+								<HamburgerDrawerNav
+									menuDrawer={menuDrawer}
+									setMenuDrawer={setMenuDrawer}
+								/>
 							</Show>
 						</Suspense>
 						<Suspense>
 							<Show when={getWindowSize().width > 1279}>
-								<Presence initial>
-									<Motion
-										animate={{ opacity: [0, 1] }}
-										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-									>
-										<div class=" h-full ml-2">
-											<DropdownMenu
-												collection={props.collection}
-												product={props.product}
-											/>
-										</div>
-									</Motion>
-								</Presence>
+								<div class=" h-full ml-2">
+									<DropdownMenu
+										collection={props.collection}
+										product={props.product}
+									/>
+								</div>
 							</Show>
 						</Suspense>
 					</div>
@@ -114,36 +79,22 @@ export default function Navigation(props: any) {
 						>
 							<Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-									<Presence initial>
-										<Motion
-											animate={{ opacity: [0, 1] }}
-											transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-										>
-											<Image
-												src={primaryData?.data?.data?.title_icon}
-												alt={primaryData?.data?.data?.title}
-												height={50}
-												width={100}
-											/>
-										</Motion>
-									</Presence>
+									<Image
+										src={primaryData?.data?.data?.title_icon}
+										alt={primaryData?.data?.data?.title}
+										height={50}
+										width={100}
+									/>
 								</Show>
 							</Suspense>
 							<Suspense fallback={<div class=" font-poppins uppercase">Loading...</div>}>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
-									<Presence initial>
-										<Motion
-											animate={{ opacity: [0, 1] }}
-											transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-										>
-											<div
-												title={primaryData?.data?.data?.title}
-												class=" font-poppins uppercase"
-											>
-												{primaryData?.data?.data?.title}
-											</div>
-										</Motion>
-									</Presence>
+									<div
+										title={primaryData?.data?.data?.title}
+										class=" font-poppins uppercase"
+									>
+										{primaryData?.data?.data?.title}
+									</div>
 								</Show>
 							</Suspense>
 						</A>
@@ -152,59 +103,38 @@ export default function Navigation(props: any) {
 					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
 						<div class="flex items-center mr-4 ">
 							<Show when={true}>
-								<Presence initial>
-									<Motion
-										animate={{ opacity: [0, 1] }}
-										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-									>
-										<A
-											class="hover:cursor-pointer"
-											href="/account"
-											title="account info"
-											role="button"
-											tabindex="0"
-										>
-											<div
-												class={clsx(
-													'h-7 w-7',
-													accountStatus() === 'inactive' && 'i-la-user-plus',
-													accountStatus() === 'active' && 'i-la-user-check'
-												)}
-											/>
-										</A>
-									</Motion>
-								</Presence>
+								<A
+									class="hover:cursor-pointer"
+									href="/account"
+									title="account info"
+									role="button"
+									tabindex="0"
+								>
+									<div
+										class={clsx(
+											'h-7 w-7',
+											accountStatus() === 'inactive' && 'i-la-user-plus',
+											accountStatus() === 'active' && 'i-la-user-check'
+										)}
+									/>
+								</A>
 							</Show>
 						</div>
 						<Suspense>
 							<Show when={getWindowSize().width > 1279}>
-								<Presence initial>
-									<Motion
-										animate={{ opacity: [0, 1] }}
-										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-									>
-										<CartDropdown
-											cart={props.cart}
-											stayOpen={stayOpen}
-											setStayOpen={setStayOpen}
-										/>
-									</Motion>
-								</Presence>
+								<CartDropdown
+									cart={props.cart}
+									stayOpen={stayOpen}
+									setStayOpen={setStayOpen}
+								/>
 							</Show>
 						</Suspense>
 						<Suspense>
 							<Show when={getWindowSize().width < 1279}>
-								<Presence initial>
-									<Motion
-										animate={{ opacity: [0, 1] }}
-										transition={{ duration: 0.5, delay: 0, easing: 'ease-in-out' }}
-									>
-										<CartDrawerNav
-											cartDrawer={cartDrawer}
-											setCartDrawer={setCartDrawer}
-										/>
-									</Motion>
-								</Presence>
+								<CartDrawerNav
+									cartDrawer={cartDrawer}
+									setCartDrawer={setCartDrawer}
+								/>
 							</Show>
 						</Suspense>
 					</div>

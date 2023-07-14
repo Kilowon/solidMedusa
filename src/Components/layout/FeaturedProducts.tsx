@@ -115,7 +115,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						a.finished.then(done)
 					}}
 				>
-					<div class="mx-1 sm:mx-auto sm:content-container font-poppins ">
+					<div class="mx-1 sm:mx-auto sm:content-container ">
 						<Show when={queryCollection?.data?.products}>
 							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16 my-32">
 								<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">

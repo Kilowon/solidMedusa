@@ -318,7 +318,7 @@ export default function CartCore(props: CartCoreProps) {
 				<Show when={queryCart?.data?.cart?.items?.length === 0}>
 					<div>
 						<div class="flex py-16 flex-col gap-y-4 items-center justify-center">
-							<div class="bg-text_2 text-sm font-poppins flex items-center justify-center w-6 h-6 rounded-full text-normal_1">
+							<div class="bg-text_2 text-sm  flex items-center justify-center w-6 h-6 rounded-full text-normal_1">
 								<span>0</span>
 							</div>
 							<span>Your shopping bag is empty.</span>

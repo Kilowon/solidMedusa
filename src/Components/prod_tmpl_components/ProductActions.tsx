@@ -133,7 +133,7 @@ export default function ProductActions(props: {
 					}
 				}}
 			/>
-			<div class="flex flex-col space-y-4 font-poppins mx-2">
+			<div class="flex flex-col space-y-4  mx-2">
 				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
 						<div class="flex items-center space-x-2">

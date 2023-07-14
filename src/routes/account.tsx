@@ -142,13 +142,11 @@ export default function Account() {
 							<div class=" w-full max-h-90svh">
 								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10  ">
 									<div class="sm:flex items-center justify-between">
-										<div class="text-xl font-400 font-poppins text-gray-6 pl-1 sm:pl-0">Welcome back</div>
+										<div class="text-xl font-400 text-gray-6 pl-1 sm:pl-0">Welcome back</div>
 										<div class="flex justify-between p-1">
-											<div class="text-xs font-500 font-poppins text-gray-6">
-												Signed in as: {currentCustomer?.data?.customer?.email}
-											</div>
+											<div class="text-xs font-500  text-gray-6">Signed in as: {currentCustomer?.data?.customer?.email}</div>
 											<div
-												class="text-xs font-500 font-poppins sm:ml-4 underline cursor-pointer"
+												class="text-xs font-500 sm:ml-4 underline cursor-pointer"
 												onClick={() => {
 													currentCustomerSignOut.refetch()
 													currentCustomer.refetch()

@@ -107,7 +107,7 @@ export default function SignIn(props: SideProps) {
 					</Show>
 					<div class="flex items-center">
 						<div class="i-ic-round-hiking h-6 w-6 text-gray-5" />
-						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">Welcome back</div>
+						<div class="text-xl font-500 ml-2 text-gray-6">Welcome back</div>
 					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}

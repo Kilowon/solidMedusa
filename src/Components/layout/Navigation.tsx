@@ -15,8 +15,6 @@ const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu
 const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
 
 export default function Navigation(props: any) {
-	const { medusa } = useGlobalContext()
-
 	const [stayOpen, setStayOpen] = createSignal(false)
 
 	const [cartDrawer, setCartDrawer] = createSignal({
@@ -75,7 +73,7 @@ export default function Navigation(props: any) {
 						<A
 							title="Home"
 							href="/"
-							class="text-regular md:text-2xl font-semibold font-poppins uppercase flex items-center justify-center space-x-3 h-full"
+							class="text-regular md:text-2xl font-semibold uppercase flex items-center justify-center space-x-3 h-full"
 						>
 							<Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
@@ -87,11 +85,11 @@ export default function Navigation(props: any) {
 									/>
 								</Show>
 							</Suspense>
-							<Suspense fallback={<div class=" font-poppins uppercase">Loading...</div>}>
+							<Suspense fallback={<div class="  uppercase">Loading...</div>}>
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
-										class=" font-poppins uppercase"
+										class=" uppercase"
 									>
 										{primaryData?.data?.data?.title}
 									</div>

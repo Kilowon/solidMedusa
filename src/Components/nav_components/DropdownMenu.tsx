@@ -30,7 +30,7 @@ export default function DropdownMenu(props: any) {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400  font-poppins
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 
 			"
 		>
 			<div>

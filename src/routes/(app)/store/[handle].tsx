@@ -53,7 +53,7 @@ export default function Store() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<div class="mx-1 sm:mx-auto sm:content-container mt-5 sm:mt-25 font-poppins space-y-5">
+			<div class="mx-1 sm:mx-auto sm:content-container mt-5 sm:mt-25 space-y-5">
 				<Show when={queryAllProducts?.data?.products}>
 					<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 my-20">
 						<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">

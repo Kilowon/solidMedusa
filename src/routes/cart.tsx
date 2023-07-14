@@ -71,7 +71,7 @@ export function Header() {
 							href="/"
 							class="text-xs font-700  "
 						>
-							<div class=" flex items-center font-poppins uppercase">
+							<div class=" flex items-center uppercase">
 								<div class={'i-tabler-chevron-left h-5 w-5 '} />
 								<div class="hidden sm:block mx-0.5">Continue to</div>
 								Store
@@ -85,7 +85,7 @@ export function Header() {
 							class="text-lg md:text-2xl font-700  "
 						>
 							<div class="flex items-center">
-								<div class=" font-poppins uppercase text-sm ml-4 lg:text-2xl"> Modern Edge </div>
+								<div class="  uppercase text-sm ml-4 lg:text-2xl"> Modern Edge </div>
 							</div>
 						</A>
 					</div>
@@ -94,7 +94,7 @@ export function Header() {
 							href="/checkout"
 							class="text-xs font-700  "
 						>
-							<div class=" flex items-center font-poppins uppercase">
+							<div class=" flex items-center  uppercase">
 								<div class="hidden sm:block mx-0.5">Continue to</div>
 								Checkout
 								<div class={'i-tabler-chevron-right h-5 w-5 '} />

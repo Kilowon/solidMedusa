@@ -131,7 +131,7 @@ export default function SignUp(props: SideProps) {
 					</Show>
 					<div class="flex items-center">
 						<div class="i-ic-baseline-directions-run w-6 h-6 text-gray-5" />
-						<div class="text-xl font-500 font-poppins ml-2 text-gray-6">I'm new here </div>
+						<div class="text-xl font-500  ml-2 text-gray-6">I'm new here </div>
 					</div>
 					<div class="">
 						{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping and hiding other options  */}

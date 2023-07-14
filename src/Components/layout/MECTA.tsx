@@ -12,7 +12,7 @@ export default function MECTA() {
 							height={100}
 							alt="couch"
 						/>
-						<div class="absolute text-white top-6 right-3.5 z-15 text-2xl font-bold font-poppins ">ME</div>
+						<div class="absolute text-white top-6 right-3.5 z-15 text-2xl font-bold  ">ME</div>
 					</div>
 				</span>
 			</div>

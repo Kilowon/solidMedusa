@@ -133,7 +133,7 @@ export default function Categories() {
 
 						<div class="pt-4 lg:py-12 ">
 							<Show when={parentCategories() && currentCategory()}>
-								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 font-poppins antialiased  ">
+								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 antialiased  ">
 									<FlexCategories
 										parentCategories={parentCategories}
 										currentCategory={currentCategory}

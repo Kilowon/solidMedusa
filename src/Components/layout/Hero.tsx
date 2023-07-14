@@ -179,7 +179,7 @@ export function Hero() {
 							<div class="flex flex-col sm:flex-row space-x-[1vw] overflow-hidden sm:overflow-visible">
 								<Show when={true}>
 									<Show when={heroData?.data?.data?.static1 === true}>
-										<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black font-poppins font-400 z-2  break-words whitespace-break-spaces">
+										<h1 class="flex-grow tracking-tighter text-5xl sm:text-[6.5vw] drop-shadow-md shadow-black  font-400 z-2  break-words whitespace-break-spaces">
 											{heroData?.data?.data?.static_callout}
 										</h1>
 									</Show>

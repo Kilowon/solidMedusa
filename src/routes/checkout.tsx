@@ -364,7 +364,7 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 							href="/"
 							class="text-sm md:text-2xl font-semibold  "
 						>
-							<div class=" font-poppins uppercase  "> Modern Edge </div>
+							<div class="  uppercase  "> Modern Edge </div>
 						</A>
 					</div>
 					<div class="flex">
@@ -381,7 +381,7 @@ export function Header(props: { mobileDrawer: any; setMobileDrawer: any }) {
 							href="/cart"
 							class="text-xs font-semibold  "
 						>
-							<div class=" hidden lg:flex items-center font-poppins uppercase">
+							<div class=" hidden lg:flex items-center uppercase">
 								<div class=" mr-0.5">Back to Shopping Cart</div>
 								<div class={'i-tabler-chevron-right text-2xl md:text-3xl '} />
 							</div>

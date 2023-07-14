@@ -113,9 +113,9 @@ export default function Root() {
 													class="w-20 h-20 mt-35 md:mt-70"
 												/>
 												<div class="i-svg-spinners:bars-scale-fade font-700" /> */}
-												<div class="font-400">Loading.</div>
-												<div class="font-500">{`Loading..`}</div>
-												<div class="font-700">Loading...</div>
+												<div class="font-400 text-white">Loading.</div>
+												<div class="font-500 text-white">{`Loading..`}</div>
+												<div class="font-700 text-white">Loading...</div>
 											</div>
 										</section>
 									}

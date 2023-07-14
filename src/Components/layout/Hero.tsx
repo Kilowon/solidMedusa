@@ -76,6 +76,7 @@ export function Hero() {
 							<div class="flex justify-between sm:block w-100% overflow-hidden">
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu1 === true}>
 									<Motion.div
+										initial={{ opacity: 1 }}
 										animate={{ opacity: [0, 1], /* x: [-1000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 										exit={{ opacity: 0, /* y: [0, 150] */ transition: { duration: 0.1 } }}
 									>
@@ -103,6 +104,7 @@ export function Hero() {
 												if (index() >= 4) return
 												return (
 													<Motion.div
+														initial={{ opacity: 1 }}
 														animate={{
 															opacity: [0, 1],
 															/* x: [-1500, 0], */
@@ -124,6 +126,7 @@ export function Hero() {
 								</Show>
 								<Show when={getWindowSize().width > 768 && heroData?.data?.data?.menu2 === true}>
 									<Motion.div
+										initial={{ opacity: 1 }}
 										animate={{ opacity: [0, 1], /* x: [-1500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 										exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
 									>
@@ -151,6 +154,7 @@ export function Hero() {
 												if (index() < 4 || index() >= 8) return
 												return (
 													<Motion.div
+														initial={{ opacity: 1 }}
 														animate={{
 															opacity: [0, 1],
 															/* x: [1500, 0], */
@@ -173,6 +177,7 @@ export function Hero() {
 							</div>
 						</Show>
 						<Motion.div
+							initial={{ opacity: 1 }}
 							animate={{ opacity: [0, 1], /* x: [-2000, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 							exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1 } }}
 						>
@@ -191,6 +196,7 @@ export function Hero() {
 									>
 										<Rerun on={count()}>
 											<Motion.div
+												initial={{ opacity: 1 }}
 												animate={{ opacity: [1, 0, 1], /*  y: [-300, 0], */ transition: { duration: 0.1 } }}
 												exit={{ opacity: 0, /*  y: [0, 150], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 											>
@@ -208,7 +214,7 @@ export function Hero() {
 									>
 										<Rerun on={count()}>
 											<Motion.div
-												initial={{ opacity: 1, x: 0, transition: { duration: 0 } }}
+												initial={{ opacity: 1 }}
 												animate={{ opacity: [0, 0, 0, 1], /*  x: [-100, -3], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 												exit={{ opacity: 0, /* x: [0, 300], */ transition: { duration: 0.1 } }}
 											>
@@ -222,6 +228,7 @@ export function Hero() {
 							</div>
 						</Motion.div>
 						<Motion.div
+							initial={{ opacity: 1 }}
 							animate={{ opacity: [0, 1], /* x: [-2500, 0], */ transition: { duration: 0.1, easing: 'ease-out' } }}
 							exit={{ opacity: 0, /* y: [0, 150], */ transition: { duration: 0.1 } }}
 						>
@@ -269,6 +276,7 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
+							initial={{ opacity: 1 }}
 							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
 							exit={{ opacity: 0, transition: { duration: 0.1 } }}
 						>
@@ -296,6 +304,7 @@ export function Hero() {
 				<Presence>
 					<Rerun on={count()}>
 						<Motion.div
+							initial={{ opacity: 1 }}
 							animate={{ opacity: [0.3, 1], transition: { duration: 0.1 } }}
 							exit={{ opacity: 0, transition: { duration: 0.1 } }}
 						>

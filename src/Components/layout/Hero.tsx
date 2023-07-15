@@ -10,6 +10,7 @@ import { createQuery } from '@tanstack/solid-query'
 
 export function Hero() {
 	const { rootCategories } = useGlobalContext()
+	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
 		queryKey: ['hero_data'],
@@ -25,6 +26,17 @@ export function Hero() {
 			})
 			const data = await response.json()
 			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	const queryCategories = createQuery(() => ({
+		queryKey: ['categories_list'],
+		queryFn: async function () {
+			const product = await medusa?.productCategories.list({ limit: '200' })
+			return product
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
@@ -64,7 +76,7 @@ export function Hero() {
 	})
 
 	return (
-		<Show when={heroData.isSuccess}>
+		<Show when={heroData.isSuccess && queryCategories.isSuccess}>
 			<div
 				class="h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
 		"
@@ -235,19 +247,19 @@ export function Hero() {
 					</div>
 					<Presence>
 						<Rerun on={count()}>
-							<Motion.div
+							{/* <Motion.div
 								initial={{ opacity: 1 }}
 								animate={{ opacity: [0.3, 1], transition: { duration: 0.0 } }}
 								exit={{ opacity: 0, transition: { duration: 0.0 } }}
-							>
-								<Image
-									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
-									layout="fullWidth"
-									priority={true}
-									class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
-									alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-								/>
-							</Motion.div>
+							> */}
+							<Image
+								src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
+								layout="fullWidth"
+								priority={true}
+								class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+								alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+							/>
+							{/* </Motion.div> */}
 						</Rerun>
 					</Presence>
 				</Show>
@@ -261,23 +273,23 @@ export function Hero() {
 							alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 						/>
 					</div>
-					<Presence>
+					{/* <Presence>
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
 								animate={{ opacity: [0.3, 1], transition: { duration: 0.0 } }}
 								exit={{ opacity: 0, transition: { duration: 0.0 } }}
-							>
-								<Image
-									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
-									layout="fullWidth"
-									priority={true}
-									class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
-									alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-								/>
-							</Motion.div>
+							> */}
+					<Image
+						src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
+						layout="fullWidth"
+						priority={true}
+						class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
+						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+					/>
+					{/* 	</Motion.div>
 						</Rerun>
-					</Presence>
+					</Presence> */}
 				</Show>
 			</div>
 		</Show>

@@ -1,4 +1,4 @@
-import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
+import { lazy, Suspense, createSignal, createEffect, Show } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
@@ -89,15 +89,17 @@ export default function Home() {
 			{/* 	<Suspense>
 				<Navigation />
 			</Suspense> */}
-			<div>
-				<Image
-					src={heroData?.data?.data?.hero_data?.[0]?.image}
-					layout="fullWidth"
-					priority={true}
-					class="object-cover object-right md:object-center h-full w-full inset-0  filter brightness-65 hidden"
-					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-				/>
-			</div>
+			<Show when={heroData.isSuccess}>
+				<div>
+					<Image
+						src={heroData?.data?.data?.hero_data?.[0]?.image}
+						layout="fullWidth"
+						priority={true}
+						class="object-cover object-right md:object-center h-full w-full inset-0  filter brightness-65 hidden"
+						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+					/>
+				</div>
+			</Show>
 			<Suspense>
 				<Outlet />
 			</Suspense>

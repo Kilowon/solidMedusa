@@ -78,7 +78,7 @@ export function Hero() {
 	return (
 		<Show when={heroData.isSuccess && queryCategories.isSuccess}>
 			<div
-				class="min-h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
+				class="h-[100svh] w-full top-0 left-0 z--20 bg-cover bg-center bg-no-repeat flex items-center md:items-end 
 		"
 			>
 				<div class="absolute bg-gray-8 w-[100%] h-[100%] top-0 left-0 z--40" />
@@ -249,11 +249,13 @@ export function Hero() {
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
-								animate={{ opacity: [0.7, 1], transition: { duration: 0.1 } }}
-								exit={{ opacity: 0.7, transition: { duration: 0.1 } }}
+								animate={{ opacity: [0.7, 1], transition: { duration: 0.01 } }}
+								exit={{ opacity: 0.7, transition: { duration: 0.01 } }}
 							>
-								<img
+								<Image
 									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
+									layout="fullWidth"
+									priority={true}
 									class="object-cover object-right md:object-center h-full w-full z--10 absolute inset-0  filter brightness-65"
 									alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 								/>

@@ -2,6 +2,7 @@ import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { Image } from '@unpic/solid'
 
 const Navigation = lazy(() => import('~/Components/layout/Navigation'))
 const Footer = lazy(() => import('~/Components/layout/Footer'))
@@ -16,6 +17,26 @@ export default function Home() {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	const heroData = createQuery(() => ({
+		queryKey: ['hero_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
 				}
 			})
 			const data = await response.json()
@@ -68,6 +89,15 @@ export default function Home() {
 			{/* 	<Suspense>
 				<Navigation />
 			</Suspense> */}
+			<div>
+				<Image
+					src={heroData?.data?.data?.hero_data?.[0]?.image}
+					layout="fullWidth"
+					priority={true}
+					class="object-cover object-right md:object-center h-full w-full inset-0  filter brightness-65 hidden"
+					alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
+				/>
+			</div>
 			<Suspense>
 				<Outlet />
 			</Suspense>

@@ -65,15 +65,15 @@ export default function Home() {
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
-			<Suspense>
+			{/* 	<Suspense>
 				<Navigation />
-			</Suspense>
+			</Suspense> */}
 			<Suspense>
 				<Outlet />
 			</Suspense>
-			<Suspense>
+			{/* <Suspense>
 				<Footer />
-			</Suspense>
+			</Suspense> */}
 		</div>
 	)
 }

@@ -100,9 +100,9 @@ export default function Home() {
 					/>
 				</div>
 			</Show>
-			<Suspense>
-				<Outlet />
-			</Suspense>
+
+			<Outlet />
+
 			{/* <Suspense>
 				<Footer />
 			</Suspense> */}

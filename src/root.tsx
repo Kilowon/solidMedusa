@@ -101,7 +101,7 @@ export default function Root() {
 							<StoreProvider>
 								<Suspense
 									fallback={
-										<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
+										<section class="flex justify-center h-[100vh] w-[100vw] p-16  bg-white text-xl">
 											<div class="flex flex-col items-center">
 												{/* <Image
 													src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"

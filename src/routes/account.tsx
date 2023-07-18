@@ -184,9 +184,9 @@ export default function Account() {
 						</Show>
 						<Show when={currentCustomer.isSuccess}>
 							<div class=" w-full max-h-90svh">
-								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10  ">
+								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10 mx-1 sm:mx-auto  ">
 									<div class="sm:flex items-center justify-between">
-										<div class="text-xl font-400 text-gray-6 pl-1 sm:pl-0">Welcome back</div>
+										<div class="text-xs sm:text-base font-400 text-gray-6 pl-1 sm:pl-0"></div>
 										<div class="flex justify-between p-1">
 											<div class="text-xs font-500  text-gray-6">Signed in as: {currentCustomer?.data?.customer?.email}</div>
 											<div
@@ -290,7 +290,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 		<div class="p-1 rounded-sm bg-gray-50 dark:bg-gray-800">
 			<p class=" mb-3 text-gray-500 dark:text-gray-400">
 				<Show when={props.currentCustomer?.orders}>
-					<div class="my-2 font-500">Recent orders</div>
+					<div class="my-2 font-500 text-xs sm:text-sm">Recent orders</div>
 					<ul class="space-y-4 ">
 						<For each={props.currentCustomer?.orders}>
 							{(order: any) => {
@@ -301,8 +301,8 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 											onClick={() => {}}
 										>
 											<div>
-												<div class="text-sm">Order date:</div>
-												<div class="text-sm font-500 capitalize">
+												<div class="text-xs sm:text-sm">Order date:</div>
+												<div class="text-xs sm:text-sm font-500 capitalize">
 													{new Date(order.created_at).toLocaleDateString('en-US', {
 														month: 'long',
 														day: 'numeric',
@@ -315,11 +315,11 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 												<div class="text-sm">#{order.display_id}</div>
 											</div>
 											<div>
-												<div class="text-sm">Payment status:</div>
-												<div class="flex">
+												<div class="text-xs sm:text-sm">Payment status:</div>
+												<div class="flex ">
 													<div
 														class={clsx(
-															'flex items-center',
+															'flex items-center ',
 															order.payment_status === 'not_paid' && 'text-red-500',
 															order.payment_status === 'awaiting' && 'text-gray-500',
 															order.payment_status === 'captured' && 'text-green-500',
@@ -331,14 +331,14 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 													>
 														<div class="i-material-symbols-circle mr-0.5 w-2.5" />
 													</div>
-													<div class="text-sm font-500 capitalize ">
+													<div class="text-xs sm:text-sm font-500 capitalize ">
 														{order.payment_status === 'awaiting' ? 'Pending' : order.payment_status}
 													</div>
 												</div>
 											</div>
 											<div>
 												<div>
-													<div class="text-sm">Shipping status:</div>
+													<div class="text-xs sm:text-sm">Shipping status:</div>
 													<div class="flex">
 														<div
 															class={clsx(
@@ -356,7 +356,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 														>
 															<div class="i-material-symbols-circle mr-0.5 w-2.5" />
 														</div>
-														<div class="font-500 capitalize">
+														<div class="font-500 capitalize text-xs sm:text-sm">
 															{order.fulfillment_status === 'not_fulfilled' ? 'Pending' : order.fulfillment_status}
 														</div>
 													</div>
@@ -457,7 +457,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 											return (
 												<div class="flex items-center justify-center">
 													<div
-														class="grid grid-cols-9 space-x-1 text-sm font-500 text-gray-500 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
+														class="grid grid-cols-6 sm:grid-cols-9 space-x-1 text-sm font-500 text-gray-500 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
 														tabindex="0" // add tabindex attribute to make the div focusable
 													>
 														<Image
@@ -470,7 +470,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														<div class="max-w-[300px] col-span-4 sm:col-span-6 flex items-center">
 															<div class="line-clamp-2   ellipsis text-xs ">{item.title}</div>
 														</div>
-														<div class="col-span-2 flex items-center">{currencyFormat(Number(item.unit_price), 'US')}</div>
+														<div class="hidden col-span-2 sm:flex items-center">{currencyFormat(Number(item.unit_price), 'US')}</div>
 													</div>
 													<div class=" sm:w-[20svw]">
 														<button

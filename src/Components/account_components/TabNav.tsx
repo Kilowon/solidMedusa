@@ -50,7 +50,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 					>
 						<div class="flex flex-col lg:flex-row justify-center items-center">
 							<div class="i-fluent-clipboard-text-ltr-24-regular sm:text-lg text-gray-6 lg:mr-2 " />
-							<div class="text-[2.5vw] sm:text-base">Overview</div>
+							<div class="text-0.65rem sm:text-base">Overview</div>
 						</div>
 					</button>
 				</li>
@@ -95,7 +95,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 					>
 						<div class="flex flex-col lg:flex-row justify-center items-center ">
 							<div class="i-vaadin-clipboard-user sm:text-lg bg-gray-6 lg:mr-2" />
-							<div class="text-[2.5vw] sm:text-base">Profile</div>
+							<div class="text-0.65rem sm:text-base">Profile</div>
 						</div>
 					</button>
 				</li>
@@ -141,7 +141,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						{' '}
 						<div class="flex flex-col lg:flex-row justify-center items-center ">
 							<div class="i-ph-truck sm:text-lg text-gray-6 lg:mr-2" />
-							<div class="text-[2.5vw] sm:text-base">Orders</div>
+							<div class="text-0.65rem sm:text-base">Orders</div>
 						</div>
 					</button>
 				</li>
@@ -184,9 +184,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 							}
 						}}
 					>
-						<div class="flex flex-col sm:flex-row sm:space-x-1  lg:flex-row justify-center items-center">
+						<div class="flex flex-col lg:flex-row sm:space-x-1  lg:flex-row justify-center items-center">
 							<div class="i-ic-baseline-star-rate sm:text-lg text-gray-6 lg:mr-2" />
-							<div class="text-[2.5vw] sm:text-base">Reviews</div>
+							<div class="text-0.65rem sm:text-base">Reviews</div>
 						</div>
 					</button>
 				</li>
@@ -230,9 +230,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						}}
 					>
 						{' '}
-						<div class="flex flex-col sm:flex-row sm:space-x-1  justify-center items-center">
+						<div class="flex flex-col lg:flex-row sm:space-x-1  justify-center items-center">
 							<div class="i-fa6-regular-thumbs-up sm:sm:text-lg text-gray-6 lg:mr-2" />
-							<div class="text-[2.5vw] sm:text-base">Wish List</div>
+							<div class="text-0.65rem sm:text-base">Wish List</div>
 						</div>
 					</button>
 				</li>

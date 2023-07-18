@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta, ErrorBoundary } from 'solid-start'
-import { createEffect, createSignal, Show, For, Suspense, onMount, untrack } from 'solid-js'
+import { useParams, Title, Meta } from 'solid-start'
+import { createEffect, createSignal, Show, For } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
 import { SingleLineSlider } from '~/Components/common/ProductSlider'
@@ -9,7 +9,6 @@ import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import { on } from 'events'
 
 export default function Categories() {
 	const params = useParams()
@@ -115,74 +114,72 @@ export default function Categories() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<Suspense fallback={<div>Loading...</div>}>
-				<ErrorBoundary>
-					<Show
-						when={currentCategory()}
-						fallback={<div></div>}
-					>
-						<Title>{currentCategory?.()[0]?.name}</Title>
-						<Meta
-							itemProp="description"
-							content={currentCategory?.()[0]?.handle}
-						/>
-						<Meta
-							itemProp="og:title"
-							content={currentCategory?.()[0]?.name}
-						/>
+			<Show
+				when={currentCategory()}
+				fallback={<div></div>}
+			>
+				<Title>{currentCategory?.()[0]?.name}</Title>
+				<Meta
+					itemProp="description"
+					content={currentCategory?.()[0]?.handle}
+				/>
+				<Meta
+					itemProp="og:title"
+					content={currentCategory?.()[0]?.name}
+				/>
 
-						<div class="pt-4 lg:py-12 ">
-							<Show when={parentCategories() && currentCategory()}>
-								<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 antialiased  ">
-									<FlexCategories
-										parentCategories={parentCategories}
-										currentCategory={currentCategory}
-									/>
+				<div class="pt-4 lg:py-12 ">
+					<Show when={parentCategories() && currentCategory()}>
+						<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 antialiased  ">
+							<FlexCategories
+								parentCategories={parentCategories}
+								currentCategory={currentCategory}
+							/>
 
-									<Show when={queryCategoryProducts.isSuccess}>
-										<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-x-4 gap-y-16">
-											<For each={queryCategoryProducts.data?.products}>
-												{(product: any, index) => {
-													let el: HTMLLIElement | undefined
-													const [isVisible, setIsVisible] = createSignal(false)
-													const [delay, setDelay] = createSignal(0)
-													const visible = createVisibilityObserver({ threshold: 0.2 })(() => el)
+							<Show when={queryCategoryProducts.isSuccess}>
+								<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-x-4 gap-y-16">
+									<For each={queryCategoryProducts.data?.products}>
+										{(product: any, index) => {
+											let el: HTMLLIElement | undefined
+											const [isVisible, setIsVisible] = createSignal(false)
+											const [delay, setDelay] = createSignal(0)
+											const visible = createVisibilityObserver({ threshold: 0.2 })(() => el)
 
-													createEffect(() => {
-														if (visible()) {
-															setIsVisible(true)
-															setDelay((index() % 4) * 0.3)
-														}
-													})
+											createEffect(() => {
+												if (visible()) {
+													setIsVisible(true)
+													setDelay((index() % 4) * 0.3)
+												}
+											})
 
-													return (
-														<li ref={el}>
-															<Show when={index() > 7 || isVisible()}>
-																<Presence initial>
-																	<Rerun on={index}>
-																		<Motion
-																			animate={{ opacity: [0, 1] }}
-																			transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-																		>
-																			<ProductPreview
-																				{...product}
-																				wish={primaryData?.data?.data?.category_wish}
-																				tag={primaryData?.data?.data?.category_tag}
-																			/>
-																		</Motion>
-																	</Rerun>
-																</Presence>
-															</Show>
-															<Show when={!isVisible()}>
-																<div class="w-[100px] h-[275px]"></div>
-															</Show>
-														</li>
-													)
-												}}
-											</For>
-										</ul>
-									</Show>
-									{/* <SingleLineSlider
+											return (
+												<li ref={el}>
+													<Show when={index() > 7 || isVisible()}>
+														<Presence initial>
+															<Rerun on={index}>
+																<Motion
+																	animate={{ opacity: [3, 1] }}
+																	transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+																>
+																	<ProductPreview
+																		{...product}
+																		wish={primaryData?.data?.data?.category_wish}
+																		tag={primaryData?.data?.data?.category_tag}
+																	/>
+																</Motion>
+															</Rerun>
+														</Presence>
+													</Show>
+													<Show when={!isVisible()}>
+														<div class="w-[100px] h-[275px]"></div>
+													</Show>
+												</li>
+											)
+										}}
+									</For>
+								</ul>
+							</Show>
+							{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}
 							setCurrentSlide={setCurrentSlide}
@@ -190,12 +187,10 @@ export default function Categories() {
 							loaded={loaded}
 							currentSlide={currentSlide}
 						/> */}
-								</div>
-							</Show>
 						</div>
 					</Show>
-				</ErrorBoundary>
-			</Suspense>
+				</div>
+			</Show>
 		</main>
 	)
 }

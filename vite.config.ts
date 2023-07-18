@@ -67,6 +67,7 @@ export default defineConfig({
 				['root', 'selector-[:root]:[--accent_3:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_4:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_5:0,200,0]'],
+				['root', 'selector-[:root]:[--accent_6:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_text_1:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_text_2:0,200,0]'],
 				['root', 'selector-[:root]:[--hero_text_1:0,200,0]']
@@ -128,6 +129,7 @@ export default defineConfig({
 					accent_3: 'rgb(var(--accent_3))',
 					accent_4: 'rgb(var(--accent_4))',
 					accent_5: 'rgb(var(--accent_5))',
+					accent_6: 'rgb(var(--accent_6))',
 					accenttext_1: 'rgb(var(--accent_text_1))',
 					accenttext_2: 'rgb(var(--accent_text_2))',
 					hero_text_1: 'rgb(var(--hero_text_1))'

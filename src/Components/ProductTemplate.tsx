@@ -2,7 +2,8 @@ import ImageGallerySlidy from '~/Components/prod_tmpl_components/ImageGallerySli
 import ProductActions from '~/Components/prod_tmpl_components/ProductActions'
 import { JSX, Show } from 'solid-js'
 import { Product } from '~/types/models'
-import { ReviewsWide } from './prod_tmpl_components/ProductActions'
+import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
+import { createQuery } from '@tanstack/solid-query'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -14,6 +15,22 @@ export default function ProductTemplate(props: {
 	variant: any
 	useStore: any
 }): JSX.Element {
+	const reviewData = createQuery(() => ({
+		queryKey: ['review_data', props.productInfo?.title],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		retry: 0
+	}))
+	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 	return (
 		<Show
 			when={
@@ -51,8 +68,10 @@ export default function ProductTemplate(props: {
 						</div>
 					</div>
 				</div>
-				<div class="hidden lg:flex lg:content-container">
-					<ReviewsWide rating={() => 4.5} />
+				<div class="hidden lg:flex lg:content-container justify-center">
+					<Show when={reviewData.isSuccess}>
+						<ReviewsDisplay rating={reviewData.data?.data} />
+					</Show>
 				</div>
 			</main>
 		</Show>

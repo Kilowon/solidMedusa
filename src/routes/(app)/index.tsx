@@ -19,15 +19,16 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh] ">
-			<Hero />
-
-			{/* <div class="">
+			<Suspense fallback={<div>HERO</div>}>
+				<Hero />
+			</Suspense>
+			<div class="">
 				<Suspense>
 					<FeaturedProducts variant="hero" />
 					<FeaturedProducts variant="hero2" />
 					<FeaturedProducts variant="hero3" />
 				</Suspense>
-			</div> */}
+			</div>
 		</main>
 	)
 }

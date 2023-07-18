@@ -245,7 +245,7 @@ export function Hero() {
 							alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 						/>
 					</div>
-					<Presence initial>
+					<Presence initial={true}>
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
@@ -273,12 +273,12 @@ export function Hero() {
 							alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 						/>
 					</div>
-					<Presence initial>
+					<Presence initial={true}>
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
-								animate={{ opacity: [0.3, 1], transition: { duration: 1.0 } }}
-								exit={{ opacity: 0, transition: { duration: 0.5 } }}
+								animate={{ opacity: [0.3, 1], transition: { duration: 0.01 } }}
+								exit={{ opacity: 0, transition: { duration: 0.01 } }}
 							>
 								<Image
 									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}

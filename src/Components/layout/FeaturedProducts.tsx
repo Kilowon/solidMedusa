@@ -7,9 +7,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { setPriority } from 'os'
 
 interface Collection {
 	id: string
@@ -120,7 +118,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 				>
 					<div class="mx-1 sm:mx-auto sm:content-container ">
 						<Show when={queryCollection?.data?.products}>
-							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-16 my-32">
+							<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12 my-18">
 								<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
 									<div class="space-y-1">
 										<h2 class=" text-xs  xl:text-base font-500  text-text_2 tracking-tighter text-balance">
@@ -176,7 +174,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 														<Rerun on={index}>
 															<Motion
 																animate={{ opacity: [0, 1] }}
-																transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
+																transition={{ duration: 0.35, delay: index() * 0.05, easing: 'ease-in-out' }}
 															>
 																<ProductPreview
 																	{...product}

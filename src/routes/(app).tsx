@@ -82,13 +82,14 @@ export default function Home() {
 				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
 				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
 				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
+				'--accent_6': `${hexToRgb(primaryData?.data?.data?.accent_6)}`,
 				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
-			{/* 	<Suspense>
+			<Suspense>
 				<Navigation />
-			</Suspense> */}
+			</Suspense>
 			<Show when={heroData.isSuccess}>
 				<div>
 					<Image
@@ -103,9 +104,9 @@ export default function Home() {
 
 			<Outlet />
 
-			{/* <Suspense>
+			<Suspense>
 				<Footer />
-			</Suspense> */}
+			</Suspense>
 		</div>
 	)
 }

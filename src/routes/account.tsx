@@ -80,8 +80,52 @@ export default function Account() {
 		console.log(currentCustomer.isSuccess)
 	})
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	function hexToRgb(hex: any) {
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
+	}
+
 	return (
-		<main>
+		<main
+			style={{
+				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
+				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
+				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
+				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
+				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
+				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
+				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
+				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
+				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
+				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
+				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
+				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
+				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
+				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
+				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
+				'--accent_6': `${hexToRgb(primaryData?.data?.data?.accent_6)}`,
+				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
+				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
+			}}
+		>
 			<Navigation />
 			<div>
 				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">

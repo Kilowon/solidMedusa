@@ -1,4 +1,4 @@
-import { JSX, For, Show, createEffect, createMemo, createSignal, onMount } from 'solid-js'
+import { JSX, For, Show, createEffect, createMemo, createSignal } from 'solid-js'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
@@ -37,12 +37,8 @@ export default function ProductActions(props: {
 	const { addToCart } = useStore()
 	const { variant } = useStore()
 
-	createEffect(() => {
-		console.log('VARIENT PRO ACT', variant())
-	})
-
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
-	const [rating, setRating] = createSignal(4.5)
+	const [rating, setRating] = createSignal(3)
 
 	const notify = () => toast.success('Added to cart!')
 
@@ -71,9 +67,9 @@ export default function ProductActions(props: {
 	})
 
 	const reviewData = createQuery(() => ({
-		queryKey: ['review_data'],
+		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/Review`, {
+			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -116,7 +112,7 @@ export default function ProductActions(props: {
 	}))
 
 	return (
-		<Show when={props.productInfo}>
+		<Show when={props.productInfo && reviewData.isSuccess}>
 			<Toaster
 				position="top-right"
 				gutter={8}
@@ -143,14 +139,14 @@ export default function ProductActions(props: {
 									reviewMutate.refetch()
 								}}
 							>
-								<StarIconRequest rating={rating()} />
+								<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
 							</div>
 
 							<div class="text-text_2 ">|</div>
 
-							<div class="text-text_2 underline ">45 reviews</div>
+							<div class="text-text_2 underline ">{reviewData.data?.data?.total_reviews} reviews</div>
 						</div>
-						<h3 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h3>
+						<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
 					</div>
 					<div>
 						<Show when={currentVariant()?.original_price}>
@@ -222,7 +218,7 @@ export default function ProductActions(props: {
 						class={clsx(
 							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
 							isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
-							isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_4 border-text_1',
+							isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_2/70 border-text_1',
 							isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
 						)}
 					>
@@ -237,7 +233,7 @@ export default function ProductActions(props: {
 				<div>
 					<ProductInformationTabs
 						productInfo={props.productInfo}
-						rating={rating}
+						rating={reviewData.data?.data}
 					/>
 				</div>
 			</div>
@@ -253,7 +249,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<span class="text-sm md:text-base font-500 text-text_2">Select {title}</span>
+				<h4 class="text-sm md:text-base font-500 text-text_2">Select {title}</h4>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{value => {
@@ -347,7 +343,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<span class="text-xs md:text-sm font-500 text-text_2 tracking-tight">Select {title}:</span>
+				<h4 class="text-xs md:text-sm font-500 text-text_2 tracking-tight">Select {title}:</h4>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {
@@ -365,7 +361,6 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 							return (
 								<button
 									onClick={() => {
-										console.log('OPTION', v)
 										updateOption({ [option.id]: v })
 									}}
 									class={clsx(
@@ -388,7 +383,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	)
 }
 
-export function ProductInformationTabs(props: { productInfo: Product; rating: () => number }) {
+export function ProductInformationTabs(props: { productInfo: Product; rating: any }) {
 	const [activeTab, setActiveTab] = createSignal({
 		description: 'active',
 		info: 'inactive',
@@ -417,7 +412,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 
 	return (
 		<div>
-			<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+			<div class="mb-4 border-b border-surface_3">
 				<ul
 					class="flex -mb-px text-xs font-medium text-center space-x-0.5 lg:space-x-6 "
 					id="myTab"
@@ -430,9 +425,9 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full bg-white lg:bg-gray-100',
-								activeTab().description === 'active' && ' border-gray-600 text-text_2 ',
-								activeTab().description === 'inactive' && 'hover:text-text_3 hover:border-gray-300'
+								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
+								activeTab().description === 'active' && ' border-text_2 text-text_2 ',
+								activeTab().description === 'inactive' && 'hover:text-text_3 hover:border-text_5'
 							)}
 							id="description-tab"
 							data-tabs-target="#description"
@@ -451,7 +446,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 							}}
 						>
 							<div class="flex flex-col justify-center items-center mb-2 sm:mb-0  ">
-								<div class="i-material-symbols-description-outline text-lg text-gray-6 " />
+								<div class="i-material-symbols-description-outline text-lg text-text_2 " />
 								Description
 							</div>
 						</button>
@@ -462,9 +457,9 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-white lg:bg-gray-100',
-								activeTab().info === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().info === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-normal_1 lg:bg-normal_2',
+								activeTab().info === 'active' && ' border-text_2 text-text_2',
+								activeTab().info === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 							)}
 							id="info-tab"
 							data-tabs-target="#info"
@@ -483,7 +478,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 							}}
 						>
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-carbon-product text-lg bg-gray-6" />
+								<div class="i-carbon-product text-lg bg-text_2" />
 								Product Information
 							</div>
 						</button>
@@ -494,9 +489,9 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-white lg:bg-gray-100',
-								activeTab().shipping === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().shipping === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-normal_1 lg:bg-normal_2',
+								activeTab().shipping === 'active' && ' border-text_2 text-text_2 ',
+								activeTab().shipping === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 							)}
 							id="shipping-tab"
 							data-tabs-target="#shipping"
@@ -516,7 +511,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 						>
 							{' '}
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ph-truck text-lg text-gray-6" />
+								<div class="i-ph-truck text-lg text-text_2" />
 								Shipping & Returns
 							</div>
 						</button>
@@ -527,9 +522,9 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					>
 						<button
 							class={clsx(
-								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-white lg:bg-gray-100',
-								activeTab().reviews === 'active' && ' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-								activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
+								activeTab().reviews === 'active' && ' border-text_2 text-text_2',
+								activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5'
 							)}
 							id="reviews-tab"
 							data-tabs-target="#reviews"
@@ -549,7 +544,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 						>
 							{' '}
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ic-baseline-star-rate text-lg text-gray-6" />
+								<div class="i-ic-baseline-star-rate text-lg text-text_2" />
 								Customer Reviews
 							</div>
 						</button>
@@ -574,24 +569,22 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					<Show when={activeTab().description === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-4',
+								'p-4 rounded-lg bg-normal_2 space-y-4',
 								activeTab().description === 'active' && ''
 								//activeTab().description === 'inactive' && 'hidden'
 							)}
 						>
 							<div class="space-y-2">
 								<h1 class="tracking-tight  sm:text-lg text-balance">{props.productInfo?.title}</h1>
-								<h2 class="tracking-tight text-gray-6 text-balance">{props.productInfo?.subtitle}</h2>
+								<h2 class="tracking-tight text-text_2 text-balance">{props.productInfo?.subtitle}</h2>
 							</div>
-							<p class=" mb-3 text-gray-500 dark:text-gray-400 whitespace-break-spaces   dark:first-letter:text-gray-100">
-								{props.productInfo.description}
-							</p>
+							<p class=" mb-3 text-text_2  whitespace-break-spaces ">{props.productInfo.description}</p>
 						</div>
 					</Show>
 					<Show when={activeTab().info === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6',
+								'p-4 rounded-lg bg-normal_2  space-y-6',
 								activeTab().info === 'active' && ''
 								//activeTab().info === 'inactive' && 'hidden'
 							)}
@@ -599,12 +592,12 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 							<div>
 								{props.productInfo?.weight && (
 									<div class="">
-										<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+										<div class="text-text_2 flex space-x-2">
 											<div class="i-mdi-fabric text-2xl" />
 											<div>Material</div>
 										</div>
 
-										<div class="text-gray-600 dark:text-gray-300">{props.productInfo?.material} </div>
+										<div class="text-text_2 ">{props.productInfo?.material} </div>
 									</div>
 								)}
 							</div>
@@ -612,43 +605,43 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 							<div>
 								{props.productInfo?.weight && (
 									<div class="">
-										<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+										<div class="text-text_2  flex space-x-2">
 											<div class="i-mdi-weight-pound text-2xl" />
 											<div>Weight</div>
 										</div>
 
-										<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
+										<div class="text-text_2 ">{(props.productInfo?.weight / 453.592).toFixed(2)} lbs</div>
 									</div>
 								)}
 							</div>
 							<div class="space-y-1">
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+								<div class="text-text_2  flex space-x-2">
 									<div class="i-radix-icons-dimensions text-2xl" />
 									<div>Dimensions</div>
 								</div>
 								<div class="flex justify-between">
 									{props.productInfo?.length && (
 										<div>
-											<div class="text-gray-500 dark:text-gray-400">Length</div>
-											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.length / 25.4).toFixed(2)} in</div>
+											<div class="text-text_2 ">Length</div>
+											<div class="text-text_2 ">{(props.productInfo?.length / 25.4).toFixed(2)} in</div>
 										</div>
 									)}
 									{props.productInfo?.width && (
 										<div>
-											<div class="text-gray-500 dark:text-gray-400">Width</div>
-											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.width / 25.4).toFixed(2)} in</div>
+											<div class="text-text_2 ">Width</div>
+											<div class="text-text_2 ">{(props.productInfo?.width / 25.4).toFixed(2)} in</div>
 										</div>
 									)}
 									{props.productInfo?.height && (
 										<div>
-											<div class="text-gray-500 dark:text-gray-400">Height</div>
-											<div class="text-gray-600 dark:text-gray-300">{(props.productInfo?.height / 25.4).toFixed(2)} in</div>
+											<div class="text-text_2 ">Height</div>
+											<div class="text-text_2 ">{(props.productInfo?.height / 25.4).toFixed(2)} in</div>
 										</div>
 									)}
 								</div>
 							</div>
 							<Show when={productData?.data?.data?.product_info_toggle === true}>
-								<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+								<div class="text-text_2  flex space-x-2">
 									<div>{productData?.data?.data?.product_info_tab}</div>
 								</div>
 							</Show>
@@ -657,36 +650,36 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					<Show when={activeTab().shipping === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm',
+								'p-4 rounded-lg bg-normal_2 space-y-6 text-sm',
 								activeTab().shipping === 'active' && ''
 								//activeTab().shipping === 'inactive' && 'hidden'
 							)}
 						>
 							<Show when={productData?.data?.data?.delivery_toggle === true}>
 								<div>
-									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="text-text_2  flex space-x-2">
 										<div class="i-mdi-truck-fast-outline text-2xl" />
 										<div>{productData?.data?.data?.delivery_title}</div>
 									</div>
-									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.delivery_body}</div>
+									<div class="text-text_2 ">{productData?.data?.data?.delivery_body}</div>
 								</div>
 							</Show>
 							<Show when={productData?.data?.data?.exchanges_toggle === true}>
 								<div>
-									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="text-text_2 flex space-x-2">
 										<div class="i-subway-round-arrow-2 text-xl" />
 										<div>{productData?.data?.data?.exchanges_title}</div>
 									</div>
-									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.exchanges_body}</div>
+									<div class="text-text_2 ">{productData?.data?.data?.exchanges_body}</div>
 								</div>
 							</Show>
 							<Show when={productData?.data?.data?.returns_toggle === true}>
 								<div>
-									<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+									<div class="text-text_2 flex space-x-2">
 										<div class="i-fluent-chat-arrow-back-16-regular text-2xl" />
 										<div>{productData?.data?.data?.returns_title}</div>
 									</div>
-									<div class="text-gray-600 dark:text-gray-300">{productData?.data?.data?.returns_body}</div>
+									<div class="text-text_2 ">{productData?.data?.data?.returns_body}</div>
 								</div>
 							</Show>
 						</div>
@@ -694,71 +687,13 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 					<Show when={activeTab().reviews === 'active'}>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm',
+								'p-4 rounded-lg bg-normal_2 space-y-3 text-sm',
 								activeTab().reviews === 'active' && ''
 								//activeTab().reviews === 'inactive' && 'hidden'
 							)}
 						>
 							<div>
-								<div>
-									<CustomerOverallReviews rating={props.rating} />
-								</div>
-								<span class="flex mx-2 border border-gray-3 border-1"></span>
-								<div class="space-y-3">
-									<CustomerIndividualReviews
-										review={{
-											customer:
-												'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
-											owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
-										}}
-										rating={4}
-										name={{ customer: 'Shane', owner: 'Modern Edge' }}
-										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-										title={'Ink on my order'}
-									/>
-									<CustomerIndividualReviews
-										review={{
-											customer:
-												'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
-											owner: 'Glad you like the color!'
-										}}
-										rating={5}
-										name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
-										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-										title={'Beautiful Forest Green Hoodie'}
-									/>
-									<CustomerIndividualReviews
-										review={{
-											customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
-											owner: 'I hope they win!'
-										}}
-										rating={5}
-										name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
-										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-										title={'Great Hoodie For The Weather'}
-									/>
-									<CustomerIndividualReviews
-										review={{
-											customer: 'It’s really soft and cute highly recommend',
-											owner: 'Soft is good!'
-										}}
-										rating={5}
-										name={{ customer: 'Abby', owner: 'Modern Edge' }}
-										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-										title={'Great product!'}
-									/>
-									<CustomerIndividualReviews
-										review={{
-											customer:
-												'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
-											owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
-										}}
-										rating={3}
-										name={{ customer: 'Bob', owner: 'Modern Edge' }}
-										date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-										title={'Color wayyy off'}
-									/>
-								</div>
+								<ReviewsDisplay rating={props.rating} />
 							</div>
 						</div>
 					</Show>
@@ -768,65 +703,70 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: ()
 	)
 }
 
-export function CustomerOverallReviews(props: { rating: () => number }) {
+export function CustomerOverallReviews(props: { rating: any }) {
 	return (
 		<div class="space-y-2">
 			<div class="flex flex-col justify-center items-center   ">
 				<div class="space-x-2  ">
-					<span class="text-gray-500 dark:text-gray-400 text-5xl lg:font-700">{props.rating()}</span>
-					<span class="text-gray-500 dark:text-gray-400 text-2xl font-light lg:font-500 ">out of</span>
-					<span class="text-gray-500 dark:text-gray-400 text-5xl lg:font-700">5</span>
+					<span class="text-text_3 text-5xl lg:font-700">{props.rating?.overall_rating}</span>
+					<span class="text-text_3 text-xl font-light lg:font-500 ">out of</span>
+					<span class="text-text_3 text-5xl lg:font-700">5</span>
 				</div>
 				<div class="flex items-center space-x-2">
 					<div class="text-xl">
-						<StarIconRequest rating={props.rating()} />
+						<StarIconRequest rating={props.rating?.overall_rating} />
 					</div>
 
-					<div class="text-gray-500 dark:text-gray-400">|</div>
+					<div class="text-text_4">|</div>
 
-					<div class="text-gray-500 dark:text-gray-400 underline">45 reviews</div>
+					<div class="text-text_4 underline">{props.rating?.total_reviews} reviews</div>
 				</div>
 			</div>
 
 			<ReviewPercentSlider
 				label="5"
-				percent={87}
+				percent={props.rating?.five_stars_percentage}
+				total={props.rating?.five_stars}
 			/>
 			<ReviewPercentSlider
 				label="4"
-				percent={9}
+				percent={props.rating?.four_stars_percentage}
+				total={props.rating?.four_stars}
 			/>
 			<ReviewPercentSlider
 				label="3"
-				percent={1}
+				percent={props.rating?.three_stars_percentage}
+				total={props.rating?.three_stars}
 			/>
 
 			<ReviewPercentSlider
 				label="2"
-				percent={2}
+				percent={props.rating?.two_stars_percentage}
+				total={props.rating?.two_stars}
 			/>
 
 			<ReviewPercentSlider
 				label="1"
-				percent={1}
+				percent={props.rating?.one_stars_percentage}
+				total={props.rating?.one_stars}
 			/>
 		</div>
 	)
 }
 
-export function ReviewPercentSlider(props: { percent: number; label: string }) {
+export function ReviewPercentSlider(props: { percent: number; label: string; total?: number }) {
 	return (
 		<div class="flex  items-center justify-center space-x-2">
-			<div class=" w-[10%] text-gray-500 dark:text-gray-400 flex justify-end ">{props.label} </div>
+			<div class=" w-[10%] text-text_4 flex justify-end ">{props.label} </div>
 
-			<div class="w-[80%] max-w-sm h-2 bg-gray-200 rounded-full ">
+			<div class="w-[80%] max-w-sm h-2 bg-normal_4 rounded-full ">
 				<div
 					class="h-full bg-yellow-400 rounded-full "
 					style={{ width: `${props.percent}%` }}
 				/>
 			</div>
 
-			<div class=" w-[10%] text-gray-500 dark:text-gray-400">{props.percent}%</div>
+			<div class=" w-[10%] text-text_4">{` ${props.total}`}</div>
 		</div>
 	)
 }
@@ -845,13 +785,13 @@ export function StarIconRequest(props: { rating: number }) {
 		}
 		if (rating < 5) {
 			for (let i = 0; i < 5 - Math.ceil(rating); i++) {
-				stars.push(<i class="i-ic-outline-star-rate text-gray-400/50" />)
+				stars.push(<i class="i-ic-outline-star-rate text-text_3/50" />)
 			}
 		}
 		return stars
 	}
 
-	return <div class=" text-gray-500 dark:text-gray-400">{getStarIcon(roundRating)}</div>
+	return <div class=" text-text_2">{getStarIcon(roundRating)}</div>
 }
 
 export function CustomerIndividualReviews(props: {
@@ -861,38 +801,57 @@ export function CustomerIndividualReviews(props: {
 	date: { customer: string; owner: string }
 	title: string
 }) {
+	function formatDate(date: any) {
+		const now = new Date()
+		const then = new Date(date)
+		const diffInYears = now.getFullYear() - then.getFullYear()
+		const diffInMonths = now.getMonth() - then.getMonth() + 12 * diffInYears
+		//@ts-ignore
+		const diffInDays = Math.floor((now - then) / (1000 * 60 * 60 * 24))
+
+		if (diffInYears > 1) {
+			return `${diffInYears} years ago`
+		} else if (diffInMonths > 1) {
+			return `${diffInMonths} months ago`
+		} else if (diffInDays > 1) {
+			return `${diffInDays} days ago`
+		} else {
+			return 'today'
+		}
+	}
+
 	return (
-		<div class="flex flex-col justify-between space-y-2 ">
+		<div class="flex flex-col justify-between space-y-2 min-h-216px h-100% ">
 			<div class="space-y-1">
-				<div class="flex items-center space-x-2 mb-1 mt-3">
-					<div class="text-green-600 dark:text-gray-400 text-[10px] lg:text-xs ">
+				<div class="flex items-center space-x-2 mb-1 ">
+					<div class="text-green-600 text-[10px] lg:text-xs ">
 						<div class="i-ic-twotone-person-pin text-base" />
 						Verified Purchaser
 					</div>
 
-					<div class="text-gray-500 dark:text-gray-400">|</div>
+					<div class="text-text_4">|</div>
 
-					<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date.customer}</div>
+					<div class="text-text_4  text-xs ">{formatDate(props.date.customer)}</div>
 				</div>
 
 				<div class="flex flex-col items-end lg:flex-row  space-x-2">
-					<div class="text-gray-500 dark:text-gray-400 text-sm">{props.name.customer}</div>
+					<div class="text-text_4  text-xs">{props.name.customer}</div>
 					<StarIconRequest rating={props.rating} />
 				</div>
-				<div class="text-gray-500 dark:text-gray-400 font-semibold text-sm">
-					<div class="text-ellipsis">{props.title}</div>
+				<div class="text-text_3  font-500 text-sm">
+					<h4 class="text-ellipsis tracking-tighter text-balance">{props.title}</h4>
 				</div>
 
-				<div class="text-gray-500 dark:text-gray-400 text-sm line-clamp-7 text-ellipsis">"{props.review.customer}"</div>
+				<p class="text-text_4  text-sm line-clamp-7 text-ellipsis">"{props.review.customer}"</p>
+				<Show when={props.review.owner}>
+					<OwnerResponce
+						review={props.review.owner}
+						name={props.name.owner}
+						date={formatDate(props.date.owner)}
+					/>
+				</Show>
 			</div>
-			<Show when={props.review.owner}>
-				<OwnerResponce
-					review={props.review.owner}
-					name={props.name.owner}
-					date={props.date.owner}
-				/>
-			</Show>
-			<span class="flex mx-2 border border-gray-3/70 border-1 rounded-36"></span>
+			<span class="flex mx-2 border border-text_5/40 border-1 rounded-36"></span>
 		</div>
 	)
 }
@@ -901,84 +860,97 @@ export function OwnerResponce(props: { name: string; review: string; date: strin
 	return (
 		<div class="flex flex-col">
 			<div class="flex items-center space-x-2 mb-1 mt-3">
-				<div class="text-blue-600 dark:text-gray-400 text-[10px] lg:text-xs font-bold ">
+				<div class="text-blue-600 text-[10px] lg:text-xs font-bold ">
 					<div class="i-ic-twotone-person-pin text-base" />
 					{props.name}
 				</div>
 
-				<div class="text-gray-500 dark:text-gray-400">|</div>
+				<div class="text-text_4">|</div>
 
-				<div class="text-gray-500 dark:text-gray-400 text-xs ">{props.date}</div>
+				<div class="text-text_4 text-xs ">{props.date}</div>
 			</div>
-			<div class="text-gray-500 dark:text-gray-400 text-sm">"{props.review}"</div>
+			<p class="text-text_4 text-sm">"{props.review}"</p>
 		</div>
 	)
 }
 
-export function ReviewsWide(props: { rating: () => number }) {
+export function ReviewsDisplay(props: { rating: any }) {
+	const [currentPage, setCurrentPage] = createSignal(1)
+	const reviewsPerPage = 5
+
+	const totalReviews = props.rating?.reviews.length
+	const totalPages = Math.ceil(totalReviews / reviewsPerPage)
+
+	const handleNextPage = () => {
+		if (currentPage() >= totalPages) {
+			setCurrentPage(1)
+		} else {
+			setCurrentPage(currentPage() + 1)
+		}
+	}
+
+	const handlePrevPage = () => {
+		if (currentPage() <= 1) {
+			setCurrentPage(totalPages)
+		} else {
+			setCurrentPage(currentPage() - 1)
+		}
+	}
+
 	return (
 		<Show when={true}>
-			<div class={clsx('p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm')}>
+			<div class={clsx('p-4 rounded-lg bg-normal_1 space-y-3 text-sm lg:min-w-80% lg:max-w-80%')}>
+				<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
+					<button
+						onClick={handlePrevPage}
+						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+					>
+						Previous
+					</button>
+					<button
+						onClick={handleNextPage}
+						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+					>
+						Next
+					</button>
+				</div>
 				<div>
 					<div class="lg:grid  lg:grid-cols-2 lg:gap-2 xl:grid-cols-3 xl:gap-4 ">
 						<div class="flex flex-col justify-between">
 							<CustomerOverallReviews rating={props.rating} />
-							<span class="flex mx-2 border border-gray-3 border-1"></span>
+							<span class="flex mx-2 border border-normal_3 border-1"></span>
 						</div>
-						<CustomerIndividualReviews
-							review={{
-								customer:
-									'Stained with ink. I received item opened package and reciept was folded on top of sweatshirt ink faced down. Item didnt come in a bag so freshly printed receipt was laid on top of sweatshirt. Please package these better. now I have to make a trip to the store to return.',
-								owner: 'Sorry about that Shane. We will make sure to package better next time. Thanks for the feedback!'
+
+						<For each={props.rating?.reviews.slice((currentPage() - 1) * reviewsPerPage, currentPage() * reviewsPerPage)}>
+							{(review, index) => {
+								return (
+									<div>
+										<CustomerIndividualReviews
+											review={{ customer: review.user_body, owner: review.owner_body }}
+											rating={review.user_rating}
+											name={{ customer: review.user_name, owner: review.owner_name }}
+											date={{ customer: review.user_date, owner: review.owner_date }}
+											title={review.user_title}
+										/>
+									</div>
+								)
 							}}
-							rating={4}
-							name={{ customer: 'Shane', owner: 'Modern Edge' }}
-							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-							title={'Ink on my order'}
-						/>
-						<CustomerIndividualReviews
-							review={{
-								customer:
-									'I needed a new hoodie and was excited to see dark green color option. Green is my favorite color and it is so hard to find a dark green top anywhere. This hoodie is soft and washed up well. 50 % cotton and 50% polyester. Nice hand size front pocket.',
-								owner: 'Glad you like the color!'
-							}}
-							rating={5}
-							name={{ customer: 'CoffeeDiva62', owner: 'Modern Edge' }}
-							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-							title={'Beautiful Forest Green Hoodie'}
-						/>
-						<CustomerIndividualReviews
-							review={{
-								customer: 'Coach my twins basketball needed hoodie that match their uniform, this one was perfect.',
-								owner: 'I hope they win!'
-							}}
-							rating={5}
-							name={{ customer: 'LADYV40', owner: 'Modern Edge' }}
-							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-							title={'Great Hoodie For The Weather'}
-						/>
-						<CustomerIndividualReviews
-							review={{
-								customer: 'It’s really soft and cute highly recommend',
-								owner: 'Soft is good!'
-							}}
-							rating={5}
-							name={{ customer: 'Abby', owner: 'Modern Edge' }}
-							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-							title={'Great product!'}
-						/>
-						<CustomerIndividualReviews
-							review={{
-								customer:
-									'Quaility is good but color is way off I got a highlighter orange color instead of what I ordered . Didn’t even take hoodie out of package because I’ll be returning asap',
-								owner: 'Sorry about the mixup Bob, we will look into your order and get it fixed. Thanks for the feedback'
-							}}
-							rating={3}
-							name={{ customer: 'Bob', owner: 'Modern Edge' }}
-							date={{ customer: 'July 20, 2021', owner: 'July 22, 2021' }}
-							title={'Color wayyy off'}
-						/>
+						</For>
 					</div>
+				</div>
+				<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
+					<button
+						onClick={handlePrevPage}
+						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+					>
+						Previous
+					</button>
+					<button
+						onClick={handleNextPage}
+						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+					>
+						Next
+					</button>
 				</div>
 			</div>
 		</Show>

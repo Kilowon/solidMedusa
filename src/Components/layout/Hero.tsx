@@ -249,8 +249,8 @@ export function Hero() {
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
-								animate={{ opacity: [0.7, 1], transition: { duration: 0.01 } }}
-								exit={{ opacity: 0.7, transition: { duration: 0.01 } }}
+								animate={{ opacity: [0.7, 1], transition: { duration: 0.25 } }}
+								exit={{ opacity: 0.7, transition: { duration: 0.25 } }}
 							>
 								<Image
 									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}
@@ -277,8 +277,8 @@ export function Hero() {
 						<Rerun on={count()}>
 							<Motion.div
 								initial={{ opacity: 1 }}
-								animate={{ opacity: [0.3, 1], transition: { duration: 0.01 } }}
-								exit={{ opacity: 0, transition: { duration: 0.01 } }}
+								animate={{ opacity: [0.3, 1], transition: { duration: 0.25 } }}
+								exit={{ opacity: 0, transition: { duration: 0.25 } }}
 							>
 								<Image
 									src={heroData?.data?.data?.hero_data?.[currentIndex()]?.image}

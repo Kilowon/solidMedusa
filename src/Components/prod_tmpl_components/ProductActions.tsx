@@ -6,6 +6,7 @@ import { currencyFormat } from '~/lib/helpers/currency'
 import { TransitionGroup } from 'solid-transition-group'
 import toast, { Toaster } from 'solid-toast'
 import { createQuery } from '@tanstack/solid-query'
+import { useGlobalContext } from '~/Context/Providers'
 
 interface CurrentVariant {
 	id: string
@@ -33,9 +34,12 @@ export default function ProductActions(props: {
 	inStock: any
 	variant: any
 	useStore: any
+	params: any
 }): JSX.Element {
 	const { addToCart } = useStore()
 	const { variant } = useStore()
+	const { medusa } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 	const [rating, setRating] = createSignal(3)
@@ -66,6 +70,16 @@ export default function ProductActions(props: {
 		}
 	})
 
+	const queryProduct = createQuery(() => ({
+		queryKey: ['Product-Page', props.params.handle],
+		queryFn: async function () {
+			const product = await medusa?.products.list({ handle: props.params, cart_id: queryCart.data?.cart.id })
+			return product
+		},
+		cacheTime: 25 * 60 * 1000,
+		enabled: !!props.params && !!queryCart?.data?.cart?.id
+	}))
+
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
@@ -79,37 +93,19 @@ export default function ProductActions(props: {
 			const data = await response.json()
 			return data
 		},
-		retry: 0
-	}))
-
-	const reviewMutate = createQuery(() => ({
-		queryKey: ['primary_data'],
-		queryFn: async function () {
-			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const reviewData = {
-				product_id: 'id',
-				user_title: 'Hello world!',
-				user_body: 'This is our first article',
-				user_rating: 5,
-				user_name: 'Shaun'
-			}
-
-			const response = await fetch(`https://direct.shauns.cool/items/Review`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					Authorization: `Bearer ${bearerToken}`
-				},
-				body: JSON.stringify(reviewData)
-			})
-
-			const data = await response.json()
-			return data
-		},
 		retry: 0,
 		enabled: false
 	}))
+
+	createEffect(() => {
+		if (queryProduct.isSuccess) {
+			reviewData.refetch()
+		}
+	})
+
+	createEffect(() => {
+		console.log(queryProduct.data)
+	})
 
 	return (
 		<Show when={props.productInfo && reviewData.isSuccess}>
@@ -133,12 +129,7 @@ export default function ProductActions(props: {
 				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
 						<div class="flex items-center space-x-2">
-							<div
-								class="text-xl"
-								onclick={() => {
-									reviewMutate.refetch()
-								}}
-							>
+							<div class="text-xl">
 								<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
 							</div>
 
@@ -262,10 +253,10 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 									class={clsx(
 										' border text-xs min-h-8 px-1 rounded-sm min-w-12 max-w-fit transition-all duration-200 capitalize',
 										{
-											'border-text_3 text-text_1 bg-normal_1 font-500': isSelected()
+											'border border-2 border-text_3 text-text_1 bg-normal_1 font-700 ': isSelected()
 										},
 										{
-											' text-text_4 bg-surface font-400': !isSelected()
+											'bg-normal_1 text-text_2 font-500': !isSelected()
 										}
 									)}
 								>
@@ -364,11 +355,11 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 										updateOption({ [option.id]: v })
 									}}
 									class={clsx(
-										'text-xs min-h-8 px-1 rounded-sm min-w-12 max-w-fit transition-all duration-200 tracking-tight capitalize',
+										'border text-xs min-h-8 px-1 rounded-sm min-w-12 max-w-fit transition-all duration-200 tracking-tight capitalize',
 										{
-											'border border-1 border-text_3 text-text_1 font-500': isSelected(),
-											'bg-surface text-text_4 line-through font-400': viable() === 'not-viable',
-											'bg-surface text-text_4 font-400 ': viable() === 'could-viable'
+											'border border-2 border-text_2 text-text_2 bg-normal_1 font-700 ': isSelected(),
+											'bg-normal_1 text-text_2 font-700': viable() === 'viable' && !isSelected(),
+											'bg-surface text-text_4 font-400 line-through ': viable() === 'could-viable'
 										}
 									)}
 								>
@@ -427,7 +418,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							class={clsx(
 								'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
 								activeTab().description === 'active' && ' border-text_2 text-text_2 ',
-								activeTab().description === 'inactive' && 'hover:text-text_3 hover:border-text_5'
+								activeTab().description === 'inactive' && 'hover:text-text_3 hover:border-text_5 text-text_3'
 							)}
 							id="description-tab"
 							data-tabs-target="#description"
@@ -446,7 +437,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							}}
 						>
 							<div class="flex flex-col justify-center items-center mb-2 sm:mb-0  ">
-								<div class="i-material-symbols-description-outline text-lg text-text_2 " />
+								<div class="i-material-symbols-description-outline text-lg  " />
 								Description
 							</div>
 						</button>
@@ -458,8 +449,8 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 						<button
 							class={clsx(
 								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-normal_1 lg:bg-normal_2',
-								activeTab().info === 'active' && ' border-text_2 text-text_2',
-								activeTab().info === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
+								activeTab().info === 'active' && ' border-text_2 text-text_2 bg-text_2',
+								activeTab().info === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_3'
 							)}
 							id="info-tab"
 							data-tabs-target="#info"
@@ -477,8 +468,8 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 								}
 							}}
 						>
-							<div class="flex flex-col justify-center items-center ">
-								<div class="i-carbon-product text-lg bg-text_2" />
+							<div class="flex flex-col justify-center items-center  ">
+								<div class="i-carbon-product text-lg" />
 								Product Information
 							</div>
 						</button>
@@ -491,7 +482,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							class={clsx(
 								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-normal_1 lg:bg-normal_2',
 								activeTab().shipping === 'active' && ' border-text_2 text-text_2 ',
-								activeTab().shipping === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
+								activeTab().shipping === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_3'
 							)}
 							id="shipping-tab"
 							data-tabs-target="#shipping"
@@ -509,9 +500,8 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 								}
 							}}
 						>
-							{' '}
-							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ph-truck text-lg text-text_2" />
+							<div class="flex flex-col justify-center items-center">
+								<div class="i-ph-truck text-lg" />
 								Shipping & Returns
 							</div>
 						</button>
@@ -524,7 +514,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							class={clsx(
 								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
 								activeTab().reviews === 'active' && ' border-text_2 text-text_2',
-								activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5'
+								activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_4'
 							)}
 							id="reviews-tab"
 							data-tabs-target="#reviews"
@@ -544,7 +534,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 						>
 							{' '}
 							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ic-baseline-star-rate text-lg text-text_2" />
+								<div class="i-ic-baseline-star-rate text-lg " />
 								Customer Reviews
 							</div>
 						</button>
@@ -575,10 +565,10 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							)}
 						>
 							<div class="space-y-2">
-								<h1 class="tracking-tight  sm:text-lg text-balance">{props.productInfo?.title}</h1>
-								<h2 class="tracking-tight text-text_2 text-balance">{props.productInfo?.subtitle}</h2>
+								<h1 class="tracking-tight  sm:text-lg text-text_2 font-500 text-balance">{props.productInfo?.title}</h1>
+								<h2 class="tracking-tight text-text_3 text-balance font-500">{props.productInfo?.subtitle}</h2>
 							</div>
-							<p class=" mb-3 text-text_2  whitespace-break-spaces ">{props.productInfo.description}</p>
+							<p class=" mb-3 text-text_3  whitespace-break-spaces ">{props.productInfo.description}</p>
 						</div>
 					</Show>
 					<Show when={activeTab().info === 'active'}>
@@ -915,7 +905,7 @@ export function ReviewsDisplay(props: { rating: any }) {
 					</button>
 				</div>
 				<div>
-					<div class="lg:grid  lg:grid-cols-2 lg:gap-2 xl:grid-cols-3 xl:gap-4 ">
+					<div class="lg:grid  lg:grid-cols-2 lg:gap-2 xl:grid-cols-2 xl:gap-4 ">
 						<div class="flex flex-col justify-between">
 							<CustomerOverallReviews rating={props.rating} />
 							<span class="flex mx-2 border border-normal_3 border-1"></span>

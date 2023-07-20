@@ -28,7 +28,8 @@ export default function ProductTemplate(props: {
 			const data = await response.json()
 			return data
 		},
-		retry: 0
+		retry: 0,
+		enabled: false
 	}))
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 	return (
@@ -63,13 +64,14 @@ export default function ProductTemplate(props: {
 									inStock={props.inStock}
 									variant={props.variant}
 									useStore={props.useStore}
+									params={props.params}
 								/>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="hidden lg:flex lg:content-container justify-center">
-					<Show when={reviewData.isSuccess}>
+					<Show when={reviewData.isSuccess && reviewData?.data?.data?.reviews?.length > 0}>
 						<ReviewsDisplay rating={reviewData.data?.data} />
 					</Show>
 				</div>

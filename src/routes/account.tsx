@@ -76,8 +76,36 @@ export default function Account() {
 		enabled: false
 	}))
 
+	const customerMutate = createQuery(() => ({
+		queryKey: ['customer_mutate'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const reviewData = {
+				customer_id: currentCustomer?.data?.customer?.id
+			}
+
+			const response = await fetch(`https://direct.shauns.cool/items/customer`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
+				},
+				body: JSON.stringify(reviewData)
+			})
+
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: false
+	}))
+
 	createEffect(() => {
 		console.log(currentCustomer.isSuccess)
+		if (currentCustomer.isSuccess) {
+			customerMutate.refetch()
+		}
 	})
 
 	const primaryData = createQuery(() => ({
@@ -131,7 +159,7 @@ export default function Account() {
 				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">
 					<Suspense
 						fallback={
-							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-gray-100 text-xl">
+							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-normal_2 text-xl">
 								<div class="flex flex-col items-center">
 									<Image
 										src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
@@ -152,7 +180,7 @@ export default function Account() {
 								class={clsx(
 									'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-2 sm:pt-12 lg:pt-0',
 									side() === 'left' && '',
-									side() === 'right' && 'lg:bg-gray-1 transition-all duration-300'
+									side() === 'right' && 'lg:bg-normal_2 transition-all duration-300'
 								)}
 								onMouseOver={() => {
 									setSide('left')
@@ -168,7 +196,7 @@ export default function Account() {
 							<div
 								class={clsx(
 									'flex lg:h-100svh justify-center items-center lg:w-1/2 pt-12 lg:pt-0',
-									side() === 'left' && 'lg:bg-gray-1 transition-all duration-600',
+									side() === 'left' && 'lg:bg-normal_2 transition-all duration-600',
 									side() === 'right' && ''
 								)}
 								onMouseOver={() => {
@@ -186,11 +214,11 @@ export default function Account() {
 							<div class=" w-full max-h-90svh">
 								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10 mx-1 sm:mx-auto  ">
 									<div class="sm:flex items-center justify-between">
-										<div class="text-xs sm:text-base font-400 text-gray-6 pl-1 sm:pl-0"></div>
+										<div class="text-xs sm:text-base font-400 text-text_2 pl-1 sm:pl-0"></div>
 										<div class="flex justify-between p-1">
-											<div class="text-xs font-500  text-gray-6">Signed in as: {currentCustomer?.data?.customer?.email}</div>
+											<div class="text-xs font-500  text-text_2">Signed in as: {currentCustomer?.data?.customer?.email}</div>
 											<div
-												class="text-xs font-500 sm:ml-4 underline cursor-pointer"
+												class="text-xs font-500 text-text_2 sm:ml-4 underline cursor-pointer"
 												onClick={() => {
 													currentCustomerSignOut.refetch()
 													currentCustomer.refetch()
@@ -201,24 +229,24 @@ export default function Account() {
 										</div>
 									</div>
 									<div class="space-y-3 flex-grow ">
-										<div class="">Account Information</div>
+										<div class="text-sm sm:text-lg text-text_2">Account Information</div>
 										<ProductInformationTabs currentCustomer={currentCustomer?.data?.customer} />
 									</div>
 									<div class="mt-auto flex-shrink">
 										<div class="space-y-3">
 											<div>
 												<div class="flex items-center space-x-3 ">
-													<div class="i-wpf-faq w-6 h-6 text-gray-7" />
-													<div class="text-lg">Questions? </div>
+													<div class="i-wpf-faq h-4 w-4 sm:w-6 sm:h-6 text-text_2" />
+													<div class="text-sm lg:text-lg">Questions? </div>
 												</div>
-												<div class="text-sm">Please visit out FAQ section for more information</div>
+												<div class="text-xs lg:text-sm">Please visit out FAQ section for more information</div>
 											</div>
 											<div>
 												<div class="flex items-center space-x-3">
-													<div class="i-mdi-email-edit-outline w-6 h-6 text-gray-7" />
-													<div class="text-lg">Something wrong? </div>
+													<div class="i-mdi-email-edit-outline h-4 w-4 sm:w-6 sm:h-6 text-text_2" />
+													<div class="text-sm lg:text-lg">Something wrong? </div>
 												</div>
-												<div class="text-sm">
+												<div class="text-xs lg:text-sm">
 													If you spotted something wrong with your order please contact us support@modernedge.com
 												</div>
 											</div>
@@ -287,8 +315,8 @@ export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 
 export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-1 rounded-sm bg-gray-50 dark:bg-gray-800">
-			<p class=" mb-3 text-gray-500 dark:text-gray-400">
+		<div class="p-1 rounded-sm bg-gray-50 ">
+			<p class=" mb-3 text-text_2">
 				<Show when={props.currentCustomer?.orders}>
 					<div class="my-2 font-500 text-xs sm:text-sm">Recent orders</div>
 					<ul class="space-y-4 ">
@@ -297,7 +325,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 								return (
 									<li>
 										<div
-											class="flex sm:flex-row justify-between cursor-pointer p-1.5 rounded-sm hover:bg-gray-6/5"
+											class="flex sm:flex-row justify-between cursor-pointer p-1.5 rounded-sm hover:bg-text_2/5"
 											onClick={() => {}}
 										>
 											<div>
@@ -320,12 +348,12 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 													<div
 														class={clsx(
 															'flex items-center ',
-															order.payment_status === 'not_paid' && 'text-red-500',
-															order.payment_status === 'awaiting' && 'text-gray-500',
-															order.payment_status === 'captured' && 'text-green-500',
+															order.payment_status === 'not_paid' && 'text-accent_3',
+															order.payment_status === 'awaiting' && 'text-text_4',
+															order.payment_status === 'captured' && 'text-accent_2',
 															order.payment_status === 'partially_refunded' && 'text-yellow-500',
-															order.payment_status === 'refunded' && 'text-red-500',
-															order.payment_status === 'canceled' && 'text-red-500',
+															order.payment_status === 'refunded' && 'text-accent_3',
+															order.payment_status === 'canceled' && 'text-accent_3',
 															order.payment_status === 'requires_action' && 'text-yellow-500'
 														)}
 													>
@@ -343,14 +371,14 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 														<div
 															class={clsx(
 																'text-sm flex items-center',
-																order.fulfillment_status === 'not_fulfilled' && 'text-gray-500',
+																order.fulfillment_status === 'not_fulfilled' && 'text-text_4',
 																order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
-																order.fulfillment_status === 'fulfilled' && 'text-blue-400',
+																order.fulfillment_status === 'fulfilled' && 'text-accent_6',
 																order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
-																order.fulfillment_status === 'shipped' && 'text-green-500',
+																order.fulfillment_status === 'shipped' && 'text-accent_2',
 																order.fulfillment_status === 'partially_returned' && 'text-yellow-500',
-																order.fulfillment_status === 'returned' && 'text-red-500',
-																order.fulfillment_status === 'canceled' && 'text-red-500',
+																order.fulfillment_status === 'returned' && 'text-accent_3',
+																order.fulfillment_status === 'canceled' && 'text-accent_3',
 																order.fulfillment_status === 'requires_action' && 'text-yellow-500'
 															)}
 														>
@@ -367,7 +395,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 												<div class="text-sm">{order.items.length}</div>
 											</div>
 										</div>
-										<hr class="border-gray-400/40 my-2 mx-6" />
+										<hr class="border-text_3/40 my-2 mx-6" />
 									</li>
 								)
 							}}
@@ -384,7 +412,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 
 export function ProfileActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6">
+		<div class="p-4 rounded-lg bg-gray-50  space-y-6">
 			<div>Profile Active Tab</div>
 		</div>
 	)
@@ -392,12 +420,12 @@ export function ProfileActiveTab(props: { currentCustomer: Customer }) {
 
 export function OrdersActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm">
+		<div class="p-4 rounded-lg bg-gray-50  space-y-6 text-sm">
 			<div>
-				<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+				<div class="text-text_2 flex space-x-2">
 					<div>Orders</div>
 				</div>
-				<div class="text-gray-600 dark:text-gray-300">Order 1</div>
+				<div class="text-text_200 ">Order 1</div>
 			</div>
 		</div>
 	)
@@ -415,7 +443,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 		setVariantId(Array.from(variantIds).join(','))
 	}
 
-	const currentCustomerSignOut = createQuery(() => ({
+	const currentProductId = createQuery(() => ({
 		queryKey: ['product_review_id', reviewVariant()],
 		queryFn: async function () {
 			const medusaURL = import.meta.env.VITE_PUBLIC_MEDUSA_BACKEND_URL
@@ -436,28 +464,139 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 		retry: 0,
 		enabled: false
 	}))
+
+	function formatDate(date: any) {
+		const now = new Date()
+		const then = new Date(date)
+		const diffInYears = now.getFullYear() - then.getFullYear()
+		const diffInMonths = now.getMonth() - then.getMonth() + 12 * diffInYears
+		//@ts-ignore
+		const diffInDays = Math.floor((now - then) / (1000 * 60 * 60 * 24))
+
+		if (diffInYears > 1) {
+			return `${diffInYears} years ago`
+		} else if (diffInMonths > 1) {
+			return `${diffInMonths} months ago`
+		} else if (diffInDays > 1) {
+			return `${diffInDays} days ago`
+		} else {
+			return 'today'
+		}
+	}
+
+	let variantIdsAndImages = new Set()
+
 	return (
-		<div class="sm:p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-3 text-sm">
+		<div class="sm:p-4 rounded-lg bg-gray-50  space-y-3 text-sm">
 			<Show when={props.currentCustomer?.orders}>
-				<div>Items that need a review:</div>
+				<div class="text-sm sm:text-lg text-text_2">Items that need a review:</div>
 				<ul class="space-y-2">
 					<For each={props.currentCustomer?.orders}>
 						{(order: any) => {
 							if (order?.fulfillment_status !== 'shipped') return
+
 							return (
 								<li>
 									<For each={order.items}>
 										{(item: any) => {
-											if (variantId() === item.variant_id) return
+											let idAndImage = item.variant_id + item.image
+											if (variantIdsAndImages.has(idAndImage)) return
+											variantIdsAndImages.add(idAndImage)
 
 											variantIds.add(item.variant_id)
 											handleVariantIdChange({ target: { value: item.variant_id } })
 
 											const [open, setOpen] = createSignal(false)
+											const [userName, setUserName] = createSignal('')
+											const [title, setTitle] = createSignal('')
+											const [body, setBody] = createSignal('')
+											const [rating, setRating] = createSignal(0)
+											const [errorMessage, setErrorMessage] = createSignal('')
+											const [productId, setProductId] = createSignal({ id: '', name: '' })
+
+											const handleRating = (value: any) => {
+												setRating(value)
+											}
+
+											const handleSubmit = (e: any) => {
+												e.preventDefault()
+												if (!userName() || !title() || !body() || rating() === 0) {
+													setErrorMessage('Please complete the form before submitting.')
+												} else {
+													setErrorMessage('')
+													// Handle form submission here
+													reviewMutate.refetch()
+													setOpen(false)
+												}
+											}
+
+											createEffect(() => {
+												console.log('CUR', currentProductId?.data?.variant.product_id)
+											})
+											createEffect(() => {
+												console.log('PROD', productId().id, productId().name)
+											})
+
+											const reviewMutate = createQuery(() => ({
+												queryKey: ['review_mutate'],
+												queryFn: async function () {
+													const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+													const reviewData = {
+														product_id: productId().id,
+														customer_id: props.currentCustomer?.id,
+														user_title: title(),
+														user_body: body(),
+														user_rating: rating(),
+														user_name: userName()
+													}
+
+													const response = await fetch(`https://direct.shauns.cool/items/main_review`, {
+														method: 'POST',
+														headers: {
+															'Content-Type': 'application/json',
+															Accept: 'application/json',
+															Authorization: `Bearer ${bearerToken}`
+														},
+														body: JSON.stringify(reviewData)
+													})
+
+													const data = await response.json()
+													return data
+												},
+												retry: 0,
+												enabled: false
+											}))
+
+											const productMutate = createQuery(() => ({
+												queryKey: ['product_mutate'],
+												queryFn: async function () {
+													const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+													const reviewData = {
+														product_id: productId().id,
+														product_name: productId().name
+													}
+
+													const response = await fetch(`https://direct.shauns.cool/items/product`, {
+														method: 'POST',
+														headers: {
+															'Content-Type': 'application/json',
+															Accept: 'application/json',
+															Authorization: `Bearer ${bearerToken}`
+														},
+														body: JSON.stringify(reviewData)
+													})
+
+													const data = await response.json()
+													return data
+												},
+												retry: 0,
+												enabled: false
+											}))
+
 											return (
 												<div class="flex items-center justify-center">
 													<div
-														class="grid grid-cols-6 sm:grid-cols-9 space-x-1 text-sm font-500 text-gray-500 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
+														class="grid grid-cols-6 sm:grid-cols-9 space-x-1 text-sm font-500 text-text_2 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
 														tabindex="0" // add tabindex attribute to make the div focusable
 													>
 														<Image
@@ -479,12 +618,12 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 																setOpen(open => !open)
 																setReviewVariant(item.variant_id)
 																setTimeout(() => {
-																	currentCustomerSignOut.refetch()
+																	currentProductId.refetch()
 																}, 250)
 															}}
 															tabindex="0"
 														>
-															<div class="flex items-center space-x-1">
+															<div class="flex items-center space-x-1 text-accent_6">
 																<div class="i-ic-outline-rate-review w-5 h-5" />
 																<div>Review</div>
 															</div>
@@ -497,18 +636,23 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 															open={open()}
 															id="dialog"
 															aria-hidden="true"
-															class="fixed top-0 left-0 right-0 z-50  overflow-x-hidden overflow-y-auto md:inset-0"
-															style="backdrop-filter: blur(50px)"
+															class="fixed top-0 left-0 right-0 z-50  overflow-x-hidden overflow-y-auto md:inset-0 bg-transparent"
 														>
-															<div class="relative w-full max-w-2xl max-h-full">
+															<div class="relative sm:w-full md:max-w-2xl md:max-h-full bg-transparent">
 																{/*  <!-- Modal content --> */}
-																<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+																<div class="relative bg-normal_2 rounded-lg shadow border-1 border-surface ">
 																	{/*  <!-- Modal header --> */}
-																	<div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-																		<h3 class="text-xl font-semibold text-gray-900 dark:text-white">Review</h3>
+
+																	<div class="flex items-start justify-between p-4 border-b rounded-t ">
+																		<div class="flex flex-col">
+																			<h3 class="text-base md:text-xl font-semibold text-text_2 tracking-tighter text-balance ">
+																				{item.title}
+																			</h3>
+																			<h4 class="text-xs text-text_2">purchased {formatDate(item.created_at)}</h4>
+																		</div>
 																		<button
 																			type="button"
-																			class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+																			class="text-text_3 bg-transparent hover:bg-gray-200 hover:text-text_1 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
 																			data-modal-hide="defaultModal"
 																			onClick={() => {
 																				setOpen(open => !open)
@@ -531,30 +675,81 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 																		</button>
 																	</div>
 																	{/*  <!-- Modal body --> */}
-																	<div class="p-6 space-y-6">
-																		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-																			With less than a month to go before the European Union enacts new consumer privacy laws for its
-																			citizens, companies around the world are updating their terms of service agreements to comply.
-																		</p>
-																		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-																			The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is
-																			meant to ensure a common set of data rights in the European Union. It requires organizations to
-																			notify users as soon as possible of high-risk data breaches that could personally affect them.
-																		</p>
+																	<div class="p-6 space-y-6 flex flex-col bg-normal_2">
+																		<form
+																			onSubmit={handleSubmit}
+																			class="min-w-80vw sm:min-w-50vw lg:min-w-40vw xl:min-w-30vw"
+																		>
+																			<div class="p-6 space-y-6 flex flex-col">
+																				<p class="text-base leading-relaxed text-text_2 font-500">Review</p>
+																				<Show when={errorMessage()}>
+																					<div class="text-accent_3 text-xs">{errorMessage()}</div>
+																				</Show>
+																				<div>
+																					{[1, 2, 3, 4, 5].map(star => (
+																						<button
+																							class="w-5 h-5 bg-transparent text-text_4"
+																							type="button"
+																							onClick={() => {
+																								handleRating(star)
+																								setProductId({
+																									...productId(),
+																									id: currentProductId?.data?.variant.product_id,
+																									name: currentProductId?.data?.variant?.product?.title
+																								})
+																								productMutate.refetch()
+																							}}
+																						>
+																							{star <= rating() ? (
+																								<div class="i-material-symbols-star w-5 h-5 text-amber-6" />
+																							) : (
+																								<div class="i-material-symbols-star-outline w-5 h-5" />
+																							)}
+																						</button>
+																					))}
+																				</div>
+																				<input
+																					type="text"
+																					value={userName()}
+																					onInput={e => setUserName(e.target.value)}
+																					placeholder="User Name"
+																					class="w-full min-h-2rem border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																				/>
+																				<input
+																					type="text"
+																					value={title()}
+																					onInput={e => setTitle(e.target.value)}
+																					placeholder="Title"
+																					class="w-full min-h-2rem border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																				/>
+																				<textarea
+																					value={body()}
+																					onInput={e => setBody(e.target.value)}
+																					placeholder="Body Text"
+																					class="w-full h-full min-h-10rem resize-y border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																				/>
+																			</div>
+																		</form>
 																	</div>
 																	{/*  <!-- Modal footer --> */}
-																	<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+																	<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b ">
 																		<button
 																			data-modal-hide="defaultModal"
 																			type="button"
-																			class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+																			class="text-normal_1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+																			onClick={e => {
+																				handleSubmit(e)
+																			}}
 																		>
-																			I accept
+																			Accept
 																		</button>
 																		<button
 																			data-modal-hide="defaultModal"
 																			type="button"
-																			class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+																			class="text-text_2 bg-normal_1 hover:bg-normal_2 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-text_1 focus:z-10"
+																			onClick={() => {
+																				setOpen(open => !open)
+																			}}
 																		>
 																			Cancel
 																		</button>
@@ -579,12 +774,12 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 
 export function WishListActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-6 text-sm">
+		<div class="p-4 rounded-lg bg-normal_2  space-y-6 text-sm">
 			<div>
-				<div class="text-gray-500 dark:text-gray-400 flex space-x-2">
+				<div class="text-text_2 flex space-x-2">
 					<div>Orders</div>
 				</div>
-				<div class="text-gray-600 dark:text-gray-300">Order 1</div>
+				<div class="text-text_200 ">Order 1</div>
 			</div>
 		</div>
 	)

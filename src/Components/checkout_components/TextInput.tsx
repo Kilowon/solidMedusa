@@ -36,7 +36,7 @@ export function TextInput(props: TextInputProps) {
 	)
 
 	return (
-		<div class={clsx(!props.padding && 'px-2 ', props.class)}>
+		<div class={clsx(!props.padding && 'px-2', props.class)}>
 			<InputLabel
 				name={props.name}
 				description={props.description}

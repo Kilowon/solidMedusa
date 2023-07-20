@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 	return (
-		<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+		<div class="mb-4 border-b border-normal_3 ">
 			<ul
 				class="flex -mb-px text-xs lg:text-base font-medium text-center space-x-0.25 md:space-x-4 lg:space-x-6 "
 				id="myTab"
@@ -15,10 +15,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 				>
 					<button
 						class={clsx(
-							'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-							props.activeTab().overview === 'active' &&
-								' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-							props.activeTab().overview === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							'inline-block p-1 lg:p-3 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-normal_1 md:bg-normal_2',
+							props.activeTab().overview === 'active' && ' border-text_2 text-text_2  ',
+							props.activeTab().overview === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 						)}
 						id="description-tab"
 						data-tabs-target="#description"
@@ -49,7 +48,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						}}
 					>
 						<div class="flex flex-col lg:flex-row justify-center items-center">
-							<div class="i-fluent-clipboard-text-ltr-24-regular sm:text-lg text-gray-6 lg:mr-2 " />
+							<div class="i-fluent-clipboard-text-ltr-24-regular sm:text-lg text-text_2 lg:mr-2 " />
 							<div class="text-0.65rem sm:text-base">Overview</div>
 						</div>
 					</button>
@@ -60,10 +59,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 				>
 					<button
 						class={clsx(
-							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33 bg-white md:bg-gray-1',
-							props.activeTab().profile === 'active' &&
-								' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-							props.activeTab().profile === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-33 bg-normal_1 md:bg-normal_2',
+							props.activeTab().profile === 'active' && ' border-text_2 text-text_2  ',
+							props.activeTab().profile === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 						)}
 						id="profile-tab"
 						data-tabs-target="#profile"
@@ -94,7 +92,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						}}
 					>
 						<div class="flex flex-col lg:flex-row justify-center items-center ">
-							<div class="i-vaadin-clipboard-user sm:text-lg bg-gray-6 lg:mr-2" />
+							<div class="i-vaadin-clipboard-user sm:text-lg bg-text_2 lg:mr-2" />
 							<div class="text-0.65rem sm:text-base">Profile</div>
 						</div>
 					</button>
@@ -105,10 +103,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 				>
 					<button
 						class={clsx(
-							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-							props.activeTab().orders === 'active' &&
-								' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-							props.activeTab().orders === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-normal_1 md:bg-normal_2',
+							props.activeTab().orders === 'active' && ' border-text_2 text-text_2  ',
+							props.activeTab().orders === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 						)}
 						id="orders-tab"
 						data-tabs-target="#orders"
@@ -140,7 +137,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 					>
 						{' '}
 						<div class="flex flex-col lg:flex-row justify-center items-center ">
-							<div class="i-ph-truck sm:text-lg text-gray-6 lg:mr-2" />
+							<div class="i-ph-truck sm:text-lg text-text_2 lg:mr-2" />
 							<div class="text-0.65rem sm:text-base">Orders</div>
 						</div>
 					</button>
@@ -151,10 +148,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 				>
 					<button
 						class={clsx(
-							'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-							props.activeTab().reviews === 'active' &&
-								' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-							props.activeTab().reviews === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							'inline-block p-1 border-b-2 rounded-t-lg  h-full  w-18 sm:w-25 lg:w-31 bg-normal_1 md:bg-normal_2',
+							props.activeTab().reviews === 'active' && ' border-text_2 text-text_2  ',
+							props.activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 						)}
 						id="reviews-tab"
 						data-tabs-target="#reviews"
@@ -185,7 +181,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						}}
 					>
 						<div class="flex flex-col lg:flex-row sm:space-x-1  lg:flex-row justify-center items-center">
-							<div class="i-ic-baseline-star-rate sm:text-lg text-gray-6 lg:mr-2" />
+							<div class="i-ic-baseline-star-rate sm:text-lg text-text_2 lg:mr-2" />
 							<div class="text-0.65rem sm:text-base">Reviews</div>
 						</div>
 					</button>
@@ -196,10 +192,9 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 				>
 					<button
 						class={clsx(
-							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-white md:bg-gray-1',
-							props.activeTab().wishlist === 'active' &&
-								' border-gray-600 text-gray-600 dark:border-gray-300 dark:text-gray-300',
-							props.activeTab().wishlist === 'inactive' && 'hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+							'inline-block p-1 border-b-2 rounded-t-lg h-full w-18 sm:w-25 lg:w-31 bg-normal_1 md:bg-normal_2',
+							props.activeTab().wishlist === 'active' && ' border-text_2 text-text_2  ',
+							props.activeTab().wishlist === 'inactive' && 'hover:text-text_2 hover:border-text_5 '
 						)}
 						id="wishlist-tab"
 						data-tabs-target="#wishlist"
@@ -231,7 +226,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 					>
 						{' '}
 						<div class="flex flex-col lg:flex-row sm:space-x-1  justify-center items-center">
-							<div class="i-fa6-regular-thumbs-up sm:sm:text-lg text-gray-6 lg:mr-2" />
+							<div class="i-fa6-regular-thumbs-up sm:sm:text-lg text-text_2 lg:mr-2" />
 							<div class="text-0.65rem sm:text-base">Wish List</div>
 						</div>
 					</button>

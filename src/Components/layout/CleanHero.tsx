@@ -150,14 +150,19 @@ export function CleanHero() {
 								class="  flex flex-col items-center"
 								href={heroData?.data?.data?.hero_info[currentIndex()].image_href}
 							>
-								<img
-									src={heroData?.data?.data?.hero_info[currentIndex()].image}
-									class="hidden lg:flex   w-[1210px] h-[765px]  object-cover object-left overflow-visible"
-								/>
-								<img
-									src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-									class="lg:hidden w-[754px] h-[396px] object-cover object-left "
-								/>
+								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
+									<img
+										src={heroData?.data?.data?.hero_info[currentIndex()].image}
+										class="w-[1210px] h-[765px]  object-cover object-left overflow-visible"
+									/>
+								</Show>
+								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
+									<img
+										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
+										class="w-[754px] h-[396px] object-cover object-left "
+									/>
+								</Show>
+
 								<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
 									{heroData?.data?.data?.hero_info[currentIndex()].image_tagline}
 								</div>

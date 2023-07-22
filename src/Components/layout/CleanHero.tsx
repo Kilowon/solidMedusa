@@ -94,8 +94,8 @@ export function CleanHero() {
 		"
 						>
 							<div class="flex flex-col justify-center  ">
-								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:ml-20 space-y-12 ">
-									<div class="flex flex-col space-y-3 items-center justify-center h-[177px]  sm:h-auto  mx-6 md:mx-auto">
+								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:ml-20 lg:space-y-12 ">
+									<div class="flex flex-col space-y-3 items-center justify-center  sm:h-auto  mx-6 md:mx-auto">
 										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
 											{heroData?.data?.data?.hero_info[currentIndex()].header}
 										</h1>
@@ -171,7 +171,7 @@ export function CleanHero() {
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										class="aspect-[377/198]  min-h-301px object-cover object-left "
+										class="w-[754px] h-[396px] aspect-[377/198]  min-h-301px object-cover object-left "
 									/>
 								</Show>
 

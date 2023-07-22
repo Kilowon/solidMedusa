@@ -79,22 +79,6 @@ export function CleanHero() {
 
 	return (
 		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess}>
-			<div class="flex space-x-2 bottom-10 left-10 absolute">
-				<For each={heroData?.data?.data?.hero_info}>
-					{(item, index) => {
-						return (
-							<div>
-								<Show when={index() === currentIndex()}>
-									<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
-								</Show>
-								<Show when={index() !== currentIndex()}>
-									<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
-								</Show>
-							</div>
-						)
-					}}
-				</For>
-			</div>
 			<Presence
 				exitBeforeEnter={true}
 				initial={false}
@@ -106,16 +90,16 @@ export function CleanHero() {
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
 					>
 						<div
-							class="h-[100svh] lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
+							class="sm:h-[100svh] lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
 		"
 						>
 							<div class="flex flex-col justify-center  ">
-								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:items-start lg:ml-20 space-y-12 ">
-									<div class="flex flex-col space-y-3 items-center justify-center h-[177px]  sm:h-auto lg:justify-start lg:items-start mx-6 md:mx-auto ">
-										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance ">
+								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:ml-20 space-y-12 ">
+									<div class="flex flex-col space-y-3 items-center justify-center h-[177px]  sm:h-auto  mx-6 md:mx-auto">
+										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
 											{heroData?.data?.data?.hero_info[currentIndex()].header}
 										</h1>
-										<h3 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  ">
+										<h3 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
 											{heroData?.data?.data?.hero_info[currentIndex()].subtitle}
 										</h3>
 									</div>
@@ -127,10 +111,24 @@ export function CleanHero() {
 										>
 											{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
 										</A>
-										{/* <div class="text-xl md:text-5xl">
-                            Orange & Plush living on the edge never looked this good :)
-								<div class="i-material-symbols-arrow-right-alt-rounded" />
-							</div> */}
+									</div>
+									<div class="flex space-x-2">
+										<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
+											<For each={heroData?.data?.data?.hero_info}>
+												{(item, index) => {
+													return (
+														<div>
+															<Show when={index() === currentIndex()}>
+																<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
+															</Show>
+															<Show when={index() !== currentIndex()}>
+																<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
+															</Show>
+														</div>
+													)
+												}}
+											</For>
+										</Show>
 									</div>
 								</div>
 							</div>
@@ -141,10 +139,24 @@ export function CleanHero() {
 								>
 									{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
 								</A>
-								{/* <div class="text-xl md:text-5xl">
-                            Orange & Plush living on the edge never looked this good :)
-								<div class="i-material-symbols-arrow-right-alt-rounded" />
-							</div> */}
+							</div>
+							<div class="flex space-x-2">
+								<Show when={getWindowSize().width < 1023 && heroData.isSuccess}>
+									<For each={heroData?.data?.data?.hero_info}>
+										{(item, index) => {
+											return (
+												<div>
+													<Show when={index() === currentIndex()}>
+														<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
+													</Show>
+													<Show when={index() !== currentIndex()}>
+														<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
+													</Show>
+												</div>
+											)
+										}}
+									</For>
+								</Show>
 							</div>
 							<A
 								class="  flex flex-col items-center"

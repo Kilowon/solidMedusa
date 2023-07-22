@@ -5,7 +5,7 @@ import clsx from 'clsx'
 
 export function FlexCategories(props: any) {
 	return (
-		<div class="flex flex-col  mb-16 ">
+		<div class="flex flex-col  mb-4 lg:mb-14">
 			<span class="text-xs md:text-base text-gray-600 mb-6">Shop By Category</span>
 			<div class=" flex flex-row text-sm lg:text-2xl text-gray-900 ">
 				<Show when={props.parentCategories()}>

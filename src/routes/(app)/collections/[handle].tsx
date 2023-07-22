@@ -82,8 +82,8 @@ export default function Collection() {
 			>
 				<div class="mx-1 sm:mx-auto sm:content-container ">
 					<Show when={queryCollection?.data?.products}>
-						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 my-20">
-							<li class="col-span-2 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16 sm:my-20">
+							<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
 								<div class="space-y-1">
 									<h2 class=" text-xs   xl:text-base font-500   text-text_2 tracking-tighter text-balance">
 										{currentCollection()?.metadata?.sub_title_top}

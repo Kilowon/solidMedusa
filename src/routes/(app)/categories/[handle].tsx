@@ -116,7 +116,7 @@ export default function Categories() {
 		<main class="min-h-[100vh]">
 			<Show
 				when={currentCategory()}
-				fallback={<div></div>}
+				
 			>
 				<Title>{currentCategory?.()[0]?.name}</Title>
 				<Meta
@@ -128,7 +128,7 @@ export default function Categories() {
 					content={currentCategory?.()[0]?.name}
 				/>
 
-				<div class="pt-4 lg:py-12 ">
+				<div class="pt-1 lg:py-12 ">
 					<Show when={parentCategories() && currentCategory()}>
 						<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 antialiased  ">
 							<FlexCategories
@@ -137,7 +137,7 @@ export default function Categories() {
 							/>
 
 							<Show when={queryCategoryProducts.isSuccess}>
-								<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-x-4 gap-y-16">
+								<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
 									<For each={queryCategoryProducts.data?.products}>
 										{(product: any, index) => {
 											let el: HTMLLIElement | undefined

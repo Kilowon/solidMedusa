@@ -1,4 +1,4 @@
-import { Show, For, createSignal, onMount } from 'solid-js'
+import { Show, For, createSignal, onMount, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
@@ -49,6 +49,7 @@ export function CleanHero() {
 	const [totalLength, setTotalLength] = createSignal(0)
 
 	function heroCarousel() {
+		if (!heroData?.data?.data?.slides_active) return
 		let interval: any
 		const startInterval = () => {
 			interval = setInterval(() => {
@@ -64,71 +65,107 @@ export function CleanHero() {
 	}
 
 	onMount(async () => {
-		const data = await heroData.data
-
-		if (data) {
-			setTime(heroData?.data?.data?.pause_between)
-			setEndWait(heroData?.data?.data?.init_hold)
-			setTotalLength(heroData?.data?.data?.hero_data?.length)
+		if (heroData.isSuccess) {
+			setTime(heroData?.data?.data?.pause_between * 1000)
+			setEndWait(heroData?.data?.data?.init_hold * 1000)
+			setTotalLength(heroData?.data?.data?.slides_active ? heroData?.data?.data?.hero_info?.length : 0)
 			heroCarousel()
 		}
 	})
 
+	createEffect(() => {
+		console.log('currentIndex', currentIndex())
+	})
+
 	return (
 		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess}>
-			<div
-				class="h-[100svh] w-full items-center justify-between flex relative overflow-hidden
-		"
+			<div class="flex space-x-2 bottom-10 left-10 absolute">
+				<For each={heroData?.data?.data?.hero_info}>
+					{(item, index) => {
+						return (
+							<div>
+								<Show when={index() === currentIndex()}>
+									<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
+								</Show>
+								<Show when={index() !== currentIndex()}>
+									<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
+								</Show>
+							</div>
+						)
+					}}
+				</For>
+			</div>
+			<Presence
+				exitBeforeEnter={true}
+				initial={false}
 			>
-				<div class="flex flex-col justify-center">
-					<div class="text-text_2 z-10 flex flex-col items-start max-w-[600px] ml-20 space-y-12 ">
-						<div class="flex flex-col space-y-3 ">
-							<h1 class="flex-grow tracking-tighter text-7xl drop-shadow-md   font-700 z-2 ">
-								{heroData?.data?.data?.hero_info[0].header}
-							</h1>
-							<h3 class="flex-grow tracking-tighter sm:text-4xl drop-shadow-md  font-500 z-2  break-words whitespace-break-spaces">
-								{heroData?.data?.data?.hero_info[0].subtitle}
-							</h3>
-						</div>
+				<Rerun on={count()}>
+					<Motion.div
+						onPressStart={() => false}
+						animate={{ opacity: [1, 0, 1], transition: { duration: 1.0 } }}
+						exit={{ opacity: 0, transition: { duration: 0.5 } }}
+					>
+						<div
+							class="h-[100vh] sm:mt-20 lg:mb-auto lg:mt-auto w-full  flex items-center justify-center  lg:justify-between flex-col lg:flex-row  
+		"
+						>
+							<div class="flex flex-col justify-center  ">
+								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:items-start lg:ml-20 space-y-12 ">
+									<div class="flex flex-col space-y-3 items-center justify-center h-[177px]  sm:h-auto lg:justify-start lg:items-start mx-6 md:mx-auto ">
+										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance ">
+											{heroData?.data?.data?.hero_info[currentIndex()].header}
+										</h1>
+										<h3 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  ">
+											{heroData?.data?.data?.hero_info[currentIndex()].subtitle}
+										</h3>
+									</div>
 
-						<div class="flex items-center hover:underline bg-text_2 text-normal_1 p-2  rounded-1">
-							<A
-								href="/store/Store"
-								class="text- z-2 tracking-tight"
-							>
-								{heroData?.data?.data?.hero_info[0].call_to_action}
-							</A>
-							{/* <div class="text-xl md:text-5xl">
+									<div class="hidden lg:flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-normal_1 p-2  rounded-1">
+										<A
+											href="/store/Store"
+											class="text- z-2 tracking-tight"
+										>
+											{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
+										</A>
+										{/* <div class="text-xl md:text-5xl">
                             Orange & Plush living on the edge never looked this good :)
 								<div class="i-material-symbols-arrow-right-alt-rounded" />
 							</div> */}
-						</div>
-					</div>
-
-					<div class="absolute bottom-4 left-4 flex space-x-2">
-						<For each={heroData?.data?.data?.hero_info}>
-							{(item, index) => {
-								return (
-									<div>
-										<Show when={index() === currentIndex()}>
-											<div class="w-1.5 h-1.5 rounded-6 bg-acces" />
-										</Show>
-										<Show when={index() !== currentIndex()}>
-											<div class="w-1.5 h-1.5 rounded-6 bg-gray-3/30" />
-										</Show>
 									</div>
-								)
-							}}
-						</For>
-					</div>
-				</div>
-				<div class=" w-[1193px] h-[841px]">
-					<img
-						src={heroData?.data?.data?.hero_info[0].image}
-						class="w-full h-full object-cover"
-					/>
-				</div>
-			</div>
+								</div>
+							</div>
+							<div class=" flex lg:hidden items-center justify-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-normal_1 p-2  rounded-1 m-3">
+								<A
+									href={heroData?.data?.data?.hero_info[currentIndex()].call_to_action_href}
+									class="text- z-2 tracking-tight"
+								>
+									{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
+								</A>
+								{/* <div class="text-xl md:text-5xl">
+                            Orange & Plush living on the edge never looked this good :)
+								<div class="i-material-symbols-arrow-right-alt-rounded" />
+							</div> */}
+							</div>
+							<A
+								class="  flex flex-col items-center"
+								href={heroData?.data?.data?.hero_info[currentIndex()].image_href}
+							>
+								<img
+									src={heroData?.data?.data?.hero_info[currentIndex()].image}
+									class="hidden lg:flex   w-[1210px] h-[765px]  object-cover object-left overflow-visible"
+								/>
+								<img
+									src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
+									class="lg:hidden w-[754px] h-[396px] object-cover object-left "
+								/>
+								<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
+									{heroData?.data?.data?.hero_info[currentIndex()].image_tagline}
+								</div>
+							</A>
+						</div>
+					</Motion.div>
+				</Rerun>
+			</Presence>
 		</Show>
 	)
 }

@@ -106,7 +106,7 @@ export function CleanHero() {
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
 					>
 						<div
-							class="h-[100svh] sm:mt-20 lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
+							class="h-[100svh] lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
 		"
 						>
 							<div class="flex flex-col justify-center  ">
@@ -153,13 +153,13 @@ export function CleanHero() {
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].image}
-										class="w-[1210px] h-[765px]  object-cover object-left overflow-visible"
+										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left overflow-visible"
 									/>
 								</Show>
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										class="w-[754px] h-[396px] object-cover object-left "
+										class="aspect-[377/198] min-h-300px object-cover object-left "
 									/>
 								</Show>
 

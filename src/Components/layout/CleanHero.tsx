@@ -159,7 +159,7 @@ export function CleanHero() {
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										class="aspect-[377/198] min-h-300px object-cover object-left "
+										class="aspect-[377/198]  min-h-301px object-cover object-left "
 									/>
 								</Show>
 

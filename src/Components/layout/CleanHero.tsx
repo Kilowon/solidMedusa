@@ -171,7 +171,7 @@ export function CleanHero() {
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										class="w-[754px] h-[396px] aspect-[377/198]  min-h-301px object-cover object-left "
+										class="w-[754px] h-[340px] aspect-[377/198]  min-h-301px object-cover object-left "
 									/>
 								</Show>
 

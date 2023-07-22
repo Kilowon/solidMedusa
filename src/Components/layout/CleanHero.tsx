@@ -106,7 +106,7 @@ export function CleanHero() {
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
 					>
 						<div
-							class="h-[100vh] sm:mt-20 lg:mb-auto lg:mt-auto w-full  flex items-center justify-center  lg:justify-between flex-col lg:flex-row  
+							class="h-[100svh] sm:mt-20 lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
 		"
 						>
 							<div class="flex flex-col justify-center  ">

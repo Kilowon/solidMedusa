@@ -27,11 +27,11 @@ export default function Home() {
 		enabled: false
 	}))
 
-	const heroData = createQuery(() => ({
+	/* const heroData = createQuery(() => ({
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+			const response = await fetch(`https://direct.shauns.cool/items/main_hero`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function Home() {
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
 		enabled: false
-	}))
+	})) */
 
 	function hexToRgb(hex: any) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
@@ -87,10 +87,9 @@ export default function Home() {
 				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
 			}}
 		>
-			<Suspense>
-				<Navigation />
-			</Suspense>
-			<Show when={heroData.isSuccess}>
+			<Navigation />
+
+			{/* <Show when={heroData.isSuccess}>
 				<div>
 					<Image
 						src={heroData?.data?.data?.hero_data?.[0]?.image}
@@ -100,13 +99,11 @@ export default function Home() {
 						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
 					/>
 				</div>
-			</Show>
+			</Show> */}
 
 			<Outlet />
 
-			<Suspense>
-				<Footer />
-			</Suspense>
+			<Footer />
 		</div>
 	)
 }

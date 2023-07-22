@@ -178,7 +178,7 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+			const response = await fetch(`https://direct.shauns.cool/items/main_hero`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

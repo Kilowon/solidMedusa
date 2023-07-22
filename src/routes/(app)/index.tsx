@@ -1,4 +1,4 @@
-import { Hero } from '~/Components/layout/Hero'
+import { CleanHero } from '~/Components/layout/CleanHero'
 import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
 
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
@@ -20,7 +20,7 @@ export default function App() {
 	return (
 		<main class="min-h-[100vh] ">
 			<Suspense fallback={<div>HERO</div>}>
-				<Hero />
+				<CleanHero />
 			</Suspense>
 			<div class="">
 				<Suspense>

@@ -15,16 +15,25 @@ const DropdownMenu = lazy(() => import('~/Components/nav_components/DropdownMenu
 const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/HamburgerDrawerNav'))
 
 export default function Navigation(props: any) {
+	const { queryCart } = useGlobalContext()
+
 	const [stayOpen, setStayOpen] = createSignal(false)
 
 	const [cartDrawer, setCartDrawer] = createSignal({
-		checkout: 'active',
-		cart: 'hidden'
+		cart: 'hidden' as 'hidden' | 'active'
 	})
 	const [menuDrawer, setMenuDrawer] = createSignal({
-		menu: 'hidden' as const
+		menu: 'hidden' as 'hidden' | 'active'
 	})
 	const [accountStatus, setAccountStatus] = createSignal('inactive')
+
+	const [openMenu, setOpenMenu] = createSignal(false)
+
+	const [preloader, setPreloader] = createSignal(false)
+
+	const [cartPreloader, setCartPreloader] = createSignal(false)
+
+	const [openCart, setOpenCart] = createSignal(false)
 
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
@@ -45,19 +54,19 @@ export default function Navigation(props: any) {
 	}))
 
 	return (
-		<div class="sticky top-0 inset-x-0 z-50 group sm:!fixed">
+		<div class="sticky top-0  z-50 ">
 			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
 				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
-						<Suspense>
+						{/* <Suspense>
 							<Show when={getWindowSize().width < 1279}>
 								<HamburgerDrawerNav
 									menuDrawer={menuDrawer}
 									setMenuDrawer={setMenuDrawer}
 								/>
 							</Show>
-						</Suspense>
-						<Suspense>
+						</Suspense> */}
+						{/* <Suspense>
 							<Show when={getWindowSize().width > 1279}>
 								<div class=" h-full ml-2">
 									<DropdownMenu
@@ -66,7 +75,61 @@ export default function Navigation(props: any) {
 									/>
 								</div>
 							</Show>
-						</Suspense>
+						</Suspense> */}
+						<div>
+							<div
+								onMouseOver={() => {
+									setPreloader(true)
+								}}
+								onFocus={() => {
+									setPreloader(true)
+								}}
+								onclick={e => {
+									e.stopPropagation()
+									setOpenMenu(!openMenu())
+									setMenuDrawer({ menu: 'active' })
+									console.log(openMenu())
+									console.log(menuDrawer())
+								}}
+								onKeyDown={e => {
+									if (e.key === 'Enter') {
+										return setOpenMenu(true)
+									}
+									if (e.key === 'Escape') {
+										return setOpenMenu(false)
+									}
+								}}
+								title="Main Menu"
+								role="button"
+								tabindex="0"
+								onkeypress={e => {
+									if (e.key === 'Enter') {
+										setMenuDrawer({ menu: 'active' })
+									}
+									if (e.key === 'Escape') {
+										setMenuDrawer({ menu: 'hidden' })
+									}
+								}}
+							>
+								<div class="i-ic-round-menu  w-7 h-7 ml-6 hover:cursor-pointer" />
+							</div>
+							<Suspense>
+								<Show when={getWindowSize().width > 1023 && preloader() === true}>
+									<DropdownMenu
+										collection={props.collection}
+										product={props.product}
+										openMenu={openMenu}
+										setOpenMenu={setOpenMenu}
+									/>
+								</Show>
+								<Show when={getWindowSize().width <= 1023 && preloader() === true}>
+									<HamburgerDrawerNav
+										menuDrawer={menuDrawer}
+										setMenuDrawer={setMenuDrawer}
+									/>
+								</Show>
+							</Suspense>
+						</div>
 					</div>
 
 					<div class="flex items-center">
@@ -118,17 +181,57 @@ export default function Navigation(props: any) {
 								</A>
 							</Show>
 						</div>
+					</div>
+					<div
+						onMouseOver={() => {
+							setCartPreloader(true)
+						}}
+						onFocus={() => {
+							setCartPreloader(true)
+						}}
+						onClick={e => {
+							setOpenCart(!openCart())
+							setCartDrawer({ cart: 'active' })
+
+							console.log('OpenCart', cartDrawer())
+						}}
+						onKeyDown={e => {
+							if (e.key === 'Enter') {
+								setOpenCart(true)
+								setCartDrawer({ cart: 'active' })
+							}
+							if (e.key === 'Escape') {
+								setOpenCart(false)
+								setCartDrawer({ cart: 'hidden' })
+							}
+						}}
+						title="Cart"
+						role="button"
+						tabindex="0"
+					>
+						<div
+							class={openCart() ? 'flex text-2xl p-5 text-accent_6 h-full relative' : 'flex text-2xl p-5 h-full relative '}
+						>
+							<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
+							<div
+								class={
+									openCart()
+										? 'w-5 h-5 absolute top-3 right-3 bg-accent_6 text-xs text-white font-500 flex items-center justify-center rounded-full'
+										: 'w-5 h-5 absolute top-3 right-3 bg-text_2 text-xs text-white font-500 flex items-center justify-center rounded-full'
+								}
+							>
+								{totalItemsInCart(queryCart?.data?.cart?.items)}
+							</div>
+						</div>
 						<Suspense>
-							<Show when={getWindowSize().width > 1279}>
+							<Show when={getWindowSize().width > 1023 && cartPreloader() === true}>
 								<CartDropdown
-									cart={props.cart}
-									stayOpen={stayOpen}
-									setStayOpen={setStayOpen}
+									openCart={openCart}
+									setOpenCart={setOpenCart}
 								/>
 							</Show>
-						</Suspense>
-						<Suspense>
-							<Show when={getWindowSize().width < 1279}>
+
+							<Show when={getWindowSize().width <= 1023 && cartPreloader() === true}>
 								<CartDrawerNav
 									cartDrawer={cartDrawer}
 									setCartDrawer={setCartDrawer}
@@ -140,4 +243,12 @@ export default function Navigation(props: any) {
 			</header>
 		</div>
 	)
+}
+
+export function totalItemsInCart(items: any) {
+	let total = 0
+	items?.forEach((item: any) => {
+		total += item.quantity
+	})
+	return total
 }

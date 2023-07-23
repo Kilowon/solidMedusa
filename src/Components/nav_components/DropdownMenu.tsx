@@ -1,14 +1,17 @@
-import { createEffect, createSignal, For, Show, Suspense } from 'solid-js'
+import { createEffect, createSignal, For, Show, Accessor, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import { Transition } from 'solid-transition-group'
 
-export default function DropdownMenu(props: any) {
+export default function DropdownMenu(props: {
+	openMenu: Accessor<boolean>
+	setOpenMenu: (arg: boolean) => void
+	product: any
+	collection: any
+}) {
 	const { medusa } = useGlobalContext()
 	const { collections } = useGlobalContext()
-
-	const [open, setOpen] = createSignal(false)
 
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
@@ -33,7 +36,7 @@ export default function DropdownMenu(props: any) {
 			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 
 			"
 		>
-			<div>
+			{/* <div>
 				<div
 					class="hover:cursor-pointer"
 					title="Main Menu"
@@ -57,7 +60,7 @@ export default function DropdownMenu(props: any) {
 						}}
 					/>
 				</div>
-			</div>
+			</div> */}
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -72,7 +75,7 @@ export default function DropdownMenu(props: any) {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={open()}>
+				<Show when={props.openMenu()}>
 					<div
 						class=" bg-normal_2 absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
 						/* onMouseLeave={() => setOpen(false)} */
@@ -84,7 +87,17 @@ export default function DropdownMenu(props: any) {
 										<div class="text-base  bg-text_1 text-normal_2 rounded-0.5  p-2">
 											<A
 												href={`/store/Store`}
-												//onClick={() => setOpen(false)}
+												onClick={e => {
+													e.stopPropagation()
+
+													props.setOpenMenu(false)
+												}}
+												onKeyDown={e => {
+													if (e.key === 'Escape') {
+														return props.setOpenMenu(false)
+														console.log(open())
+													}
+												}}
 											>
 												Shop All Our Items
 											</A>
@@ -100,11 +113,11 @@ export default function DropdownMenu(props: any) {
 																	onClick={e => {
 																		e.stopPropagation()
 
-																		setOpen(false)
+																		props.setOpenMenu(false)
 																	}}
 																	onKeyDown={e => {
 																		if (e.key === 'Escape') {
-																			return setOpen(false)
+																			return props.setOpenMenu(false)
 																			console.log(open())
 																		}
 																	}}
@@ -132,11 +145,11 @@ export default function DropdownMenu(props: any) {
 																			onClick={e => {
 																				e.stopPropagation()
 
-																				setOpen(false)
+																				props.setOpenMenu(false)
 																			}}
 																			onKeyDown={e => {
 																				if (e.key === 'Escape') {
-																					return setOpen(false)
+																					return props.setOpenMenu(false)
 																					console.log(open())
 																				}
 																			}}
@@ -155,11 +168,11 @@ export default function DropdownMenu(props: any) {
 																								onClick={e => {
 																									e.stopPropagation()
 
-																									setOpen(false)
+																									props.setOpenMenu(false)
 																								}}
 																								onKeyDown={e => {
 																									if (e.key === 'Escape') {
-																										return setOpen(false)
+																										return props.setOpenMenu(false)
 																										console.log(open())
 																									}
 																								}}

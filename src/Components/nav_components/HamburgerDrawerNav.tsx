@@ -1,10 +1,11 @@
 import { For } from 'solid-js/web'
-import { createSignal, Show, Suspense, SuspenseList, Accessor, createEffect } from 'solid-js'
+import { createSignal, Show, Suspense, SuspenseList, Accessor, createEffect, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import { isServer } from 'solid-js/web'
 import { Transition } from 'solid-transition-group'
+import { on } from 'events'
 
 type ShowForm = {
 	menu: 'active' | 'hidden'
@@ -44,25 +45,12 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 		return categories()?.filter((category: any) => rootCategory.some((cat: any) => cat.id === category.id))
 	}
 
+	onMount(() => {
+		setSelectedRoot(rootCategories())
+	})
+
 	return (
 		<div>
-			<div
-				class="flex items-center rounded-full z-1 relative"
-				style="position: fixed; top: 0.85vh; left: 0.5rem; width: 3.75rem; height: 3rem;"
-				title="Menu"
-				role="button"
-				tabindex="0"
-				onClick={() => {
-					setSelectedRoot(rootCategories())
-					props.setMenuDrawer({ menu: 'active' })
-				}}
-				onkeypress={() => {
-					setSelectedRoot(rootCategories())
-					props.setMenuDrawer({ menu: 'active' })
-				}}
-			>
-				<div class="i-ic-round-menu w-7 h-7 ml-2" />
-			</div>
 			<div
 				class={`fixed inset-0 bg-normal_2/30 backdrop-blur-6px z-200 transition-all duration-250 ease-in-out ${
 					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none bg-normal_2/60'

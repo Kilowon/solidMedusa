@@ -12,7 +12,10 @@ export function totalItemsInCart(items: any) {
 	return total
 }
 
-export default function CartDrawerNav(props: any) {
+export default function CartDrawerNav(props: {
+	cartDrawer: () => { cart: 'active' | 'hidden' }
+	setCartDrawer: (arg: { cart: 'active' | 'hidden' }) => void
+}) {
 	const { queryCart } = useGlobalContext()
 	const [items, setItems] = createSignal(queryCart.data?.cart?.items)
 

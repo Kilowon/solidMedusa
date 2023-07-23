@@ -17,8 +17,6 @@ const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/Hambur
 export default function Navigation(props: any) {
 	const { queryCart } = useGlobalContext()
 
-	const [stayOpen, setStayOpen] = createSignal(false)
-
 	const [cartDrawer, setCartDrawer] = createSignal({
 		cart: 'hidden' as 'hidden' | 'active'
 	})
@@ -58,24 +56,6 @@ export default function Navigation(props: any) {
 			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
 				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
 					<div class="flex-1 basis-0 h-full flex items-center">
-						{/* <Suspense>
-							<Show when={getWindowSize().width < 1279}>
-								<HamburgerDrawerNav
-									menuDrawer={menuDrawer}
-									setMenuDrawer={setMenuDrawer}
-								/>
-							</Show>
-						</Suspense> */}
-						{/* <Suspense>
-							<Show when={getWindowSize().width > 1279}>
-								<div class=" h-full ml-2">
-									<DropdownMenu
-										collection={props.collection}
-										product={props.product}
-									/>
-								</div>
-							</Show>
-						</Suspense> */}
 						<div>
 							<div
 								onMouseOver={() => {
@@ -87,16 +67,20 @@ export default function Navigation(props: any) {
 								onclick={e => {
 									e.stopPropagation()
 									setOpenMenu(!openMenu())
+									setOpenCart(false)
 									setMenuDrawer({ menu: 'active' })
-									console.log(openMenu())
-									console.log(menuDrawer())
+									setCartDrawer({ cart: 'hidden' })
 								}}
 								onKeyDown={e => {
 									if (e.key === 'Enter') {
-										return setOpenMenu(true)
+										setOpenMenu(true)
+										setOpenCart(false)
+										setMenuDrawer({ menu: 'active' })
+										setCartDrawer({ cart: 'hidden' })
 									}
 									if (e.key === 'Escape') {
-										return setOpenMenu(false)
+										setOpenMenu(false)
+										setMenuDrawer({ menu: 'hidden' })
 									}
 								}}
 								title="Main Menu"
@@ -190,19 +174,35 @@ export default function Navigation(props: any) {
 							setCartPreloader(true)
 						}}
 						onClick={e => {
-							setOpenCart(!openCart())
-							setCartDrawer({ cart: 'active' })
+							if (getWindowSize().width > 1023) {
+								e.stopPropagation()
+								setOpenCart(!openCart())
+								setOpenMenu(false)
+							}
+							if (getWindowSize().width <= 1023) {
+								setCartDrawer({ cart: 'active' })
+								setMenuDrawer({ menu: 'hidden' })
+							}
 
 							console.log('OpenCart', cartDrawer())
 						}}
 						onKeyDown={e => {
-							if (e.key === 'Enter') {
-								setOpenCart(true)
-								setCartDrawer({ cart: 'active' })
-							}
-							if (e.key === 'Escape') {
-								setOpenCart(false)
-								setCartDrawer({ cart: 'hidden' })
+							e.stopPropagation()
+							if (e.target === document.activeElement) {
+								if (e.key === 'Enter') {
+									if (getWindowSize().width > 1023) {
+										setOpenCart(true)
+										setOpenMenu(false)
+									}
+									if (getWindowSize().width <= 1023) {
+										setCartDrawer({ cart: 'active' })
+										setMenuDrawer({ menu: 'hidden' })
+									}
+								}
+								if (e.key === 'Escape') {
+									setOpenCart(false)
+									setCartDrawer({ cart: 'hidden' })
+								}
 							}
 						}}
 						title="Cart"

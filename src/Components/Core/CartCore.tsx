@@ -138,7 +138,14 @@ export default function CartCore(props: CartCoreProps) {
 																	props.variant === 'mobile-panel' && 'text-xs'
 																)}
 															>
-																<A href={`/products/${item.variant.product?.handle}`}>{item?.title}</A>
+																<A
+																	href={`/products/${item.variant.product?.handle}`}
+																	title={`product link ${item.variant.product?.handle}`}
+																	role="button"
+																	tabindex="0"
+																>
+																	{item?.title}
+																</A>
 															</div>
 
 															<ItemOptions
@@ -200,15 +207,25 @@ export default function CartCore(props: CartCoreProps) {
 																props.variant === 'mobile-panel' && ''
 															)}
 														>
-															<button
+															<div
 																class="flex items-center gap-x-1 rounded p-1 bg-normal_1"
-																onClick={() => {
+																onClick={e => {
+																	e.stopPropagation()
 																	deleteItem(item?.id)
 																}}
+																onKeyDown={e => {
+																	e.stopPropagation()
+																	if (e.key === 'Enter') {
+																		deleteItem(item?.id)
+																	}
+																}}
+																title={`remove ${item?.title} from cart`}
+																role="button"
+																tabindex="0"
 															>
 																<div class="i-ph-trash-duotone text-sm  text-text_3  "></div>
 																<span class="text-xs ">Remove</span>
-															</button>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -325,7 +342,8 @@ export default function CartCore(props: CartCoreProps) {
 									<span class="sr-only">Go to all products page</span>
 									<Show when={props.variant === 'mobile-panel'}>
 										<div
-											onClick={() => {
+											onClick={e => {
+												e.stopPropagation()
 												props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
 											}}
 											class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 border-text_2 hover:bg-normal_1 hover:text-text_2 "
@@ -388,37 +406,47 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 	})
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
-			<button
+			<div
 				class="flex items-center justify-center w-5 h-5 bg-normal_1"
 				onKeyDown={e => {
+					e.stopPropagation()
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity - 1)
 					}
 				}}
+				title="decrease quanity"
+				role="button"
+				tabindex="0"
 			>
 				<div
 					class={clsx('i-mdi-minus-circle text-text_3', props.item.quantity === props.item.variant && 'text-normal_2')}
-					onclick={() => {
+					onclick={e => {
+						e.stopPropagation()
 						handleQuanity(props.item.quantity - 1)
 					}}
 				/>
-			</button>
+			</div>
 			<span class="flex items-center justify-center text-sm text-text_3 font-500">{props.item?.quantity}</span>
-			<button
+			<div
 				class="flex items-center justify-center w-5 bg-normal_1"
 				onKeyDown={e => {
+					e.stopPropagation()
 					if (e.key === 'Enter') {
 						handleQuanity(props.item.quantity + 1)
 					}
 				}}
+				title="increase quanity"
+				role="button"
+				tabindex="0"
 			>
 				<div
 					class="i-mdi-plus-circle text-text_3"
 					onClick={e => {
+						e.stopPropagation()
 						handleQuanity(props.item.quantity + 1)
 					}}
 				/>
-			</button>
+			</div>
 		</div>
 	)
 }

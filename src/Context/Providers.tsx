@@ -220,7 +220,7 @@ export function GlobalContextProvider(props: any) {
 
 	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])
 
-	const queryCategoryProducts = createQuery(() => ({
+	/* 	const queryCategoryProducts = createQuery(() => ({
 		queryKey: ['categories_products', currentCategoryId()],
 		queryFn: async function () {
 			const product = await medusa.products.list({
@@ -231,15 +231,15 @@ export function GlobalContextProvider(props: any) {
 		},
 		cacheTime: 15 * 60 * 1000
 		//enabled: false
-	}))
+	})) */
 
 	const [categoryProducts, setCategoryProducts] = createSignal([])
-
+	/* 
 	createEffect(() => {
 		setCategoryProducts(queryCategoryProducts.data?.products)
-	}, [queryCategoryProducts, currentCategoryId])
+	}, [queryCategoryProducts, currentCategoryId]) */
 
-	const queryCollections = createQuery(() => ({
+	/* 	const queryCollections = createQuery(() => ({
 		queryKey: ['collections-list'],
 		queryFn: async function () {
 			const product = await medusa.collections.list()
@@ -255,11 +255,9 @@ export function GlobalContextProvider(props: any) {
 	onMount(() => {
 		queryCollections.refetch()
 
-		/* setTimeout(() => {
-			setCollections(queryCollections?.data)
-		}, 350) */
+		
 	})
-
+ */
 	return (
 		<GlobalContext.Provider
 			value={{
@@ -272,8 +270,8 @@ export function GlobalContextProvider(props: any) {
 				categories,
 				setCurrentCategoryId,
 				categoryProducts,
-				setCategoryProducts,
-				collections
+				setCategoryProducts
+				//collections
 			}}
 		>
 			{props.children}

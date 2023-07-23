@@ -164,7 +164,7 @@ export function CleanHero() {
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].image}
-										fetchpriority="high"
+										loading="eager"
 										alt="main image"
 										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
 									/>
@@ -172,7 +172,7 @@ export function CleanHero() {
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										fetchpriority="high"
+										loading="eager"
 										alt="main image"
 										class=" aspect-[377/198]  min-h-396px object-cover object-left "
 									/>

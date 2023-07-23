@@ -19,9 +19,8 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh] ">
-			<Suspense fallback={<div>HERO</div>}>
-				<CleanHero />
-			</Suspense>
+			<CleanHero />
+
 			<div class="">
 				<Suspense>
 					<FeaturedProducts variant="hero" />

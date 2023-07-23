@@ -165,13 +165,13 @@ export function CleanHero() {
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].image}
-										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left overflow-visible"
+										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
 									/>
 								</Show>
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
-										class="w-[754px] h-[340px] aspect-[377/198]  min-h-301px object-cover object-left "
+										class=" aspect-[377/198]  min-h-396px object-cover object-left "
 									/>
 								</Show>
 

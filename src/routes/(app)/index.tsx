@@ -1,6 +1,6 @@
 import { CleanHero } from '~/Components/layout/CleanHero'
-import { lazy, Suspense, createSignal, createEffect } from 'solid-js'
-
+import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
+import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
@@ -17,15 +17,46 @@ export default function App() {
 		}
 	})
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	return (
 		<main class="min-h-[100vh] ">
 			<CleanHero />
-
-			<div class="">
+			<div class="min-h-[100vh]">
+				<div
+					ref={el}
+					class="w-100% h-5 bg-transparent"
+				></div>
 				<Suspense>
-					<FeaturedProducts variant="hero" />
-					<FeaturedProducts variant="hero2" />
-					<FeaturedProducts variant="hero3" />
+					<Show when={isVisible() && primaryData.isSuccess}>
+						<For each={primaryData.data?.data?.main_page_component_block}>
+							{item => {
+								return (
+									<div>
+										<Show when={item.component_type === 'featured_products'}>
+											<FeaturedProducts variant={item.variant} />
+										</Show>
+									</div>
+								)
+							}}
+						</For>
+					</Show>
 				</Suspense>
 			</div>
 		</main>

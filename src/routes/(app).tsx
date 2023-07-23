@@ -2,12 +2,11 @@ import { lazy, Suspense, createSignal, createEffect, Show } from 'solid-js'
 import { Outlet } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import { Image } from '@unpic/solid'
+import { getWindowSize } from '@solid-primitives/resize-observer'
+import Navigation from '~/Components/layout/Navigation'
 
-const Navigation = lazy(() => import('~/Components/layout/Navigation'))
 const Footer = lazy(() => import('~/Components/layout/Footer'))
 
-// App.tsx
 export default function Home() {
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
@@ -27,7 +26,7 @@ export default function Home() {
 		enabled: false
 	}))
 
-	/* const heroData = createQuery(() => ({
+	const heroData = createQuery(() => ({
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
@@ -45,17 +44,23 @@ export default function Home() {
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
 		enabled: false
-	})) */
+	}))
 
 	function hexToRgb(hex: any) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
 	}
 
-	let elb: HTMLDivElement | undefined
+	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
-	const [delay, setDelay] = createSignal(0.5)
-	const visible = createVisibilityObserver({ threshold: 0.1 })(() => elb)
+	const [delay, setDelay] = createSignal(0.1)
+	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
+
+	createEffect(() => {
+		if (visible()) {
+			setIsVisible(true)
+		}
+	})
 
 	createEffect(() => {
 		if (visible()) {
@@ -89,21 +94,35 @@ export default function Home() {
 		>
 			<Navigation />
 
-			{/* <Show when={heroData.isSuccess}>
+			<Show when={heroData.isSuccess}>
 				<div>
-					<Image
-						src={heroData?.data?.data?.hero_data?.[0]?.image}
-						layout="fullWidth"
-						priority={true}
-						class="object-cover object-right md:object-center h-full w-full inset-0  filter brightness-65 hidden"
-						alt="Photo by @thevoncomplex https://unsplash.com/@thevoncomplex"
-					/>
+					<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
+						<img
+							src={heroData?.data?.data?.hero_info[0].image}
+							class="hidden w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
+						/>
+					</Show>
+					<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
+						<img
+							src={heroData?.data?.data?.hero_info[0].mobile_image}
+							class="hidden aspect-[377/198]  min-h-396px object-cover object-left "
+						/>
+					</Show>
 				</div>
-			</Show> */}
+			</Show>
 
 			<Outlet />
-
-			<Footer />
+			<div
+				ref={el}
+				class="w-100% h-5 bg-transparent"
+			></div>
+			<Suspense>
+				<Show when={isVisible() && primaryData.isSuccess}>
+					<div class="min-h-[50vh]">
+						<Footer />
+					</div>
+				</Show>
+			</Suspense>
 		</div>
 	)
 }

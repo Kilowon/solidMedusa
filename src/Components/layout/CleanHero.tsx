@@ -1,6 +1,5 @@
 import { Show, For, createSignal, onMount, createEffect } from 'solid-js'
 import { A } from 'solid-start'
-import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
 import { Motion, Presence } from '@motionone/solid'

@@ -98,9 +98,9 @@ export function CleanHero() {
 										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
 											{heroData?.data?.data?.hero_info[currentIndex()].header}
 										</h1>
-										<h3 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
+										<h2 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
 											{heroData?.data?.data?.hero_info[currentIndex()].subtitle}
-										</h3>
+										</h2>
 									</div>
 
 									<div class="hidden lg:flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-normal_1 p-2  rounded-1">
@@ -165,6 +165,7 @@ export function CleanHero() {
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].image}
 										fetchpriority="high"
+										alt="main image"
 										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
 									/>
 								</Show>
@@ -172,6 +173,7 @@ export function CleanHero() {
 									<img
 										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
 										fetchpriority="high"
+										alt="main image"
 										class=" aspect-[377/198]  min-h-396px object-cover object-left "
 									/>
 								</Show>

@@ -100,14 +100,16 @@ export default function Home() {
 						<img
 							src={heroData?.data?.data?.hero_info[0].image}
 							fetchpriority="high"
-							class="hidden w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
+							alt="image preloading"
+							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left"
 						/>
 					</Show>
 					<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 						<img
 							src={heroData?.data?.data?.hero_info[0].mobile_image}
 							fetchpriority="high"
-							class="hidden aspect-[377/198]  min-h-396px object-cover object-left "
+							alt="image preloading"
+							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left "
 						/>
 					</Show>
 				</div>

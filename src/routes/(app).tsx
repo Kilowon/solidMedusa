@@ -99,7 +99,7 @@ export default function Home() {
 					<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 						<img
 							src={heroData?.data?.data?.hero_info[0].image}
-							fetchpriority="high"
+							loading="eager"
 							alt="image preloading"
 							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left"
 						/>
@@ -107,7 +107,7 @@ export default function Home() {
 					<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 						<img
 							src={heroData?.data?.data?.hero_info[0].mobile_image}
-							fetchpriority="high"
+							loading="eager"
 							alt="image preloading"
 							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left "
 						/>

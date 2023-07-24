@@ -89,11 +89,11 @@ export function CleanHero() {
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
 					>
 						<div
-							class="sm:h-[100svh] lg:mb-auto lg:mt-auto w-full  flex items-center sm:justify-center  lg:justify-between flex-col lg:flex-row  
+							class="sm:h-[100svh] lg:mb-auto lg:mt-auto w-full  flex items-center lg:items-initial  sm:justify-center   flex-col lg:flex-row  
 		"
 						>
 							<div class="flex flex-col justify-center  ">
-								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center lg:ml-20 lg:space-y-12 ">
+								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center  lg:space-y-12 ">
 									<div class="flex flex-col space-y-3 items-center justify-center  sm:h-auto  mx-6 md:mx-auto">
 										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
 											{heroData?.data?.data?.hero_info[currentIndex()].header}

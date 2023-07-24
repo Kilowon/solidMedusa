@@ -71,26 +71,51 @@ export default function Home() {
 	return (
 		<div
 			class=""
-			style={{
-				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
-				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
-				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
-				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
-				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
-				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
-				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
-				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
-				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
-				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
-				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
-				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
-				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
-				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
-				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
-				'--accent_6': `${hexToRgb(primaryData?.data?.data?.accent_6)}`,
-				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
-				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
-			}}
+			style={
+				import.meta.env.VITE_DRAFT_SITE === 'false'
+					? {
+							'--normal_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal)}`,
+							'--normal_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_2)}`,
+							'--normal_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_3)}`,
+							'--normal_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_4)}`,
+							'--surface': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.surface)}`,
+							'--text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.Text_1)}`,
+							'--text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_2)}`,
+							'--text_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_3)}`,
+							'--text_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_4)}`,
+							'--text_5': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_5)}`,
+							'--accent_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent)}`,
+							'--accent_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_3)}`,
+							'--accent_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_2)}`,
+							'--accent_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_4)}`,
+							'--accent_5': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_5)}`,
+							'--accent_6': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_6)}`,
+							'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_text)}`,
+							'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_text_2)}`
+					  }
+					: import.meta.env.VITE_DRAFT_SITE === 'true'
+					? {
+							'--normal_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal)}`,
+							'--normal_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_2)}`,
+							'--normal_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_3)}`,
+							'--normal_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_4)}`,
+							'--surface': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.surface)}`,
+							'--text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.Text_1)}`,
+							'--text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_2)}`,
+							'--text_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_3)}`,
+							'--text_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_4)}`,
+							'--text_5': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_5)}`,
+							'--accent_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent)}`,
+							'--accent_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_3)}`,
+							'--accent_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_2)}`,
+							'--accent_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_4)}`,
+							'--accent_5': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_5)}`,
+							'--accent_6': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_6)}`,
+							'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_text)}`,
+							'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_text_2)}`
+					  }
+					: {}
+			}
 		>
 			<Navigation />
 

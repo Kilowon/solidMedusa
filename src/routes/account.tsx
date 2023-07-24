@@ -133,26 +133,51 @@ export default function Account() {
 
 	return (
 		<main
-			style={{
-				'--normal_1': `${hexToRgb(primaryData?.data?.data?.normal)}`,
-				'--normal_2': `${hexToRgb(primaryData?.data?.data?.normal_2)}`,
-				'--normal_3': `${hexToRgb(primaryData?.data?.data?.normal_3)}`,
-				'--normal_4': `${hexToRgb(primaryData?.data?.data?.normal_4)}`,
-				'--surface': `${hexToRgb(primaryData?.data?.data?.surface)}`,
-				'--text_1': `${hexToRgb(primaryData?.data?.data?.Text_1)}`,
-				'--text_2': `${hexToRgb(primaryData?.data?.data?.text_2)}`,
-				'--text_3': `${hexToRgb(primaryData?.data?.data?.text_3)}`,
-				'--text_4': `${hexToRgb(primaryData?.data?.data?.text_4)}`,
-				'--text_5': `${hexToRgb(primaryData?.data?.data?.text_5)}`,
-				'--accent_1': `${hexToRgb(primaryData?.data?.data?.accent)}`,
-				'--accent_3': `${hexToRgb(primaryData?.data?.data?.accent_3)}`,
-				'--accent_2': `${hexToRgb(primaryData?.data?.data?.accent_2)}`,
-				'--accent_4': `${hexToRgb(primaryData?.data?.data?.accent_4)}`,
-				'--accent_5': `${hexToRgb(primaryData?.data?.data?.accent_5)}`,
-				'--accent_6': `${hexToRgb(primaryData?.data?.data?.accent_6)}`,
-				'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.accent_text)}`,
-				'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.accent_text_2)}`
-			}}
+			style={
+				import.meta.env.VITE_DRAFT_SITE === 'false'
+					? {
+							'--normal_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal)}`,
+							'--normal_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_2)}`,
+							'--normal_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_3)}`,
+							'--normal_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.normal_4)}`,
+							'--surface': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.surface)}`,
+							'--text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.Text_1)}`,
+							'--text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_2)}`,
+							'--text_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_3)}`,
+							'--text_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_4)}`,
+							'--text_5': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.text_5)}`,
+							'--accent_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent)}`,
+							'--accent_3': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_3)}`,
+							'--accent_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_2)}`,
+							'--accent_4': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_4)}`,
+							'--accent_5': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_5)}`,
+							'--accent_6': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_6)}`,
+							'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_text)}`,
+							'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[0]?.accent_text_2)}`
+					  }
+					: import.meta.env.VITE_DRAFT_SITE === 'true'
+					? {
+							'--normal_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal)}`,
+							'--normal_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_2)}`,
+							'--normal_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_3)}`,
+							'--normal_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.normal_4)}`,
+							'--surface': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.surface)}`,
+							'--text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.Text_1)}`,
+							'--text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_2)}`,
+							'--text_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_3)}`,
+							'--text_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_4)}`,
+							'--text_5': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.text_5)}`,
+							'--accent_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent)}`,
+							'--accent_3': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_3)}`,
+							'--accent_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_2)}`,
+							'--accent_4': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_4)}`,
+							'--accent_5': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_5)}`,
+							'--accent_6': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_6)}`,
+							'--accent_text_1': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_text)}`,
+							'--accent_text_2': `${hexToRgb(primaryData?.data?.data?.layout_color[1]?.accent_text_2)}`
+					  }
+					: {}
+			}
 		>
 			<Navigation />
 			<div>
@@ -221,7 +246,10 @@ export default function Account() {
 												class="text-xs font-500 text-text_2 sm:ml-4 underline cursor-pointer"
 												onClick={() => {
 													currentCustomerSignOut.refetch()
-													currentCustomer.refetch()
+
+													setTimeout(() => {
+														currentCustomer.refetch()
+													}, 1000)
 												}}
 											>
 												sign out
@@ -264,10 +292,10 @@ export default function Account() {
 
 export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 	const [activeTab, setActiveTab] = createSignal({
-		overview: 'inactive',
+		overview: 'active',
 		profile: 'inactive',
 		orders: 'inactive',
-		reviews: 'active',
+		reviews: 'inactive',
 		wishlist: 'inactive'
 	})
 
@@ -315,7 +343,7 @@ export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 
 export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-1 rounded-sm bg-gray-50 ">
+		<div class="p-1 rounded-sm bg-normal_1 ">
 			<p class=" mb-3 text-text_2">
 				<Show when={props.currentCustomer?.orders}>
 					<div class="my-2 font-500 text-xs sm:text-sm">Recent orders</div>
@@ -349,7 +377,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 														class={clsx(
 															'flex items-center ',
 															order.payment_status === 'not_paid' && 'text-accent_3',
-															order.payment_status === 'awaiting' && 'text-text_4',
+															order.payment_status === 'awaiting' && 'text-text_4/80',
 															order.payment_status === 'captured' && 'text-accent_2',
 															order.payment_status === 'partially_refunded' && 'text-yellow-500',
 															order.payment_status === 'refunded' && 'text-accent_3',
@@ -360,7 +388,11 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 														<div class="i-material-symbols-circle mr-0.5 w-2.5" />
 													</div>
 													<div class="text-xs sm:text-sm font-500 capitalize ">
-														{order.payment_status === 'awaiting' ? 'Pending' : order.payment_status}
+														{order.payment_status === 'awaiting'
+															? 'Pending'
+															: order.payment_status === 'captured'
+															? 'Complete'
+															: order.payment_status}
 													</div>
 												</div>
 											</div>
@@ -371,7 +403,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 														<div
 															class={clsx(
 																'text-sm flex items-center',
-																order.fulfillment_status === 'not_fulfilled' && 'text-text_4',
+																order.fulfillment_status === 'not_fulfilled' && 'text-text_4/80',
 																order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
 																order.fulfillment_status === 'fulfilled' && 'text-accent_6',
 																order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
@@ -385,7 +417,11 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 															<div class="i-material-symbols-circle mr-0.5 w-2.5" />
 														</div>
 														<div class="font-500 capitalize text-xs sm:text-sm">
-															{order.fulfillment_status === 'not_fulfilled' ? 'Pending' : order.fulfillment_status}
+															{order.fulfillment_status === 'not_fulfilled'
+																? 'Pending'
+																: order.fulfillment_status === 'fulfilled'
+																? 'In Progress'
+																: order.fulfillment_status}
 														</div>
 													</div>
 												</div>
@@ -412,7 +448,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 
 export function ProfileActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-4 rounded-lg bg-gray-50  space-y-6">
+		<div class="p-4 rounded-lg bg-normal_1  space-y-6">
 			<div>Profile Active Tab</div>
 		</div>
 	)
@@ -420,7 +456,7 @@ export function ProfileActiveTab(props: { currentCustomer: Customer }) {
 
 export function OrdersActiveTab(props: { currentCustomer: Customer }) {
 	return (
-		<div class="p-4 rounded-lg bg-gray-50  space-y-6 text-sm">
+		<div class="p-4 rounded-lg bg-normal_1  space-y-6 text-sm">
 			<div>
 				<div class="text-text_2 flex space-x-2">
 					<div>Orders</div>
@@ -465,6 +501,56 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 		enabled: false
 	}))
 
+	const currentUserReviews = createQuery(() => ({
+		queryKey: ['currentUserReviews'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+
+			const response = await fetch(
+				`https://direct.shauns.cool/items/main_review?filter[customer_id][_eq]=${props.currentCustomer?.id}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+						Authorization: `Bearer ${bearerToken}`
+					}
+				}
+			)
+
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: props.currentCustomer?.id !== undefined
+	}))
+
+	createEffect(() => {
+		console.log(currentUserReviews.isSuccess)
+	})
+
+	function userProductReviewedList(currentId: string) {
+		let userProductReviews = new Set()
+		if (currentUserReviews.isSuccess) {
+			currentUserReviews?.data?.data?.forEach((review: any) => {
+				userProductReviews.add(review.variant_id)
+			})
+		}
+		return userProductReviews.has(currentId)
+	}
+
+	function reviewByVariantId(currentId: string) {
+		let userRating
+		if (currentUserReviews.isSuccess) {
+			currentUserReviews?.data?.data?.forEach((review: any) => {
+				if (review.variant_id === currentId) {
+					userRating = review.user_rating
+				}
+			})
+		}
+		return userRating
+	}
+
 	function formatDate(date: any) {
 		const now = new Date()
 		const then = new Date(date)
@@ -487,8 +573,8 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 	let variantIdsAndImages = new Set()
 
 	return (
-		<div class="sm:p-4 rounded-lg bg-gray-50  space-y-3 text-sm">
-			<Show when={props.currentCustomer?.orders}>
+		<div class="sm:p-4 rounded-lg bg-normal_1  space-y-3 text-sm">
+			<Show when={props.currentCustomer?.orders && currentUserReviews.isSuccess}>
 				<div class="text-sm sm:text-lg text-text_2">Items that need a review:</div>
 				<ul class="space-y-2">
 					<For each={props.currentCustomer?.orders}>
@@ -526,6 +612,10 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 													setErrorMessage('')
 													// Handle form submission here
 													reviewMutate.refetch()
+
+													setTimeout(() => {
+														currentUserReviews.refetch()
+													}, 250)
 													setOpen(false)
 												}
 											}
@@ -543,6 +633,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 													const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 													const reviewData = {
 														product_id: productId().id,
+														variant_id: item.variant_id,
 														customer_id: props.currentCustomer?.id,
 														user_title: title(),
 														user_body: body(),
@@ -604,16 +695,16 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 															height={50}
 															src={item.thumbnail}
 															alt={item.title}
-															class="-mb-px mr-2 rounded-md col-span-2 sm:col-span-1"
+															class="-mb-px mr-2 rounded-md col-span-1 sm:col-span-1"
 														></Image>
-														<div class="max-w-[300px] col-span-4 sm:col-span-6 flex items-center">
+														<div class="max-w-[300px] col-span-5 sm:col-span-6 flex items-center">
 															<div class="line-clamp-2   ellipsis text-xs ">{item.title}</div>
 														</div>
 														<div class="hidden col-span-2 sm:flex items-center">{currencyFormat(Number(item.unit_price), 'US')}</div>
 													</div>
 													<div class=" sm:w-[20svw]">
 														<button
-															class="flex text-gray-5 bg-transparent hover:text-gray-8 "
+															class="flex bg-transparent"
 															onClick={() => {
 																setOpen(open => !open)
 																setReviewVariant(item.variant_id)
@@ -623,11 +714,29 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 															}}
 															tabindex="0"
 														>
-															<div class="flex items-center space-x-1 text-accent_6">
+															<div
+																class={clsx(
+																	' text-accent_6',
+																	userProductReviewedList(item.variant_id) && 'hidden',
+																	!userProductReviewedList(item.variant_id) && 'flex items-center space-x-1'
+																)}
+															>
 																<div class="i-ic-outline-rate-review w-5 h-5" />
 																<div>Review</div>
 															</div>
 														</button>
+														<div
+															class={clsx(
+																'',
+																!userProductReviewedList(item.variant_id) && 'hidden',
+																userProductReviewedList(item.variant_id) && 'flex items-center space-x-1'
+															)}
+														>
+															<div class="flex flex-col items-center">
+																<StarIconRequest rating={Number(reviewByVariantId(item.variant_id))} />
+																<div class="text-xs text-text_4">Reviewed</div>
+															</div>
+														</div>
 
 														{/* <!--Verically centered scrollable modal--> */}
 
@@ -652,7 +761,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 																		</div>
 																		<button
 																			type="button"
-																			class="text-text_3 bg-transparent hover:bg-gray-200 hover:text-text_1 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
+																			class="text-text_3 bg-transparent hover:bg-normal_2 hover:text-text_1 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
 																			data-modal-hide="defaultModal"
 																			onClick={() => {
 																				setOpen(open => !open)
@@ -713,26 +822,26 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 																					value={userName()}
 																					onInput={e => setUserName(e.target.value)}
 																					placeholder="User Name"
-																					class="w-full min-h-2rem border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																					class="w-full min-h-2rem border border-1 border-surface p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
 																				/>
 																				<input
 																					type="text"
 																					value={title()}
 																					onInput={e => setTitle(e.target.value)}
 																					placeholder="Title"
-																					class="w-full min-h-2rem border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																					class="w-full min-h-2rem border border-1 border-surface p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
 																				/>
 																				<textarea
 																					value={body()}
 																					onInput={e => setBody(e.target.value)}
-																					placeholder="Body Text"
-																					class="w-full h-full min-h-10rem resize-y border border-1 border-gray-3 p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
+																					placeholder="Review Text"
+																					class="w-full h-full min-h-10rem resize-y border border-1 border-surface p-1 text-text_2 focus:outline-none focus:border-accent_6 focus:ring-1 focus:ring-accent_5"
 																				/>
 																			</div>
 																		</form>
 																	</div>
 																	{/*  <!-- Modal footer --> */}
-																	<div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b ">
+																	<div class="flex items-center p-6 space-x-2 border-t border-normal_2 rounded-b ">
 																		<button
 																			data-modal-hide="defaultModal"
 																			type="button"
@@ -746,9 +855,13 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 																		<button
 																			data-modal-hide="defaultModal"
 																			type="button"
-																			class="text-text_2 bg-normal_1 hover:bg-normal_2 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-text_1 focus:z-10"
+																			class="text-text_2 bg-normal_1 hover:bg-normal_2 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-normal_2 text-sm font-medium px-5 py-2.5 hover:text-text_1 focus:z-10"
 																			onClick={() => {
 																				setOpen(open => !open)
+																				setBody('')
+																				setTitle('')
+																				setUserName('')
+																				setRating(0)
 																			}}
 																		>
 																			Cancel
@@ -783,4 +896,34 @@ export function WishListActiveTab(props: { currentCustomer: Customer }) {
 			</div>
 		</div>
 	)
+}
+
+export function StarIconRequest(props: { rating: number }) {
+	//round rating to nearist half
+
+	const [rating, setRating] = createSignal(props.rating)
+
+	createEffect(() => {
+		const roundRating = Math.round(props.rating * 2) / 2
+
+		setRating(roundRating)
+	})
+
+	function getStarIcon(rating: number) {
+		const stars = []
+		for (let i = 0; i < Math.floor(rating); i++) {
+			stars.push(<i class="i-ic-baseline-star-rate text-yellow-500" />)
+		}
+		if (rating % 1 !== 0) {
+			stars.push(<i class="i-ic-baseline-star-half text-yellow-500" />)
+		}
+		if (rating < 5) {
+			for (let i = 0; i < 5 - Math.ceil(rating); i++) {
+				stars.push(<i class="i-ic-outline-star-rate text-text_3/50" />)
+			}
+		}
+		return stars
+	}
+
+	return <div class=" text-text_2 flex">{getStarIcon(rating())}</div>
 }

@@ -46,6 +46,7 @@ export function CleanHero() {
 	const [time, setTime] = createSignal(5000)
 	const [endWait, setEndWait] = createSignal(15000)
 	const [totalLength, setTotalLength] = createSignal(0)
+	const [filteredSlides, setFilteredSlides] = createSignal<any>([''])
 
 	function heroCarousel() {
 		if (!heroData?.data?.data?.slides_active) return
@@ -64,16 +65,29 @@ export function CleanHero() {
 	}
 
 	onMount(async () => {
+		if (heroData.isSuccess && heroData?.data?.data?.slides_active) {
+			setFilteredSlides(
+				slideStatusCheck(
+					heroData?.data?.data?.hero_info,
+					(import.meta.env.VITE_DRAFT_SITE === 'false' ? 'published' : 'draft') as any
+				)
+			)
+		}
 		if (heroData.isSuccess) {
 			setTime(heroData?.data?.data?.pause_between * 1000)
 			setEndWait(heroData?.data?.data?.init_hold * 1000)
-			setTotalLength(heroData?.data?.data?.slides_active ? heroData?.data?.data?.hero_info?.length : 0)
+			setTotalLength(heroData?.data?.data?.slides_active ? filteredSlides().length : 0)
 			heroCarousel()
 		}
 	})
 
+	function slideStatusCheck(slides: [any], status: 'published' | 'draft' | 'archived') {
+		const filtered = slides.filter((slide: any) => slide.status === status || slide.status === 'published')
+		return filtered
+	}
+
 	createEffect(() => {
-		console.log('currentIndex', currentIndex())
+		console.log(filteredSlides())
 	})
 
 	return (
@@ -103,7 +117,7 @@ export function CleanHero() {
 										</h2>
 									</div>
 
-									<div class="hidden lg:flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-normal_1 p-2  rounded-1">
+									<div class="hidden lg:flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1">
 										<A
 											href="/store/Store"
 											class="text- z-2 tracking-tight"
@@ -121,7 +135,7 @@ export function CleanHero() {
 																<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
 															</Show>
 															<Show when={index() !== currentIndex()}>
-																<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
+																<div class="w-1.5 h-1.5 rounded-6 bg-accent_6/50" />
 															</Show>
 														</div>
 													)
@@ -131,7 +145,7 @@ export function CleanHero() {
 									</div>
 								</div>
 							</div>
-							<div class=" flex lg:hidden items-center justify-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-normal_1 p-2  rounded-1 m-3">
+							<div class=" flex lg:hidden items-center justify-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 m-3">
 								<A
 									href={heroData?.data?.data?.hero_info[currentIndex()].call_to_action_href}
 									class="text- z-2 tracking-tight"

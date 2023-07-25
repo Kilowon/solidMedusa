@@ -65,7 +65,7 @@ export function CleanHero() {
 	}
 
 	onMount(async () => {
-		if (heroData.isSuccess && heroData?.data?.data?.slides_active) {
+		if (heroData.isSuccess) {
 			setFilteredSlides(
 				slideStatusCheck(
 					heroData?.data?.data?.hero_info,

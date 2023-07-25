@@ -64,6 +64,43 @@ export default function Collection() {
 		enabled: false
 	}))
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					priority: 'low'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	const [primaryDataFeatured, setPrimaryDataFeatured] = createSignal<any>(null)
+
+	createEffect(() => {
+		if (primaryData.isSuccess) {
+			setPrimaryDataFeatured(matchCollections(currentCollection()))
+		}
+	})
+
+	function matchCollections(currentFeatured: any) {
+		let match = primaryData?.data?.data?.main_page_component_block.filter(
+			(block: any) => block.variant === currentFeatured?.metadata?.location
+		)
+		if (match?.length > 0) {
+			return match[0]
+		}
+	}
+
 	return (
 		<main class="min-h-[100vh]">
 			<Transition
@@ -81,22 +118,32 @@ export default function Collection() {
 				}}
 			>
 				<div class="mx-1 sm:mx-auto sm:content-container ">
-					<Show when={queryCollection?.data?.products}>
+					<Show when={queryCollection?.data?.products && primaryData.isSuccess}>
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16 sm:my-20">
 							<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
 								<div class="space-y-1">
-									<h2 class=" text-xs   xl:text-base font-500   text-text_2 tracking-tighter text-balance">
-										{currentCollection()?.metadata?.sub_title_top}
-									</h2>
+									<Show when={primaryDataFeatured()?.top_line_tag?.length > 0}>
+										<ul class="flex space-x-2">
+											<For each={primaryDataFeatured()?.top_line_tag}>
+												{(item: any) => {
+													return (
+														<li class="flex items-center justify-center text-xs  xl:text-base font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
+															{item}
+														</li>
+													)
+												}}
+											</For>
+										</ul>
+									</Show>
 									<h1 class=" text-sm  xl:text-[1.2svw] font-500  text-text_1 tracking-tighter text-balance">
-										{currentCollection()?.title}
+										{primaryDataFeatured()?.title}
 									</h1>
 									<h2 class=" text-xs   xl:text-sm font-500  text-text_2 tracking-tighter text-balance">
-										{currentCollection()?.metadata?.sub_title_bottom}
+										{primaryDataFeatured()?.sub_title_bottom}
 									</h2>
 								</div>
 								<p class="text-xs xl:text-sm  text-text_3  tracking-normal text-balance">
-									{currentCollection()?.metadata?.description}
+									{primaryDataFeatured()?.description}
 								</p>
 							</li>
 							<For each={queryCollection?.data?.products}>

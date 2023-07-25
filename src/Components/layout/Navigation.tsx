@@ -52,10 +52,10 @@ export default function Navigation(props: any) {
 	}))
 
 	return (
-		<div class="sticky top-0  z-50 ">
-			<header class="relative h-16 mx-auto  border-b border-transparent  bg-normal_1 text-text_2">
-				<nav class="flex items-center justify-between w-full h-full text-sm  relative">
-					<div class="flex-1 basis-0 h-full flex items-center">
+		<div class="sticky top-0 z-50 ">
+			<header class="relative h-16 mx-auto bg-normal_1 text-text_2 flex">
+				<nav class="flex items-center justify-center w-full">
+					<div class="absolute left-0  p-4">
 						<div>
 							<div
 								onMouseOver={() => {
@@ -95,7 +95,7 @@ export default function Navigation(props: any) {
 									}
 								}}
 							>
-								<div class="i-ic-round-menu  w-7 h-7 ml-6 hover:cursor-pointer" />
+								<div class="i-ic-round-menu w-5.5 h-5.5  lg:w-7 lg:h-7  hover:cursor-pointer" />
 							</div>
 							<Suspense>
 								<Show when={getWindowSize().width > 1023 && preloader() === true}>
@@ -116,11 +116,10 @@ export default function Navigation(props: any) {
 						</div>
 					</div>
 
-					<div class="flex items-center">
+					<div class="">
 						<A
 							title="Home"
 							href="/"
-							class="text-regular md:text-2xl font-semibold uppercase flex items-center justify-center space-x-3 h-full"
 						>
 							<Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
@@ -131,12 +130,11 @@ export default function Navigation(props: any) {
 										width={100}
 									/>
 								</Show>
-							</Suspense>
-							<Suspense fallback={<div class="  uppercase">Loading...</div>}>
+
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
-										class=" uppercase"
+										class="text-regular md:text-2xl font-semibold uppercase"
 									>
 										{primaryData?.data?.data?.title}
 									</div>
@@ -145,7 +143,7 @@ export default function Navigation(props: any) {
 						</A>
 					</div>
 
-					<div class="flex items-center gap-x-10 h-full flex-1 basis-0 justify-end xl:gap-x-10 ">
+					<div class="absolute right-10 p-4">
 						<div class="flex items-center mr-4 ">
 							<Show when={true}>
 								<A
@@ -157,7 +155,7 @@ export default function Navigation(props: any) {
 								>
 									<div
 										class={clsx(
-											'h-7 w-7',
+											'w-5.5 h-5.5 lg:w-7 lg:h-7',
 											accountStatus() === 'inactive' && 'i-la-user-plus',
 											accountStatus() === 'active' && 'i-la-user-check'
 										)}
@@ -167,6 +165,7 @@ export default function Navigation(props: any) {
 						</div>
 					</div>
 					<div
+						class="absolute right-0"
 						onMouseOver={() => {
 							setCartPreloader(true)
 						}}
@@ -212,12 +211,12 @@ export default function Navigation(props: any) {
 						<div
 							class={openCart() ? 'flex text-2xl p-5 text-accent_6 h-full relative' : 'flex text-2xl p-5 h-full relative '}
 						>
-							<div class="i-ion-cart-outline w-7 h-7 hover:cursor-pointer"></div>
+							<div class="i-ion-cart-outline w-5.5 h-5.5 lg:w-7 lg:h-7 hover:cursor-pointer"></div>
 							<div
 								class={
 									openCart()
-										? 'w-5 h-5 absolute top-3 right-3 bg-accent_6 text-xs text-white font-500 flex items-center justify-center rounded-full'
-										: 'w-5 h-5 absolute top-3 right-3 bg-text_2 text-xs text-white font-500 flex items-center justify-center rounded-full'
+										? 'w-3.5 h-3.5  lg:w-5 lg:h-5 absolute top-3 right-3 bg-accent_6 text-[0.6rem]  lg:text-xs text-normal_1 font-500 flex items-center justify-center rounded-full'
+										: 'w-3.5 h-3.5  lg:w-5 lg:h-5 absolute top-3 right-3 bg-text_2  text-[0.6rem]  lg:text-xs text-normal_1 font-500 flex items-center justify-center rounded-full'
 								}
 							>
 								{totalItemsInCart(queryCart?.data?.cart?.items)}

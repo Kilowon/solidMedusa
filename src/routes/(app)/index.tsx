@@ -47,6 +47,11 @@ export default function App() {
 					<Show when={isVisible() && primaryData.isSuccess}>
 						<For each={primaryData.data?.data?.main_page_component_block}>
 							{item => {
+								if (item.location !== 'hero') return
+								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+									if (item.status === 'draft') return
+								}
+								if (item.status === 'archived') return
 								return (
 									<div>
 										<Show when={item.component_type === 'featured_products'}>

@@ -30,6 +30,24 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 		enabled: false
 	}))
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	const [categories, categoriesServerState] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
@@ -48,6 +66,13 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 	onMount(() => {
 		setSelectedRoot(rootCategories())
 	})
+
+	function matchCollections(currentFeatured: any, primaryData: any) {
+		let match = currentFeatured.filter((block: any) => block.metadata.location === primaryData)
+		if (match.length === 0) return
+
+		return match
+	}
 
 	return (
 		<div>
@@ -75,7 +100,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 					}`}
 					style={{ overflow: 'auto' }}
 				>
-					<Show when={selectedRoot()?.length > 0}>
+					<Show when={selectedRoot()?.length > 0 && primaryData.isSuccess}>
 						<ol class=" text-base font-500 space-y-2 h-[120vh] ">
 							<Show when={backButton() === 'active'}>
 								<button
@@ -167,13 +192,23 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 										href={`/store/Store`}
 										onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
 									>
-										Shop All Our Items{' '}
+										{primaryData?.data?.data?.menu_shop_all}
 									</A>
 								</div>
-								<Show when={collections()?.collections}>
-									<For each={collections()?.collections}>
+								<Show when={primaryData.isSuccess && collections()?.collections.length > 0}>
+									<For each={primaryData?.data?.data?.main_page_component_block}>
 										{collection => {
-											if (collection?.metadata?.menu !== 'hidden')
+											if (collection.status === 'archived') return
+
+											if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+												if (collection.status === 'draft') return
+											}
+
+											if (collection?.menu_status !== 'menu')
+												createEffect(() => {
+													console.log(matchCollections(collections()?.collections, collection.variant))
+												})
+											if (collection?.menu_status === 'menu')
 												return (
 													<div
 														class="text-base font-500 text-text_2 bg-normal_3   p-2 rounded-0.5 capitalize"
@@ -183,10 +218,10 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 														}}
 													>
 														<A
-															href={`/collections/${collection?.handle}`}
+															href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
 															onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
 														>
-															Shop {collection?.title}
+															Shop {collection?.menu_title}
 														</A>
 													</div>
 												)

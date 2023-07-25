@@ -23,6 +23,24 @@ export default function DropdownMenu(props: {
 		enabled: false
 	}))
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
 	const [categories, categoriesServerState] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
@@ -31,36 +49,18 @@ export default function DropdownMenu(props: {
 		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
 	}, [queryCategories])
 
+	function matchCollections(currentFeatured: any, primaryData: any) {
+		let match = currentFeatured.filter((block: any) => block.metadata.location === primaryData)
+		if (match.length === 0) return
+
+		return match
+	}
+
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 w-95vw h-100vh bg-red-400
 			"
 		>
-			{/* <div>
-				<div
-					class="hover:cursor-pointer"
-					title="Main Menu"
-					role="button"
-					tabindex="0"
-					onKeyDown={e => {
-						if (e.key === 'Enter') {
-							return setOpen(true)
-						}
-						if (e.key === 'Escape') {
-							return setOpen(false)
-						}
-					}}
-				>
-					<div
-						class="i-ic-round-menu  w-7 h-7 ml-2"
-						onclick={e => {
-							e.stopPropagation()
-							setOpen(!open())
-							console.log(open())
-						}}
-					/>
-				</div>
-			</div> */}
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -75,16 +75,13 @@ export default function DropdownMenu(props: {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={props.openMenu()}>
-					<div
-						class=" bg-normal_2 absolute top-full w-full inset-x-0 z-30 mx-auto px-8"
-						/* onMouseLeave={() => setOpen(false)} */
-					>
+				<Show when={props.openMenu() && primaryData.isSuccess}>
+					<div class=" bg-normal_1 absolute top-full w-98.9svw inset-x-0 z-30 mx-auto px-8">
 						<div class="relative py-4">
 							<div class="flex items-start  mx-auto px-8 ">
 								<div class="flex flex-col space-y-8 ">
 									<div class="flex space-x-12 ">
-										<div class="text-base  bg-text_1 text-normal_2 rounded-0.5  p-2">
+										<div class="text-base  bg-text_1 text-normal_2 rounded-1  p-2">
 											<A
 												href={`/store/Store`}
 												onClick={e => {
@@ -95,21 +92,30 @@ export default function DropdownMenu(props: {
 												onKeyDown={e => {
 													if (e.key === 'Escape') {
 														return props.setOpenMenu(false)
-														console.log(open())
 													}
 												}}
 											>
-												Shop All Our Items
+												{primaryData?.data?.data?.menu_shop_all}
 											</A>
 										</div>
-										<Show when={collections()?.collections}>
-											<For each={collections()?.collections}>
+										<Show when={primaryData.isSuccess && collections()?.collections.length > 0}>
+											<For each={primaryData?.data?.data?.main_page_component_block}>
 												{collection => {
-													if (collection?.metadata?.menu !== 'hidden')
+													if (collection.status === 'archived') return
+
+													if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+														if (collection.status === 'draft') return
+													}
+
+													if (collection?.menu_status !== 'menu')
+														createEffect(() => {
+															console.log(matchCollections(collections()?.collections, collection.variant))
+														})
+													if (collection?.menu_status === 'menu')
 														return (
 															<div class="text-base bg-text_3 text-normal_2  p-2 rounded-0.5">
 																<A
-																	href={`/collections/${collection.handle}`}
+																	href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
 																	onClick={e => {
 																		e.stopPropagation()
 
@@ -122,7 +128,7 @@ export default function DropdownMenu(props: {
 																		}
 																	}}
 																>
-																	Shop {collection.title}
+																	{collection.menu_title}
 																</A>
 															</div>
 														)

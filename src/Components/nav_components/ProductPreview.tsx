@@ -16,6 +16,7 @@ interface ProductPreviewProps extends ProductPreviewType {
 	wish: boolean
 	tag: boolean
 	tags: string[]
+	description: string
 }
 
 const ProductPreview = (props: ProductPreviewProps) => {
@@ -116,7 +117,8 @@ const ProductPreview = (props: ProductPreviewProps) => {
 									/>
 								</div>
 							</Show>
-							<p class="text-xs xl:text-sm font-500 tracking-tight text-text_3 text-balance">{props.title}</p>
+							<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3 text-balance">{props.title}</h5>
+							<p class="hidden">{props.description}</p>
 						</div>
 					</div>
 				</div>

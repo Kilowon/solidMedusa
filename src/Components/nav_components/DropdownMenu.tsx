@@ -58,7 +58,7 @@ export default function DropdownMenu(props: {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 w-95vw h-100vh bg-red-400
+			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 w-95vw h-100vh
 			"
 		>
 			<Transition

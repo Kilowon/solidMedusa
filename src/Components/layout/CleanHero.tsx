@@ -86,12 +86,8 @@ export function CleanHero() {
 		return filtered
 	}
 
-	createEffect(() => {
-		console.log(filteredSlides())
-	})
-
 	return (
-		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess}>
+		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess && filteredSlides().length > 0}>
 			<Presence
 				exitBeforeEnter={true}
 				initial={false}
@@ -110,10 +106,10 @@ export function CleanHero() {
 								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center  lg:space-y-12 ">
 									<div class="flex flex-col space-y-3 items-center justify-center  sm:h-auto  mx-6 md:mx-auto">
 										<h1 class=" tracking-tighter text-3xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
-											{heroData?.data?.data?.hero_info[currentIndex()].header}
+											{filteredSlides()?.[currentIndex()]?.header}
 										</h1>
 										<h2 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
-											{heroData?.data?.data?.hero_info[currentIndex()].subtitle}
+											{filteredSlides()?.[currentIndex()]?.subtitle}
 										</h2>
 									</div>
 
@@ -122,12 +118,12 @@ export function CleanHero() {
 											href="/store/Store"
 											class="text- z-2 tracking-tight"
 										>
-											{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
+											{filteredSlides()?.[currentIndex()]?.call_to_action}
 										</A>
 									</div>
 									<div class="flex space-x-2">
 										<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
-											<For each={heroData?.data?.data?.hero_info}>
+											<For each={filteredSlides()}>
 												{(item, index) => {
 													return (
 														<div>
@@ -147,15 +143,15 @@ export function CleanHero() {
 							</div>
 							<div class=" flex lg:hidden items-center justify-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 m-3">
 								<A
-									href={heroData?.data?.data?.hero_info[currentIndex()].call_to_action_href}
+									href={filteredSlides()?.[currentIndex()]?.call_to_action_href || '/store/Store'}
 									class="text- z-2 tracking-tight"
 								>
-									{heroData?.data?.data?.hero_info[currentIndex()].call_to_action}
+									{filteredSlides()?.[currentIndex()]?.call_to_action}
 								</A>
 							</div>
 							<div class="flex space-x-2">
 								<Show when={getWindowSize().width < 1023 && heroData.isSuccess}>
-									<For each={heroData?.data?.data?.hero_info}>
+									<For each={filteredSlides()}>
 										{(item, index) => {
 											return (
 												<div>
@@ -173,11 +169,11 @@ export function CleanHero() {
 							</div>
 							<A
 								class="  flex flex-col items-center"
-								href={heroData?.data?.data?.hero_info[currentIndex()].image_href}
+								href={filteredSlides()?.[currentIndex()]?.call_to_action_href || '/store/Store'}
 							>
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img
-										src={heroData?.data?.data?.hero_info[currentIndex()].image}
+										src={filteredSlides()?.[currentIndex()]?.image}
 										loading="eager"
 										alt="main image"
 										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
@@ -185,7 +181,7 @@ export function CleanHero() {
 								</Show>
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
-										src={heroData?.data?.data?.hero_info[currentIndex()].mobile_image}
+										src={filteredSlides()?.[currentIndex()]?.mobile_image}
 										loading="eager"
 										alt="main image"
 										class=" aspect-[377/198]  min-h-396px object-cover object-left "
@@ -193,7 +189,7 @@ export function CleanHero() {
 								</Show>
 
 								<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
-									{heroData?.data?.data?.hero_info[currentIndex()].image_tagline}
+									{filteredSlides()?.[currentIndex()]?.image_tagline}
 								</div>
 							</A>
 						</div>

@@ -55,7 +55,7 @@ export default function Navigation(props: any) {
 		<div class="sticky top-0 z-50 ">
 			<header class="relative h-16 mx-auto bg-normal_1 text-text_2 flex">
 				<nav class="flex items-center justify-center w-full">
-					<div class="absolute left-0  p-4">
+					<div class="absolute left-0  p-4 z-10">
 						<div>
 							<div
 								onMouseOver={() => {
@@ -95,7 +95,7 @@ export default function Navigation(props: any) {
 									}
 								}}
 							>
-								<div class="i-ic-round-menu w-5.5 h-5.5  lg:w-7 lg:h-7  hover:cursor-pointer" />
+								<div class="i-ic-round-menu w-5.5 h-5.5  lg:w-7 lg:h-7  hover:cursor-pointer z-80" />
 							</div>
 							<Suspense>
 								<Show when={getWindowSize().width > 1023 && preloader() === true}>

@@ -58,7 +58,7 @@ export default function DropdownMenu(props: {
 
 	return (
 		<div
-			class=" flex items-center justify-center h-full w-full hover:transition-opacity hover:duration-400 w-95vw h-100vh
+			class=" 
 			"
 		>
 			<Transition
@@ -76,12 +76,12 @@ export default function DropdownMenu(props: {
 				}}
 			>
 				<Show when={props.openMenu() && primaryData.isSuccess}>
-					<div class=" bg-normal_1 absolute top-full w-98.9svw inset-x-0 z-30 mx-auto px-8">
+					<div class=" bg-normal_1 fixed top-16 left-0 px-5 rounded-br-5 select-none">
 						<div class="relative py-4">
-							<div class="flex items-start  mx-auto px-8 ">
+							<div class="">
 								<div class="flex flex-col space-y-8 ">
-									<div class="flex space-x-12 ">
-										<div class="text-base  bg-text_1 text-normal_2 rounded-1  p-2">
+									<div class="flex flex-wrap">
+										<div class="text-base  text-accent_6 mr-6 font-500">
 											<A
 												href={`/store/Store`}
 												onClick={e => {
@@ -113,7 +113,7 @@ export default function DropdownMenu(props: {
 														})
 													if (collection?.menu_status === 'menu')
 														return (
-															<div class="text-base bg-text_3 text-normal_2  p-2 rounded-0.5">
+															<div class="text-base text-base  text-accent_6 mr-6 font-500">
 																<A
 																	href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
 																	onClick={e => {
@@ -139,12 +139,12 @@ export default function DropdownMenu(props: {
 									<hr class="border-text_4/50 my-2 mx-6" />
 									<div class="flex items-start">
 										<Show when={rootCategories()}>
-											<ol class="flex flex-auto space-x-6 mt-2 ">
+											<ol class="flex flex-wrap">
 												<For each={rootCategories()}>
 													{(parentCategory: any) => {
 														if (parentCategory.category_children?.length > 0) {
 															return (
-																<li class="whitespace-nowrap space-y-4">
+																<li class="whitespace-nowrap space-y-4 mr-6 mb-6">
 																	<div class="text-base text-text_2 text-lg font-500 capitalize">
 																		<A
 																			href={`/categories/${parentCategory.handle}`}

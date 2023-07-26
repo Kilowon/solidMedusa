@@ -55,8 +55,8 @@ export default function Navigation(props: any) {
 		<div class="sticky top-0 z-50 ">
 			<header class="relative h-16 mx-auto bg-normal_1 text-text_2 flex ">
 				<Show when={import.meta.env.VITE_DRAFT_SITE === 'true'}>
-					<div class="bg-red-7 w-full justify-center items-center font-700 text-white text-xs fixed z-100 bottom-0 h-8">
-						<div class="w-full h-full flex justify-center items-center">Draft</div>
+					<div class="bg-sky-7 w-full justify-center items-center font-700 text-white text-xs fixed z-100 bottom-0 h-6">
+						<div class="w-full h-full flex justify-center items-center">DRAFT SITE</div>
 					</div>
 				</Show>
 				<nav class="flex items-center justify-center w-full">

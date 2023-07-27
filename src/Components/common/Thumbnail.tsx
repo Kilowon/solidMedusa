@@ -13,6 +13,7 @@ export type ThumbnailProps = {
 	size?: string | 'small' | 'medium' | 'large' | 'full'
 	title?: string | null
 	variant?: 'wide' | 'default' | 'tall' | 'default_cart'
+	bgVariant?: 'default' | 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
 }
 
 export function Thumbnail(props: ThumbnailProps) {
@@ -21,18 +22,33 @@ export function Thumbnail(props: ThumbnailProps) {
 	return (
 		<div
 			class={clsx(
-				'relative aspect-[100/75]',
-				props.variant === 'default' && 'aspect-[29/34]',
-				props.variant === 'tall' && 'aspect-[75/100]',
-				props.variant === 'wide' && 'aspect-[100/75]'
+				'',
+				props.bgVariant === 'default' && '',
+				props.bgVariant === 'type_1' && 'rounded-md bg-surface overflow-hidden',
+				props.bgVariant === 'type_2' && 'rounded-t-md bg-surface overflow-hidden border border-normal_4 ',
+				props.bgVariant === 'type_3' &&
+					'rounded-md bg-surface overflow-hidden border border-normal_4 shadow-lg shadow-text_5/50',
+				props.bgVariant === 'type_4' && 'bg-surface rounded-t-md border border-normal_4',
+				props.bgVariant === 'type_5' && 'bg-normal_1 rounded-t-md border border-normal_4',
+				props.bgVariant === 'type_6' && 'bg-normal_1 rounded-md border border-normal_4'
 			)}
 		>
-			<ImageOrPlaceholder
-				title={props.title}
-				image={initialImage}
-				size={props.size}
-				variant={props.variant}
-			/>
+			<div
+				class={clsx(
+					'relative aspect-[100/75]  ',
+					props.variant === 'default' && 'aspect-[29/34]',
+					props.variant === 'tall' && 'aspect-[75/100]',
+					props.variant === 'wide' && 'aspect-[100/75]'
+				)}
+			>
+				<div></div>
+				<ImageOrPlaceholder
+					title={props.title}
+					image={initialImage}
+					size={props.size}
+					variant={props.variant}
+				/>
+			</div>
 		</div>
 	)
 }

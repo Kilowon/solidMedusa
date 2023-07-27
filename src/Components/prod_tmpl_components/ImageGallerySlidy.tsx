@@ -1,6 +1,6 @@
 import { createSignal, createEffect, Show } from 'solid-js'
 import { Slidy } from '@slidy/solid'
-import { blur, fade, matrix, translate } from '@slidy/animation'
+import { fade } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
@@ -55,18 +55,11 @@ export default function ImageGallerySlidy(props: {
 	})
 
 	return (
-		<Show
-			when={location() === useLocation().pathname && slides().length > 0}
-			fallback={
-				<section class="flex items-center justify-center h-full p-16 bg-gray-900 text-gray-100 text-4xl">
-					<div class="i-svg-spinners:bars-scale-fade" />
-				</section>
-			}
-		>
+		<Show when={location() === useLocation().pathname && slides().length > 0}>
 			<div class="md:flex md:items-start md:relative">
 				<div
 					id="gallery"
-					class="h-[75svh]  lg:flex lg:h-[90svh] lg:mx-8"
+					class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
 					style={{
 						'--slidy-slide-radius': '3px',
 						'--slidy-slide-height': '93%',
@@ -81,7 +74,6 @@ export default function ImageGallerySlidy(props: {
 				>
 					<Slidy
 						slides={slides()}
-						snap="center"
 						thumbnail={false}
 						clamp={0}
 						loop={true}
@@ -91,7 +83,10 @@ export default function ImageGallerySlidy(props: {
 						progress={true}
 						counter={false}
 						sensity={5}
-						gravity={0.5}
+						gravity={0.75}
+						snap="center"
+						autoplay={true}
+						easing={linear}
 					/>
 				</div>
 			</div>

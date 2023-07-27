@@ -49,7 +49,7 @@ export function CleanHero() {
 	const [filteredSlides, setFilteredSlides] = createSignal<any>([''])
 
 	function heroCarousel() {
-		if (!heroData?.data?.data?.slides_active) return
+		if (!heroSlidesActive()) return
 		let interval: any
 		const startInterval = () => {
 			interval = setInterval(() => {
@@ -76,10 +76,19 @@ export function CleanHero() {
 		if (heroData.isSuccess) {
 			setTime(heroData?.data?.data?.pause_between * 1000)
 			setEndWait(heroData?.data?.data?.init_hold * 1000)
-			setTotalLength(heroData?.data?.data?.slides_active ? filteredSlides().length : 0)
+			setTotalLength(heroSlidesActive() ? filteredSlides().length : 0)
 			heroCarousel()
 		}
 	})
+
+	function heroSlidesActive() {
+		if (import.meta.env.VITE_DRAFT_SITE === 'true') {
+			return heroData?.data?.data?.draft_slides_active
+		}
+		if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+			return heroData?.data?.data?.slides_active
+		}
+	}
 
 	function slideStatusCheck(slides: [any], status: 'published' | 'draft' | 'archived') {
 		const filtered = slides.filter((slide: any) => slide.status === status || slide.status === 'published')
@@ -103,13 +112,13 @@ export function CleanHero() {
 		"
 						>
 							<div class="flex flex-col justify-center h-35svh lg:h-auto ">
-								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[600px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ">
+								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ">
 									<div>
 										<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-											<h1 class=" tracking-tighter text-4xl  sm:text-5xl md:text-[5vw] md:max-w-lg lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
+											<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
 												{filteredSlides()?.[currentIndex()]?.header}
 											</h1>
-											<h2 class=" tracking-tighter text-xl  sm:text-3xl md:text-[3vw] md:max-w-lg lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
+											<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
 												{filteredSlides()?.[currentIndex()]?.subtitle}
 											</h2>
 										</div>
@@ -185,7 +194,7 @@ export function CleanHero() {
 										src={filteredSlides()?.[currentIndex()]?.mobile_image}
 										loading="eager"
 										alt="main image"
-										class=" aspect-[390/170]  min-h-292px object-cover object-left "
+										class="   min-h-292px object-cover object-left "
 									/>
 								</Show>
 

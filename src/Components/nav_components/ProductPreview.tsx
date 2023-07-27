@@ -2,9 +2,10 @@ import { A } from 'solid-start'
 import { ProductPreviewType } from '~/types/global'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { currencyFormat } from '~/lib/helpers/currency'
-import { Show, Suspense, createSignal, For } from 'solid-js'
+import { Show, onMount, createSignal, For } from 'solid-js'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
+
 interface ProductPreviewProps extends ProductPreviewType {
 	handleClick: () => void
 	variants: [
@@ -39,6 +40,20 @@ const ProductPreview = (props: ProductPreviewProps) => {
 	}))
 
 	const [favoritesIcon, setFavoritesIcon] = createSignal(false)
+
+	const [bgVariant, setBgVariant] = createSignal<any>('default')
+
+	onMount(() => {
+		if (primaryData.isSuccess) {
+			if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+				setBgVariant(primaryData?.data?.data?.product_card_variants)
+			}
+			if (import.meta.env.VITE_DRAFT_SITE === 'true') {
+				setBgVariant(primaryData?.data?.data?.draft_site_card_variant)
+			}
+		}
+	})
+
 	return (
 		<Show when={props.title}>
 			<A href={`/products/${props.handle}`}>
@@ -50,9 +65,22 @@ const ProductPreview = (props: ProductPreviewProps) => {
 						thumbnail={props.thumbnail}
 						title={props.title}
 						variant={primaryData?.data?.data?.thumbnail_ratio}
+						bgVariant={bgVariant()}
 					/>
-					<div class=" flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 ">
-						<div class="flex justify-between">
+					<div
+						class={clsx(
+							'flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 ',
+							bgVariant() === 'default' && '',
+							bgVariant() === 'type_1' && 'rounded-md bg-surface overflow-hidden',
+							bgVariant() === 'type_2' && 'rounded-b-md bg-surface overflow-hidden border border-normal_4 ',
+							bgVariant() === 'type_3' &&
+								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-lg shadow-text_5/50',
+							bgVariant() === 'type_4' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
+							bgVariant() === 'type_5' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
+							bgVariant() === 'type_6' && ' '
+						)}
+					>
+						<div class="flex justify-between pt-0.5 px-1 ">
 							<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight relative">
 								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 									<div class="">
@@ -98,27 +126,31 @@ const ProductPreview = (props: ProductPreviewProps) => {
 								</ul>
 							</Show>
 						</div>
-						<div class="flex space-x-2">
-							<Show when={props?.wish === true}>
-								<div
-									class="bg-transparent rounded-full flex space-x-0.5 cursor-pointer  "
-									onClick={e => {
-										e.stopPropagation()
-										e.preventDefault()
-										setFavoritesIcon(!favoritesIcon())
-									}}
-								>
+						<div class="min-h-2.5rem lg:min-h-3rem  pt-0.5 px-1 ">
+							<div class="flex">
+								<Show when={props?.wish === true}>
 									<div
-										class={clsx(
-											' w-4 h-4 lg:w-5 lg:h-5 ',
-											favoritesIcon() === true && 'bg-accent_1 i-material-symbols-bookmark',
-											favoritesIcon() === false && 'bg-text_2 i-material-symbols-bookmark-outline'
-										)}
-									/>
-								</div>
-							</Show>
-							<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3 text-balance">{props.title}</h5>
-							<p class="hidden">{props.description}</p>
+										class="bg-transparent rounded-full flex space-x-0.5 cursor-pointer  "
+										onClick={e => {
+											e.stopPropagation()
+											e.preventDefault()
+											setFavoritesIcon(!favoritesIcon())
+										}}
+									>
+										<div
+											class={clsx(
+												' w-4 h-4 lg:w-5 lg:h-5 ',
+												favoritesIcon() === true && 'bg-accent_1 i-material-symbols-bookmark',
+												favoritesIcon() === false && 'bg-text_4 i-material-symbols-bookmark-outline'
+											)}
+										/>
+									</div>
+								</Show>
+								<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip">
+									{props.title}
+								</h5>
+								<p class="hidden">{props.description}</p>
+							</div>
 						</div>
 					</div>
 				</div>

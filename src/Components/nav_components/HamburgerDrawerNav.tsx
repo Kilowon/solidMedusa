@@ -101,7 +101,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()?.length > 0 && primaryData.isSuccess}>
-						<ol class=" text-base font-500 space-y-2 h-[120vh] ">
+						<ol class=" text-sm font-500 space-y-2 h-[120vh] ">
 							<Show when={backButton() === 'active'}>
 								<button
 									class="flex space-x-2 items-center w-full py-1 bg-normal_1"
@@ -116,10 +116,9 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 							</Show>
 							<For each={selectedRoot()}>
 								{(collection: any, index) => {
-									console.log('COL', collection)
 									if (collection?.parent_category_id !== null && index() === 0) {
 										return (
-											<div class="flex justify-between space-x-0.5 capitalize">
+											<div class="flex text-sm justify-between space-x-0.5 capitalize py-1">
 												<A
 													class="w-2/3 "
 													href={`/categories/${collection?.parent_category?.handle}`}
@@ -165,7 +164,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 									if (collection?.category_children?.length === 0) {
 										return (
 											<li
-												class=" ml-2 w-full  text-text_2 capitalize"
+												class=" ml-2 w-full py-1 text-text_3 capitalize"
 												onClick={() => {
 													setBackButton('inactive')
 													props.setMenuDrawer({ menu: 'hidden' })
@@ -187,7 +186,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 							</For>
 
 							<div class="flex flex-col space-y-0.5 ">
-								<div class="text-base font-500 text-text_2  p-2 capitalize">
+								<div class="text-sm font-500 text-accent_6  p-2 capitalize">
 									<A
 										href={`/store/Store`}
 										onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
@@ -211,7 +210,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 											if (collection?.menu_status === 'menu')
 												return (
 													<div
-														class="text-base font-500 text-text_2 bg-normal_3   p-2 rounded-0.5 capitalize"
+														class="text-sm font-500 text-accent_6    p-2 rounded-0.5 capitalize"
 														onClick={() => {
 															setBackButton('inactive')
 															props.setMenuDrawer({ menu: 'hidden' })
@@ -221,7 +220,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 															href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
 															onClick={() => props.setMenuDrawer({ menu: 'hidden' })}
 														>
-															Shop {collection?.menu_title}
+															{collection?.menu_title}
 														</A>
 													</div>
 												)

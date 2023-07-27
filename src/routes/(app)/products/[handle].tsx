@@ -1,7 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { fetchProduct } from '~/Services/medusaAPI'
 import { useParams, Title, Meta } from 'solid-start'
-import { Suspense, createEffect, Show } from 'solid-js'
+import { createEffect, Show } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -16,7 +15,10 @@ export default function Products() {
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
-			const product = await medusa?.products.list({ handle: params.handle, cart_id: queryCart.data?.cart.id })
+			const product = await medusa?.products.list({
+				handle: params.handle,
+				cart_id: queryCart.data?.cart.id
+			})
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,

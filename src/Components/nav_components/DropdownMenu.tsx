@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For, Show, Accessor, onMount } from 'solid-js'
+import { createEffect, createSignal, For, Show, Accessor } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
@@ -81,7 +81,7 @@ export default function DropdownMenu(props: {
 							<div class="">
 								<div class="flex flex-col space-y-8 ">
 									<div class="flex flex-wrap">
-										<div class="text-base  text-accent_6 mr-6 font-500">
+										<div class="text-sm  text-accent_6 mr-6 font-500">
 											<A
 												href={`/store/Store`}
 												onClick={e => {
@@ -113,7 +113,7 @@ export default function DropdownMenu(props: {
 														})
 													if (collection?.menu_status === 'menu')
 														return (
-															<div class="text-base text-base  text-accent_6 mr-6 font-500">
+															<div class="text-sm text-sm  text-accent_6 mr-6 font-500">
 																<A
 																	href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
 																	onClick={e => {
@@ -145,7 +145,7 @@ export default function DropdownMenu(props: {
 														if (parentCategory.category_children?.length > 0) {
 															return (
 																<li class="whitespace-nowrap space-y-4 mr-6 mb-6">
-																	<div class="text-base text-text_2 text-lg font-500 capitalize">
+																	<div class="text-sm text-text_2 text-lg font-500 capitalize">
 																		<A
 																			href={`/categories/${parentCategory.handle}`}
 																			onClick={e => {
@@ -168,7 +168,7 @@ export default function DropdownMenu(props: {
 																			{(category: any) => {
 																				if (category.parent_category?.id === parentCategory.id) {
 																					return (
-																						<div class="text-text_3/85 capitalize">
+																						<div class="text-text_3 text-sm capitalize">
 																							<A
 																								href={`/categories/${category.handle}`}
 																								onClick={e => {
@@ -198,7 +198,7 @@ export default function DropdownMenu(props: {
 												</For>
 
 												<li class="flex flex-col whitespace-nowrap ">
-													<div class="text-base text-text_2 font-500 space-y-3">
+													<div class="text-sm text-text_2 font-500 space-y-3">
 														<For each={rootCategories()}>
 															{(collection: any) => {
 																if (collection.category_children?.length === 0) {

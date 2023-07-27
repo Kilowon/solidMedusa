@@ -1,4 +1,4 @@
-import { Show, lazy, Accessor, Suspense, onMount } from 'solid-js'
+import { Show, lazy, Accessor, Suspense } from 'solid-js'
 import { Transition } from 'solid-transition-group'
 
 const CartCore = lazy(() => import('../Core/CartCore'))

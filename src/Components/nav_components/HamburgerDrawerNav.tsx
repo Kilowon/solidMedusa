@@ -51,6 +51,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 	const [categories, categoriesServerState] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
+
 	createEffect(() => {
 		categoriesServerState(queryCategories.data?.product_categories)
 		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
@@ -65,6 +66,12 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 
 	onMount(() => {
 		setSelectedRoot(rootCategories())
+	})
+
+	createEffect(() => {
+		if (props.menuDrawer().menu === 'active') {
+			setSelectedRoot(rootCategories())
+		}
 	})
 
 	function matchCollections(currentFeatured: any, primaryData: any) {

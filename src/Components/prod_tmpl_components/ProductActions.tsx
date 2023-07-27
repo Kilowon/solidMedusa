@@ -83,13 +83,16 @@ export default function ProductActions(props: {
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json'
+			const response = await fetch(
+				`https://direct.shauns.cool/items/product/${props.productInfo?.id}?fields=*,reviews.*`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json'
+					}
 				}
-			})
+			)
 			const data = await response.json()
 			return data
 		},
@@ -128,15 +131,17 @@ export default function ProductActions(props: {
 			<div class="flex flex-col space-y-4  mx-2">
 				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
-						<div class="flex items-center space-x-2">
-							<div class="text-xl">
-								<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
+						<Show when={reviewData.data?.data?.overall_rating}>
+							<div class="flex items-center space-x-2">
+								<div class="text-xl">
+									<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
+								</div>
+
+								<div class="text-text_2 ">|</div>
+
+								<div class="text-text_2 underline ">{reviewData.data?.data?.total_reviews} reviews</div>
 							</div>
-
-							<div class="text-text_2 ">|</div>
-
-							<div class="text-text_2 underline ">{reviewData.data?.data?.total_reviews} reviews</div>
-						</div>
+						</Show>
 						<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
 					</div>
 					<div>
@@ -449,7 +454,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 						<button
 							class={clsx(
 								'inline-block p-1 border-b-2 rounded-t-lg h-full lg:w-31 bg-normal_1 lg:bg-normal_2',
-								activeTab().info === 'active' && ' border-text_2 text-text_2 bg-text_2',
+								activeTab().info === 'active' && ' border-text_2 text-text_2',
 								activeTab().info === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_3'
 							)}
 							id="info-tab"
@@ -506,6 +511,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							</div>
 						</button>
 					</li>
+					<Show when={props.rating?.reviews}>
 					<li
 						class=""
 						role="presentation"
@@ -538,7 +544,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 								Customer Reviews
 							</div>
 						</button>
-					</li>
+					</li></Show>
 				</ul>
 			</div>
 			<div class="text-sm h-full">
@@ -674,7 +680,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							</Show>
 						</div>
 					</Show>
-					<Show when={activeTab().reviews === 'active'}>
+					<Show when={activeTab().reviews === 'active' && props.rating?.reviews}>
 						<div
 							class={clsx(
 								'p-4 rounded-lg bg-normal_2 space-y-3 text-sm',

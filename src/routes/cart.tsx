@@ -28,6 +28,7 @@ export default function Cart(props: any) {
 	}))
 	return (
 		<div
+			class="bg-normal_1 min-h-[100svh]"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -78,7 +79,7 @@ export default function Cart(props: any) {
 			<div class="content-container sm:mt-10">
 				<CartCore variant="primary" />
 			</div>
-			<FeaturedProducts variant="footer" />
+			{/* <FeaturedProducts variant="footer" /> */}
 		</div>
 	)
 }

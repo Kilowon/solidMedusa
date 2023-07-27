@@ -70,7 +70,7 @@ export default function Home() {
 
 	return (
 		<div
-			class=""
+			class="bg-normal_1"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {

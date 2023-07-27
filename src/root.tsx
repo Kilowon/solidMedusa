@@ -30,7 +30,7 @@ export default function Root() {
 	return (
 		<Html
 			lang="en"
-			class="overflow-y-scroll"
+			class="overflow-y-scroll bg-transparent"
 		>
 			<Head>
 				{/* <Meta

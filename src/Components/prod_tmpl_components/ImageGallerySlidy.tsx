@@ -56,19 +56,21 @@ export default function ImageGallerySlidy(props: {
 
 	return (
 		<Show when={location() === useLocation().pathname && slides().length > 0}>
-			<div class="md:flex md:items-start md:relative">
+			<div class="md:flex md:items-start md:relative bg-transparent">
 				<div
 					id="gallery"
 					class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
 					style={{
 						'--slidy-slide-radius': '3px',
 						'--slidy-slide-height': '93%',
-						'--slidy-progress-thumb-color': '#363636',
+						'--slidy-progress-thumb-color': '#263C59',
+						'--slidy-progress-track-color': '#e3e3e3',
 						'--slidy-height': '100%',
-						'--slidy-slide-bg-color': '#ffffff',
+						'--slidy-slide-bg-color': 'transparent',
 						'--slidy-slide-object-fit': 'contain',
 						'--slidy-arrow-bg': '#ff',
-						'--slidy-arrow-icon-color': '#16293b',
+						'--slidy-arrow-icon-color': '#263C59',
+
 						'--slidy-arrow-size': '2.5rem'
 					}}
 				>

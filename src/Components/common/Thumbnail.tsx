@@ -26,11 +26,10 @@ export function Thumbnail(props: ThumbnailProps) {
 				props.bgVariant === 'default' && '',
 				props.bgVariant === 'type_1' && 'rounded-md bg-surface overflow-hidden',
 				props.bgVariant === 'type_2' && 'rounded-t-md bg-surface overflow-hidden border border-normal_4 ',
-				props.bgVariant === 'type_3' &&
-					'rounded-md bg-surface overflow-hidden border border-normal_4 shadow-lg shadow-text_5/50',
-				props.bgVariant === 'type_4' && 'bg-surface rounded-t-md border border-normal_4',
-				props.bgVariant === 'type_5' && 'bg-normal_1 rounded-t-md border border-normal_4',
-				props.bgVariant === 'type_6' && 'bg-normal_1 rounded-md border border-normal_4'
+				props.bgVariant === 'type_3' && 'rounded-t-md bg-surface shadow-sm shadow-text_5/50 shadow-sm shadow-text_5/50',
+				props.bgVariant === 'type_4' && 'bg-surface rounded-t-md shadow-md shadow-text_5/50 ',
+				props.bgVariant === 'type_5' && 'bg-normal_1 rounded-t-sm border border-normal_4 shadow-sm shadow-text_5/50',
+				props.bgVariant === 'type_6' && 'bg-normal_1 rounded-t-md border border-normal_4 shadow-md shadow-text_5/50'
 			)}
 		>
 			<div

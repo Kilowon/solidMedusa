@@ -42,14 +42,17 @@ const ProductPreview = (props: ProductPreviewProps) => {
 	const [favoritesIcon, setFavoritesIcon] = createSignal(false)
 
 	const [bgVariant, setBgVariant] = createSignal<any>('default')
+	const [bgVariantImage, setBgVariantImage] = createSignal<any>('default')
 
 	onMount(() => {
 		if (primaryData.isSuccess) {
 			if (import.meta.env.VITE_DRAFT_SITE === 'false') {
 				setBgVariant(primaryData?.data?.data?.product_card_variants)
+				setBgVariantImage(primaryData?.data?.data?.product_card_image_variant)
 			}
 			if (import.meta.env.VITE_DRAFT_SITE === 'true') {
 				setBgVariant(primaryData?.data?.data?.draft_site_card_variant)
+				setBgVariantImage(primaryData?.data?.data?.draft_site_card_image_variant)
 			}
 		}
 	})
@@ -65,7 +68,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 						thumbnail={props.thumbnail}
 						title={props.title}
 						variant={primaryData?.data?.data?.thumbnail_ratio}
-						bgVariant={bgVariant()}
+						bgVariant={bgVariantImage()}
 					/>
 					<div
 						class={clsx(
@@ -73,11 +76,14 @@ const ProductPreview = (props: ProductPreviewProps) => {
 							bgVariant() === 'default' && '',
 							bgVariant() === 'type_1' && 'rounded-md bg-surface overflow-hidden',
 							bgVariant() === 'type_2' && 'rounded-b-md bg-surface overflow-hidden border border-normal_4 ',
-							bgVariant() === 'type_3' &&
-								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-lg shadow-text_5/50',
-							bgVariant() === 'type_4' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
-							bgVariant() === 'type_5' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
-							bgVariant() === 'type_6' && ' '
+							bgVariant() === 'type_3' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
+
+							bgVariant() === 'type_4' && 'bg-normal_1 rounded-b-md border border-normal_4 shadow-sm shadow-text_5/50',
+							bgVariant() === 'type_5' &&
+								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-sm shadow-text_5/50',
+
+							bgVariant() === 'type_6' &&
+								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-md shadow-text_5/50 '
 						)}
 					>
 						<div class="flex justify-between pt-0.5 px-1 ">

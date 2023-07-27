@@ -133,6 +133,7 @@ export default function Account() {
 
 	return (
 		<main
+			class="bg-normal_1 min-h-[100svh]"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -180,7 +181,7 @@ export default function Account() {
 			}
 		>
 			<Navigation />
-			<div>
+			<div class="bg-normal_1 min-h-[100svh]">
 				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">
 					<Suspense
 						fallback={
@@ -236,7 +237,7 @@ export default function Account() {
 							</div>
 						</Show>
 						<Show when={currentCustomer.isSuccess}>
-							<div class=" w-full max-h-90svh">
+							<div class=" w-full min-h-90svh">
 								<div class="flex flex-col  sm:content-container md:max-w-900px  justify-center lg:mt-20 space-y-2 sm:space-y-6 lg:space-y-10 mx-1 sm:mx-auto  ">
 									<div class="sm:flex items-center justify-between">
 										<div class="text-xs sm:text-base font-400 text-text_2 pl-1 sm:pl-0"></div>

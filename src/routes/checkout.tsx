@@ -236,7 +236,7 @@ export default function CheckoutPage() {
 	}
 	return (
 		<div
-			class=" text-text_2"
+			class=" text-text_2 bg-normal_1 min-h-[100svh]"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -367,7 +367,7 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 				</div>
-				<div class="hidden lg:block lg:w-[433px] mx-auto bg-white">
+				<div class="hidden lg:block lg:w-[433px] mx-auto ">
 					<CartCore variant="checkout" />
 				</div>
 			</div>
@@ -423,7 +423,7 @@ export function CartDrawer(props: any) {
 	return (
 		<div>
 			<div
-				class={`fixed inset-0 bg-white/70 z-200 transition-all duration-250 ease-in-out backdrop-blur-2 ${
+				class={`fixed inset-0  z-200 transition-all duration-250 ease-in-out backdrop-blur-2 ${
 					props.mobileDrawer().cart === 'active' ? '' : 'opacity-0 pointer-events-none'
 				}`}
 				onClick={event => {
@@ -441,7 +441,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-16 right-0 h-full w-[95vw] bg-white z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
+					class={`fixed top-16 right-0 h-full w-[95vw]  z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

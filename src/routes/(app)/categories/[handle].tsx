@@ -164,6 +164,7 @@ export default function Categories() {
 																					{...product}
 																					wish={primaryData?.data?.data?.category_wish}
 																					tag={primaryData?.data?.data?.category_tag}
+																					component_type="standard"
 																				/>
 																			</Motion>
 																		</Rerun>

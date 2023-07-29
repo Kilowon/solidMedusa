@@ -169,7 +169,10 @@ export default function Collection() {
 															animate={{ opacity: [0, 1] }}
 															transition={{ duration: 0.5, delay: delay(), easing: 'ease-in-out' }}
 														>
-															<ProductPreview {...product} />
+															<ProductPreview
+																{...product}
+																component_type="standard"
+															/>
 														</Motion>
 													</Rerun>
 												</Presence>

@@ -17,7 +17,9 @@ interface ProductPreviewProps extends ProductPreviewType {
 	wish: boolean
 	tag: boolean
 	tags: string[]
+	subtitle: string
 	description: string
+	component_type: 'extended' | 'standard'
 }
 
 const ProductPreview = (props: ProductPreviewProps) => {
@@ -43,6 +45,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 
 	const [bgVariant, setBgVariant] = createSignal<any>('default')
 	const [bgVariantImage, setBgVariantImage] = createSignal<any>('default')
+	const [mouseOver, setMouseOver] = createSignal(false)
 
 	onMount(() => {
 		if (primaryData.isSuccess) {
@@ -62,6 +65,8 @@ const ProductPreview = (props: ProductPreviewProps) => {
 			<A href={`/products/${props.handle}`}>
 				<div
 					onClick={props.handleClick}
+					onMouseOver={() => setMouseOver(true)}
+					onMouseOut={() => setMouseOver(false)}
 					class="space-y-1 bg-transparent"
 				>
 					<Thumbnail
@@ -72,7 +77,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 					/>
 					<div
 						class={clsx(
-							'flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 ',
+							'flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 relative',
 							bgVariant() === 'default' && '',
 							bgVariant() === 'type_1' && 'rounded-md bg-surface overflow-hidden',
 							bgVariant() === 'type_2' && 'rounded-b-md bg-surface overflow-hidden border border-normal_4 ',
@@ -86,8 +91,8 @@ const ProductPreview = (props: ProductPreviewProps) => {
 								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-md shadow-text_5/50 '
 						)}
 					>
-						<div class="flex justify-between pt-0.5 px-1 ">
-							<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight relative">
+						<div class="flex justify-between pt-0.5 px-1 relative ">
+							<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight ">
 								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 									<div class="">
 										{props.variants?.[0]?.original_price
@@ -152,12 +157,22 @@ const ProductPreview = (props: ProductPreviewProps) => {
 										/>
 									</div>
 								</Show>
-								<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip">
-									{props.title}
-								</h5>
-								<p class="hidden">{props.description}</p>
+								<div class="space-y-1">
+									<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip">
+										{props.title}
+									</h5>
+									<p class="hidden">{props.description}</p>
+									<Show when={props.component_type === 'extended'}>
+										<h6 class="text-xs text-text_4 line-clamp-2 text-ellipsis text-clip">{props.subtitle}</h6>
+									</Show>
+								</div>
 							</div>
 						</div>
+						<Show when={props.component_type === 'extended' && mouseOver() === true}>
+							<div class="w-full flex justify-start h-3.5 absolute bottom--4 z-30">
+								<button class="text-xs h-1 bg-accent_4 text-accenttext_1 rounded-1 flex items-center w-full"></button>
+							</div>
+						</Show>
 					</div>
 				</div>
 			</A>

@@ -93,6 +93,7 @@ export default function Store() {
 															{...product}
 															wish={primaryData?.data?.data?.store_wish}
 															tag={primaryData?.data?.data?.store_tag}
+															component_type="standard"
 														/>
 													</Motion>
 												</Rerun>

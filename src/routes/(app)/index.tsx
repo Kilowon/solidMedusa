@@ -5,6 +5,10 @@ import { createVisibilityObserver } from '@solid-primitives/intersection-observe
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
+const FeaturedProductsLg = lazy(() => import('~/Components/layout/FeaturedProductsLg'))
+
+const FeaturedProductsLgExtended = lazy(() => import('~/Components/layout/FeaturedProductsLgExtended'))
+
 export default function App() {
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
@@ -56,6 +60,12 @@ export default function App() {
 									<div>
 										<Show when={item.component_type === 'featured_products'}>
 											<FeaturedProducts variant={item.variant} />
+										</Show>
+										<Show when={item.component_type === 'featured_products_lg'}>
+											<FeaturedProductsLg variant={item.variant} />
+										</Show>
+										<Show when={item.component_type === 'featured_products_lg'}>
+											<FeaturedProductsLgExtended variant={item.variant} />
 										</Show>
 									</div>
 								)

@@ -27,7 +27,7 @@ interface FeaturedProps {
 	variant?: 'block_1' | 'block_2' | 'block_3' | 'block_4' | 'block_5' | 'block_6' | 'block_7' | 'block_8'
 }
 
-export default function FeaturedProducts(props: FeaturedProps) {
+export default function FeaturedProductsLg(props: FeaturedProps) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
@@ -119,10 +119,6 @@ export default function FeaturedProducts(props: FeaturedProps) {
 		}
 	}
 
-	createEffect(() => {
-		console.log('currentFeatured', primaryDataFeatured())
-	})
-
 	return (
 		<section>
 			<Transition
@@ -141,7 +137,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 							primaryData.isSuccess
 						}
 					>
-						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12 my-18">
+						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12 my-18">
 							<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
 								<div class="space-y-1">
 									<Show when={primaryDataFeatured()?.top_line_tag?.length > 0}>
@@ -217,7 +213,7 @@ export default function FeaturedProducts(props: FeaturedProps) {
 																{...product}
 																wish={primaryData?.data?.data?.product_wish}
 																tag={primaryData?.data?.data?.product_tag}
-																component_type="standard"
+																component_type={'standard'}
 															/>
 														</Motion>
 													</Rerun>

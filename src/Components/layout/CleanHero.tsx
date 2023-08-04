@@ -30,6 +30,26 @@ export function CleanHero() {
 		enabled: false
 	}))
 
+	/* 	const featuredData = createQuery(() => ({
+		queryKey: ['featured_data'],
+		queryFn: async function () {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`https://direct.shauns.cool/items/featured_components?fields=*.*.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: true
+	}))
+ */
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
@@ -111,74 +131,52 @@ export function CleanHero() {
 							class="min-h-[100svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row 
 		"
 						>
-							<div class="flex flex-col justify-center h-35svh lg:h-auto ">
-								<div class="text-text_2 z-10 flex flex-col  lg:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ">
-									<div>
-										<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-											<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
-												{filteredSlides()?.[currentIndex()]?.header}
-											</h1>
-											<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
-												{filteredSlides()?.[currentIndex()]?.subtitle}
-											</h2>
+							<div class="flex flex-col">
+								<div class="flex flex-grow w-full  h-1/3"></div>
+								<div class="flex flex-col justify-center h-35svh h-1/3 lg:h-auto ">
+									<div class="text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ">
+										<div>
+											<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
+												<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
+													{filteredSlides()?.[currentIndex()]?.header}
+												</h1>
+												<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
+													{filteredSlides()?.[currentIndex()]?.subtitle}
+												</h2>
+											</div>
 										</div>
-									</div>
-									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
-										<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1">
-											<A
-												href="/store/Store"
-												class="text- z-2 tracking-tight"
-											>
-												{filteredSlides()?.[currentIndex()]?.call_to_action}
-											</A>
-										</div>
-										<div class="flex space-x-2">
-											<For each={filteredSlides()}>
-												{(item, index) => {
-													return (
-														<div>
-															<Show when={index() === currentIndex()}>
-																<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
-															</Show>
-															<Show when={index() !== currentIndex()}>
-																<div class="w-1.5 h-1.5 rounded-6 bg-accent_6/50" />
-															</Show>
-														</div>
-													)
-												}}
-											</For>
+										<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
+											<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1">
+												<A
+													href="/store/Store"
+													class="text- z-2 tracking-tight"
+												>
+													{filteredSlides()?.[currentIndex()]?.call_to_action}
+												</A>
+											</div>
+											<div class="flex space-x-2">
+												<For each={filteredSlides()}>
+													{(item, index) => {
+														return (
+															<div>
+																<Show when={index() === currentIndex()}>
+																	<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
+																</Show>
+																<Show when={index() !== currentIndex()}>
+																	<div class="w-1.5 h-1.5 rounded-6 bg-accent_6/50" />
+																</Show>
+															</div>
+														)
+													}}
+												</For>
+											</div>
 										</div>
 									</div>
 								</div>
+								<div class="flex flex-grow h-1/3"></div>
 							</div>
-							{/* <div class=" flex lg:hidden items-center justify-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 m-3">
-								<A
-									href={filteredSlides()?.[currentIndex()]?.call_to_action_href || '/store/Store'}
-									class="text- z-2 tracking-tight"
-								>
-									{filteredSlides()?.[currentIndex()]?.call_to_action}
-								</A>
-							</div> */}
-							{/* <div class="flex space-x-2">
-								<Show when={getWindowSize().width < 1023 && heroData.isSuccess}>
-									<For each={filteredSlides()}>
-										{(item, index) => {
-											return (
-												<div>
-													<Show when={index() === currentIndex()}>
-														<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
-													</Show>
-													<Show when={index() !== currentIndex()}>
-														<div class="w-1.5 h-1.5 rounded-6 bg-gray-4" />
-													</Show>
-												</div>
-											)
-										}}
-									</For>
-								</Show>
-							</div> */}
 							<A
-								class="  flex flex-col items-center h-50svh lg:h-auto"
+								class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
 								href={filteredSlides()?.[currentIndex()]?.call_to_action_href || '/store/Store'}
 							>
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
@@ -186,7 +184,7 @@ export function CleanHero() {
 										src={filteredSlides()?.[currentIndex()]?.image}
 										loading="eager"
 										alt="main image"
-										class="w-[1210px] h-[765px] aspect-[242/153] object-cover object-left"
+										class="w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left"
 									/>
 								</Show>
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>

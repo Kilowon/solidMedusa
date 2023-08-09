@@ -182,7 +182,7 @@ export default function FeaturedProducts(props: { variant: FeaturedProps['varian
 									</Show>
 								</div>
 								<Show when={props.item.description}>
-									<p class="text-xs xl:text-sm text-text_3 ">{props.item.description}</p>
+									<p class="text-xs xl:text-sm text-text_3 tracking-normal text-balance">{props.item.description}</p>
 								</Show>
 							</li>
 							<For each={queryCollection?.data?.products}>

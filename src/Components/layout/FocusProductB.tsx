@@ -143,7 +143,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 					{/* //One */}
 					<div
 						class={clsx(
-							'flex flex-col justify-center  max-h-600px min-h-600px rounded-4 overflow-hidden ',
+							'flex flex-col justify-between  max-h-600px min-h-600px rounded-4 overflow-hidden ',
 							props.item.background_colors === 'normal_1' && 'bg-normal_1',
 							props.item.background_colors === 'normal_2' && 'bg-normal_2',
 							props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -180,7 +180,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 												</div>
 												<h1
 													class={clsx(
-														'tracking-tighter text-text_2   font-700 z-2  text-start text-shadow-sm',
+														'tracking-tighter text-text_2   font-700 z-2  text-start ',
 														props.item.text_size === 'text-xs' && 'text-xs',
 														props.item.text_size === 'text-sm' && 'text-sm',
 														props.item.text_size === 'text-base' && 'text-base',
@@ -219,7 +219,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 								</div>
 							</div>
 						</div>
-						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center   overflow-hidden')}>
+						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center overflow-hidden')}>
 							<img
 								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=focus-product-b`}
 								height={600}
@@ -274,7 +274,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 
 											<h1
 												class={clsx(
-													'tracking-tighter text-text_2   font-700 z-2  text-start text-shadow-sm',
+													'tracking-tighter text-text_2   font-700 z-2  text-start ',
 													props.item.text_size_b === 'text-xs' && 'text-xs',
 													props.item.text_size_b === 'text-sm' && 'text-sm',
 													props.item.text_size_b === 'text-base' && 'text-base',
@@ -356,7 +356,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 												<Show when={props.item.title_3}>
 													<h1
 														class={clsx(
-															'tracking-tighter text-text_2   font-700 z-2  text-start text-shadow-sm',
+															'tracking-tighter text-text_2   font-700 z-2  text-start ',
 															props.item.text_size_c === 'text-xs' && 'text-xs',
 															props.item.text_size_c === 'text-sm' && 'text-sm',
 															props.item.text_size_c === 'text-base' && 'text-base',

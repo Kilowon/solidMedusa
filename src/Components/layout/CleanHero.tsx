@@ -128,7 +128,7 @@ export function CleanHero() {
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
 					>
 						<div
-							class="min-h-[100svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row 
+							class="min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row 
 		"
 						>
 							<div class="flex flex-col">

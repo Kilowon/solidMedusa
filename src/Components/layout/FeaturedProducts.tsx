@@ -25,9 +25,22 @@ interface Collection {
 
 interface FeaturedProps {
 	variant?: 'block_1' | 'block_2' | 'block_3' | 'block_4' | 'block_5' | 'block_6' | 'block_7' | 'block_8'
+	item: {
+		id: string
+		status: string
+		title: string
+		sub_title_bottom: string
+		top_line_tag: string[]
+		menu_status: string
+		menu_title: string
+		location: string
+		variant: string
+		description: string
+		type: string
+	}
 }
 
-export default function FeaturedProducts(props: FeaturedProps) {
+export default function FeaturedProducts(props: { variant: FeaturedProps['variant']; item: FeaturedProps['item'] }) {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
@@ -144,9 +157,9 @@ export default function FeaturedProducts(props: FeaturedProps) {
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12 my-18">
 							<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance max-w-60">
 								<div class="space-y-1">
-									<Show when={primaryDataFeatured()?.top_line_tag?.length > 0}>
+									<Show when={props.item.top_line_tag?.length > 0}>
 										<ul class="flex space-x-2">
-											<For each={primaryDataFeatured()?.top_line_tag}>
+											<For each={props.item.top_line_tag}>
 												{(item: any) => {
 													return (
 														<li class="flex items-center justify-center text-xs  xl:text-base font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
@@ -157,19 +170,19 @@ export default function FeaturedProducts(props: FeaturedProps) {
 											</For>
 										</ul>
 									</Show>
-									<Show when={primaryDataFeatured()?.title}>
+									<Show when={props.item?.title}>
 										<h3 class=" text-sm  xl:text-[1.2svw] font-500 text-text_1 tracking-tighter text-balance">
-											{primaryDataFeatured()?.title}
+											{props.item.title}
 										</h3>
 									</Show>
-									<Show when={primaryDataFeatured()?.sub_title_bottom}>
+									<Show when={props.item.sub_title_bottom}>
 										<h4 class=" text-xs   xl:text-sm font-500 text-text_2 tracking-tighter text-balance">
-											{primaryDataFeatured()?.sub_title_bottom}
+											{props.item.sub_title_bottom}
 										</h4>
 									</Show>
 								</div>
-								<Show when={primaryDataFeatured()?.description}>
-									<p class="text-xs xl:text-sm text-text_3 tracking-normal text-balance">{primaryDataFeatured()?.description}</p>
+								<Show when={props.item.description}>
+									<p class="text-xs xl:text-sm text-text_3 ">{props.item.description}</p>
 								</Show>
 							</li>
 							<For each={queryCollection?.data?.products}>

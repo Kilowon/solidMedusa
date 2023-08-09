@@ -2,12 +2,25 @@ import { CleanHero } from '~/Components/layout/CleanHero'
 import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { create } from 'domain'
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
-const FeaturedProductsLg = lazy(() => import('~/Components/layout/FeaturedProductsLg'))
+const FeaturedProductsLg = lazy(() => import('~/Components/layout/FeaturedProducts_b'))
 
-const FeaturedProductsLgExtended = lazy(() => import('~/Components/layout/FeaturedProductsLgExtended'))
+const FeaturedProductsLgExtended = lazy(() => import('~/Components/layout/FeaturedProducts_c'))
+
+const FocusProduct = lazy(() => import('~/Components/layout/FocusProduct'))
+
+const FocusProductB = lazy(() => import('~/Components/layout/FocusProductB'))
+
+const FocusProductC = lazy(() => import('~/Components/layout/FocusProductC'))
+
+const FocusProductD = lazy(() => import('~/Components/layout/FocusProductD'))
+
+const FocusProductE = lazy(() => import('~/Components/layout/FocusProductE'))
+
+const FocusProductF = lazy(() => import('~/Components/layout/FocusProductF'))
 
 export default function App() {
 	let el: HTMLDivElement | undefined
@@ -39,6 +52,24 @@ export default function App() {
 		enabled: false
 	}))
 
+	const featuredData = createQuery(() => ({
+		queryKey: ['featured_data'],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/featured_constructor?fields=*.item.*.*.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: true
+	}))
+
 	return (
 		<main class="min-h-[100vh] ">
 			<CleanHero />
@@ -47,25 +78,63 @@ export default function App() {
 					ref={el}
 					class="w-100% h-5 bg-transparent"
 				></div>
+
 				<Suspense>
-					<Show when={isVisible() && primaryData.isSuccess}>
-						<For each={primaryData.data?.data?.main_page_component_block}>
+					<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
+						<For each={featuredData.data?.data?.builder_blocks}>
 							{item => {
-								if (item.location !== 'hero') return
+								createEffect(() => {
+									console.log(item.item.type)
+								})
+								if (item.item.location !== 'hero') return
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
-									if (item.status === 'draft') return
+									if (item.item.status === 'draft') return
 								}
-								if (item.status === 'archived') return
+								if (item.item.status === 'archived') return
+								createEffect(() => {
+									console.log(item.item.type)
+								})
+
 								return (
 									<div>
-										<Show when={item.component_type === 'featured_products'}>
-											<FeaturedProducts variant={item.variant} />
+										<Show when={item?.item?.type === 'featured_products_a'}>
+											<FeaturedProducts
+												variant={item?.item?.variant}
+												item={item.item}
+											/>
 										</Show>
-										<Show when={item.component_type === 'featured_products_lg'}>
-											<FeaturedProductsLg variant={item.variant} />
+										<Show when={item?.item?.type === 'featured_products_b'}>
+											<FeaturedProductsLg
+												variant={item?.item?.variant}
+												item={item.item}
+											/>
 										</Show>
-										<Show when={item.component_type === 'featured_products_lg'}>
-											<FeaturedProductsLgExtended variant={item.variant} />
+										<Show when={item?.item?.type === 'featured_products_c'}>
+											<FeaturedProductsLgExtended
+												variant={item?.item?.variant}
+												item={item.item}
+											/>
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_a'}>
+											<FocusProduct item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_b'}>
+											<FocusProductB item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_c'}>
+											<FocusProductC item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_d'}>
+											<FocusProductD item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_e'}>
+											<FocusProductE item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_f'}>
+											<FocusProductF item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_g'}>
+											<FocusProduct item={item.item} />
 										</Show>
 									</div>
 								)

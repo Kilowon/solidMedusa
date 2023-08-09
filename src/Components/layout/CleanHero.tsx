@@ -201,6 +201,7 @@ export function CleanHero() {
 								</div>
 							</A>
 						</div>
+						<div class="h-5vw w-100svw bg-transparent"></div>
 					</Motion.div>
 				</Rerun>
 			</Presence>

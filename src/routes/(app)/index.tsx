@@ -83,17 +83,11 @@ export default function App() {
 					<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
 						<For each={featuredData.data?.data?.builder_blocks}>
 							{item => {
-								createEffect(() => {
-									console.log(item.item.type)
-								})
 								if (item.item.location !== 'hero') return
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
 									if (item.item.status === 'draft') return
 								}
 								if (item.item.status === 'archived') return
-								createEffect(() => {
-									console.log(item.item.type)
-								})
 
 								return (
 									<div>

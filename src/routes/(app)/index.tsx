@@ -10,6 +10,8 @@ const FeaturedProductsLg = lazy(() => import('~/Components/layout/FeaturedProduc
 
 const FeaturedProductsLgExtended = lazy(() => import('~/Components/layout/FeaturedProducts_c'))
 
+const FeaturedProductsD = lazy(() => import('~/Components/layout/FeaturedProductsD'))
+
 const FocusProduct = lazy(() => import('~/Components/layout/FocusProduct'))
 
 const FocusProductB = lazy(() => import('~/Components/layout/FocusProductB'))
@@ -76,7 +78,7 @@ export default function App() {
 			<div class="min-h-[100vh]">
 				<div
 					ref={el}
-					class="w-100% h-5 bg-transparent"
+					class="w-90% h-5 bg-transparent"
 				></div>
 
 				<Suspense>
@@ -109,6 +111,9 @@ export default function App() {
 												item={item.item}
 											/>
 										</Show>
+										<Show when={item?.item?.type === 'featured_products_d'}>
+											<FeaturedProductsD item={item.item} />
+										</Show>
 										<Show when={item?.item?.type === 'focus_product_a'}>
 											<FocusProduct item={item.item} />
 										</Show>
@@ -126,9 +131,6 @@ export default function App() {
 										</Show>
 										<Show when={item?.item?.type === 'focus_product_f'}>
 											<FocusProductF item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_g'}>
-											<FocusProduct item={item.item} />
 										</Show>
 									</div>
 								)

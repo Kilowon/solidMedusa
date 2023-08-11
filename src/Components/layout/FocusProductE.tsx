@@ -60,6 +60,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 
 		background_colors_b:
 			| 'normal_1'
@@ -72,6 +76,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 
 		menu_status: string
 		menu_title: string
@@ -192,7 +200,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																	props.item.background_colors_b === 'text_5' && 'bg-text_5',
 																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
 																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 																)}
 															>
 																<img
@@ -303,7 +315,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								props.item.background_colors === 'text_5' && 'bg-text_5',
 								props.item.background_colors === 'accent_4' && 'bg-accent_4',
 								props.item.background_colors === 'accent_5' && 'bg-accent_5',
-								props.item.background_colors === 'accent_6' && 'bg-accent_6'
+								props.item.background_colors === 'accent_6' && 'bg-accent_6',
+								props.item.background_colors === 'accent_7' && 'bg-accent_7',
+								props.item.background_colors === 'accent_8' && 'bg-accent_8',
+								props.item.background_colors === 'accent_9' && 'bg-accent_9',
+								props.item.background_colors === 'accent_10' && 'bg-accent_10'
 							)}
 						>
 							<img

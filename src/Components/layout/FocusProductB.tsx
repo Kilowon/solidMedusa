@@ -78,7 +78,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
-
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 		background_colors_b:
 			| 'normal_1'
 			| 'normal_2'
@@ -90,7 +93,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
-
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 		background_colors_c:
 			| 'normal_1'
 			| 'normal_2'
@@ -102,7 +108,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
-
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 		menu_status: string
 		menu_title: string
 		location: string
@@ -153,7 +162,11 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 							props.item.background_colors === 'text_5' && 'bg-text_5',
 							props.item.background_colors === 'accent_4' && 'bg-accent_4',
 							props.item.background_colors === 'accent_5' && 'bg-accent_5',
-							props.item.background_colors === 'accent_6' && 'bg-accent_6'
+							props.item.background_colors === 'accent_6' && 'bg-accent_6',
+							props.item.background_colors === 'accent_7' && 'bg-accent_7',
+							props.item.background_colors === 'accent_8' && 'bg-accent_8',
+							props.item.background_colors === 'accent_9' && 'bg-accent_9',
+							props.item.background_colors === 'accent_10' && 'bg-accent_10'
 						)}
 					>
 						<div class="flex flex-col ">
@@ -242,7 +255,11 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 							props.item.background_colors_b === 'text_5' && 'bg-text_5',
 							props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
 							props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-							props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+							props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+							props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+							props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+							props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+							props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 						)}
 					>
 						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center   overflow-hidden')}>
@@ -326,7 +343,11 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 							props.item.background_colors_c === 'text_5' && 'bg-text_5',
 							props.item.background_colors_c === 'accent_4' && 'bg-accent_4',
 							props.item.background_colors_c === 'accent_5' && 'bg-accent_5',
-							props.item.background_colors_c === 'accent_6' && 'bg-accent_6'
+							props.item.background_colors_c === 'accent_6' && 'bg-accent_6',
+							props.item.background_colors_c === 'accent_7' && 'bg-accent_7',
+							props.item.background_colors_c === 'accent_8' && 'bg-accent_8',
+							props.item.background_colors_c === 'accent_9' && 'bg-accent_9',
+							props.item.background_colors_c === 'accent_10' && 'bg-accent_10'
 						)}
 					>
 						<div class="flex flex-col ">

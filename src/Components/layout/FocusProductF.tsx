@@ -62,6 +62,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 
 		background_colors_b:
 			| 'normal_1'
@@ -74,7 +78,10 @@ interface FeaturedProps {
 			| 'accent_4'
 			| 'accent_5'
 			| 'accent_6'
-
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 		menu_status: string
 		menu_title: string
 		location: string
@@ -112,7 +119,9 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 			<div
 				class={clsx(
 					'min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center mx-2 ',
-					props.item.component_variant === 'left' && 'flex-row-reverse'
+					props.item.component_variant === 'left' && 'flex-row-reverse min-h-[900px] ',
+					props.item.component_variant === 'default' && 'min-h-[900px] ',
+					props.item.component_variant === 'center' && ' min-h-[800px] '
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
@@ -120,16 +129,16 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						<div class="flex  justify-center  ">
 							<div
 								class={clsx(
-									'text-text_2 z-10 flex flex-col items-center space-y-3 lg:space-y-12 ',
+									'text-text_2 z-10 flex flex-col items-center ',
 									props.item.component_variant === 'center' && 'min-w-[300px] max-w-400px',
-									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px',
-									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px'
+									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
+									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
 								)}
 							>
 								<div>
 									<div class="flex flex-col space-y-8">
 										<Show when={props.item?.component_variant !== 'center'}>
-											<div class="space-y-1">
+											<div class="space-y-1 ">
 												<div
 													class={clsx(
 														' tracking-tighter text-text_2   font-500 z-2  text-start',
@@ -174,7 +183,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										<ul
 											class={clsx(
 												'',
-												props.item?.component_variant === 'center' && 'flex flex-col space-y-8',
+												props.item?.component_variant === 'center' && 'flex flex-col space-y-20',
 												props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 												props.item?.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 											)}
@@ -199,7 +208,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																	props.item.background_colors_b === 'text_5' && 'bg-text_5',
 																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
 																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 																)}
 															>
 																<Show when={item.item?.image}>
@@ -279,7 +292,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 					</div>
 					<div class="mx-8  ">
 						<Show when={props.item?.component_variant === 'center'}>
-							<div class="space-y-1">
+							<div class="space-y-1 mb-2 max-w-500px">
 								<div
 									class={clsx(
 										' tracking-tighter text-text_2   font-500 z-2  text-start',
@@ -332,7 +345,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								props.item.background_colors === 'text_5' && 'bg-text_5',
 								props.item.background_colors === 'accent_4' && 'bg-accent_4',
 								props.item.background_colors === 'accent_5' && 'bg-accent_5',
-								props.item.background_colors === 'accent_6' && 'bg-accent_6'
+								props.item.background_colors === 'accent_6' && 'bg-accent_6',
+								props.item.background_colors === 'accent_7' && 'bg-accent_7',
+								props.item.background_colors === 'accent_8' && 'bg-accent_8',
+								props.item.background_colors === 'accent_9' && 'bg-accent_9',
+								props.item.background_colors === 'accent_10' && 'bg-accent_10'
 							)}
 						>
 							<img
@@ -348,10 +365,10 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						<div class="flex  justify-center  ">
 							<div
 								class={clsx(
-									'text-text_2 z-10 flex flex-col items-center space-y-3 lg:space-y-12 ',
+									'text-text_2 z-10 flex flex-col items-center  ',
 									props.item.component_variant === 'center' && 'min-w-[300px] max-w-400px',
-									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px',
-									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px'
+									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
+									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
 								)}
 							>
 								<div>
@@ -359,7 +376,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										<ul
 											class={clsx(
 												'',
-												props.item.component_variant === 'center' && 'flex flex-col space-y-8',
+												props.item.component_variant === 'center' && 'flex flex-col space-y-20',
 												props.item.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 												props.item.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 											)}
@@ -384,7 +401,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																	props.item.background_colors_b === 'text_5' && 'bg-text_5',
 																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
 																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 																)}
 															>
 																<Show when={item.item?.image}>

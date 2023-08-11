@@ -1,5 +1,5 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta } from 'solid-start'
+import { useParams, Title, Meta, useNavigate } from 'solid-start'
 import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
@@ -12,6 +12,7 @@ import { createVisibilityObserver } from '@solid-primitives/intersection-observe
 
 export default function Categories() {
 	const params = useParams()
+	const navigate = useNavigate()
 
 	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
@@ -109,6 +110,12 @@ export default function Categories() {
 			if (queryCategories.isSuccess) {
 				getParentCategories(queryCategories?.data?.product_categories, params)
 			}
+		}
+	})
+	createEffect(() => {
+		if (queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products?.length === 1) {
+			const singleProduct = queryCategoryProducts.data.products[0]
+			navigate(`/products/${singleProduct.handle}`)
 		}
 	})
 

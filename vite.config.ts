@@ -68,6 +68,10 @@ export default defineConfig({
 				['root', 'selector-[:root]:[--accent_4:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_5:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_6:0,200,0]'],
+				['root', 'selector-[:root]:[--accent_7:0,200,0]'],
+				['root', 'selector-[:root]:[--accent_8:0,200,0]'],
+				['root', 'selector-[:root]:[--accent_9:0,200,0]'],
+				['root', 'selector-[:root]:[--accent_10:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_text_1:0,200,0]'],
 				['root', 'selector-[:root]:[--accent_text_2:0,200,0]'],
 				['root', 'selector-[:root]:[--hero_text_1:0,200,0]']
@@ -130,6 +134,10 @@ export default defineConfig({
 					accent_4: 'rgb(var(--accent_4))',
 					accent_5: 'rgb(var(--accent_5))',
 					accent_6: 'rgb(var(--accent_6))',
+					accent_7: 'rgb(var(--accent_7))',
+					accent_8: 'rgb(var(--accent_8))',
+					accent_9: 'rgb(var(--accent_9))',
+					accent_10: 'rgb(var(--accent_10))',
 					accenttext_1: 'rgb(var(--accent_text_1))',
 					accenttext_2: 'rgb(var(--accent_text_2))',
 					hero_text_1: 'rgb(var(--hero_text_1))'

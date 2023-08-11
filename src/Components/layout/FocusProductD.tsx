@@ -110,14 +110,14 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center ',
+					'min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center mx-2',
 					props.item.component_variant === 'left' && 'flex-row-reverse'
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
 					<div class="flex flex-col ">
 						<div class="flex  justify-center  ">
-							<div class="text-text_2 z-10 flex flex-col  md:max-w-[600px] lg:min-w-[300px] items-center space-y-3 lg:space-y-12 ">
+							<div class="text-text_2 z-10 flex flex-col  md:max-w-[600px] lg:min-w-[600px] items-center space-y-3 lg:space-y-12 ">
 								<div>
 									<div class="flex flex-col space-y-8">
 										<div class="space-y-1">
@@ -256,10 +256,10 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 							</div>
 						</div>
 					</div>
-					<div class="mx-8  ">
+					<div class="ml-8  ">
 						<div
 							class={clsx(
-								'max-w-600px max-h-600px min-w-300px min-h-300px  aspect-[1/1] flex items-center justify-center overflow-hidden rounded-2',
+								'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
 								props.item.background_colors === 'normal_1' && 'bg-normal_1',
 								props.item.background_colors === 'normal_2' && 'bg-normal_2',
 								props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -277,7 +277,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
-								class={clsx('object-cover z-5', props.item.component_variant === 'left' && 'transform -scale-x-100')}
+								class={clsx('object-cover object-left min-h-600px z-5')}
 							/>
 						</div>
 					</div>

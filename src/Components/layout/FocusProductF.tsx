@@ -322,7 +322,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</Show>
 						<div
 							class={clsx(
-								'max-w-600px max-h-600px min-w-300px min-h-300px  aspect-[1/1] flex items-center justify-center overflow-hidden rounded-2',
+								'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
 								props.item.background_colors === 'normal_1' && 'bg-normal_1',
 								props.item.background_colors === 'normal_2' && 'bg-normal_2',
 								props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -340,7 +340,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
-								class={clsx('object-cover z-5 ')}
+								class={clsx('object-cover object-center min-h-450px z-5')}
 							/>
 						</div>
 					</div>

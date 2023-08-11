@@ -200,120 +200,132 @@ export default function FocusProductC(props: { item: FeaturedProps['item'] }) {
 							class="object-cover"
 						/>
 					</div>
-					<div class="flex flex-col ">
-						<div class="flex w-full  h-1/3"></div>
+					<div class="flex flex-col">
 						<div class="flex  justify-center  ">
 							<div class="text-text_2 z-10 flex flex-col  md:max-w-[512px] items-center space-y-3 lg:space-y-12 ">
-								<div>
-									<div class="flex flex-col    sm:h-auto  mx-6 md:mx-auto space-y-4">
-										<div class="space-y-1">
-											<Show when={props.item.tags?.length > 0}>
-												<ul class="flex space-x-2">
-													<For each={props.item.tags}>
-														{(item: any) => {
-															return (
-																<li
-																	class={clsx(
-																		'flex items-center justify-center  font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5',
-																		props.item.text_size_b === 'text-xs' && 'text-xs',
-																		props.item.text_size_b === 'text-sm' && 'text-sm',
-																		props.item.text_size_b === 'text-base' && 'text-base',
-																		props.item.text_size_b === 'text-lg' && 'text-lg',
-																		props.item.text_size_b === 'text-xl' && 'text-xl',
-																		props.item.text_size_b === 'text-2xl' && 'text-2xl',
-																		props.item.text_size_b === 'text-3xl' && 'text-3xl',
-																		props.item.text_size_b === 'text-4xl' && 'text-4xl',
-																		props.item.text_size_b === 'text-5xl' && 'text-5xl',
-																		props.item.text_size_b === 'text-6xl' && 'text-6xl',
-																		props.item.text_size_b === 'text-7xl' && 'text-7xl',
-																		props.item.text_size_b === 'text-8xl' && 'text-8xl'
-																	)}
-																>
-																	{item}
-																</li>
-															)
-														}}
-													</For>
-												</ul>
-											</Show>
-											<div
-												class={clsx(
-													' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',
-													props.item.text_size_b === 'text-xs' && 'text-xs',
-													props.item.text_size_b === 'text-sm' && 'text-sm',
-													props.item.text_size_b === 'text-base' && 'text-base',
-													props.item.text_size_b === 'text-lg' && 'text-lg',
-													props.item.text_size_b === 'text-xl' && 'text-xl',
-													props.item.text_size_b === 'text-2xl' && 'text-2xl',
-													props.item.text_size_b === 'text-3xl' && 'text-3xl',
-													props.item.text_size_b === 'text-4xl' && 'text-4xl',
-													props.item.text_size_b === 'text-5xl' && 'text-5xl',
-													props.item.text_size_b === 'text-6xl' && 'text-6xl',
-													props.item.text_size_b === 'text-7xl' && 'text-7xl',
-													props.item.text_size_b === 'text-8xl' && 'text-8xl'
-												)}
-											>
-												{props.item.sub_title}
-											</div>
-											<h1
-												class={clsx(
-													' tracking-tighter  font-700 z-2  text-start text-balance',
-													props.item.text_size === 'text-xs' && 'text-xs',
-													props.item.text_size === 'text-sm' && 'text-sm',
-													props.item.text_size === 'text-base' && 'text-base',
-													props.item.text_size === 'text-lg' && 'text-lg',
-													props.item.text_size === 'text-xl' && 'text-xl',
-													props.item.text_size === 'text-2xl' && 'text-2xl',
-													props.item.text_size === 'text-3xl' && 'text-3xl',
-													props.item.text_size === 'text-4xl' && 'text-4xl',
-													props.item.text_size === 'text-5xl' && 'text-5xl',
-													props.item.text_size === 'text-6xl' && 'text-6xl',
-													props.item.text_size === 'text-7xl' && 'text-7xl',
-													props.item.text_size === 'text-8xl' && 'text-8xl'
-												)}
-											>
-												{props.item.title}
-											</h1>
-											<p
-												class={clsx(
-													' tracking-tighter  font-400 z-2  text-text_3 text-start text-balance whitespace-break-spaces',
-													props.item.text_size_b === 'text-xs' && 'text-xs',
-													props.item.text_size_b === 'text-sm' && 'text-sm',
-													props.item.text_size_b === 'text-base' && 'text-base',
-													props.item.text_size_b === 'text-lg' && 'text-lg',
-													props.item.text_size_b === 'text-xl' && 'text-xl',
-													props.item.text_size_b === 'text-2xl' && 'text-2xl',
-													props.item.text_size_b === 'text-3xl' && 'text-3xl',
-													props.item.text_size_b === 'text-4xl' && 'text-4xl',
-													props.item.text_size_b === 'text-5xl' && 'text-5xl',
-													props.item.text_size_b === 'text-6xl' && 'text-6xl',
-													props.item.text_size_b === 'text-7xl' && 'text-7xl',
-													props.item.text_size_b === 'text-8xl' && 'text-8xl'
-												)}
-											>
-												{props.item.description}
-											</p>
+								<div class="flex flex-col    sm:h-auto  mx-6 md:mx-auto space-y-4">
+									<div class="space-y-6">
+										<Show when={props.item.tags?.length > 0}>
+											<ul class="flex space-x-2">
+												<For each={props.item.tags}>
+													{(item: any) => {
+														return (
+															<li
+																class={clsx(
+																	'flex items-center justify-center  font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5',
+																	props.item.text_size_b === 'text-xs' && 'text-xs',
+																	props.item.text_size_b === 'text-sm' && 'text-sm',
+																	props.item.text_size_b === 'text-base' && 'text-base',
+																	props.item.text_size_b === 'text-lg' && 'text-lg',
+																	props.item.text_size_b === 'text-xl' && 'text-xl',
+																	props.item.text_size_b === 'text-2xl' && 'text-2xl',
+																	props.item.text_size_b === 'text-3xl' && 'text-3xl',
+																	props.item.text_size_b === 'text-4xl' && 'text-4xl',
+																	props.item.text_size_b === 'text-5xl' && 'text-5xl',
+																	props.item.text_size_b === 'text-6xl' && 'text-6xl',
+																	props.item.text_size_b === 'text-7xl' && 'text-7xl',
+																	props.item.text_size_b === 'text-8xl' && 'text-8xl'
+																)}
+															>
+																{item}
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+										</Show>
+										<div
+											class={clsx(
+												' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',
+												props.item.text_size_b === 'text-xs' && 'text-xs',
+												props.item.text_size_b === 'text-sm' && 'text-sm',
+												props.item.text_size_b === 'text-base' && 'text-base',
+												props.item.text_size_b === 'text-lg' && 'text-lg',
+												props.item.text_size_b === 'text-xl' && 'text-xl',
+												props.item.text_size_b === 'text-2xl' && 'text-2xl',
+												props.item.text_size_b === 'text-3xl' && 'text-3xl',
+												props.item.text_size_b === 'text-4xl' && 'text-4xl',
+												props.item.text_size_b === 'text-5xl' && 'text-5xl',
+												props.item.text_size_b === 'text-6xl' && 'text-6xl',
+												props.item.text_size_b === 'text-7xl' && 'text-7xl',
+												props.item.text_size_b === 'text-8xl' && 'text-8xl'
+											)}
+										>
+											{props.item.sub_title}
 										</div>
+										<h1
+											class={clsx(
+												' tracking-tighter  font-700 z-2  text-start text-balance',
+												props.item.text_size === 'text-xs' && 'text-xs',
+												props.item.text_size === 'text-sm' && 'text-sm',
+												props.item.text_size === 'text-base' && 'text-base',
+												props.item.text_size === 'text-lg' && 'text-lg',
+												props.item.text_size === 'text-xl' && 'text-xl',
+												props.item.text_size === 'text-2xl' && 'text-2xl',
+												props.item.text_size === 'text-3xl' && 'text-3xl',
+												props.item.text_size === 'text-4xl' && 'text-4xl',
+												props.item.text_size === 'text-5xl' && 'text-5xl',
+												props.item.text_size === 'text-6xl' && 'text-6xl',
+												props.item.text_size === 'text-7xl' && 'text-7xl',
+												props.item.text_size === 'text-8xl' && 'text-8xl'
+											)}
+										>
+											{props.item.title}
+										</h1>
+										<p
+											class={clsx(
+												' tracking-tighter  font-400 z-2  text-text_3 text-start text-balance whitespace-break-spaces',
+												props.item.text_size_b === 'text-xs' && 'text-xs',
+												props.item.text_size_b === 'text-sm' && 'text-sm',
+												props.item.text_size_b === 'text-base' && 'text-base',
+												props.item.text_size_b === 'text-lg' && 'text-lg',
+												props.item.text_size_b === 'text-xl' && 'text-xl',
+												props.item.text_size_b === 'text-2xl' && 'text-2xl',
+												props.item.text_size_b === 'text-3xl' && 'text-3xl',
+												props.item.text_size_b === 'text-4xl' && 'text-4xl',
+												props.item.text_size_b === 'text-5xl' && 'text-5xl',
+												props.item.text_size_b === 'text-6xl' && 'text-6xl',
+												props.item.text_size_b === 'text-7xl' && 'text-7xl',
+												props.item.text_size_b === 'text-8xl' && 'text-8xl'
+											)}
+										>
+											{props.item.description}
+										</p>
 									</div>
-									<div class="flex flex-col items-center space-y-2">
-										<Show when={props.item.call_to_action}>
-											<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
-												<A
-													href="/store/Store"
-													class="text- z-2 tracking-tight"
-												>
-													{props.item.call_to_action}
-												</A>
-											</div>
-										</Show>
-										<Show when={props.item.price}>
-											<div class="font-500 text-text_3  tracking-tighter ">{props.item.price}</div>
-										</Show>
-									</div>
-									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 								</div>
+								<div
+									class={clsx(
+										' flex flex-row items-center space-x-4',
+										props.item.text_size_b === 'text-xs' && 'text-xs',
+										props.item.text_size_b === 'text-sm' && 'text-sm',
+										props.item.text_size_b === 'text-base' && 'text-base',
+										props.item.text_size_b === 'text-lg' && 'text-lg',
+										props.item.text_size_b === 'text-xl' && 'text-xl',
+										props.item.text_size_b === 'text-2xl' && 'text-2xl',
+										props.item.text_size_b === 'text-3xl' && 'text-3xl',
+										props.item.text_size_b === 'text-4xl' && 'text-4xl',
+										props.item.text_size_b === 'text-5xl' && 'text-5xl',
+										props.item.text_size_b === 'text-6xl' && 'text-6xl',
+										props.item.text_size_b === 'text-7xl' && 'text-7xl',
+										props.item.text_size_b === 'text-8xl' && 'text-8xl'
+									)}
+								>
+									<Show when={props.item.price}>
+										<div class="font-500 text-text_3  tracking-tighter ">{props.item.price}</div>
+									</Show>
+									<Show when={props.item.call_to_action}>
+										<div class="flex items-center hover:underline bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
+											<A
+												href="/store/Store"
+												class="text- z-2 tracking-tight"
+											>
+												{props.item.call_to_action}
+											</A>
+										</div>
+									</Show>
+								</div>
+								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 							</div>
-							<div class="flex flex-grow h-1/3"></div>
 						</div>
 					</div>
 				</Show>

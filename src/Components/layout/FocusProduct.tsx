@@ -106,7 +106,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 	return (
 		<Show when={true}>
 			<div
-				class="min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-x-8 mx-2 
+				class="min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto  flex items-center justify-center flex-row space-x-8 mx-2 
 		"
 			>
 				<Show when={getWindowSize().width > 1023}>
@@ -114,7 +114,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 						<div class="flex flex-col justify-center space-y-18 min-h-600px">
 							<div
 								class={clsx(
-									'max-w-200px max-h-200px min-w-100px min-h-100px aspect-[1/1] flex  justify-center  rounded-3 overflow-hidden',
+									'max-w-200px max-h-200px  min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
 									props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 									props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 									props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -131,12 +131,12 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 									src={`https://direct.shauns.cool/assets/${props.item.image_2?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
-									class=" object-fill "
+									class="object-cover object-center min-h-100px z-5 "
 								/>
 							</div>
 							<div
 								class={clsx(
-									'max-w-200px max-h-200px min-w-100px min-h-100px aspect-[1/1] flex  justify-center  rounded-3 overflow-hidden',
+									'max-w-200px max-h-200px min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
 									props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 									props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 									props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -153,14 +153,14 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 									src={`https://direct.shauns.cool/assets/${props.item.image_3?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
-									class=" object-cover "
+									class="object-cover object-center min-h-100px z-5 "
 								/>
 							</div>
 						</div>
 					</div>
 					<div class="flex flex-col ">
 						<div class="flex  justify-center  ">
-							<div class="text-text_2 z-10 flex flex-col  md:max-w-[520px] lg:min-w-[300px] items-center space-y-3 lg:space-y-12 ">
+							<div class="text-text_2 z-10 flex flex-col  md:max-w-[520px] lg:min-w-[400px] items-center space-y-3 lg:space-y-12 ">
 								<div>
 									<div class="flex flex-col space-y-4">
 										<div class="space-y-1">
@@ -237,8 +237,24 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 										</p>
 									</div>
 								</div>
-								<div class="flex flex-col items-center space-y-6">
-									<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
+								<div
+									class={clsx(
+										' flex flex-col items-center space-y-6',
+										props.item.text_size_b === 'text-xs' && 'text-xs',
+										props.item.text_size_b === 'text-sm' && 'text-sm',
+										props.item.text_size_b === 'text-base' && 'text-base',
+										props.item.text_size_b === 'text-lg' && 'text-lg',
+										props.item.text_size_b === 'text-xl' && 'text-xl',
+										props.item.text_size_b === 'text-2xl' && 'text-2xl',
+										props.item.text_size_b === 'text-3xl' && 'text-3xl',
+										props.item.text_size_b === 'text-4xl' && 'text-4xl',
+										props.item.text_size_b === 'text-5xl' && 'text-5xl',
+										props.item.text_size_b === 'text-6xl' && 'text-6xl',
+										props.item.text_size_b === 'text-7xl' && 'text-7xl',
+										props.item.text_size_b === 'text-8xl' && 'text-8xl'
+									)}
+								>
+									<div class="flex items-center hover:underline bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
 										<A
 											href="/store/Store"
 											class="text- z-2 tracking-tight"
@@ -251,11 +267,11 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 							</div>
 						</div>
-					</div>{' '}
+					</div>
 					<div class="space-x-18 flex ">
 						<div
 							class={clsx(
-								'max-w-600px max-h-600px min-w-300px min-h-300px  aspect-[1/1] flex items-center justify-center  rounded-3 overflow-hidden',
+								'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
 								props.item.background_colors === 'normal_1' && 'bg-normal_1',
 								props.item.background_colors === 'normal_2' && 'bg-normal_2',
 								props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -273,7 +289,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
-								class="object-cover"
+								class="object-cover object-left min-h-600px z-5"
 							/>
 						</div>
 					</div>

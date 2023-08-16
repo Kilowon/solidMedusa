@@ -55,11 +55,7 @@ export default function Root() {
 			/> */}
 				<Title>Store</Title>
 				<Meta charset="utf-8" />
-				<script
-					defer
-					data-domain="shauns.cool"
-					src="https://plausible.shauns.cool/js/script.js"
-				></script>
+
 				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
@@ -89,6 +85,11 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
+				<script
+					defer
+					data-domain="shauns.cool"
+					src="https://plausible.shauns.cool/js/script.js"
+				></script>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

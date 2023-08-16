@@ -21,12 +21,17 @@ import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { Image } from '@unpic/solid'
+import Plausible from 'plausible-tracker'
 
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
 const queryClient = new QueryClient()
 export default function Root() {
+	const plausible = Plausible({
+		domain: 'solid.shauns.cool',
+		apiHost: 'https://plausible.shauns.cool/'
+	})
 	return (
 		<Html
 			lang="en"
@@ -88,8 +93,9 @@ export default function Root() {
 				<script
 					defer
 					data-domain="shauns.cool"
-					src="https://plausible.shauns.cool/js/script.js"
-				></script>
+				>
+					{'https://plausible.shauns.cool/js/script.js'}
+				</script>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary
@@ -108,16 +114,6 @@ export default function Root() {
 									fallback={
 										<section class="flex justify-center h-[100vh] w-[100vw] p-16  bg-white text-xl">
 											<div class="flex flex-col items-center">
-												{/* <Image
-													src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
-													alt="logo"
-													layout="constrained"
-													width={600}
-													height={600}
-													priority={true}
-													class="w-20 h-20 mt-35 md:mt-70"
-												/>
-												<div class="i-svg-spinners:bars-scale-fade font-700" /> */}
 												<div class="i-ic-round-menu  font-400 text-white">Loading.</div>
 												<div class="i-la-user-plus font-500 text-white">{`Loading..`}</div>
 												<div class="i-ion-cart-outline font-700 text-white">Loading...</div>

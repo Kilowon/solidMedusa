@@ -90,12 +90,6 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
-				<script
-					defer
-					data-domain="shauns.cool"
-				>
-					{'https://plausible.shauns.cool/js/script.js'}
-				</script>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

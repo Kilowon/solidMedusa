@@ -90,6 +90,7 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
+				<>{plausible}</>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

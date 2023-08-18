@@ -21,6 +21,18 @@ import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import Plausible from 'plausible-tracker'
 
+function PlausibleScript() {
+	onMount(() => {
+		const script = document.createElement('script')
+		script.defer = true
+		script.dataset.domain = 'shauns.cool'
+		script.src = 'https://plausible.shauns.cool/js/script.js'
+		document.head.appendChild(script)
+	})
+
+	return null
+}
+
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
@@ -33,7 +45,7 @@ const { enableAutoPageviews } = plausible
 
 const queryClient = new QueryClient()
 export default function Root() {
-	onMount(() => {
+	onMount(async () => {
 		enableAutoPageviews()
 	})
 
@@ -95,6 +107,7 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
+				<PlausibleScript />
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

@@ -32,6 +32,9 @@ export default function Root() {
 		domain: 'solid.shauns.cool',
 		apiHost: 'https://plausible.shauns.cool/'
 	})
+
+	const { enableAutoPageviews } = plausible
+
 	return (
 		<Html
 			lang="en"
@@ -90,7 +93,8 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
-				<>{plausible}</>
+
+				<>{enableAutoPageviews()}</>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

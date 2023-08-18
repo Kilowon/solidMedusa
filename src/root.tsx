@@ -19,7 +19,6 @@ import '@unocss/reset/tailwind-compat.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
-import Plausible from 'plausible-tracker'
 
 function PlausibleScript() {
 	onMount(() => {
@@ -33,29 +32,20 @@ function PlausibleScript() {
 	return null
 }
 
-//@ts-ignore
-const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
+function MetaTags() {
+	let shouldRender = false
 
-const plausible = Plausible({
-	domain: 'solid.shauns.cool',
-	apiHost: 'https://plausible.shauns.cool/'
-})
-
-const { enableAutoPageviews } = plausible
-
-const queryClient = new QueryClient()
-export default function Root() {
-	onMount(async () => {
-		enableAutoPageviews()
+	onMount(() => {
+		shouldRender = import.meta.env.VITE_DRAFT_SITE === 'false'
 	})
 
+	if (!shouldRender) {
+		return null
+	}
+
 	return (
-		<Html
-			lang="en"
-			class="overflow-y-scroll bg-transparent"
-		>
-			<Head>
-				{/* <Meta
+		<>
+			<Meta
 				http-equiv="Strict-Transport-Security"
 				content="max-age=63072000 includeSubDomains"
 			/>
@@ -74,7 +64,23 @@ export default function Root() {
 			<Meta
 				http-equiv="Content-Security-Policy"
 				content="default-src https: data: "
-			/> */}
+			/>
+		</>
+	)
+}
+
+//@ts-ignore
+const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
+
+const queryClient = new QueryClient()
+export default function Root() {
+	return (
+		<Html
+			lang="en"
+			class="overflow-y-scroll bg-transparent"
+		>
+			<Head>
+				<MetaTags />
 				<Title>Store</Title>
 				<Meta charset="utf-8" />
 

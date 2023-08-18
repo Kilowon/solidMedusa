@@ -2,7 +2,6 @@ import { CleanHero } from '~/Components/layout/CleanHero'
 import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
-import { create } from 'domain'
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
@@ -23,6 +22,8 @@ const FocusProductD = lazy(() => import('~/Components/layout/FocusProductD'))
 const FocusProductE = lazy(() => import('~/Components/layout/FocusProductE'))
 
 const FocusProductF = lazy(() => import('~/Components/layout/FocusProductF'))
+
+const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 
 export default function App() {
 	let el: HTMLDivElement | undefined
@@ -131,6 +132,9 @@ export default function App() {
 										</Show>
 										<Show when={item?.item?.type === 'focus_product_f'}>
 											<FocusProductF item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'focus_product_g'}>
+											<FocusProductG item={item.item} />
 										</Show>
 									</div>
 								)

@@ -105,11 +105,11 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'min-h-[800px] max-w-99svw lg:mb-auto lg:mt-auto flex  justify-center  mx-2 relative',
-					props.item?.component_variant === 'default' && ' flex-col items-center',
-					props.item?.component_variant === 'right' && ' flex-col items-center',
-					props.item?.component_variant === 'three' && '  items-start',
-					props.item?.component_variant === 'nine' && '  items-start'
+					' max-w-99svw lg:mb-auto lg:mt-auto flex  justify-center  mx-2 relative',
+					props.item?.component_variant === 'default' && ' flex-col items-center min-h-[950px]',
+					props.item?.component_variant === 'right' && ' flex-col items-center min-h-[950px]',
+					props.item?.component_variant === 'three' && '  items-center min-h-[750px]',
+					props.item?.component_variant === 'nine' && '  items-center min-h-[950px] lg:flex-col xl:flex-row'
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
@@ -242,14 +242,14 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 									{props.item.title}
 								</h1>
 							</div>
-							<div class="max-w-120">
+							<div >
 								<ul
 									class={clsx(
-										'',
+										'max-w-120',
 
 										props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-2 gap-y-4',
 										props.item?.component_variant === 'three' && 'grid grid-cols-1 gap-y-8',
-										props.item?.component_variant === 'nine' && 'grid grid-cols-1 lg:gap-y-3 xl:gap-y-8'
+										props.item?.component_variant === 'nine' && 'grid grid-cols-2 xl:grid-cols-1 lg:gap-y-3 xl:gap-y-8 lg:max-w-200 xl:max-w-120'
 									)}
 								>
 									<For each={props.item.icons}>
@@ -317,7 +317,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 													props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-3.75',
 													props.item?.component_variant === 'right' && 'grid grid-cols-2 gap-x-6 gap-y-3.75',
 													props.item?.component_variant === 'three' && 'grid grid-cols-1 gap-x-2 gap-y-4',
-													props.item?.component_variant === 'nine' && 'grid lg:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-3.75'
+													props.item?.component_variant === 'nine' && 'grid lg:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-3.75'
 												)}
 											>
 												<For each={props.item.items}>

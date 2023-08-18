@@ -118,10 +118,10 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center mx-2 ',
-					props.item.component_variant === 'left' && 'flex-row-reverse min-h-[900px] ',
-					props.item.component_variant === 'default' && 'min-h-[900px] ',
-					props.item.component_variant === 'center' && ' min-h-[800px] '
+					'  max-w-99svw  flex  justify-center mx-2 ',
+					props.item.component_variant === 'left' && 'flex-row-reverse min-h-[900px] items-center',
+					props.item.component_variant === 'default' && 'min-h-[900px] items-center',
+					props.item.component_variant === 'center' && ' min-h-[900px] items-end mb-15'
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
@@ -136,7 +136,16 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								)}
 							>
 								<div>
-									<div class="flex flex-col space-y-8">
+									<div 
+									
+									class={clsx(
+										'flex flex-col ',
+										props.item.component_variant === 'center' && '',
+										props.item.component_variant === 'default' && ' space-y-8',
+										props.item.component_variant === 'left' && ' space-y-8'
+									)}
+									
+									>
 										<Show when={props.item?.component_variant !== 'center'}>
 											<div class="space-y-1 ">
 												<div
@@ -160,7 +169,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												</div>
 												<h1
 													class={clsx(
-														'tracking-tighter text-text_2   font-700 z-2  text-start',
+														'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces',
 														props.item.text_size === 'text-xs' && 'text-xs',
 														props.item.text_size === 'text-sm' && 'text-sm',
 														props.item.text_size === 'text-base' && 'text-base',
@@ -177,13 +186,32 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												>
 													{props.item.title}
 												</h1>
+												<p
+													class={clsx(
+														' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line',
+														props.item.text_size_b === 'text-xs' && 'text-xs',
+														props.item.text_size_b === 'text-sm' && 'text-sm',
+														props.item.text_size_b === 'text-base' && 'text-base',
+														props.item.text_size_b === 'text-lg' && 'text-lg',
+														props.item.text_size_b === 'text-xl' && 'text-xl',
+														props.item.text_size_b === 'text-2xl' && 'text-2xl',
+														props.item.text_size_b === 'text-3xl' && 'text-3xl',
+														props.item.text_size_b === 'text-4xl' && 'text-4xl',
+														props.item.text_size_b === 'text-5xl' && 'text-5xl',
+														props.item.text_size_b === 'text-6xl' && 'text-6xl',
+														props.item.text_size_b === 'text-7xl' && 'text-7xl',
+														props.item.text_size_b === 'text-8xl' && 'text-8xl'
+													)}
+												>
+													{props.item.description}
+												</p>
 											</div>
 										</Show>
 
 										<ul
 											class={clsx(
 												'',
-												props.item?.component_variant === 'center' && 'flex flex-col space-y-20',
+												props.item?.component_variant === 'center' && 'flex flex-col space-y-15',
 												props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 												props.item?.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 											)}
@@ -198,7 +226,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 														<li class="flex items-start justify-start">
 															<div
 																class={clsx(
-																	' flex  justify-center items-center  rounded-0.5 overflow-hidden w-25% fill-current',
+																	' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
 																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -221,7 +249,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																		loading="lazy"
 																		alt={item.item?.title}
 																		role="img"
-																		class=" object-fill grayscale-100 contrast-50
+																		class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px
 
 																		"
 																	/>
@@ -248,7 +276,16 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												props.item.component_variant === 'center' && 'justify-end'
 											)}
 										>
-											<div class="flex items-center space-x-3">
+											<div 
+											
+											class={clsx(
+												'flex items-center space-x-3 ',
+												props.item.component_variant === 'center' && 'mt-8',
+												props.item.component_variant === 'default' && ' ',
+												props.item.component_variant === 'left' && ''
+											)}
+
+											>
 												<Show when={props.item?.price}>
 													<div class="font-500 text-text_3 text-sm tracking-tighter ">{props.item?.price}</div>
 												</Show>
@@ -266,25 +303,6 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										</div>
 									</div>
 								</div>
-								<p
-									class={clsx(
-										' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line',
-										props.item.text_size_b === 'text-xs' && 'text-xs',
-										props.item.text_size_b === 'text-sm' && 'text-sm',
-										props.item.text_size_b === 'text-base' && 'text-base',
-										props.item.text_size_b === 'text-lg' && 'text-lg',
-										props.item.text_size_b === 'text-xl' && 'text-xl',
-										props.item.text_size_b === 'text-2xl' && 'text-2xl',
-										props.item.text_size_b === 'text-3xl' && 'text-3xl',
-										props.item.text_size_b === 'text-4xl' && 'text-4xl',
-										props.item.text_size_b === 'text-5xl' && 'text-5xl',
-										props.item.text_size_b === 'text-6xl' && 'text-6xl',
-										props.item.text_size_b === 'text-7xl' && 'text-7xl',
-										props.item.text_size_b === 'text-8xl' && 'text-8xl'
-									)}
-								>
-									{props.item.description}
-								</p>
 
 								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 							</div>
@@ -331,6 +349,25 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								>
 									{props.item.title}
 								</h1>
+								<p
+									class={clsx(
+										' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line ',
+										props.item.text_size_b === 'text-xs' && 'text-xs',
+										props.item.text_size_b === 'text-sm' && 'text-sm',
+										props.item.text_size_b === 'text-base' && 'text-base',
+										props.item.text_size_b === 'text-lg' && 'text-lg',
+										props.item.text_size_b === 'text-xl' && 'text-xl',
+										props.item.text_size_b === 'text-2xl' && 'text-2xl',
+										props.item.text_size_b === 'text-3xl' && 'text-3xl',
+										props.item.text_size_b === 'text-4xl' && 'text-4xl',
+										props.item.text_size_b === 'text-5xl' && 'text-5xl',
+										props.item.text_size_b === 'text-6xl' && 'text-6xl',
+										props.item.text_size_b === 'text-7xl' && 'text-7xl',
+										props.item.text_size_b === 'text-8xl' && 'text-8xl'
+									)}
+								>
+									{props.item.description}
+								</p>
 							</div>
 						</Show>
 						<div
@@ -376,7 +413,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										<ul
 											class={clsx(
 												'',
-												props.item.component_variant === 'center' && 'flex flex-col space-y-20',
+												props.item.component_variant === 'center' && 'flex flex-col space-y-15',
 												props.item.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 												props.item.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 											)}
@@ -391,7 +428,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 														<li class="flex items-start justify-start">
 															<div
 																class={clsx(
-																	' flex  justify-center items-center  rounded-0.5 overflow-hidden w-25% fill-current',
+																	' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
 																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -414,7 +451,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																		loading="lazy"
 																		alt={item.item?.title}
 																		role="img"
-																		class=" object-fill grayscale-100 contrast-50"
+																		class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px"
 																	/>
 																</Show>
 															</div>
@@ -431,28 +468,11 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												}}
 											</For>
 										</ul>
-										<div class="h-1.4rem "></div>
+										<Show when={props.item?.call_to_action}>
+											<div class="h-1.4rem "></div>
+										</Show>
 									</div>
 								</div>
-								<p
-									class={clsx(
-										' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line',
-										props.item.text_size_b === 'text-xs' && 'text-xs',
-										props.item.text_size_b === 'text-sm' && 'text-sm',
-										props.item.text_size_b === 'text-base' && 'text-base',
-										props.item.text_size_b === 'text-lg' && 'text-lg',
-										props.item.text_size_b === 'text-xl' && 'text-xl',
-										props.item.text_size_b === 'text-2xl' && 'text-2xl',
-										props.item.text_size_b === 'text-3xl' && 'text-3xl',
-										props.item.text_size_b === 'text-4xl' && 'text-4xl',
-										props.item.text_size_b === 'text-5xl' && 'text-5xl',
-										props.item.text_size_b === 'text-6xl' && 'text-6xl',
-										props.item.text_size_b === 'text-7xl' && 'text-7xl',
-										props.item.text_size_b === 'text-8xl' && 'text-8xl'
-									)}
-								>
-									{props.item.description}
-								</p>
 
 								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 							</div>

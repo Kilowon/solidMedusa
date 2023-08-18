@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense, SuspenseList } from 'solid-js'
+import { Suspense, onMount } from 'solid-js'
 import {
 	A,
 	Body,
@@ -17,23 +17,25 @@ import {
 import 'uno.css'
 import '@unocss/reset/tailwind-compat.css'
 import { GlobalContextProvider } from '~/Context/Providers'
-import NotFound from './routes/[...404]'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
-import { Image } from '@unpic/solid'
 import Plausible from 'plausible-tracker'
 
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 
+const plausible = Plausible({
+	domain: 'solid.shauns.cool',
+	apiHost: 'https://plausible.shauns.cool/'
+})
+
+const { enableAutoPageviews } = plausible
+
 const queryClient = new QueryClient()
 export default function Root() {
-	const plausible = Plausible({
-		domain: 'solid.shauns.cool',
-		apiHost: 'https://plausible.shauns.cool/'
+	onMount(() => {
+		enableAutoPageviews()
 	})
-
-	const { enableAutoPageviews } = plausible
 
 	return (
 		<Html
@@ -93,8 +95,6 @@ export default function Root() {
 					rel="preconnect"
 					href="https://direct.shauns.cool/items/Primary"
 				/>
-
-				<>{enableAutoPageviews()}</>
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

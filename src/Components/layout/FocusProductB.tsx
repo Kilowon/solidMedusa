@@ -145,10 +145,10 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 	return (
 		<Show when={true}>
 			<div
-				class="min-h-[800px] max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-x-8 mx-2 
+				class="min-h-[800px] max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-y-8 lg:space-y-auto lg:space-x-8 mx-2 
 		"
 			>
-				<Show when={getWindowSize().width > 1023}>
+				<Show when={true}>
 					{/* //One */}
 					<div
 						class={clsx(
@@ -426,9 +426,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-				<Show when={getWindowSize().width <= 1023}>
-					<div>NONE</div>
-				</Show>
+				
 			</div>
 		</Show>
 	)

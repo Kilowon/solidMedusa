@@ -118,369 +118,715 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'  max-w-99svw  flex  justify-center mx-2 ',
+					'  max-w-99svw  flex flex-col lg:flex-row justify-center mx-2 ',
 					props.item.component_variant === 'left' && 'flex-row-reverse min-h-[900px] items-center',
 					props.item.component_variant === 'default' && 'min-h-[900px] items-center',
-					props.item.component_variant === 'center' && ' min-h-[900px] items-end mb-15'
+					props.item.component_variant === 'center' && ' min-h-[900px] items-center lg:items-end mb-15'
 				)}
 			>
-				<Show when={getWindowSize().width > 1023}>
-					<div class="flex flex-col ">
-						<div class="flex  justify-center  ">
-							<div
-								class={clsx(
-									'text-text_2 z-10 flex flex-col items-center ',
-									props.item.component_variant === 'center' && 'min-w-[300px] max-w-400px',
-									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
-									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
-								)}
-							>
-								<div>
-									<div 
-									
+				<Show when={getWindowSize().width > 1024}>
+					<div class="flex justify-center items-center">
+						<div class="flex flex-col ">
+							<div class="flex  justify-center  ">
+								<div
 									class={clsx(
-										'flex flex-col ',
-										props.item.component_variant === 'center' && '',
-										props.item.component_variant === 'default' && ' space-y-8',
-										props.item.component_variant === 'left' && ' space-y-8'
+										'text-text_2 z-10 flex flex-col items-center ',
+										props.item.component_variant === 'center' && 'lg:min-w-[300px] max-w-400px',
+										props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
+										props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
 									)}
-									
-									>
-										<Show when={props.item?.component_variant !== 'center'}>
-											<div class="space-y-1 ">
-												<div
-													class={clsx(
-														' tracking-tighter text-text_2   font-500 z-2  text-start',
-														props.item.text_size_b === 'text-xs' && 'text-xs',
-														props.item.text_size_b === 'text-sm' && 'text-sm',
-														props.item.text_size_b === 'text-base' && 'text-base',
-														props.item.text_size_b === 'text-lg' && 'text-lg',
-														props.item.text_size_b === 'text-xl' && 'text-xl',
-														props.item.text_size_b === 'text-2xl' && 'text-2xl',
-														props.item.text_size_b === 'text-3xl' && 'text-3xl',
-														props.item.text_size_b === 'text-4xl' && 'text-4xl',
-														props.item.text_size_b === 'text-5xl' && 'text-5xl',
-														props.item.text_size_b === 'text-6xl' && 'text-6xl',
-														props.item.text_size_b === 'text-7xl' && 'text-7xl',
-														props.item.text_size_b === 'text-8xl' && 'text-8xl'
-													)}
-												>
-													{props.item.sub_title}
-												</div>
-												<h1
-													class={clsx(
-														'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces',
-														props.item.text_size === 'text-xs' && 'text-xs',
-														props.item.text_size === 'text-sm' && 'text-sm',
-														props.item.text_size === 'text-base' && 'text-base',
-														props.item.text_size === 'text-lg' && 'text-lg',
-														props.item.text_size === 'text-xl' && 'text-xl',
-														props.item.text_size === 'text-2xl' && 'text-2xl',
-														props.item.text_size === 'text-3xl' && 'text-3xl',
-														props.item.text_size === 'text-4xl' && 'text-4xl',
-														props.item.text_size === 'text-5xl' && 'text-5xl',
-														props.item.text_size === 'text-6xl' && 'text-6xl',
-														props.item.text_size === 'text-7xl' && 'text-7xl',
-														props.item.text_size === 'text-8xl' && 'text-8xl'
-													)}
-												>
-													{props.item.title}
-												</h1>
-												<p
-													class={clsx(
-														' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line',
-														props.item.text_size_b === 'text-xs' && 'text-xs',
-														props.item.text_size_b === 'text-sm' && 'text-sm',
-														props.item.text_size_b === 'text-base' && 'text-base',
-														props.item.text_size_b === 'text-lg' && 'text-lg',
-														props.item.text_size_b === 'text-xl' && 'text-xl',
-														props.item.text_size_b === 'text-2xl' && 'text-2xl',
-														props.item.text_size_b === 'text-3xl' && 'text-3xl',
-														props.item.text_size_b === 'text-4xl' && 'text-4xl',
-														props.item.text_size_b === 'text-5xl' && 'text-5xl',
-														props.item.text_size_b === 'text-6xl' && 'text-6xl',
-														props.item.text_size_b === 'text-7xl' && 'text-7xl',
-														props.item.text_size_b === 'text-8xl' && 'text-8xl'
-													)}
-												>
-													{props.item.description}
-												</p>
-											</div>
-										</Show>
-
-										<ul
-											class={clsx(
-												'',
-												props.item?.component_variant === 'center' && 'flex flex-col space-y-15',
-												props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
-												props.item?.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
-											)}
-										>
-											<For each={props.item.icons}>
-												{(item: any, index) => {
-													if (props.item?.component_variant === 'center') {
-														if (index() % 2 !== 0) return
-													}
-
-													return (
-														<li class="flex items-start justify-start">
-															<div
-																class={clsx(
-																	' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
-																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-																	props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-																	props.item.background_colors_b === 'surface' && 'bg-surface',
-																	props.item.background_colors_b === 'text_4' && 'bg-text_4',
-																	props.item.background_colors_b === 'text_5' && 'bg-text_5',
-																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
-																)}
-															>
-																<Show when={item.item?.image}>
-																	<img
-																		src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
-																		loading="lazy"
-																		alt={item.item?.title}
-																		role="img"
-																		class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px
-
-																		"
-																	/>
-																</Show>
-															</div>
-															<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
-																<Show when={item.item?.title}>
-																	<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
-																</Show>
-																<Show when={item.item?.sub_title}>
-																	<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
-																</Show>
-															</div>
-														</li>
-													)
-												}}
-											</For>
-										</ul>
+								>
+									<div>
 										<div
 											class={clsx(
-												'flex items-end ',
-												props.item.component_variant === 'left' && 'justify-start',
-												props.item.component_variant === 'default' && 'justify-end',
-												props.item.component_variant === 'center' && 'justify-end'
+												'flex flex-col ',
+												props.item.component_variant === 'center' && '',
+												props.item.component_variant === 'default' && ' space-y-8',
+												props.item.component_variant === 'left' && ' space-y-8'
 											)}
 										>
-											<div 
-											
-											class={clsx(
-												'flex items-center space-x-3 ',
-												props.item.component_variant === 'center' && 'mt-8',
-												props.item.component_variant === 'default' && ' ',
-												props.item.component_variant === 'left' && ''
-											)}
-
-											>
-												<Show when={props.item?.price}>
-													<div class="font-500 text-text_3 text-sm tracking-tighter ">{props.item?.price}</div>
-												</Show>
-												<Show when={props.item?.call_to_action}>
-													<div class="flex items-center hover:underline text-sm font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
-														<A
-															href="/store/Store"
-															class="text- z-2 tracking-tight"
-														>
-															{props.item?.call_to_action}
-														</A>
+											<Show when={props.item?.component_variant !== 'center'}>
+												<div class="space-y-1 ">
+													<div
+														class={clsx(
+															' tracking-tighter text-text_2   font-500 z-2  text-start',
+															props.item.text_size_b === 'text-xs' && 'text-xs',
+															props.item.text_size_b === 'text-sm' && 'text-sm',
+															props.item.text_size_b === 'text-base' && 'text-base',
+															props.item.text_size_b === 'text-lg' && 'text-lg',
+															props.item.text_size_b === 'text-xl' && 'text-xl',
+															props.item.text_size_b === 'text-2xl' && 'text-2xl',
+															props.item.text_size_b === 'text-3xl' && 'text-3xl',
+															props.item.text_size_b === 'text-4xl' && 'text-4xl',
+															props.item.text_size_b === 'text-5xl' && 'text-5xl',
+															props.item.text_size_b === 'text-6xl' && 'text-6xl',
+															props.item.text_size_b === 'text-7xl' && 'text-7xl',
+															props.item.text_size_b === 'text-8xl' && 'text-8xl'
+														)}
+													>
+														{props.item.sub_title}
 													</div>
-												</Show>
+													<h1
+														class={clsx(
+															'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces',
+															props.item.text_size === 'text-xs' && 'text-xs',
+															props.item.text_size === 'text-sm' && 'text-sm',
+															props.item.text_size === 'text-base' && 'text-base',
+															props.item.text_size === 'text-lg' && 'text-lg',
+															props.item.text_size === 'text-xl' && 'text-xl',
+															props.item.text_size === 'text-2xl' && 'text-2xl',
+															props.item.text_size === 'text-3xl' && 'text-3xl',
+															props.item.text_size === 'text-4xl' && 'text-4xl',
+															props.item.text_size === 'text-5xl' && 'text-5xl',
+															props.item.text_size === 'text-6xl' && 'text-6xl',
+															props.item.text_size === 'text-7xl' && 'text-7xl',
+															props.item.text_size === 'text-8xl' && 'text-8xl'
+														)}
+													>
+														{props.item.title}
+													</h1>
+													<p
+														class={clsx(
+															' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line',
+															props.item.text_size_b === 'text-xs' && 'text-xs',
+															props.item.text_size_b === 'text-sm' && 'text-sm',
+															props.item.text_size_b === 'text-base' && 'text-base',
+															props.item.text_size_b === 'text-lg' && 'text-lg',
+															props.item.text_size_b === 'text-xl' && 'text-xl',
+															props.item.text_size_b === 'text-2xl' && 'text-2xl',
+															props.item.text_size_b === 'text-3xl' && 'text-3xl',
+															props.item.text_size_b === 'text-4xl' && 'text-4xl',
+															props.item.text_size_b === 'text-5xl' && 'text-5xl',
+															props.item.text_size_b === 'text-6xl' && 'text-6xl',
+															props.item.text_size_b === 'text-7xl' && 'text-7xl',
+															props.item.text_size_b === 'text-8xl' && 'text-8xl'
+														)}
+													>
+														{props.item.description}
+													</p>
+												</div>
+											</Show>
+
+											<ul
+												class={clsx(
+													'',
+													props.item?.component_variant === 'center' && 'flex flex-col space-y-15',
+													props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
+													props.item?.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
+												)}
+											>
+												<For each={props.item.icons}>
+													{(item: any, index) => {
+														if (props.item?.component_variant === 'center') {
+															if (index() % 2 !== 0) return
+														}
+
+														return (
+															<li class="flex items-start justify-start">
+																<div
+																	class={clsx(
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																	)}
+																>
+																	<Show when={item.item?.image}>
+																		<img
+																			src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
+																			loading="lazy"
+																			alt={item.item?.title}
+																			role="img"
+																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px
+
+																		"
+																		/>
+																	</Show>
+																</div>
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																	<Show when={item.item?.title}>
+																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
+																	</Show>
+																	<Show when={item.item?.sub_title}>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																	</Show>
+																</div>
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+											<div
+												class={clsx(
+													'flex items-end ',
+													props.item.component_variant === 'left' && 'justify-start',
+													props.item.component_variant === 'default' && 'justify-end',
+													props.item.component_variant === 'center' && 'justify-end'
+												)}
+											>
+												<div
+													class={clsx(
+														'flex items-center space-x-3 ',
+														props.item.component_variant === 'center' && 'mt-8',
+														props.item.component_variant === 'default' && ' ',
+														props.item.component_variant === 'left' && ''
+													)}
+												>
+													<Show when={props.item?.price}>
+														<div class="font-500 text-text_3 text-sm tracking-tighter ">{props.item?.price}</div>
+													</Show>
+													<Show when={props.item?.call_to_action}>
+														<div class="flex items-center hover:underline text-sm font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
+															<A
+																href="/store/Store"
+																class="text- z-2 tracking-tight"
+															>
+																{props.item?.call_to_action}
+															</A>
+														</div>
+													</Show>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
-								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
-							</div>
-						</div>
-					</div>
-					<div class="mx-8  ">
-						<Show when={props.item?.component_variant === 'center'}>
-							<div class="space-y-1 mb-2 max-w-500px">
-								<div
-									class={clsx(
-										' tracking-tighter text-text_2   font-500 z-2  text-start',
-										props.item.text_size_b === 'text-xs' && 'text-xs',
-										props.item.text_size_b === 'text-sm' && 'text-sm',
-										props.item.text_size_b === 'text-base' && 'text-base',
-										props.item.text_size_b === 'text-lg' && 'text-lg',
-										props.item.text_size_b === 'text-xl' && 'text-xl',
-										props.item.text_size_b === 'text-2xl' && 'text-2xl',
-										props.item.text_size_b === 'text-3xl' && 'text-3xl',
-										props.item.text_size_b === 'text-4xl' && 'text-4xl',
-										props.item.text_size_b === 'text-5xl' && 'text-5xl',
-										props.item.text_size_b === 'text-6xl' && 'text-6xl',
-										props.item.text_size_b === 'text-7xl' && 'text-7xl',
-										props.item.text_size_b === 'text-8xl' && 'text-8xl'
-									)}
-								>
-									{props.item.sub_title}
+									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 								</div>
-								<h1
-									class={clsx(
-										'tracking-tighter text-text_2   font-700 z-2  text-start',
-										props.item.text_size === 'text-xs' && 'text-xs',
-										props.item.text_size === 'text-sm' && 'text-sm',
-										props.item.text_size === 'text-base' && 'text-base',
-										props.item.text_size === 'text-lg' && 'text-lg',
-										props.item.text_size === 'text-xl' && 'text-xl',
-										props.item.text_size === 'text-2xl' && 'text-2xl',
-										props.item.text_size === 'text-3xl' && 'text-3xl',
-										props.item.text_size === 'text-4xl' && 'text-4xl',
-										props.item.text_size === 'text-5xl' && 'text-5xl',
-										props.item.text_size === 'text-6xl' && 'text-6xl',
-										props.item.text_size === 'text-7xl' && 'text-7xl',
-										props.item.text_size === 'text-8xl' && 'text-8xl'
-									)}
-								>
-									{props.item.title}
-								</h1>
-								<p
-									class={clsx(
-										' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line ',
-										props.item.text_size_b === 'text-xs' && 'text-xs',
-										props.item.text_size_b === 'text-sm' && 'text-sm',
-										props.item.text_size_b === 'text-base' && 'text-base',
-										props.item.text_size_b === 'text-lg' && 'text-lg',
-										props.item.text_size_b === 'text-xl' && 'text-xl',
-										props.item.text_size_b === 'text-2xl' && 'text-2xl',
-										props.item.text_size_b === 'text-3xl' && 'text-3xl',
-										props.item.text_size_b === 'text-4xl' && 'text-4xl',
-										props.item.text_size_b === 'text-5xl' && 'text-5xl',
-										props.item.text_size_b === 'text-6xl' && 'text-6xl',
-										props.item.text_size_b === 'text-7xl' && 'text-7xl',
-										props.item.text_size_b === 'text-8xl' && 'text-8xl'
-									)}
-								>
-									{props.item.description}
-								</p>
 							</div>
-						</Show>
-						<div
-							class={clsx(
-								'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
-								props.item.background_colors === 'normal_1' && 'bg-normal_1',
-								props.item.background_colors === 'normal_2' && 'bg-normal_2',
-								props.item.background_colors === 'normal_3' && 'bg-normal_3',
-								props.item.background_colors === 'normal_4' && 'bg-normal_4',
-								props.item.background_colors === 'surface' && 'bg-surface',
-								props.item.background_colors === 'text_4' && 'bg-text_4',
-								props.item.background_colors === 'text_5' && 'bg-text_5',
-								props.item.background_colors === 'accent_4' && 'bg-accent_4',
-								props.item.background_colors === 'accent_5' && 'bg-accent_5',
-								props.item.background_colors === 'accent_6' && 'bg-accent_6',
-								props.item.background_colors === 'accent_7' && 'bg-accent_7',
-								props.item.background_colors === 'accent_8' && 'bg-accent_8',
-								props.item.background_colors === 'accent_9' && 'bg-accent_9',
-								props.item.background_colors === 'accent_10' && 'bg-accent_10'
-							)}
-						>
-							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
-								height={600}
-								width={600}
-								alt={props.item.title || 'main image'}
-								class={clsx('object-cover object-center min-h-450px z-5')}
-							/>
 						</div>
-					</div>
-					<Show when={props.item?.component_variant === 'center'}>
-						<div class="flex  justify-center  ">
+
+						<div class="mx-8  ">
+							<Show when={props.item?.component_variant === 'center'}>
+								<div class="space-y-1 mb-2 max-w-500px">
+									<div
+										class={clsx(
+											' tracking-tighter text-text_2   font-500 z-2  text-start',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-base',
+											props.item.text_size_b === 'text-lg' && 'text-lg',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-2xl',
+											props.item.text_size_b === 'text-3xl' && 'text-3xl',
+											props.item.text_size_b === 'text-4xl' && 'text-4xl',
+											props.item.text_size_b === 'text-5xl' && 'text-5xl',
+											props.item.text_size_b === 'text-6xl' && 'text-6xl',
+											props.item.text_size_b === 'text-7xl' && 'text-7xl',
+											props.item.text_size_b === 'text-8xl' && 'text-8xl'
+										)}
+									>
+										{props.item.sub_title}
+									</div>
+									<h1
+										class={clsx(
+											'tracking-tighter text-text_2   font-700 z-2  text-start',
+											props.item.text_size === 'text-xs' && 'text-xs',
+											props.item.text_size === 'text-sm' && 'text-sm',
+											props.item.text_size === 'text-base' && 'text-base',
+											props.item.text_size === 'text-lg' && 'text-lg',
+											props.item.text_size === 'text-xl' && 'text-xl',
+											props.item.text_size === 'text-2xl' && 'text-2xl',
+											props.item.text_size === 'text-3xl' && 'text-3xl',
+											props.item.text_size === 'text-4xl' && 'text-4xl',
+											props.item.text_size === 'text-5xl' && 'text-5xl',
+											props.item.text_size === 'text-6xl' && 'text-6xl',
+											props.item.text_size === 'text-7xl' && 'text-7xl',
+											props.item.text_size === 'text-8xl' && 'text-8xl'
+										)}
+									>
+										{props.item.title}
+									</h1>
+									<p
+										class={clsx(
+											' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-pre-line ',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-base',
+											props.item.text_size_b === 'text-lg' && 'text-lg',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-2xl',
+											props.item.text_size_b === 'text-3xl' && 'text-3xl',
+											props.item.text_size_b === 'text-4xl' && 'text-4xl',
+											props.item.text_size_b === 'text-5xl' && 'text-5xl',
+											props.item.text_size_b === 'text-6xl' && 'text-6xl',
+											props.item.text_size_b === 'text-7xl' && 'text-7xl',
+											props.item.text_size_b === 'text-8xl' && 'text-8xl'
+										)}
+									>
+										{props.item.description}
+									</p>
+								</div>
+							</Show>
 							<div
 								class={clsx(
-									'text-text_2 z-10 flex flex-col items-center  ',
-									props.item.component_variant === 'center' && 'min-w-[300px] max-w-400px',
-									props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
-									props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
+									'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+									props.item.background_colors === 'normal_1' && 'bg-normal_1',
+									props.item.background_colors === 'normal_2' && 'bg-normal_2',
+									props.item.background_colors === 'normal_3' && 'bg-normal_3',
+									props.item.background_colors === 'normal_4' && 'bg-normal_4',
+									props.item.background_colors === 'surface' && 'bg-surface',
+									props.item.background_colors === 'text_4' && 'bg-text_4',
+									props.item.background_colors === 'text_5' && 'bg-text_5',
+									props.item.background_colors === 'accent_4' && 'bg-accent_4',
+									props.item.background_colors === 'accent_5' && 'bg-accent_5',
+									props.item.background_colors === 'accent_6' && 'bg-accent_6',
+									props.item.background_colors === 'accent_7' && 'bg-accent_7',
+									props.item.background_colors === 'accent_8' && 'bg-accent_8',
+									props.item.background_colors === 'accent_9' && 'bg-accent_9',
+									props.item.background_colors === 'accent_10' && 'bg-accent_10'
 								)}
 							>
-								<div>
-									<div class="flex flex-col space-y-8">
-										<ul
-											class={clsx(
-												'',
-												props.item.component_variant === 'center' && 'flex flex-col space-y-15',
-												props.item.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
-												props.item.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
-											)}
-										>
-											<For each={props.item.icons}>
-												{(item: any, index) => {
-													if (props.item?.component_variant === 'center') {
-														if (index() % 2 === 0) return
-													}
+								<img
+									src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+									height={600}
+									width={600}
+									alt={props.item.title || 'main image'}
+									class={clsx('object-cover object-center min-h-450px z-5')}
+								/>
+							</div>
+						</div>
 
-													return (
-														<li class="flex items-start justify-start">
-															<div
-																class={clsx(
-																	' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
-																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-																	props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-																	props.item.background_colors_b === 'surface' && 'bg-surface',
-																	props.item.background_colors_b === 'text_4' && 'bg-text_4',
-																	props.item.background_colors_b === 'text_5' && 'bg-text_5',
-																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
-																)}
-															>
-																<Show when={item.item?.image}>
-																	<img
-																		src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
-																		loading="lazy"
-																		alt={item.item?.title}
-																		role="img"
-																		class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px"
-																	/>
-																</Show>
-															</div>
-															<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
-																<Show when={item.item?.title}>
-																	<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
-																</Show>
-																<Show when={item.item?.sub_title}>
-																	<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
-																</Show>
-															</div>
-														</li>
-													)
-												}}
-											</For>
-										</ul>
+						<Show when={props.item?.component_variant === 'center'}>
+							<div class="flex  justify-center  ml-10 lg:ml-auto">
+								<div
+									class={clsx(
+										'text-text_2 z-10 flex flex-col items-center  ',
+										props.item.component_variant === 'center' && 'lg:min-w-[300px] max-w-400px',
+										props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
+										props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
+									)}
+								>
+									<div>
+										<div class="flex flex-col space-y-8 ">
+											<ul
+												class={clsx(
+													'',
+													props.item.component_variant === 'center' && 'flex flex-col space-y-15',
+													props.item.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
+													props.item.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
+												)}
+											>
+												<For each={props.item.icons}>
+													{(item: any, index) => {
+														if (props.item?.component_variant === 'center') {
+															if (index() % 2 === 0) return
+														}
+
+														return (
+															<li class="flex items-start justify-start">
+																<div
+																	class={clsx(
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																	)}
+																>
+																	<Show when={item.item?.image}>
+																		<img
+																			src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
+																			loading="lazy"
+																			alt={item.item?.title}
+																			role="img"
+																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px"
+																		/>
+																	</Show>
+																</div>
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																	<Show when={item.item?.title}>
+																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
+																	</Show>
+																	<Show when={item.item?.sub_title}>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																	</Show>
+																</div>
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+											<Show when={props.item?.call_to_action}>
+												<div class="h-1.4rem "></div>
+											</Show>
+										</div>
+									</div>
+
+									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
+								</div>
+							</div>
+						</Show>
+					</div>
+				</Show>
+
+				<Show when={getWindowSize().width < 1024 && getWindowSize().width > 600}>
+					<div class="flex flex-col justify-center items-center my-10">
+						<div class="mx-4 mb-8 flex">
+							<div class="flex flex-col items-center justify-center mr-4">
+								<div class="space-y-1 mb-2 max-w-500px">
+									<div
+										class={clsx(
+											' tracking-tighter text-text_2   font-500 z-2  text-start',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-sm',
+											props.item.text_size_b === 'text-lg' && 'text-sm',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-xl',
+											props.item.text_size_b === 'text-3xl' && 'text-xl',
+											props.item.text_size_b === 'text-4xl' && 'text-xl',
+											props.item.text_size_b === 'text-5xl' && 'text-xl',
+											props.item.text_size_b === 'text-6xl' && 'text-xl',
+											props.item.text_size_b === 'text-7xl' && 'text-xl',
+											props.item.text_size_b === 'text-8xl' && 'text-xl'
+										)}
+									>
+										{props.item.sub_title}
+									</div>
+									<h1
+										class={clsx(
+											'tracking-tighter text-text_2   font-700 z-2  text-start',
+											props.item.text_size === 'text-xs' && 'text-xs',
+											props.item.text_size === 'text-sm' && 'text-sm',
+											props.item.text_size === 'text-base' && 'text-base',
+											props.item.text_size === 'text-lg' && 'text-lg',
+											props.item.text_size === 'text-xl' && 'text-xl',
+											props.item.text_size === 'text-2xl' && 'text-2xl',
+											props.item.text_size === 'text-3xl' && 'text-3xl',
+											props.item.text_size === 'text-4xl' && 'text-4xl',
+											props.item.text_size === 'text-5xl' && 'text-5xl',
+											props.item.text_size === 'text-6xl' && 'text-5xl',
+											props.item.text_size === 'text-7xl' && 'text-5xl',
+											props.item.text_size === 'text-8xl' && 'text-5xl'
+										)}
+									>
+										{props.item.title}
+									</h1>
+									<p
+										class={clsx(
+											' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-break-spaces ',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-base',
+											props.item.text_size_b === 'text-lg' && 'text-lg',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-2xl',
+											props.item.text_size_b === 'text-3xl' && 'text-3xl',
+											props.item.text_size_b === 'text-4xl' && 'text-4xl',
+											props.item.text_size_b === 'text-5xl' && 'text-5xl',
+											props.item.text_size_b === 'text-6xl' && 'text-6xl',
+											props.item.text_size_b === 'text-7xl' && 'text-7xl',
+											props.item.text_size_b === 'text-8xl' && 'text-8xl'
+										)}
+									>
+										{props.item.description}
+									</p>
+								</div>
+								<div class={clsx('flex items-end justify-end mt-8')}>
+									<div class={clsx('flex items-center space-x-3 ')}>
+										<Show when={props.item?.price}>
+											<div class="font-500 text-text_3 text-xs tracking-tighter ">{props.item?.price}</div>
+										</Show>
 										<Show when={props.item?.call_to_action}>
-											<div class="h-1.4rem "></div>
+											<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
+												<A
+													href="/store/Store"
+													class="text- z-2 tracking-tight"
+												>
+													{props.item?.call_to_action}
+												</A>
+											</div>
 										</Show>
 									</div>
 								</div>
+							</div>
 
-								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
+							<div
+								class={clsx(
+									'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+									props.item.background_colors === 'normal_1' && 'bg-normal_1',
+									props.item.background_colors === 'normal_2' && 'bg-normal_2',
+									props.item.background_colors === 'normal_3' && 'bg-normal_3',
+									props.item.background_colors === 'normal_4' && 'bg-normal_4',
+									props.item.background_colors === 'surface' && 'bg-surface',
+									props.item.background_colors === 'text_4' && 'bg-text_4',
+									props.item.background_colors === 'text_5' && 'bg-text_5',
+									props.item.background_colors === 'accent_4' && 'bg-accent_4',
+									props.item.background_colors === 'accent_5' && 'bg-accent_5',
+									props.item.background_colors === 'accent_6' && 'bg-accent_6',
+									props.item.background_colors === 'accent_7' && 'bg-accent_7',
+									props.item.background_colors === 'accent_8' && 'bg-accent_8',
+									props.item.background_colors === 'accent_9' && 'bg-accent_9',
+									props.item.background_colors === 'accent_10' && 'bg-accent_10'
+								)}
+							>
+								<img
+									src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+									height={600}
+									width={600}
+									alt={props.item.title || 'main image'}
+									class={clsx('object-cover object-center min-h-450px z-5')}
+								/>
 							</div>
 						</div>
-					</Show>
+
+						<div class="flex flex-col ">
+							<div class="flex  justify-center  ">
+								<div class={clsx('text-text_2 z-10 flex flex-col items-center ')}>
+									<div>
+										<div class={clsx('flex flex-col ')}>
+											<ul class={clsx('grid grid-cols-2 gap-x-6 gap-y-6')}>
+												<For each={props.item.icons}>
+													{(item: any, index) => {
+														return (
+															<li class="flex items-start justify-start">
+																<div
+																	class={clsx(
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden max-w-30px min-w-30px fill-current',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																	)}
+																>
+																	<Show when={item.item?.image}>
+																		<img
+																			src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
+																			loading="lazy"
+																			alt={item.item?.title}
+																			role="img"
+																			class=" object-fill grayscale-100 contrast-50  
+
+																		"
+																		/>
+																	</Show>
+																</div>
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																	<Show when={item.item?.title}>
+																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
+																	</Show>
+																	<Show when={item.item?.sub_title}>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																	</Show>
+																</div>
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+										</div>
+									</div>
+
+									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</Show>
-				<Show when={getWindowSize().width <= 1023}>
-					<div>NONE</div>
+				<Show when={getWindowSize().width <= 600}>
+					<div class="flex flex-col justify-center items-center my-10">
+						<div class="mb-8 flex flex-col">
+							<div class="flex flex-col items-center justify-center mb-4">
+								<div class="space-y-1 mb-2 max-w-500px">
+									<div
+										class={clsx(
+											' tracking-tighter text-text_2   font-500 z-2  text-start',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-sm',
+											props.item.text_size_b === 'text-lg' && 'text-sm',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-xl',
+											props.item.text_size_b === 'text-3xl' && 'text-xl',
+											props.item.text_size_b === 'text-4xl' && 'text-xl',
+											props.item.text_size_b === 'text-5xl' && 'text-xl',
+											props.item.text_size_b === 'text-6xl' && 'text-xl',
+											props.item.text_size_b === 'text-7xl' && 'text-xl',
+											props.item.text_size_b === 'text-8xl' && 'text-xl'
+										)}
+									>
+										{props.item.sub_title}
+									</div>
+									<h1
+										class={clsx(
+											'tracking-tighter text-text_2   font-700 z-2  text-start',
+											props.item.text_size === 'text-xs' && 'text-xs',
+											props.item.text_size === 'text-sm' && 'text-sm',
+											props.item.text_size === 'text-base' && 'text-base',
+											props.item.text_size === 'text-lg' && 'text-lg',
+											props.item.text_size === 'text-xl' && 'text-xl',
+											props.item.text_size === 'text-2xl' && 'text-2xl',
+											props.item.text_size === 'text-3xl' && 'text-3xl',
+											props.item.text_size === 'text-4xl' && 'text-4xl',
+											props.item.text_size === 'text-5xl' && 'text-5xl',
+											props.item.text_size === 'text-6xl' && 'text-5xl',
+											props.item.text_size === 'text-7xl' && 'text-5xl',
+											props.item.text_size === 'text-8xl' && 'text-5xl'
+										)}
+									>
+										{props.item.title}
+									</h1>
+									<p
+										class={clsx(
+											' tracking-tighter  text-text_4   font-500 z-2  text-start whitespace-break-spaces ',
+											props.item.text_size_b === 'text-xs' && 'text-xs',
+											props.item.text_size_b === 'text-sm' && 'text-sm',
+											props.item.text_size_b === 'text-base' && 'text-base',
+											props.item.text_size_b === 'text-lg' && 'text-lg',
+											props.item.text_size_b === 'text-xl' && 'text-xl',
+											props.item.text_size_b === 'text-2xl' && 'text-2xl',
+											props.item.text_size_b === 'text-3xl' && 'text-3xl',
+											props.item.text_size_b === 'text-4xl' && 'text-4xl',
+											props.item.text_size_b === 'text-5xl' && 'text-5xl',
+											props.item.text_size_b === 'text-6xl' && 'text-6xl',
+											props.item.text_size_b === 'text-7xl' && 'text-7xl',
+											props.item.text_size_b === 'text-8xl' && 'text-8xl'
+										)}
+									>
+										{props.item.description}
+									</p>
+								</div>
+								<div class={clsx('flex items-end justify-end mt-8')}>
+									<div class={clsx('flex items-center space-x-3 ')}>
+										<Show when={props.item?.price}>
+											<div class="font-500 text-text_3 text-xs tracking-tighter ">{props.item?.price}</div>
+										</Show>
+										<Show when={props.item?.call_to_action}>
+											<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
+												<A
+													href="/store/Store"
+													class="text- z-2 tracking-tight"
+												>
+													{props.item?.call_to_action}
+												</A>
+											</div>
+										</Show>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class={clsx(
+									'max-w-600px max-h-600px min-h-300px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+									props.item.background_colors === 'normal_1' && 'bg-normal_1',
+									props.item.background_colors === 'normal_2' && 'bg-normal_2',
+									props.item.background_colors === 'normal_3' && 'bg-normal_3',
+									props.item.background_colors === 'normal_4' && 'bg-normal_4',
+									props.item.background_colors === 'surface' && 'bg-surface',
+									props.item.background_colors === 'text_4' && 'bg-text_4',
+									props.item.background_colors === 'text_5' && 'bg-text_5',
+									props.item.background_colors === 'accent_4' && 'bg-accent_4',
+									props.item.background_colors === 'accent_5' && 'bg-accent_5',
+									props.item.background_colors === 'accent_6' && 'bg-accent_6',
+									props.item.background_colors === 'accent_7' && 'bg-accent_7',
+									props.item.background_colors === 'accent_8' && 'bg-accent_8',
+									props.item.background_colors === 'accent_9' && 'bg-accent_9',
+									props.item.background_colors === 'accent_10' && 'bg-accent_10'
+								)}
+							>
+								<img
+									src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+									height={600}
+									width={600}
+									alt={props.item.title || 'main image'}
+									class={clsx('object-cover object-center min-h-250px z-5')}
+								/>
+							</div>
+						</div>
+
+						<div class="flex flex-col ">
+							<div class="flex  justify-center  ">
+								<div class={clsx('text-text_2 z-10 flex flex-col items-center ')}>
+									<div>
+										<div class={clsx('flex flex-col ')}>
+											<ul class={clsx('grid grid-cols-1 gap-x-6 gap-y-6')}>
+												<For each={props.item.icons}>
+													{(item: any, index) => {
+														return (
+															<li class="flex items-start justify-start">
+																<div
+																	class={clsx(
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden max-w-25px min-w-25px fill-current',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																	)}
+																>
+																	<Show when={item.item?.image}>
+																		<img
+																			src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
+																			loading="lazy"
+																			alt={item.item?.title}
+																			role="img"
+																			class=" object-fill grayscale-100 contrast-50  
+
+																		"
+																		/>
+																	</Show>
+																</div>
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																	<Show when={item.item?.title}>
+																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
+																	</Show>
+																	<Show when={item.item?.sub_title}>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																	</Show>
+																</div>
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+										</div>
+									</div>
+
+									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</Show>
 			</div>
 		</Show>

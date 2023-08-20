@@ -190,9 +190,9 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 								<div
 									class={clsx(
 										'',
-										props.item?.component_variant === 'default' && 'columns-2 lg:columns-3 xl:columns-4 space-y-4',
-										props.item?.component_variant === 'text' && 'columns-2 lg:columns-3 xl:columns-4 space-y-4',
-										props.item?.component_variant === 'text_only' && 'columns-2 lg:columns-3 xl:columns-4 space-y-4'
+										props.item?.component_variant === 'default' && 'column-1 sm:columns-2 lg:columns-3 xl:columns-4 space-y-4',
+										props.item?.component_variant === 'text' && 'column-1 sm:columns-2 lg:columns-3 xl:columns-4 space-y-4',
+										props.item?.component_variant === 'text_only' && 'column-1 sm:columns-2 lg:columns-3 xl:columns-4 space-y-4'
 									)}
 								>
 									<For each={props.item.body}>
@@ -215,7 +215,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 						<div class="flex flex-col xl:space-x-16 xl:flex-row ">
 							<div class="flex items-center justify-center space-x-10 ">
 								<div class="flex flex-col items-center justify-center space-y-20">
-									<div class="flex min-w-400px space-x-5">
+									<div class="flex sm:min-w-400px space-x-5">
 										<Show when={props.item?.image_3}>
 											<div
 												class={clsx(
@@ -303,7 +303,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 								<Show when={props.item?.image}>
 									<div
 										class={clsx(
-											'max-w-450px max-h-450px min-h-450px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+											'max-w-450px max-h-450px min-h-450px hidden  sm:flex items-center justify-center overflow-hidden rounded-2 relative ',
 											props.item.background_colors === 'normal_1' && 'bg-normal_1',
 											props.item.background_colors === 'normal_2' && 'bg-normal_2',
 											props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -343,8 +343,8 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 									<div
 										class={clsx(
 											'',
-											props.item?.component_variant === 'default' && 'columns-2 lg:columns-3 xl:columns-1  space-y-4',
-											props.item?.component_variant === 'text' && 'columns-2 lg:columns-3 xl:columns-1 space-y-4'
+											props.item?.component_variant === 'default' && 'column-1 sm:columns-2 lg:columns-3 xl:columns-1  space-y-4',
+											props.item?.component_variant === 'text' && 'column-1 sm:columns-2 lg:columns-3 xl:columns-1 space-y-4'
 										)}
 									>
 										<For each={props.item.body_alt}>

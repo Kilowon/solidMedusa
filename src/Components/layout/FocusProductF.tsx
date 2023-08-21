@@ -124,7 +124,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 					props.item.component_variant === 'center' && ' min-h-[900px] items-center lg:items-end mb-15'
 				)}
 			>
-				<Show when={getWindowSize().width > 1024}>
+				<Show when={getWindowSize().width > 1023}>
 					<div class="flex justify-center items-center">
 						<div class="flex flex-col ">
 							<div class="flex  justify-center  ">
@@ -480,7 +480,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 					</div>
 				</Show>
 
-				<Show when={getWindowSize().width < 1024 && getWindowSize().width > 600}>
+				<Show when={getWindowSize().width < 1023 && getWindowSize().width > 600}>
 					<div class="flex flex-col justify-center items-center my-10">
 						<div class="mx-4 mb-8 flex">
 							<div class="flex flex-col items-center justify-center mr-4">
@@ -689,10 +689,10 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 											props.item.text_size === 'text-2xl' && 'text-2xl',
 											props.item.text_size === 'text-3xl' && 'text-3xl',
 											props.item.text_size === 'text-4xl' && 'text-4xl',
-											props.item.text_size === 'text-5xl' && 'text-5xl',
-											props.item.text_size === 'text-6xl' && 'text-5xl',
-											props.item.text_size === 'text-7xl' && 'text-5xl',
-											props.item.text_size === 'text-8xl' && 'text-5xl'
+											props.item.text_size === 'text-5xl' && 'text-4xl',
+											props.item.text_size === 'text-6xl' && 'text-4xl',
+											props.item.text_size === 'text-7xl' && 'text-4xl',
+											props.item.text_size === 'text-8xl' && 'text-4xl'
 										)}
 									>
 										{props.item.title}

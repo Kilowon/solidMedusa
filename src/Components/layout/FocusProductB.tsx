@@ -145,7 +145,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 	return (
 		<Show when={true}>
 			<div
-				class="min-h-[800px] max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-y-8 lg:space-y-auto lg:space-x-8 mx-2 
+				class="min-h-[800px] max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-y-8 lg:space-y-auto lg:space-x-8 mx-2 my-25 sm:my-50 lg:my-auto 
 		"
 			>
 				<Show when={true}>
@@ -271,9 +271,9 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 							/>
 						</div>
 						<div class="min-h-260px flex items-center">
-							<div class="text-text_2 z-10 flex  items-center  space-y-3 max-w-410px p-2 relative">
+							<div class="text-text_2 z-10 flex flex-col sm:flex-row items-center  space-y-3 max-w-410px p-2 relative">
 								<div class="w-70%">
-									<div class="flex flex-col space-y-4">
+									<div class="flex space-y-4">
 										<div class="space-y-1">
 											<Show when={props.item.tags?.length > 0}>
 												<ul class="flex space-x-2">
@@ -311,7 +311,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 										</div>
 									</div>
 								</div>
-								<div class="flex flex-col items-center justify-center space-y-2 w-40% absolute right-0 top-0">
+								<div class="flex flex-col items-center justify-center space-y-2 sm:w-40% sm:absolute sm:right-0 sm:top-0">
 									<Show when={props.item.price_2}>
 										<div class="font-500 text-text_3  tracking-tighter  ">{props.item.price_2}</div>
 									</Show>
@@ -326,7 +326,6 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 										</div>
 									</Show>
 								</div>
-								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 							</div>
 						</div>
 					</div>
@@ -426,7 +425,6 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-				
 			</div>
 		</Show>
 	)

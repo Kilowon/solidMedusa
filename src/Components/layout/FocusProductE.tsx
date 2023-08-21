@@ -117,17 +117,17 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center mx-2',
-					props.item.component_variant === 'left' && 'flex-row-reverse'
+					'lg:min-h-[800px]  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center my-25 sm:my-50 lg:my-auto   mx-2',
+					props.item.component_variant === 'left' && 'lg:flex-row-reverse'
 				)}
 			>
-				<Show when={getWindowSize().width > 1023}>
-					<div class="flex flex-col ">
-						<div class="flex  justify-center  ">
-							<div class="text-text_2 z-10 flex flex-col min-w-[600px] max-w-800px items-center space-y-3 lg:space-y-12 ">
+				<Show when={getWindowSize().width > 640}>
+					<div class="lg:flex flex-col ">
+						<div class="lg:flex  justify-center  ">
+							<div class="text-text_2 z-10 lg:flex flex-col lg:min-w-[600px] lg:max-w-800px items-center space-y-3 lg:space-y-12 ">
 								<div>
-									<div class="flex flex-col space-y-2 ">
-										<Show when={props.item?.component_variant === 'default'}>
+									<div class="lg:flex flex-col space-y-2 ">
+										<Show when={props.item?.component_variant === 'default' || getWindowSize().width <= 1023}>
 											<div>
 												<Show when={props.item.tags?.length > 0}>
 													<ul class="flex space-x-2">
@@ -261,7 +261,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 									</For>
 								</ul>
 							</Show>
-							<Show when={props.item?.component_variant === 'left'}>
+							<Show when={props.item?.component_variant === 'left' && getWindowSize().width > 1024}>
 								<div
 									class={clsx(
 										' tracking-tighter text-text_2   font-500 z-10  text-start ',
@@ -305,7 +305,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 
 						<div
 							class={clsx(
-								'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+								'max-w-600px max-h-600px min-h-600px hidden  lg:flex items-center justify-center overflow-hidden rounded-2 relative ',
 								props.item.background_colors === 'normal_1' && 'bg-normal_1',
 								props.item.background_colors === 'normal_2' && 'bg-normal_2',
 								props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -330,8 +330,116 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-				<Show when={getWindowSize().width <= 1023}>
-					<div>NONE</div>
+				<Show when={getWindowSize().width <= 640}>
+					<div class={clsx(' max-w-90svw  flex-col items-center')}>
+						<div class="lg:flex justify-center items-center my-8 ">
+							<div class="flex flex-col   my-8 ">
+								<div
+									class={clsx(
+										' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',
+										props.item.text_size_b === 'text-xs' && 'text-xs',
+										props.item.text_size_b === 'text-sm' && 'text-sm',
+										props.item.text_size_b === 'text-base' && 'text-sm',
+										props.item.text_size_b === 'text-lg' && 'text-sm',
+										props.item.text_size_b === 'text-xl' && 'text-xl',
+										props.item.text_size_b === 'text-2xl' && 'text-xl',
+										props.item.text_size_b === 'text-3xl' && 'text-xl',
+										props.item.text_size_b === 'text-4xl' && 'text-xl',
+										props.item.text_size_b === 'text-5xl' && 'text-xl',
+										props.item.text_size_b === 'text-6xl' && 'text-xl',
+										props.item.text_size_b === 'text-7xl' && 'text-xl',
+										props.item.text_size_b === 'text-8xl' && 'text-xl'
+									)}
+								>
+									{props.item.sub_title}
+								</div>
+								<h1
+									class={clsx(
+										'tracking-tighter text-text_2   font-700 z-2  text-start',
+										props.item.text_size === 'text-xs' && 'text-xs',
+										props.item.text_size === 'text-sm' && 'text-sm',
+										props.item.text_size === 'text-base' && 'text-base',
+										props.item.text_size === 'text-lg' && 'text-lg',
+										props.item.text_size === 'text-xl' && 'text-xl',
+										props.item.text_size === 'text-2xl' && 'text-2xl',
+										props.item.text_size === 'text-3xl' && 'text-3xl',
+										props.item.text_size === 'text-4xl' && 'text-4xl',
+										props.item.text_size === 'text-5xl' && 'text-4xl',
+										props.item.text_size === 'text-6xl' && 'text-4xl',
+										props.item.text_size === 'text-7xl' && 'text-4xl',
+										props.item.text_size === 'text-8xl' && 'text-4xl'
+									)}
+								>
+									{props.item.title}
+								</h1>
+							</div>
+						</div>
+
+						<div class="flex flex-col ">
+							<div class={clsx('', props.item?.component_variant === 'default' && ' ')}>
+								<div class="text-text_2 z-10 flex items-center space-y-3 lg:space-y-12 ">
+									<div>
+										<div class="flex  ">
+											<ul class={clsx('grid grid-cols-2  gap-x-6 gap-y-3.75 min-w-70')}>
+												<For each={props.item.items}>
+													{(item: any) => {
+														return (
+															<li class="flex flex-col ">
+																<div
+																	class={clsx(
+																		' flex  justify-center items-center  rounded-3 overflow-hidden',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+																	)}
+																>
+																	<img
+																		src={`https://direct.shauns.cool/assets/${item.item?.image}?key=200-avif`}
+																		loading="eager"
+																		alt="main image"
+																		class=" object-fill  "
+																	/>
+																</div>
+
+																<div class="flex flex-col justify-center items-start min-w-40% space-y-2 ml-2">
+																	<div class="flex flex-col items-start">
+																		<Show when={item.item?.Title}>
+																			<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.Title}</div>
+																		</Show>
+
+																		<Show when={item.item?.price}>
+																			<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.price}</div>
+																		</Show>
+																	</div>
+																	<Show when={item.item?.call_to_action}>
+																		<div class="flex items-center hover:underline text-xs font-500  bg-accent_6 text-accenttext_1 px-1 py-0.25 rounded-1 ">
+																			<A
+																				href="/store/Store"
+																				class="text- z-2 tracking-tight"
+																			>
+																				{item.item?.call_to_action}
+																			</A>
+																		</div>
+																	</Show>
+																</div>
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</Show>
 			</div>
 		</Show>

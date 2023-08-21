@@ -112,7 +112,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 					props.item?.component_variant === 'nine' && 'flex   items-center min-h-[950px] lg:flex-col xl:flex-row'
 				)}
 			>
-				<Show when={getWindowSize().width > 600}>
+				<Show when={getWindowSize().width > 640}>
 					<div
 						class={clsx(
 							' max-w-99svw ',
@@ -479,7 +479,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 						</Show>
 					</div>
 				</Show>
-				<Show when={getWindowSize().width <= 600}>
+				<Show when={getWindowSize().width <= 640}>
 					<div class={clsx(' max-w-90svw  flex-col items-center')}>
 						<div class="lg:flex justify-center items-center my-8 ">
 							<div class="flex flex-col   my-8 ">
@@ -530,7 +530,11 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 												<li class="flex items-start justify-start ">
 													<div class="flex flex-col justify-start items-start  space-y-2 ml-2">
 														<div class="flex flex-start min-h-40px">
-															<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden w-30px h-30px mr-2 fill-current')}>
+															<div
+																class={clsx(
+																	' flex  justify-center items-center  rounded-0.5 overflow-hidden w-30px h-30px mr-2 fill-current'
+																)}
+															>
 																<Show when={item.item?.image}>
 																	<img
 																		src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
@@ -548,7 +552,6 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																<div class="font-700 text-text_3 text-xs tracking-tighter w-100% ">{item.item.title}</div>
 															</Show>
 														</div>
-														
 													</div>
 												</li>
 											)

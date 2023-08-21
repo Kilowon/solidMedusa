@@ -100,6 +100,23 @@ export default function ProductActions(props: {
 		enabled: false
 	}))
 
+	const draftReviewData = createQuery(() => ({
+		queryKey: ['draft_review_data', props.productInfo?.title],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: false
+	}))
+
 	createEffect(() => {
 		if (queryProduct.isSuccess) {
 			reviewData.refetch()
@@ -131,7 +148,7 @@ export default function ProductActions(props: {
 			<div class="flex flex-col space-y-4  mx-2">
 				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
-						<Show when={reviewData.data?.data?.overall_rating}>
+						<Show when={reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'}>
 							<div class="flex items-center space-x-2">
 								<div class="text-xl">
 									<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
@@ -140,6 +157,18 @@ export default function ProductActions(props: {
 								<div class="text-text_2 ">|</div>
 
 								<div class="text-text_2 underline ">{reviewData.data?.data?.total_reviews} reviews</div>
+							</div>
+						</Show>
+
+						<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
+							<div class="flex items-center space-x-2">
+								<div class="text-xl">
+									<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
+								</div>
+
+								<div class="text-text_2 ">|</div>
+
+								<div class="text-text_2 underline ">{draftReviewData.data?.data?.total_reviews} reviews</div>
 							</div>
 						</Show>
 						<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
@@ -406,6 +435,23 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 		retry: 0
 	}))
 
+	const draftReviewData = createQuery(() => ({
+		queryKey: ['draft_review_data', props.productInfo?.title],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: false
+	}))
+
 	return (
 		<div>
 			<div class="mb-4 border-b border-surface_3">
@@ -512,39 +558,40 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 						</button>
 					</li>
 					<Show when={props.rating?.reviews}>
-					<li
-						class=""
-						role="presentation"
-					>
-						<button
-							class={clsx(
-								'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
-								activeTab().reviews === 'active' && ' border-text_2 text-text_2',
-								activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_4'
-							)}
-							id="reviews-tab"
-							data-tabs-target="#reviews"
-							type="button"
-							role="tab"
-							aria-controls="reviews"
-							aria-selected="false"
-							onClick={() => {
-								if (activeTab().reviews === 'inactive') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'active' })
-									return
-								}
-								if (activeTab().reviews === 'active') {
-									setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
-								}
-							}}
+						<li
+							class=""
+							role="presentation"
 						>
-							{' '}
-							<div class="flex flex-col justify-center items-center ">
-								<div class="i-ic-baseline-star-rate text-lg " />
-								Customer Reviews
-							</div>
-						</button>
-					</li></Show>
+							<button
+								class={clsx(
+									'lg:hidden inline-block p-1 border-b-2 rounded-t-lg h-full bg-normal_1 lg:bg-normal_2',
+									activeTab().reviews === 'active' && ' border-text_2 text-text_2',
+									activeTab().reviews === 'inactive' && 'hover:text-text_2 hover:border-text_5 text-text_3'
+								)}
+								id="reviews-tab"
+								data-tabs-target="#reviews"
+								type="button"
+								role="tab"
+								aria-controls="reviews"
+								aria-selected="false"
+								onClick={() => {
+									if (activeTab().reviews === 'inactive') {
+										setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'active' })
+										return
+									}
+									if (activeTab().reviews === 'active') {
+										setActiveTab({ description: 'inactive', info: 'inactive', shipping: 'inactive', reviews: 'inactive' })
+									}
+								}}
+							>
+								{' '}
+								<div class="flex flex-col justify-center items-center ">
+									<div class="i-ic-baseline-star-rate text-lg " />
+									Customer Reviews
+								</div>
+							</button>
+						</li>
+					</Show>
 				</ul>
 			</div>
 			<div class="text-sm h-full">
@@ -688,9 +735,16 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 								//activeTab().reviews === 'inactive' && 'hidden'
 							)}
 						>
-							<div>
-								<ReviewsDisplay rating={props.rating} />
-							</div>
+							<Show when={import.meta.env.VITE_DRAFT_SITE === 'false'}>
+								<div>
+									<ReviewsDisplay rating={props.rating} />
+								</div>
+							</Show>
+							<Show when={import.meta.env.VITE_DRAFT_SITE === 'true'}>
+								<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
+									<ReviewsDisplay rating={draftReviewData.data?.data} />
+								</Show>
+							</Show>
 						</div>
 					</Show>
 				</TransitionGroup>
@@ -847,7 +901,7 @@ export function CustomerIndividualReviews(props: {
 					/>
 				</Show>
 			</div>
-			<span class="flex mx-2 border border-text_5/40 border-1 rounded-36"></span>
+			<span class="flex mx-2 border border-surface border-1 rounded-36"></span>
 		</div>
 	)
 }
@@ -895,7 +949,7 @@ export function ReviewsDisplay(props: { rating: any }) {
 
 	return (
 		<Show when={true}>
-			<div class={clsx('p-4 rounded-lg bg-normal_1 space-y-3 text-sm lg:min-w-80% lg:max-w-80%')}>
+			<div class={clsx('p-4 rounded-lg bg-normal_1 space-y-3 text-sm lg:min-w-80% lg:max-w-80% xl:max-w-95%')}>
 				<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
 					<button
 						onClick={handlePrevPage}
@@ -911,7 +965,7 @@ export function ReviewsDisplay(props: { rating: any }) {
 					</button>
 				</div>
 				<div>
-					<div class="lg:grid  lg:grid-cols-2 lg:gap-2 xl:grid-cols-2 xl:gap-4 ">
+					<div class="sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-6 xl:grid-cols-3 xl:gap-4 ">
 						<div class="flex flex-col justify-between">
 							<CustomerOverallReviews rating={props.rating} />
 							<span class="flex mx-2 border border-normal_3 border-1"></span>

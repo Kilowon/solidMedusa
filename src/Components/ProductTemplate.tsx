@@ -32,6 +32,24 @@ export default function ProductTemplate(props: {
 		enabled: false
 	}))
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
+
+	const draftReviewData = createQuery(() => ({
+		queryKey: ['draft_review_data', props.productInfo?.title],
+		queryFn: async function () {
+			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: true
+	}))
+
 	return (
 		<Show
 			when={
@@ -71,8 +89,17 @@ export default function ProductTemplate(props: {
 					</div>
 				</div>
 				<div class="hidden lg:flex lg:content-container justify-center">
-					<Show when={reviewData.isSuccess && reviewData?.data?.data?.reviews?.length > 0}>
+					<Show
+						when={
+							reviewData.isSuccess &&
+							reviewData?.data?.data?.reviews?.length > 0 &&
+							import.meta.env.VITE_DRAFT_SITE === 'false'
+						}
+					>
 						<ReviewsDisplay rating={reviewData.data?.data} />
+					</Show>
+					<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
+						<ReviewsDisplay rating={draftReviewData.data?.data} />
 					</Show>
 				</div>
 			</main>

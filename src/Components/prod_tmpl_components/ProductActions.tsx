@@ -557,7 +557,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							</div>
 						</button>
 					</li>
-					<Show when={props.rating?.reviews}>
+					<Show when={props.rating?.reviews || import.meta.env.VITE_DRAFT_SITE === 'true'}>
 						<li
 							class=""
 							role="presentation"
@@ -727,7 +727,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							</Show>
 						</div>
 					</Show>
-					<Show when={activeTab().reviews === 'active' && props.rating?.reviews}>
+					<Show when={activeTab().reviews === 'active' && props.rating?.reviews || import.meta.env.VITE_DRAFT_SITE === 'true'}>
 						<div
 							class={clsx(
 								'p-4 rounded-lg bg-normal_2 space-y-3 text-sm',

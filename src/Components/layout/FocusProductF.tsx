@@ -479,8 +479,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</Show>
 					</div>
 				</Show>
-
-				<Show when={getWindowSize().width < 1023 && getWindowSize().width > 600}>
+				<Show when={getWindowSize().width < 1023 && getWindowSize().width > 640}>
 					<div class="flex flex-col justify-center items-center my-10">
 						<div class="mx-4 mb-8 flex">
 							<div class="flex flex-col items-center justify-center mr-4">
@@ -654,7 +653,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-				<Show when={getWindowSize().width <= 600}>
+				<Show when={getWindowSize().width <= 640}>
 					<div class="flex flex-col justify-center items-center my-10">
 						<div class="mb-8 flex flex-col">
 							<div class="flex flex-col items-center justify-center mb-4">
@@ -820,9 +819,21 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												</For>
 											</ul>
 										</div>
+										<div class={clsx('flex items-end justify-center mt-8')}>
+											<div class={clsx('flex items-center space-x-3 ')}>
+												<Show when={props.item?.call_to_action}>
+													<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
+														<A
+															href="/store/Store"
+															class="text- z-2 tracking-tight"
+														>
+															{props.item?.call_to_action}
+														</A>
+													</div>
+												</Show>
+											</div>
+										</div>
 									</div>
-
-									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 								</div>
 							</div>
 						</div>

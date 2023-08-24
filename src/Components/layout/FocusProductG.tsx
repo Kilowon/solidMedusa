@@ -135,7 +135,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 								'',
 								props.item?.component_variant === 'default' && 'xl:min-w-1200px mb-4',
 								props.item.component_variant === 'text' && 'xl:min-w-1200px mb-4',
-								props.item.component_variant === 'text_only' && 'xl:min-w-1200px mb-45'
+								props.item.component_variant === 'text_only' && 'xl:min-w-1200px  mb-4'
 							)}
 						>
 							<ul
@@ -336,7 +336,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 									'',
 									props.item?.component_variant === 'text' && ' lg:max-w-7xl xl:max-w-300px mt-5 xl:mt-auto',
 									props.item?.component_variant === 'default' &&
-										'grid grid-cols-2 xl:grid-cols-1 gap-6 xl:gap-6 lg:max-w-800px xl:max-w-400px '
+										'grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-6 xl:gap-6 xl:max-w-400px '
 								)}
 							>
 								<Show when={props.item?.body_alt.length > 0}>

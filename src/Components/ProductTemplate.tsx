@@ -4,6 +4,7 @@ import { JSX, Show } from 'solid-js'
 import { Product } from '~/types/models'
 import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
 import { createQuery } from '@tanstack/solid-query'
+import DisplayContainer from './layout/DisplayContainer'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -50,6 +51,25 @@ export default function ProductTemplate(props: {
 		enabled: true
 	}))
 
+	const displayContainerData = createQuery(() => ({
+		queryKey: ['display_container_data', props.productInfo?.title],
+		queryFn: async function () {
+			const response = await fetch(
+				`https://direct.shauns.cool/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json'
+					}
+				}
+			)
+			const data = await response.json()
+			return data
+		},
+		retry: 0
+	}))
+
 	return (
 		<Show
 			when={
@@ -88,6 +108,7 @@ export default function ProductTemplate(props: {
 						</div>
 					</div>
 				</div>
+				<DisplayContainer data={displayContainerData} />
 				<div class="hidden lg:flex lg:content-container justify-center">
 					<Show
 						when={

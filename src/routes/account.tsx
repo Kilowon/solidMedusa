@@ -191,24 +191,7 @@ export default function Account() {
 			<Navigation />
 			<div class="bg-normal_1 min-h-[100svh]">
 				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">
-					<Suspense
-						fallback={
-							<section class="flex justify-center h-[100vh] w-[100vw] p-16 text-orange-600 bg-normal_2 text-xl">
-								<div class="flex flex-col items-center">
-									<Image
-										src="https://res.cloudinary.com/contentdelivery/image/upload/v1684413389/couch_npht3q.webp"
-										alt="logo"
-										layout="constrained"
-										width={600}
-										height={600}
-										priority={true}
-										class="w-20 h-20 mt-35 md:mt-70"
-									/>
-									<div class="i-svg-spinners:bars-scale-fade" />
-								</div>
-							</section>
-						}
-					>
+					<Suspense>
 						<Show when={!currentCustomer.isSuccess}>
 							<div
 								class={clsx(
@@ -315,55 +298,86 @@ export function ProductInformationTabs(props: { currentCustomer: Customer }) {
 				setActiveTab={setActiveTab}
 			/>
 			<div class="text-sm h-full">
-				<TransitionGroup
-					onEnter={(el, done) => {
-						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-							duration: 250
-						})
-						a.finished.then(done)
-					}}
-					onExit={(el, done) => {
-						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-							duration: 0
-						})
-						a.finished.then(done)
-					}}
-				>
-					<Show when={activeTab().overview === 'active'}>
-						<OverviewActiveTab currentCustomer={props.currentCustomer} />
-					</Show>
-					<Show when={activeTab().profile === 'active'}>
-						<ProfileActiveTab currentCustomer={props.currentCustomer} />
-					</Show>
-					<Show when={activeTab().orders === 'active'}>
-						<OrdersActiveTab currentCustomer={props.currentCustomer} />
-					</Show>
-					<Show when={activeTab().reviews === 'active'}>
-						<ReviewsActiveTab currentCustomer={props.currentCustomer} />
-					</Show>
-					<Show when={activeTab().wishlist === 'active'}>
-						<WishListActiveTab currentCustomer={props.currentCustomer} />
-					</Show>
-				</TransitionGroup>
+				<Suspense>
+					<TransitionGroup
+						onEnter={(el, done) => {
+							const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+								duration: 250
+							})
+							a.finished.then(done)
+						}}
+						onExit={(el, done) => {
+							const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+								duration: 0
+							})
+							a.finished.then(done)
+						}}
+					>
+						<Show when={activeTab().overview === 'active'}>
+							<OverviewActiveTab currentCustomer={props.currentCustomer} />
+						</Show>
+						<Show when={activeTab().profile === 'active'}>
+							<ProfileActiveTab currentCustomer={props.currentCustomer} />
+						</Show>
+						<Show when={activeTab().orders === 'active'}>
+							<OrdersActiveTab currentCustomer={props.currentCustomer} />
+						</Show>
+						<Show when={activeTab().reviews === 'active'}>
+							<ReviewsActiveTab currentCustomer={props.currentCustomer} />
+						</Show>
+						<Show when={activeTab().wishlist === 'active'}>
+							<WishListActiveTab currentCustomer={props.currentCustomer} />
+						</Show>
+					</TransitionGroup>
+				</Suspense>
 			</div>
 		</div>
 	)
 }
 
 export function OverviewActiveTab(props: { currentCustomer: Customer }) {
+	const [sortedOrders, setSortedOrders] = createSignal<any[]>([])
+
+	createEffect(() => {
+		let sorted = [...props.currentCustomer?.orders].sort((a, b) => b.display_id - a.display_id)
+		setSortedOrders(sorted)
+	})
+
 	return (
 		<div class="p-1 rounded-sm bg-normal_1 ">
-			<p class=" mb-3 text-text_2">
+			<div class=" mb-3 text-text_2">
 				<Show when={props.currentCustomer?.orders}>
 					<div class="my-2 font-500 text-xs sm:text-sm">Recent orders</div>
 					<ul class="space-y-4 ">
-						<For each={props.currentCustomer?.orders}>
+						<For each={sortedOrders()}>
 							{(order: any) => {
+								const [open, setOpen] = createSignal(false)
+
+								const { medusa } = useGlobalContext()
+								const currentOrder = createQuery(() => ({
+									queryKey: ['current_order', order.id],
+									queryFn: async function () {
+										const customerOrder = await medusa?.orders?.retrieve(order.id)
+										return customerOrder
+									},
+									retry: 0,
+									enabled: false
+								}))
+
+								const createdAtDate = new Date(order.created_at)
+								const formattedDate = `${createdAtDate.getFullYear()}${(createdAtDate.getMonth() + 1)
+									.toString()
+									.padStart(2, '0')}${createdAtDate.getDate().toString().padStart(2, '0')}`
+								const formattedOrderId = `${formattedDate}-${order.display_id}`
+
 								return (
 									<li>
 										<div
 											class="flex sm:flex-row justify-between cursor-pointer p-1.5 rounded-sm hover:bg-text_2/5"
-											onClick={() => {}}
+											onClick={() => {
+												currentOrder.refetch()
+												setOpen(open => !open)
+											}}
 										>
 											<div>
 												<div class="text-xs sm:text-sm">Order date:</div>
@@ -377,7 +391,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 											</div>
 											<div class="hidden sm:block">
 												<div class="text-sm">Order number:</div>
-												<div class="text-sm">#{order.display_id}</div>
+												<div class="text-sm">#{formattedOrderId}</div>
 											</div>
 											<div>
 												<div class="text-xs sm:text-sm">Payment status:</div>
@@ -414,7 +428,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 																'text-sm flex items-center',
 																order.fulfillment_status === 'not_fulfilled' && 'text-text_4/80',
 																order.fulfillment_status === 'partially_fulfilled' && 'text-yellow-500',
-																order.fulfillment_status === 'fulfilled' && 'text-accent_6',
+																order.fulfillment_status === 'fulfilled' && 'text-blue-500',
 																order.fulfillment_status === 'partially_shipped' && 'text-yellow-500',
 																order.fulfillment_status === 'shipped' && 'text-accent_2',
 																order.fulfillment_status === 'partially_returned' && 'text-yellow-500',
@@ -440,6 +454,183 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 												<div class="text-sm">{order.items.length}</div>
 											</div>
 										</div>
+										<Show when={currentOrder.isSuccess}>
+											<dialog
+												data-modal
+												open={open()}
+												id="dialog"
+												aria-hidden="true"
+												class="fixed top-0 left-0 right-0 z-50  overflow-x-hidden overflow-y-auto md:inset-0 bg-transparent min-w-100svw sm:min-w-800px "
+											>
+												<div class="relative sm:w-full md:max-w-2xl md:max-h-full bg-transparent">
+													{/*  <!-- Modal content --> */}
+													<div class="relative bg-normal_2 rounded-lg shadow border-1 border-surface ">
+														{/*  <!-- Modal header --> */}
+
+														<div class="flex items-start justify-between p-4 border-b rounded-t  ">
+															<div class="flex flex-col space-y-5">
+																<h3 class="text-base md:text-xl font-semibold text-text_2 tracking-tighter text-balance ">
+																	Order: <div class="text-sm">#{formattedOrderId}</div>
+																</h3>
+																<div>
+																	<h4 class="text-xs text-text_3">
+																		purchased on{' '}
+																		{new Date(currentOrder?.data?.order?.created_at).toLocaleDateString('en-US', {
+																			month: 'long',
+																			day: 'numeric',
+																			year: 'numeric'
+																		})}
+																	</h4>
+																	<h4 class="text-xs text-text_3">order id: {currentOrder?.data?.order?.id.replace('order_', '')}</h4>
+																</div>
+															</div>
+															<button
+																type="button"
+																class="text-text_3 bg-transparent hover:bg-normal_2 hover:text-text_1 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
+																data-modal-hide="defaultModal"
+																onClick={() => {
+																	setOpen(open => !open)
+																}}
+															>
+																<svg
+																	aria-hidden="true"
+																	class="w-5 h-5"
+																	fill="currentColor"
+																	viewBox="0 0 20 20"
+																	xmlns="http://www.w3.org/2000/svg"
+																>
+																	<path
+																		fill-rule="evenodd"
+																		d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+																		clip-rule="evenodd"
+																	></path>
+																</svg>
+																<span class="sr-only">Close modal</span>
+															</button>
+														</div>
+														{/*  <!-- Modal body --> */}
+														<div class="p-6 space-y-6 flex flex-col bg-normal_2">
+															<div class="sm:flex sm:justify-between space-y-5 sm:space-y-auto">
+																<div class="text-text_2 text-sm">
+																	<div class="text-xs text-text_4">Shipping Address:</div>
+																	<div>
+																		{currentOrder?.data?.order?.shipping_address?.first_name}{' '}
+																		{currentOrder?.data?.order?.shipping_address?.last_name}
+																	</div>
+																	<div>{currentOrder?.data?.order?.shipping_address?.address_1}</div>
+																	<div>{currentOrder?.data?.order?.shipping_address?.address_2}</div>
+																	<div>
+																		{currentOrder?.data?.order?.shipping_address?.city},{' '}
+																		{currentOrder?.data?.order?.shipping_address?.province}{' '}
+																		{currentOrder?.data?.order?.shipping_address?.postal_code}
+																	</div>
+																	<div>{currentOrder?.data?.order?.shipping_address?.country}</div>
+																	<div>{currentOrder?.data?.order?.shipping_address?.phone}</div>
+																</div>
+																<div class="flex flex-col space-y-2 text-text_2">
+																	<div class="flex space-x-2">
+																		<div class="text-xs text-text_4">Delivery method:</div>
+																		<div class="text-text_2 text-xs">
+																			{currentOrder?.data?.order?.shipping_methods[0]?.shipping_option?.name}
+																		</div>
+																	</div>
+																	<div class="text-xs text-text_4">Tracking Numbers:</div>
+																	<div class="text-text_2 text-sm">
+																		<For each={currentOrder?.data?.order?.fulfillments[0]?.tracking_links}>
+																			{(link: any) => {
+																				return (
+																					<div class="text-text_2 text-sm">
+																						<a
+																							href={link.url}
+																							target="_blank"
+																							rel="noreferrer"
+																						>
+																							{link.tracking_number}
+																						</a>
+																					</div>
+																				)
+																			}}
+																		</For>
+																	</div>
+																</div>
+															</div>
+															<div class="text-xs text-text_4 mb-2">
+																<div>Order Summary:</div>
+																<div class="flex justify-between max-w-200px">
+																	Subtotal
+																	<div>
+																		{currencyFormat(currentOrder?.data?.order?.subtotal, currentOrder?.data?.order?.currency_code)}
+																	</div>
+																</div>
+																<div class="flex justify-between max-w-200px">
+																	Discounts
+																	<div>
+																		{currencyFormat(currentOrder?.data?.order?.discount_total, currentOrder?.data?.order?.currency_code)}
+																	</div>
+																</div>
+																<div class="flex justify-between max-w-200px">
+																	Gift Cards
+																	<div>
+																		{currencyFormat(currentOrder?.data?.order?.gift_card_total, currentOrder?.data?.order?.currency_code)}
+																	</div>
+																</div>
+																<div class="flex justify-between max-w-200px">
+																	Shipping
+																	<div>
+																		{currencyFormat(currentOrder?.data?.order?.shipping_total, currentOrder?.data?.order?.currency_code)}
+																	</div>
+																</div>
+																<div class="flex justify-between max-w-200px">
+																	Taxes
+																	<div>
+																		{currencyFormat(currentOrder?.data?.order?.tax_total, currentOrder?.data?.order?.currency_code)}
+																	</div>
+																</div>
+
+																<div class="flex justify-between max-w-200px text-sm font-500 text-text_2 mb-2">
+																	Total{' '}
+																	<div>{currencyFormat(currentOrder?.data?.order?.total, currentOrder?.data?.order?.currency_code)}</div>
+																</div>
+															</div>
+															<div class=" text-text_2 text-sm">
+																<div class="text-xs text-text_4 mb-2">Items:</div>
+
+																<ol>
+																	<For each={currentOrder?.data?.order?.items}>
+																		{(item: any) => {
+																			return (
+																				<li>
+																					<div class="text-xs text-text_4">Quantity: {item.quantity}</div>
+																					<div class="sm:flex sm:justify-between sm:items-center sm:space-x-10 mb-1 sm:min-w-500px">
+																						<h6>{item.title}</h6>
+																						<div class="text-xs text-text_4">{item.description}</div>
+																						<div>{currencyFormat(item.unit_price, item.currency_code)}</div>
+																					</div>
+																					<div class="flex justify-between items-center space-x-10 mb-1"></div>
+																				</li>
+																			)
+																		}}
+																	</For>
+																</ol>
+															</div>
+														</div>
+														{/*  <!-- Modal footer --> */}
+														<div class="flex items-center p-6 space-x-2 border-t border-normal_2 rounded-b ">
+															<button
+																data-modal-hide="defaultModal"
+																type="button"
+																class="text-text_2 bg-normal_1 hover:bg-normal_2 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-normal_2 text-sm font-medium px-5 py-2.5 hover:text-text_1 focus:z-10"
+																onClick={() => {
+																	setOpen(open => !open)
+																}}
+															>
+																Close
+															</button>
+														</div>
+													</div>
+												</div>
+											</dialog>
+										</Show>
 										<hr class="border-text_3/40 my-2 mx-6" />
 									</li>
 								)
@@ -450,7 +641,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 				<Show when={props.currentCustomer?.orders.length === 0}>
 					<div>No Orders Available</div>
 				</Show>
-			</p>
+			</div>
 		</div>
 	)
 }
@@ -580,13 +771,19 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 	}
 
 	let variantIdsAndImages = new Set()
+	const [sortedOrders, setSortedOrders] = createSignal<any[]>([])
+
+	createEffect(() => {
+		let sorted = [...props.currentCustomer?.orders].sort((a, b) => b.display_id - a.display_id)
+		setSortedOrders(sorted)
+	})
 
 	return (
 		<div class="sm:p-4 rounded-lg bg-normal_1  space-y-3 text-sm">
 			<Show when={props.currentCustomer?.orders && currentUserReviews.isSuccess}>
 				<div class="text-sm sm:text-lg text-text_2">Items that need a review:</div>
 				<ul class="space-y-2">
-					<For each={props.currentCustomer?.orders}>
+					<For each={sortedOrders()}>
 						{(order: any) => {
 							if (order?.fulfillment_status !== 'shipped') return
 
@@ -699,13 +896,22 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														class="grid grid-cols-6 sm:grid-cols-9 space-x-1 text-sm font-500 text-text_2 cursor-pointer w-[90svw] sm:w-[80svw] min-h-[68px]"
 														tabindex="0" // add tabindex attribute to make the div focusable
 													>
-														<Image
-															width={50}
-															height={50}
-															src={item.thumbnail}
-															alt={item.title}
-															class="-mb-px mr-2 rounded-md col-span-1 sm:col-span-1"
-														></Image>
+														<Show when={item.thumbnail}>
+															<Image
+																width={50}
+																height={50}
+																src={item.thumbnail}
+																alt={item.title}
+																class="-mb-px mr-2 rounded-md col-span-1 sm:col-span-1"
+															></Image>
+														</Show>
+														<Show when={!item.thumbnail}>
+															<Image
+																width={50}
+																height={50}
+																src={`https://fakeimg.pl/100x100?text=X&font=poppins`}
+															></Image>
+														</Show>
 														<div class="max-w-[300px] col-span-5 sm:col-span-6 flex items-center">
 															<div class="line-clamp-2   ellipsis text-xs ">{item.title}</div>
 														</div>
@@ -725,7 +931,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														>
 															<div
 																class={clsx(
-																	' text-accent_6',
+																	' text-[#2563EB]',
 																	userProductReviewedList(item.variant_id) && 'hidden',
 																	!userProductReviewedList(item.variant_id) && 'flex items-center space-x-1'
 																)}

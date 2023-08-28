@@ -1428,7 +1428,7 @@ export function Shipping(props: ShippingProps) {
 									value={field.value}
 									error={field.error}
 									//description="We'll only use this if we need to contact you about your order."
-									type="text"
+									type="tel"
 									label="Phone Number"
 									placeholder="Enter your phone number here"
 								/>
@@ -1943,7 +1943,7 @@ export function Billing(props: BillingProps) {
 									value={field.value}
 									error={field.error}
 									//description="We'll only use this if we need to contact you about your order."
-									type="text"
+									type="tel"
 									label="Phone Number (optional)"
 								/>
 							)}

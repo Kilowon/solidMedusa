@@ -477,7 +477,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										<span
 											class={clsx(
 												'line-through text-text_1',
-												props.variant === 'primary' && 'text-lg ',
+												props.variant === 'primary' && 'text-xs lg:text-lg ',
 												props.variant === 'checkout' && 'text-sm ',
 												props.variant === 'panel' && 'text-sm',
 												props.variant === 'mobile-checkout' && 'text-sm ',
@@ -490,7 +490,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										<span
 											class={clsx(
 												'text-accent_3',
-												props.variant === 'primary' && 'text-lg',
+												props.variant === 'primary' && 'text-sm lg:text-lg',
 												props.variant === 'checkout' && 'text-sm',
 												props.variant === 'panel' && 'text-sm',
 												props.variant === 'mobile-checkout' && 'text-sm',
@@ -509,7 +509,7 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 									<span
 										class={clsx(
 											' text-text_1',
-											props.variant === 'primary' && 'text-lg ',
+											props.variant === 'primary' && 'text-sm lg:text-lg ',
 											props.variant === 'checkout' && 'text-sm ',
 											props.variant === 'panel' && 'text-sm',
 											props.variant === 'mobile-checkout' && 'text-sm ',

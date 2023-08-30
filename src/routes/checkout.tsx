@@ -375,7 +375,7 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 				</div>
-				<div class="hidden lg:block lg:w-[433px] mx-auto ">
+				<div class="hidden lg:flex lg:items-center lg:w-[433px] mx-auto ">
 					<CartCore variant="checkout" />
 				</div>
 			</div>
@@ -449,7 +449,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-16 right-0 h-full w-[98vw] sm:w-[70vw] md:w-[0vw] bg-normal_1  z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
+					class={`fixed top-16 right-0 h-full w-[98vw] sm:w-[70vw] md:w-[45vw] bg-normal_1  z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

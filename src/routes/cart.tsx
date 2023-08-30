@@ -84,8 +84,10 @@ export default function Cart(props: any) {
 			}
 		>
 			<Header />
-			<div class="content-container sm:mt-10">
-				<CartCore variant="primary" />
+			<div>
+				<div class="lg:content-container mx-2 lg:mx-auto sm:mt-10 lg:min-w-80vw lg:mt-20 ">
+					<CartCore variant="primary" />
+				</div>
 			</div>
 			{/* <FeaturedProducts variant="footer" /> */}
 		</div>

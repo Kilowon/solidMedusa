@@ -19,6 +19,7 @@ import '@unocss/reset/tailwind-compat.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
+import clsx from 'clsx'
 
 function PlausibleScript() {
 	onMount(() => {
@@ -71,13 +72,19 @@ function MetaTags() {
 
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
+import { openCart, openMenu } from '~/state'
 
 const queryClient = new QueryClient()
 export default function Root() {
 	return (
 		<Html
 			lang="en"
-			class="overflow-y-scroll bg-transparent"
+			class={clsx(
+				' bg-transparent scrollbar-gutter',
+				openCart() === true && 'overflow-hidden',
+				openMenu() === true && 'overflow-hidden',
+				openCart() === false && openMenu() === false && 'overflow-y-scroll'
+			)}
 		>
 			<Head>
 				<MetaTags />

@@ -106,6 +106,13 @@ export default defineConfig({
 					}
 				],
 				[
+					'scrollbar-gutter',
+					{
+						['scrollbar-gutter']: 'stable',
+						['scrollbar-width']: 'auto'
+					}
+				],
+				[
 					/^scrollbar-hide$/,
 					([r]) => `.scrollbar-hide{scrollbar-width:none}
 .scrollbar-hide::-webkit-scrollbar{display:none}`

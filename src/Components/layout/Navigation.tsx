@@ -1,10 +1,11 @@
-import { createSignal, lazy, Suspense, Show } from 'solid-js'
+import { createSignal, lazy, Suspense, Show, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
+import { openCart, setOpenCart, openMenu, setOpenMenu, accountStatus, setAccountStatus } from '~/state'
 
 const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
 
@@ -23,15 +24,10 @@ export default function Navigation(props: any) {
 	const [menuDrawer, setMenuDrawer] = createSignal({
 		menu: 'hidden' as 'hidden' | 'active'
 	})
-	const [accountStatus, setAccountStatus] = createSignal('inactive')
-
-	const [openMenu, setOpenMenu] = createSignal(false)
 
 	const [preloader, setPreloader] = createSignal(false)
 
 	const [cartPreloader, setCartPreloader] = createSignal(false)
-
-	const [openCart, setOpenCart] = createSignal(false)
 
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],

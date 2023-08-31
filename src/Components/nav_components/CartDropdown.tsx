@@ -22,7 +22,7 @@ export default function CartDropdown(props: { openCart: Accessor<boolean>; setOp
 					}}
 				>
 					<Show when={props.openCart() === true}>
-						<div class=" bg-normal_1 absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100vh]  text-sm  z-10 mx-auto px-8">
+						<div class=" bg-normal_1 absolute top-[calc(100%+1px)] right-0 w-[440px] h-[100svh]   text-sm  z-10 mx-auto px-8">
 							<CartCore variant="panel" />
 						</div>
 					</Show>

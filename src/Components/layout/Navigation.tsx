@@ -5,7 +5,18 @@ import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { Image } from '@unpic/solid'
 import { getWindowSize } from '@solid-primitives/resize-observer'
-import { openCart, setOpenCart, openMenu, setOpenMenu, accountStatus, setAccountStatus } from '~/state'
+import {
+	openCart,
+	setOpenCart,
+	openMenu,
+	setOpenMenu,
+	accountStatus,
+	setAccountStatus,
+	cartDrawer,
+	setCartDrawer,
+	menuDrawer,
+	setMenuDrawer
+} from '~/state'
 
 const CartDropdown = lazy(() => import('~/Components/nav_components/CartDropdown'))
 
@@ -17,13 +28,6 @@ const HamburgerDrawerNav = lazy(() => import('~/Components/nav_components/Hambur
 
 export default function Navigation(props: any) {
 	const { queryCart } = useGlobalContext()
-
-	const [cartDrawer, setCartDrawer] = createSignal({
-		cart: 'hidden' as 'hidden' | 'active'
-	})
-	const [menuDrawer, setMenuDrawer] = createSignal({
-		menu: 'hidden' as 'hidden' | 'active'
-	})
 
 	const [preloader, setPreloader] = createSignal(false)
 

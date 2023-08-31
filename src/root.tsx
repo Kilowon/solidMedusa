@@ -72,7 +72,7 @@ function MetaTags() {
 
 //@ts-ignore
 const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
-import { openCart, openMenu } from '~/state'
+import { openCart, openMenu, cartDrawer, menuDrawer } from '~/state'
 
 const queryClient = new QueryClient()
 export default function Root() {
@@ -83,6 +83,8 @@ export default function Root() {
 				' bg-transparent scrollbar-gutter',
 				openCart() === true && 'overflow-hidden',
 				openMenu() === true && 'overflow-hidden',
+				cartDrawer().cart === 'active' && 'overflow-hidden',
+				menuDrawer().menu === 'active' && 'overflow-hidden',
 				openCart() === false && openMenu() === false && 'overflow-y-scroll'
 			)}
 		>

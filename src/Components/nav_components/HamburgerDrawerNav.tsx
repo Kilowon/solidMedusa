@@ -84,8 +84,8 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 	return (
 		<div>
 			<div
-				class={`fixed inset-0 bg-normal_2/30 backdrop-blur-6px z-200 transition-all duration-250 ease-in-out ${
-					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none bg-normal_2/60'
+				class={`fixed inset-0 bg-normal_2/70 backdrop-blur-10px z-200 transition-all duration-250 ease-in-out ${
+					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none '
 				}`}
 				onClick={event => {
 					if (event.target === event.currentTarget) {
@@ -102,9 +102,7 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 					}}
 				/>
 				<div
-					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-normal_1 z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 ${
-						props.menuDrawer().menu === 'active' ? '' : ''
-					}`}
+					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-normal_1 z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 `}
 					style={{ overflow: 'auto' }}
 				>
 					<Show when={selectedRoot()?.length > 0 && primaryData.isSuccess}>

@@ -23,3 +23,7 @@ const [menuDrawer, setMenuDrawer] = createSignal({
 })
 
 export { menuDrawer, setMenuDrawer }
+
+const [isScroll, setIsScroll] = createSignal(true)
+
+export { isScroll, setIsScroll }

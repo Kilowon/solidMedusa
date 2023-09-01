@@ -20,6 +20,7 @@ import { GlobalContextProvider } from '~/Context/Providers'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import clsx from 'clsx'
+import { getWindowSize } from '@solid-primitives/resize-observer'
 
 function PlausibleScript() {
 	onMount(() => {
@@ -75,17 +76,22 @@ const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query
 import { openCart, openMenu, cartDrawer, menuDrawer } from '~/state'
 
 const queryClient = new QueryClient()
+
 export default function Root() {
 	return (
 		<Html
 			lang="en"
 			class={clsx(
-				' bg-transparent scrollbar-gutter',
-				openCart() === true && 'overflow-hidden',
-				openMenu() === true && 'overflow-hidden',
+				' bg-transparent ',
+				openCart() === true && 'overflow-hidden scrollbar-gutter',
+				openMenu() === true && 'overflow-hidden scrollbar-gutter',
 				cartDrawer().cart === 'active' && 'overflow-hidden',
 				menuDrawer().menu === 'active' && 'overflow-hidden',
-				openCart() === false && openMenu() === false && 'overflow-y-scroll'
+				openCart() === false && openMenu() === false && getWindowSize().width > 1023 && 'overflow-y-scroll',
+				cartDrawer().cart === 'hidden' &&
+					menuDrawer().menu === 'hidden' &&
+					getWindowSize().width <= 1023 &&
+					'overflow-y-scroll'
 			)}
 		>
 			<Head>

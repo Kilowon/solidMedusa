@@ -187,8 +187,6 @@ export default function Navigation(props: any) {
 								setCartDrawer({ cart: 'active' })
 								setMenuDrawer({ menu: 'hidden' })
 							}
-
-							console.log('OpenCart', cartDrawer())
 						}}
 						onKeyDown={e => {
 							e.stopPropagation()

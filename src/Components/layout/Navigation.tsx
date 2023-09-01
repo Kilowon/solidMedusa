@@ -180,7 +180,7 @@ export default function Navigation(props: any) {
 						onClick={e => {
 							if (getWindowSize().width > 1023) {
 								e.stopPropagation()
-								setOpenCart(!openCart())
+								setOpenCart(true)
 								setOpenMenu(false)
 							}
 							if (getWindowSize().width <= 1023) {
@@ -241,6 +241,28 @@ export default function Navigation(props: any) {
 							</Show>
 						</Suspense>
 					</div>
+					<div
+						class={clsx(
+							'absolute right-0 top-0 bg-transparent w-96vw h-100vh ',
+
+							openCart() === true && '',
+							openCart() === false && 'hidden'
+						)}
+						onClick={() => {
+							setOpenCart(false)
+						}}
+					></div>
+					<div
+						class={clsx(
+							'absolute left-0 top-0 bg-transparent w-96vw h-100vh ',
+
+							openMenu() === true && '',
+							openMenu() === false && 'hidden'
+						)}
+						onClick={() => {
+							setOpenMenu(false)
+						}}
+					></div>
 				</nav>
 			</header>
 		</div>

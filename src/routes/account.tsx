@@ -14,6 +14,7 @@ import { currencyFormat } from '~/lib/helpers/currency'
 import SignUp from '~/Components/account_components/SignUp'
 import SignIn from '~/Components/account_components/SignIn'
 import TabNav from '~/Components/account_components/TabNav'
+import { setAccountStatus } from '~/state'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -102,7 +103,6 @@ export default function Account() {
 	}))
 
 	createEffect(() => {
-		console.log(currentCustomer.isSuccess)
 		if (currentCustomer.isSuccess) {
 			customerMutate.refetch()
 		}
@@ -130,6 +130,15 @@ export default function Account() {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 		return result ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}` : null
 	}
+
+	createEffect(() => {
+		if (currentCustomer.isSuccess) {
+			setAccountStatus('active')
+		}
+		if (!currentCustomer.isSuccess) {
+			setAccountStatus('inactive')
+		}
+	})
 
 	return (
 		<main

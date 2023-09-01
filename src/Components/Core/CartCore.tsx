@@ -70,7 +70,7 @@ export default function CartCore(props: CartCoreProps) {
 					>
 						<ol
 							class={clsx(
-								'overflow-y-scroll  scrollbar-hide ',
+								'overflow-y-scroll  ',
 								props.variant === 'primary' && 'lg:w-2/3 ',
 								props.variant === 'checkout' && 'max-h-[425px] mx-auto',
 								props.variant === 'panel' && 'max-h-43svh mx-auto',
@@ -344,7 +344,7 @@ export default function CartCore(props: CartCoreProps) {
 										<div
 											onClick={e => {
 												e.stopPropagation()
-												props.setCartDrawer({ cart: 'hidden', checkout: 'active' })
+												props.setCartDrawer({ cart: 'hidden' })
 											}}
 											class="w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 border-text_2 hover:bg-normal_1 hover:text-text_2 "
 										>

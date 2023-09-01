@@ -112,6 +112,7 @@ export default defineConfig({
 						['scrollbar-width']: 'auto'
 					}
 				],
+
 				[
 					/^scrollbar-hide$/,
 					([r]) => `.scrollbar-hide{scrollbar-width:none}

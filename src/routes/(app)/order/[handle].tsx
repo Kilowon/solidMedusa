@@ -80,19 +80,6 @@ export default function Order() {
 										data-modal-hide="defaultModal"
 										onClick={() => {}}
 									>
-										<svg
-											aria-hidden="true"
-											class="w-5 h-5"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												fill-rule="evenodd"
-												d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-												clip-rule="evenodd"
-											></path>
-										</svg>
 										<span class="sr-only">Close modal</span>
 									</button>
 								</div>
@@ -197,16 +184,7 @@ export default function Order() {
 									</div>
 								</div>
 								{/*  <!-- Modal footer --> */}
-								<div class="flex items-center p-6 space-x-2 border-t border-normal_2 rounded-b ">
-									<button
-										data-modal-hide="defaultModal"
-										type="button"
-										class="text-text_2 bg-normal_1 hover:bg-normal_2 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-normal_2 text-sm font-medium px-5 py-2.5 hover:text-text_1 focus:z-10"
-										onClick={() => {}}
-									>
-										Close
-									</button>
-								</div>
+								<div class="flex items-center p-6 space-x-2 border-t border-normal_2 rounded-b "></div>
 							</div>
 						</div>
 						<p class="text-xs max-w-600px">

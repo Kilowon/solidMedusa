@@ -13,6 +13,7 @@ interface ContextProps {
 	medusa?: Medusa | null
 	cart?: Cart | null
 	queryCart?: Cart | null
+	queryNewCart?: Cart | null
 	queryCartRefetch?: () => void
 	setCurrentProductId?: (id: string) => void
 	rootCategories?: any
@@ -265,6 +266,7 @@ export function GlobalContextProvider(props: any) {
 			value={{
 				medusa,
 				queryCart: querySavedCart as Cart,
+				queryNewCart,
 				queryCartRefetch,
 				queryByProductId,
 				setCurrentProductId,

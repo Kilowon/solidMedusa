@@ -22,6 +22,9 @@ import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
 import CartCore from '~/Components/Core/CartCore'
+import { onMount } from 'solid-js'
+import { Stripe, StripeElements, loadStripe } from '@stripe/stripe-js'
+import Payment from '~/Components/checkout_components/Payment'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -2002,100 +2005,125 @@ export function Billing(props: BillingProps) {
 	)
 }
 
-export function Payment(props: PaymentProps) {
-	const [paymentForm, { Form, Field }] = createForm<PaymentForm>()
+/* export function Payment(props: PaymentProps) {
 
+	const {medusa} = useGlobalContext()
+
+	const [paymentForm, { Form, Field }] = createForm<PaymentForm>()
+	let [stripe, setStripe] = createSignal<Stripe | null>(null)
+	let [elements, setElements] = createSignal<StripeElements | null>(null)
+	let [card, setCard] = createSignal<any | null>(null)
+
+	createEffect(() => {
+		if (!card()) { // Check if card element already exists
+		  setCard(elements()?.create('card') ?? null);
+		}
+	  });
+
+	  onMount(async () => {
+		if (!stripe()) {
+			setStripe(await loadStripe(import.meta.env.VITE_PUBLIC_STRIPE_KEY));
+		}
+		if (!elements()) {
+			setElements(stripe()?.elements() ?? null);
+		}
+		if (!card()) {
+			setCard(elements()?.create('card') ?? null);
+		}
+	});
+
+	// Mount the Card Element to a div in your HTML
+	createEffect(() => {
+		const cardElement = card();
+		if (cardElement) {
+			cardElement.mount('#card-element');
+
+			// Handle real-time validation errors from the Card Element.
+			cardElement.on('change', function(event:any) {
+				let displayError = document.getElementById('card-errors');
+				if (event.error) {
+					if (displayError) {
+						displayError.textContent = event.error.message;
+					}
+				} else {
+					if (displayError) {
+						displayError.textContent = '';
+					}
+				}
+			});
+		}
+	});
+	// Handle form submission
+	const handleSubmit = async (event: Event, values: PaymentForm) => {
+		event.preventDefault();
+		const cardElement = card();
+		if (cardElement) {
+			const result = await stripe?.createToken(cardElement);
+			if (result.error) {
+				let errorElement = document.getElementById('card-errors');
+				if (errorElement) {
+					errorElement.textContent = result.error.message || '';
+				}
+			} else {
+				// Send the token to your server
+				stripeTokenHandler(result.token);
+			}
+		}
+	};
+
+	// Submit the form with the token ID
+	const stripeTokenHandler = async (token: any) => {
+		// Insert the token ID into the form so it gets submitted to the server
+		let form = document.getElementById('payment-form') as HTMLFormElement;
+		let hiddenInput = document.createElement('input');
+		hiddenInput.setAttribute('type', 'hidden');
+		hiddenInput.setAttribute('name', 'stripeToken');
+		hiddenInput.setAttribute('value', token.id);
+		form?.appendChild(hiddenInput);
+
+		// Submit the form
+		form?.submit();
+
+		// Trigger Medusa payment session and submit payment
+		const paymentSessionQuery = createQuery(() => ({
+			queryKey: ['paymentSessions', 'create'],
+			queryFn: () => medusa?.paymentSessions?.create({
+				provider_id: 'stripe',
+				data: {
+					stripeToken: token.id
+				}
+			}),
+			enabled: true
+		}))
+
+		const paymentCreateQuery = createQuery(() => ({
+			queryKey: ['payments', 'create'],
+			queryFn: () => medusa?.payments.create({
+				amount: paymentForm.amount,
+				session_id: paymentSessionQuery.data.id
+			}),
+			enabled: paymentSessionQuery.isSuccess
+		}))
+	};
+
+	
 	return (
-		<Form onSubmit={values => alert(JSON.stringify(values, null, 4))}>
+		<Form onSubmit={handleSubmit}>
 			<FormHeader
 				of={paymentForm}
 				heading="Payment"
 				numberLabel="five"
 			/>
 
-			<div class="space-y-2 ">
-				<Field
-					name="type"
-					validate={required('Please select the payment type.')}
-				>
-					{(field, props) => (
-						<Select
-							{...props}
-							value={field.value}
-							options={[
-								{ label: 'Card', value: 'card' },
-								{ label: 'PayPal', value: 'paypal' }
-							]}
-							error={field.error}
-							label="Type"
-							placeholder="Card or PayPal?"
-							required
-						/>
-					)}
-				</Field>
-				<Switch>
-					<Match when={getValue(paymentForm, 'type') === 'card'}>
-						<Field
-							name="card.number"
-							validate={[
-								required('Please enter your card number.'),
-								pattern(/^\d{4}\s?(\d{6}\s?\d{5}|\d{4}\s?\d{4}\s?\d{4})$/, 'The card number is badly formatted.')
-							]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Number"
-									placeholder="1234 1234 1234 1234"
-									required
-								/>
-							)}
-						</Field>
-						<Field
-							name="card.expiration"
-							validate={[
-								required('Please enter your card number.'),
-								pattern(/^(0[1-9]|1[0-2])\/2[2-9]$/, 'The expiration date is badly formatted.')
-							]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="text"
-									label="Expiration"
-									placeholder="MM/YY"
-									required
-								/>
-							)}
-						</Field>
-					</Match>
-					<Match when={getValue(paymentForm, 'type') === 'paypal'}>
-						<Field
-							name="paypal.email"
-							validate={[required('Please enter your PayPal email.'), email('The email address is badly formatted.')]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="email"
-									label="Email"
-									placeholder="example@email.com"
-									required
-								/>
-							)}
-						</Field>
-					</Match>
-				</Switch>
-			</div>
+				<div class="space-y-2 ">
+					<div id="card-element">
+						 
+					</div>
+					<div id="card-errors" role="alert"></div>
+				</div>
 
 			<FormFooter of={paymentForm} />
 		</Form>
 	)
-}
+	
+} */

@@ -44,7 +44,11 @@ export default function Payment() {
 
 	createEffect(() => {
 		if (paymentSessionQuery?.isSuccess) {
+			console.log('Triggering Stripe payment session')
 			paymentSessionStripeQuery.refetch()
+		}
+		if (paymentSessionStripeQuery?.isSuccess) {
+			console.log('Stripe payment session success', paymentSessionStripeQuery?.data?.cart)
 		}
 	})
 

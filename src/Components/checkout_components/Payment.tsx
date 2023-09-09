@@ -19,7 +19,7 @@ export default function Payment() {
 	})
 
 	onMount(async () => {
-		console.log('Mounting Stripe ')
+		console.log('Mounting Stripe', import.meta.env.VITE_PUBLIC_STRIPE_KEY)
 		const result = await loadStripe(import.meta.env.VITE_PUBLIC_STRIPE_KEY)
 		setStripe(result)
 	})

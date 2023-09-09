@@ -32,6 +32,22 @@ export default function Payment() {
 		cacheTime: 3 * 60 * 1000
 	}))
 
+	const paymentSessionStripeQuery = createQuery(() => ({
+		queryKey: ['paymentSession', queryCart.data?.cart?.id],
+		queryFn: () =>
+			medusa?.carts.setPaymentSession(queryCart.data?.cart?.id, {
+				// retrieved from the payment session selected by the customer
+				provider_id: 'stripe'
+			}),
+		enabled: false
+	}))
+
+	createEffect(() => {
+		if (paymentSessionQuery?.isSuccess) {
+			paymentSessionStripeQuery.refetch()
+		}
+	})
+
 	createEffect(() => {
 		console.log('STRIPE CLIENT SECRET', paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret)
 		console.log('PAYMENTSESSIONQUERY', paymentSessionQuery?.data?.cart)
@@ -43,10 +59,10 @@ export default function Payment() {
 			fallback={<div>Loading stripe</div>}
 		>
 			<div>Stripe</div>
-			<Show when={paymentSessionQuery?.isSuccess}>
+			<Show when={paymentSessionStripeQuery?.isSuccess}>
 				<Elements
 					stripe={stripe()}
-					clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
+					clientSecret={paymentSessionStripeQuery?.data?.cart?.payment_session?.data?.client_secret}
 				>
 					<CheckoutForm />
 				</Elements>
@@ -69,8 +85,7 @@ export function CheckoutForm() {
 	const paymentSessionAuthorize = createQuery(() => ({
 		queryKey: ['cart_complete'],
 		queryFn: () => medusa?.carts?.complete(queryCart?.data?.cart?.id),
-		enabled: false,
-		cacheTime: 1 * 60 * 1000
+		enabled: false
 	}))
 
 	async function handleSubmit(event: SubmitEvent) {

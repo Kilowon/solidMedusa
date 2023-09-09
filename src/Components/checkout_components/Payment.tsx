@@ -34,6 +34,7 @@ export default function Payment() {
 
 	createEffect(() => {
 		console.log('STRIPE CLIENT SECRET', paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret)
+		console.log('PAYMENTSESSIONQUERY', paymentSessionQuery?.data?.cart)
 	})
 
 	return (

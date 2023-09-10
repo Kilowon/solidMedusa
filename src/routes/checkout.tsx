@@ -239,7 +239,7 @@ export default function CheckoutPage() {
 	}
 	return (
 		<div
-			class=" text-text_2 bg-normal_1 min-h-[100svh]"
+			class=" text-text_2 bg-normal_1 min-h-[100svh] overflow-y-scroll"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -371,11 +371,7 @@ export default function CheckoutPage() {
 						/>
 					</Show>
 					<Show when={showForm()?.payment === 'active'}>
-						<Payment
-							setShowForm={setShowForm}
-							showForm={showForm}
-							cart={queryCart.data?.cart}
-						/>
+						<Payment />
 					</Show>
 				</div>
 				<div class="hidden lg:flex lg:items-center lg:w-[433px] mx-auto ">
@@ -1064,7 +1060,7 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<div>
+		<div class="overflow-y-scroll">
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<FormHeader
 					of={customerForm}
@@ -1283,7 +1279,7 @@ export function Shipping(props: ShippingProps) {
 	}))
 
 	return (
-		<div>
+		<div class="overflow-y-scroll">
 			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={shippingForm}
@@ -1651,7 +1647,7 @@ export function Carrier(props: CarrierProps) {
 	}
 
 	return (
-		<div>
+		<div class="overflow-y-scroll">
 			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={carrierForm}
@@ -1677,15 +1673,15 @@ export function Carrier(props: CarrierProps) {
 										class="grid grid-cols-3 items-center justify-between w-full p-2 text-text_4 bg-normal_1 border border-normal_4 rounded-md cursor-pointer peer-checked:border-accent_5 peer-checked:text-accent_5 peer-checked:border-2 hover:text-accent_5 hover:bg-normal_1"
 									>
 										<div class="block ">
-											<div class="w-full text-lg font-semibold">${(option?.amount / 100).toFixed(2)}</div>
+											<div class="w-full text-base font-500">${(option?.amount / 100).toFixed(2)}</div>
 											<div class="w-full">{option?.name}</div>
 										</div>
 										<div class="flex item-center justify-self-center md:justify-self-center w-13 h-11 md:w-18 md:h-14 ">
 											{carrierIcon(option?.metadata?.logo)}
 										</div>
 										<div class=" flex flex-col  ml-4 md:justify-self-center">
-											<div class=" flex item-center justify-center">{option?.metadata?.estimate}</div>
-											<div class=" flex item-center justify-center peer-checked:border-accent_5 peer-checked:text-accent_5">
+											<div class=" flex items-center justify-center">{option?.metadata?.estimate}</div>
+											<div class=" flex items-center justify-center peer-checked:border-accent_5 peer-checked:text-accent_5">
 												<div class="i-ic-twotone-local-shipping w-5 h-5" />
 												<svg
 													aria-hidden="true"
@@ -1794,7 +1790,7 @@ export function Billing(props: BillingProps) {
 	}))
 
 	return (
-		<div>
+		<div class="overflow-y-scroll">
 			<Form
 				onSubmit={() => handleSubmit()}
 				keepResponse={true}

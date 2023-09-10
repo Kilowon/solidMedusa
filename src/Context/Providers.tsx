@@ -1,13 +1,11 @@
 import { isServer } from 'solid-js/web'
 import { createContext, useContext, createSignal, createEffect, onMount } from 'solid-js'
-import { createRouteAction } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 
 //TODO: Becareful with imports from @medusajs/medusa-js as it will break the build process with too many imports it seems some webpack issue even though vite is used for the frontend
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
 import Medusa from '@medusajs/medusa-js'
 import { Cart } from '~/types/types'
-import { on } from 'events'
 
 interface ContextProps {
 	medusa?: Medusa | null
@@ -74,6 +72,7 @@ async function fetchSavedCart(): Promise<Cart> {
 		try {
 			const cartId = localStorage.getItem('cart_id')!
 			const cart = await medusa.carts.retrieve(cartId)
+			if (cart?.cart?.payment_authorized_at !== null) return fetchNewCart()
 			return cart
 		} catch (e) {
 			console.log(e)

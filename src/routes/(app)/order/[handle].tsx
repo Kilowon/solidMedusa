@@ -2,7 +2,6 @@ import { createEffect, Show, createSignal, For } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
-import { Customer } from '~/types/models'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { useNavigate, useParams, A } from 'solid-start'
 
@@ -39,7 +38,7 @@ export default function Order() {
 	})
 
 	return (
-		<div class="min-h-100vh p-1 rounded-sm bg-normal_1 ">
+		<div class="min-h-200vh p-1 rounded-sm bg-normal_1 ">
 			<div class=" mb-3 text-text_2">
 				<Show when={currentOrder.isSuccess}>
 					<div class="flex flex-col justify-center items-center space-y-10 ">

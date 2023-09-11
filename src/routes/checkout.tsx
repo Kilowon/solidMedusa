@@ -237,7 +237,7 @@ export default function CheckoutPage() {
 	}
 	return (
 		<div
-			class=" text-text_2 bg-normal_1 min-h-[100svh] overflow-y-scroll"
+			class=" text-text_2 bg-normal_1 min-h-[150svh] sm:min-h-[100svh] overflow-y-scroll"
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -446,7 +446,7 @@ export function CartDrawer(props: any) {
 					}}
 				/>
 				<div
-					class={`fixed top-16 right-0 h-full w-[98vw] sm:w-[70vw] md:w-[45vw] bg-normal_1  z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
+					class={`fixed top-16 right-0 h-full w-[100vw] sm:w-[70vw] md:w-[45vw] bg-normal_1  z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2   ${
 						props.mobileDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
@@ -1058,7 +1058,7 @@ export function Customer(props: CustomerProps) {
 	}))
 
 	return (
-		<div class="overflow-y-scroll">
+		<div>
 			<Form onSubmit={values => handleSubmit(values) as any}>
 				<FormHeader
 					of={customerForm}
@@ -1277,7 +1277,7 @@ export function Shipping(props: ShippingProps) {
 	}))
 
 	return (
-		<div class="overflow-y-scroll">
+		<div>
 			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={shippingForm}
@@ -1645,7 +1645,7 @@ export function Carrier(props: CarrierProps) {
 	}
 
 	return (
-		<div class="overflow-y-scroll">
+		<div>
 			<Form onSubmit={values => handleSubmit(values)}>
 				<FormHeader
 					of={carrierForm}
@@ -1788,7 +1788,7 @@ export function Billing(props: BillingProps) {
 	}))
 
 	return (
-		<div class="overflow-y-scroll">
+		<div>
 			<Form
 				onSubmit={() => handleSubmit()}
 				keepResponse={true}

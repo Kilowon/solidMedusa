@@ -56,9 +56,9 @@ export default function Order() {
 							<div class="relative bg-normal_2 rounded-lg shadow border-1 border-surface ">
 								{/*  <!-- Modal header --> */}
 
-								<div class="flex items-start justify-between lg:p-4 border-b rounded-t  ">
+								<div class="flex items-start justify-between p-2 lg:p-4 border-b rounded-t  ">
 									<div class="flex flex-col space-y-5">
-										<h3 class="text-base md:text-xl font-semibold text-text_2 tracking-tighter text-balance ">
+										<h3 class="text-base  font-semibold text-text_2 tracking-tighter text-balance ">
 											Order: <div class="text-sm">#{orderNumber()}</div>
 										</h3>
 										<div>
@@ -83,7 +83,7 @@ export default function Order() {
 									</button>
 								</div>
 								{/*  <!-- Modal body --> */}
-								<div class="p-6 space-y-6 flex flex-col bg-normal_2">
+								<div class="p-2 lg:p-6 space-y-6 flex flex-col bg-normal_2">
 									<div class="sm:flex sm:justify-between space-y-5 sm:space-y-auto">
 										<div class="text-text_2 text-sm">
 											<div class="text-xs text-text_4">Shipping Address:</div>
@@ -183,10 +183,10 @@ export default function Order() {
 									</div>
 								</div>
 								{/*  <!-- Modal footer --> */}
-								<div class="flex items-center p-6 space-x-2 border-t border-normal_2 rounded-b "></div>
+								<div class="flex items-center p-2 lg:p-6 space-x-2 border-t border-normal_2 rounded-b "></div>
 							</div>
 						</div>
-						<p class="text-xs max-w-600px">
+						<p class="text-xs max-w-600px p-2 ">
 							*If you did not sign-up for a customer account, you will not be able to view your order history. **Please save
 							your order number for your records. You can also bookmark this page to view this order in the future.
 						</p>

@@ -42,21 +42,21 @@ export default function Order() {
 			<div class=" mb-3 text-text_2">
 				<Show when={currentOrder.isSuccess}>
 					<div class="flex flex-col justify-center items-center space-y-10 ">
-						<div class="flex mt-10">
-							<div class="i-ic-outline-check-circle lg:h-7 lg:w-7 bg-green-6" />
+						<div class="flex justify-center items-center mt-10">
+							<div class="i-ic-outline-check-circle h-7 w-7 bg-green-6" />
 							<h1 class="text-text_2 text-xl font-500">Thank you for your order!</h1>
 						</div>
-						<h2 class="text-text_2 text-xs">
-							<div class="i-ic-outline-email lg:h-5 lg:w-5" /> Your order has been received and is being processed. You will
+						<h2 class="sm:flex justify-center items-center text-text_2 text-xs m-2">
+							<div class="i-ic-outline-email h-5 w-5 mr-1 " /> Your order has been received and is being processed. You will
 							receive an email confirmation shortly.
 						</h2>
 
-						<div class="relative sm:w-full md:max-w-2xl md:max-h-full bg-transparent">
+						<div class="relative min-w-95% sm:min-w-auto md:max-w-2xl md:max-h-full bg-transparent">
 							{/*  <!-- Modal content --> */}
 							<div class="relative bg-normal_2 rounded-lg shadow border-1 border-surface ">
 								{/*  <!-- Modal header --> */}
 
-								<div class="flex items-start justify-between p-4 border-b rounded-t  ">
+								<div class="flex items-start justify-between lg:p-4 border-b rounded-t  ">
 									<div class="flex flex-col space-y-5">
 										<h3 class="text-base md:text-xl font-semibold text-text_2 tracking-tighter text-balance ">
 											Order: <div class="text-sm">#{orderNumber()}</div>

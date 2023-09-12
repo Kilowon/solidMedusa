@@ -237,7 +237,7 @@ export default function CheckoutPage() {
 	}
 	return (
 		<div
-			class=" text-text_2 bg-normal_1 min-h-[150svh] sm:min-h-[100svh] overflow-y-scroll"
+			class=" text-text_2 bg-normal_1 min-h-[150svh] sm:min-h-[100svh] "
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {

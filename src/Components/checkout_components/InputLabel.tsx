@@ -16,7 +16,7 @@ export function InputLabel(props: InputLabelProps) {
 	return (
 		<Show when={props.label}>
 			<label
-				class={clsx('inline-block font-medium text-sm text-text_2 ' )}
+				class={clsx('inline-block font-medium text-xs text-text_2 ')}
 				for={props.name}
 			>
 				{props.label}

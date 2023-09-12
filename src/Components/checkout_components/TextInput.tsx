@@ -46,7 +46,7 @@ export function TextInput(props: TextInputProps) {
 			<input
 				{...inputProps}
 				class={clsx(
-					'h-10 md:h-12 w-full rounded-[5px] border-2 bg-normal_3 px-2 outline-none placeholder:text-text_4 ',
+					'h-11 w-full rounded-[5px] border-1 bg-normal_1 shadow-md shadow-text_2/8 px-2 outline-none placeholder:text-text_4 ',
 					props.error ? 'border-red-600 ' : 'border-slate-3 hover:border-slate-4 focus:border-sky-600/50'
 				)}
 				id={props.name}

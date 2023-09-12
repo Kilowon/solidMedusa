@@ -81,18 +81,7 @@ export default function Root() {
 	return (
 		<Html
 			lang="en"
-			class={clsx(
-				' bg-transparent ',
-				openCart() === true && 'overflow-hidden scrollbar-gutter',
-				openMenu() === true && 'overflow-hidden scrollbar-gutter',
-				cartDrawer().cart === 'active' && 'overflow-hidden',
-				menuDrawer().menu === 'active' && 'overflow-hidden',
-				openCart() === false && openMenu() === false && getWindowSize().width > 1023 && 'overflow-y-scroll',
-				cartDrawer().cart === 'hidden' &&
-					menuDrawer().menu === 'hidden' &&
-					getWindowSize().width <= 1023 &&
-					'overflow-y-scroll'
-			)}
+			class={clsx(' bg-transparent ')}
 		>
 			<Head>
 				<MetaTags />

@@ -11,6 +11,7 @@ import { LineItem, Region } from '~/types/models'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { fetchProduct } from '~/Services/medusaAPI'
 import { ProductVariant } from '~/types/models'
+import { setCartDrawer, setOpenCart } from '~/state'
 
 interface CartCoreProps {
 	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout' | 'mobile-panel'
@@ -308,6 +309,11 @@ export default function CartCore(props: CartCoreProps) {
 													props.variant === 'mobile-checkout' && 'hidden',
 													props.variant === 'mobile-panel' && ''
 												)}
+												onClick={e => {
+													e.stopPropagation()
+													setOpenCart(false)
+													setCartDrawer({ cart: 'hidden' })
+												}}
 											>
 												SECURE CHECKOUT
 											</button>

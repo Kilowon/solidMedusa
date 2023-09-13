@@ -23,6 +23,7 @@
 		"@medusajs/medusa-js": "^6.0.0",
 		"@modular-forms/solid": "^0.13.2",
 		"@motionone/solid": "^10.16.2",
+		"@paypal/paypal-js": "^7.0.2",
 		"@slidy/solid": "^1.4.0",
 		"@solid-primitives/geolocation": "^1.4.6",
 		"@solid-primitives/intersection-observer": "^2.1.2",

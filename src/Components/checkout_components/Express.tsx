@@ -13,7 +13,7 @@ export default function Express() {
 		console.log('paypal Window', windowSize())
 
 		const paypal = await loadScript({
-			clientId: 'Ad28GEh45rpiSIzbgyTHn-ViCYfPa_A4prn6-d_Z09oxmsozpaHx21QDysng3P5_wd-sXdeQiMnM7hA3'
+			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID
 		})
 
 		console.log(paypal)

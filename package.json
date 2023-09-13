@@ -46,7 +46,8 @@
 		"solid-toast": "^0.5.0",
 		"solid-transition-group": "^0.2.2",
 		"undici": "^5.15.1",
-		"unocss": "^0.50.4"
+		"unocss": "^0.50.4",
+		"unocss-preset-scrollbar": "^0.2.1"
 	},
 	"engines": {
 		"node": ">=16.8"

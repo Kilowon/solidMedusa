@@ -62,7 +62,7 @@ export default function CartCore(props: CartCoreProps) {
 					<div
 						class={clsx(
 							'',
-							props.variant === 'primary' && 'lg:flex lg:space-x-10',
+							props.variant === 'primary' && 'lg:flex lg:space-x-10 min-h-200vh lg:min-h-120vh',
 							props.variant === 'checkout' && '',
 							props.variant === 'panel' && '',
 							props.variant === 'mobile-checkout' && '',
@@ -71,18 +71,18 @@ export default function CartCore(props: CartCoreProps) {
 					>
 						<ol
 							class={clsx(
-								'overflow-y-scroll  ',
+								'scrollbar  scrollbar-w-4px  ',
 								props.variant === 'primary' && 'lg:w-2/3 ',
-								props.variant === 'checkout' && 'max-h-[425px] mx-auto',
-								props.variant === 'panel' && 'max-h-43svh mx-auto',
-								props.variant === 'mobile-checkout' && 'max-h-[45dvh] mx-auto',
-								props.variant === 'mobile-panel' && 'max-h-[45dvh] mx-auto'
+								props.variant === 'checkout' && 'max-h-[425px] mx-auto overflow-y-scroll',
+								props.variant === 'panel' && 'max-h-43svh mx-auto overflow-y-scroll ',
+								props.variant === 'mobile-checkout' && 'max-h-[45dvh] mx-auto overflow-y-scroll',
+								props.variant === 'mobile-panel' && 'max-h-[45dvh] mx-auto overflow-y-scroll'
 							)}
 						>
 							<For each={sortedItems()}>
 								{item => (
 									<Show when={item.variant.product}>
-										<li>
+										<li class="m-1">
 											<div
 												class={clsx(
 													'grid gap-x-3',
@@ -244,7 +244,7 @@ export default function CartCore(props: CartCoreProps) {
 								props.variant === 'primary' && 'lg:w-1/3 lg:sticky lg:top-20 lg:self-start lg:mt-2',
 								props.variant === 'checkout' && '',
 								props.variant === 'panel' && 'lg:sticky lg:top-20 lg:self-start lg:mt-2 ',
-								props.variant === 'mobile-checkout' && '',
+								props.variant === 'mobile-checkout' && ' ',
 								props.variant === 'mobile-panel' && ''
 							)}
 						>
@@ -321,7 +321,14 @@ export default function CartCore(props: CartCoreProps) {
 									</Show>
 									<Show when={props.variant !== 'primary'}>
 										<A href="/cart">
-											<button class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 hover:border-text_2 focus:border-text_2 hover:bg-normal_1 focus:bg-normal_1 hover:text-text_1 focus:text-text_1 ">
+											<button
+												class="w-full uppercase flex items-center justify-center min-h-[44px] rounded-sm px-5 my-1 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-50 text-normal_1 bg-text_2 hover:border-text_2 focus:border-text_2 hover:bg-normal_1 focus:bg-normal_1 hover:text-text_1 focus:text-text_1 "
+												onClick={e => {
+													e.stopPropagation()
+													setOpenCart(false)
+													setCartDrawer({ cart: 'hidden' })
+												}}
+											>
 												<Show when={props.variant === 'checkout' || props.variant === 'mobile-checkout'}>
 													Make Changes to Your Order
 												</Show>
@@ -330,7 +337,9 @@ export default function CartCore(props: CartCoreProps) {
 										</A>
 									</Show>
 								</div>
-								<span class=" font-500 text-text_1 underline flex items-center justify-center">save for later</span>
+								<A href="/account">
+									<span class=" font-500 text-text_1 underline flex items-center justify-center">save for later</span>
+								</A>
 							</Show>
 						</div>
 					</div>

@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import presetIcons from '@unocss/preset-icons'
 import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 export default defineConfig({
 	assetsInclude: ['**/*.ttf'],
@@ -13,6 +14,9 @@ export default defineConfig({
 		}),
 		unocssPlugin({
 			presets: [
+				presetScrollbar({
+					// config
+				}),
 				presetIcons({
 					// options
 					prefix: 'i-',

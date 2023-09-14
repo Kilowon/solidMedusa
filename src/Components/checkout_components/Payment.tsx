@@ -97,24 +97,105 @@ export function CheckoutForm(props: { clientSecret: string }) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<PaymentElement />
-			<CheckoutButtons clientSecret={props.clientSecret} />
-			<button class="mt-5 bg-transparent">Pay</button>
-		</form>
+		<div class="space-y-4">
+			<form onSubmit={handleSubmit}>
+				<PaymentElement />
+				<div class="py-2"></div>
+				<CheckoutButtons clientSecret={props.clientSecret} />
+				<div class="py-2"></div>
+
+				<button class="mt-5 bg-transparent">Pay</button>
+			</form>
+			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-16 text-text_2 text-sm">
+				<div>
+					<div>Shipping:</div>
+					<div>{queryCart?.data?.cart?.shipping_address?.company}</div>
+					<div class="flex space-x-2">
+						<div>{queryCart?.data?.cart?.shipping_address?.first_name}</div>
+						<div>{queryCart?.data?.cart?.shipping_address?.last_name}</div>
+					</div>
+					<div>{queryCart?.data?.cart?.shipping_address?.address_1}</div>
+					<div>{queryCart?.data?.cart?.shipping_address?.address_2}</div>
+					<div class="flex space-x-2">
+						<div>{queryCart?.data?.cart?.shipping_address?.city}</div>
+						<div>{queryCart?.data?.cart?.shipping_address?.province}</div>
+						<div>{queryCart?.data?.cart?.shipping_address?.postal_code}</div>
+					</div>
+
+					<div>{queryCart?.data?.cart?.shipping_address?.phone}</div>
+				</div>
+
+				<div>
+					<div>Billing:</div>
+					<div>{queryCart?.data?.cart?.shipping_address?.company}</div>
+					<div class="flex space-x-2">
+						<div>{queryCart?.data?.cart?.billing_address?.first_name}</div>
+						<div>{queryCart?.data?.cart?.billing_address?.last_name}</div>
+					</div>
+					<div>{queryCart?.data?.cart?.billing_address?.address_1}</div>
+					<div>{queryCart?.data?.cart?.billing_address?.address_2}</div>
+					<div class="flex space-x-2">
+						<div>{queryCart?.data?.cart?.billing_address?.city}</div>
+						<div>{queryCart?.data?.cart?.billing_address?.province}</div>
+						<div>{queryCart?.data?.cart?.billing_address?.postal_code}</div>
+					</div>
+
+					<div>{queryCart?.data?.cart?.billing_address?.phone}</div>
+				</div>
+			</div>
+		</div>
 	)
 }
 
 export function CheckoutButtons(props: { clientSecret: string }) {
 	const stripe = useStripe()
+	const { queryCart } = useGlobalContext()
 
 	// Declare payment metadata (amounts must match payment intent)
 	const paymentRequest = {
 		country: 'US',
 		currency: 'usd',
-		total: { label: 'Demo total', amount: 4445 },
+		total: { label: 'Demo total', amount: queryCart?.data?.cart?.total },
 		requestPayerName: true,
-		requestPayerEmail: true
+		requestPayerEmail: true,
+		requestPayerPhone: true,
+		requestShipping: true,
+		displayItems: [
+			{
+				label: 'Subtotal',
+				amount: queryCart?.data?.cart?.subtotal
+			},
+			{
+				label: 'Shipping',
+				amount: queryCart?.data?.cart?.shipping_total
+			},
+			{
+				label: 'Tax',
+				amount: queryCart?.data?.cart?.tax_total
+			},
+			{
+				label: 'Total',
+				amount: queryCart?.data?.cart?.total
+			}
+		],
+		shippingOptions: [
+			{
+				id: 'free-shipping',
+				label: 'Free shipping',
+				detail: 'Arrives in 5 to 7 days',
+				amount: 0
+
+				// selected: true
+			},
+			{
+				id: 'express-shipping',
+				label: 'Express shipping',
+				detail: 'Arrives in 1 to 3 days',
+				amount: 599
+
+				// selected: false
+			}
+		]
 	}
 
 	async function handlePaymentRequest(ev: PaymentRequestPaymentMethodEvent) {
@@ -141,6 +222,7 @@ export function CheckoutButtons(props: { clientSecret: string }) {
 		<PaymentRequestButton
 			paymentRequest={paymentRequest}
 			onPaymentMethod={handlePaymentRequest}
+			style={{ paymentRequestButton: { theme: 'light', height: '42px', type: 'check-out', buttonSpacing: 'horizontal' } }}
 		/>
 	)
 }

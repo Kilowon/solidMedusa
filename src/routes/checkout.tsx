@@ -929,7 +929,8 @@ export function Shipping(props: ShippingProps) {
 			if (getValues(shippingForm).checkbox?.billing === false) {
 				props.setFormCompleted?.({
 					...props.formCompleted(),
-					shipping: 'complete'
+					shipping: 'complete',
+					billing: 'queued'
 				})
 
 				props.setShowForm({
@@ -1228,6 +1229,7 @@ export function Carrier(props: CarrierProps) {
 	const [carrierForm, { Form, Field }] = createForm<PaymentForm>()
 
 	const [optionId, setOptionId] = createSignal(null)
+	const [selectedCarrier, setSelectedCarrier] = createSignal(null)
 
 	async function handleSubmit(values: any) {
 		if (optionId() === null) return
@@ -1377,14 +1379,26 @@ export function Carrier(props: CarrierProps) {
 					<div class="space-y-1 md:space-y-2 p-1">
 						<For each={queryCarriers?.data?.shipping_options}>
 							{option => (
-								<li onClick={() => setOptionId(option?.id)}>
+								<li
+									onClick={() => setOptionId(option?.id)}
+									title="Click to select shipping option"
+									role="button"
+									tabindex="0"
+									onkeypress={e => {
+										if (e.key === 'Enter') {
+											console.log('ITs a me', option?.id)
+											setOptionId(option?.id)
+											setSelectedCarrier(option?.id)
+										}
+									}}
+								>
 									<input
 										type="radio"
 										id={option?.id}
 										name="hosting"
 										value={option?.id}
 										class="hidden peer"
-										checked={option?.id === props.cart?.shipping_methods?.shipping_option_id}
+										checked={option?.id === props.cart?.shipping_methods?.shipping_option_id || selectedCarrier() === option?.id}
 									/>
 									<label
 										for={option?.id}

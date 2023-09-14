@@ -1,6 +1,7 @@
 import { Show, createSignal, onMount, createEffect } from 'solid-js'
 import { loadScript } from '@paypal/paypal-js'
 import { getWindowSize } from '@solid-primitives/resize-observer'
+import ExpressShipping from '~/Components/checkout_components/ExpressShipping'
 
 export default function Express() {
 	let paypalButtons: any
@@ -24,7 +25,9 @@ export default function Express() {
 					layout: 'horizontal',
 					color: 'gold',
 					shape: 'rect',
-					label: 'paypal'
+					label: 'paypal',
+					tagline: false,
+					height: 42
 				}
 			})
 			setPaypalLoaded(true)
@@ -50,6 +53,7 @@ export default function Express() {
 
 	return (
 		<div class="m-1 md:m-2 space-y-3 md:space-y-3 ">
+			<ExpressShipping />
 			<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
 			<Show when={paypalLoaded()}>
 				<div

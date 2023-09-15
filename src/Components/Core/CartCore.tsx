@@ -416,9 +416,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 		cacheTime: 0,
 		retry: 0
 	}))
-	createEffect(() => {
-		console.log('VAR', queryLineItem?.data?.product?.variants)
-	})
+
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<div

@@ -1,6 +1,5 @@
 import { Show, createSignal, onMount, createEffect } from 'solid-js'
 import { loadScript } from '@paypal/paypal-js'
-import { getWindowSize } from '@solid-primitives/resize-observer'
 import ExpressShipping from '~/Components/checkout_components/ExpressShipping'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
@@ -19,7 +18,6 @@ import { useNavigate } from 'solid-start'
 export default function Express() {
 	let paypalButtons: any
 	let paypalButtonRef: HTMLElement
-	const [windowSize, setWindowSize] = createSignal(getWindowSize())
 	const [paypalLoaded, setPaypalLoaded] = createSignal(false)
 
 	const { medusa } = useGlobalContext()
@@ -40,16 +38,17 @@ export default function Express() {
 	}))
 
 	onMount(async () => {
-		setWindowSize(getWindowSize())
-		console.log('paypal Window', windowSize())
-
 		const paypal = await loadScript({
-			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID
+			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+			buyerCountry: 'US',
+			components: ['buttons'],
+			commit: false,
+			enableFunding: ['paypal']
+		}).catch(err => {
+			console.log('Failed to load Paypal script', err)
 		})
 
-		console.log(paypal)
-
-		if (paypal && paypal.Buttons && windowSize().width >= 768) {
+		if (paypal && paypal.Buttons) {
 			paypalButtons = paypal.Buttons({
 				style: {
 					layout: 'horizontal',
@@ -74,17 +73,6 @@ export default function Express() {
 			})
 			setPaypalLoaded(true)
 		}
-		if (paypal && paypal.Buttons && windowSize().width < 768) {
-			paypalButtons = paypal.Buttons({
-				style: {
-					layout: 'vertical',
-					color: 'gold',
-					shape: 'rect',
-					label: 'paypal'
-				}
-			})
-			setPaypalLoaded(true)
-		}
 	})
 
 	createEffect(() => {
@@ -97,6 +85,7 @@ export default function Express() {
 		<div class="m-1 md:m-2 space-y-3 md:space-y-3 ">
 			<ExpressShipping />
 			<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
+
 			<Show when={paypalLoaded()}>
 				<div
 					onClick={() => console.log('PAYPAL PAYMENT')}

@@ -58,6 +58,18 @@ export default function Express() {
 					label: 'paypal',
 					tagline: false,
 					height: 42
+				},
+				createOrder: function (data: any, actions: any) {
+					return actions.order.create({
+						purchase_units: [
+							{
+								amount: {
+									value: `${queryCart.data?.cart?.total}`,
+									currency_code: 'USD'
+								}
+							}
+						]
+					})
 				}
 			})
 			setPaypalLoaded(true)
@@ -120,19 +132,19 @@ export function CheckoutButtons(props: { clientSecret: string }) {
 		displayItems: [
 			{
 				label: 'Subtotal',
-				amount: queryCart?.data?.cart?.subtotal
+				amount: queryCart?.data?.cart?.subtotal || 0
 			},
 			{
 				label: 'Shipping',
-				amount: queryCart?.data?.cart?.shipping_total
+				amount: queryCart?.data?.cart?.shipping_total || 0
 			},
 			{
 				label: 'Tax',
-				amount: queryCart?.data?.cart?.tax_total
+				amount: queryCart?.data?.cart?.tax_total || 0
 			},
 			{
 				label: 'Total',
-				amount: queryCart?.data?.cart?.total
+				amount: queryCart?.data?.cart?.total || 0
 			}
 		],
 		shippingOptions: [

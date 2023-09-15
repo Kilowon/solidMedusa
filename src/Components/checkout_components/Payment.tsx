@@ -41,6 +41,23 @@ export default function Payment() {
 				<Elements
 					stripe={stripe()}
 					clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
+					options={{
+						layout: {
+							type: 'accordion',
+							defaultCollapsed: true,
+							radios: true,
+							spacedAccordionItems: true
+						},
+						defaultValues: {
+							billingDetails: {
+								name: `${queryCart?.data?.cart?.billing_address?.first_name} ${queryCart?.data?.cart?.billing_address?.last_name}`,
+								email: queryCart?.data?.cart?.email,
+								address: {
+									postal_code: queryCart?.data?.cart?.billing_address?.postal_code
+								}
+							}
+						}
+					}}
 				>
 					<CheckoutForm clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
 				</Elements>

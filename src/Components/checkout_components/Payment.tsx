@@ -37,14 +37,6 @@ export default function Payment() {
 			when={stripe() && paymentSessionQuery?.data?.cart?.payment_session?.provider_id === 'stripe'}
 			fallback={<div>Loading stripe</div>}
 		>
-			<header class="flex items-center justify-between my-3">
-				<div class=" flex items-center py-1.8">
-					<NumberIcons />
-					<h1 class="text-base font-500 text-text_2 tracking-tighter ">Payment</h1>
-				</div>
-				<div class="hidden md:flex md:space-x-8"></div>
-			</header>
-
 			<Show when={paymentSessionQuery?.isSuccess}>
 				<Elements
 					stripe={stripe()}
@@ -126,16 +118,25 @@ export function CheckoutForm(props: { clientSecret: string }) {
 
 	return (
 		<div class="space-y-12">
-			<form onSubmit={handleSubmit}>
-				<PaymentElement />
-				<div class="py-2"></div>
-				<CheckoutButtons clientSecret={props.clientSecret} />
-				<div class="py-2"></div>
+			<header class="flex items-center justify-between my-3">
+				<div class=" flex items-center md:py-1.8">
+					<NumberIcons />
+					<h1 class="text-base font-500 text-text_2 tracking-tighter ">Payment</h1>
+				</div>
+				<div class="hidden md:flex md:space-x-8"></div>
+			</header>
+			<Show when={true}>
+				<form onSubmit={handleSubmit}>
+					<PaymentElement />
+					<div class="py-2"></div>
+					<CheckoutButtons clientSecret={props.clientSecret} />
+					<div class="py-2"></div>
 
-				<button class="mt-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1">
-					Pay - {currencyFormat(queryCart?.data?.cart?.total, 'USD')}
-				</button>
-			</form>
+					<button class="mt-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1 font-500">
+						Pay - {currencyFormat(queryCart?.data?.cart?.total, 'USD')}
+					</button>
+				</form>
+			</Show>
 			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-16 text-text_2 text-sm">
 				<div>
 					<div class="font-500">Shipping:</div>

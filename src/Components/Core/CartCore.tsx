@@ -119,7 +119,7 @@ export default function CartCore(props: CartCoreProps) {
 												</div>
 												<div
 													class={clsx(
-														'grid grid-cols-2',
+														'grid grid-cols-1 md:grid-cols-2 ',
 														props.variant === 'primary' && 'lg:flex lg:justify-between',
 														props.variant === 'checkout' && '',
 														props.variant === 'panel' && '',
@@ -131,7 +131,7 @@ export default function CartCore(props: CartCoreProps) {
 														<div>
 															<div
 																class={clsx(
-																	'font-semibold line-clamp-2 text-ellipsis',
+																	'font-500 line-clamp-2 text-ellipsis',
 																	props.variant === 'primary' && 'md:text-lg',
 																	props.variant === 'checkout' && 'text-xs',
 																	props.variant === 'panel' && 'text-xs',
@@ -182,9 +182,9 @@ export default function CartCore(props: CartCoreProps) {
 																	class={clsx(
 																		'',
 																		props.variant === 'primary' && 'hidden',
-																		props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																		props.variant === 'checkout' && 'flex items-center justify-center mt-2 text-xs ',
 																		props.variant === 'panel' && 'hidden',
-																		props.variant === 'mobile-checkout' && 'flex items-center justify-center mt-2 text-sm font-semibold',
+																		props.variant === 'mobile-checkout' && 'flex items-center justify-center mt-2 text-xs ',
 																		props.variant === 'mobile-panel' && 'hidden'
 																	)}
 																>

@@ -732,7 +732,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 					>
 						<div
 							class={clsx(
-								'p-4 rounded-lg bg-normal_2 space-y-3 text-sm',
+								'p-auto rounded-lg bg-normal_2 space-y-3 text-sm',
 								activeTab().reviews === 'active' && ''
 								//activeTab().reviews === 'inactive' && 'hidden'
 							)}
@@ -873,7 +873,7 @@ export function CustomerIndividualReviews(props: {
 	}
 
 	return (
-		<div class="flex flex-col justify-between space-y-2 min-h-216px h-100% ">
+		<div class="flex flex-col justify-between space-y-2 min-h-216px h-100% mt-4">
 			<div class="space-y-1">
 				<div class="flex items-center space-x-2 mb-1 ">
 					<div class="text-green-600 text-[10px] lg:text-xs ">
@@ -886,7 +886,7 @@ export function CustomerIndividualReviews(props: {
 					<div class="text-text_4  text-xs ">{formatDate(props.date.customer)}</div>
 				</div>
 
-				<div class="flex flex-col items-end lg:flex-row  space-x-2">
+				<div class="flex  items-end flex-row  space-x-2">
 					<div class="text-text_4  text-xs">{props.name.customer}</div>
 					<StarIconRequest rating={props.rating} />
 				</div>

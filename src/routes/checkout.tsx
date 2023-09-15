@@ -305,7 +305,7 @@ export default function CheckoutPage() {
 					setMobileDrawer={setMobileDrawer}
 				/>
 			</div>
-			<div class="mx-3 md:content-container lg:hidden">
+			<div class="mx-3 md:mx-11.5 lg:mx-3 md:content-container lg:hidden">
 				<Stepper
 					formCompleted={formCompleted}
 					setShowForm={setShowForm}
@@ -313,7 +313,7 @@ export default function CheckoutPage() {
 				/>
 			</div>
 			<div class="md:flex md:content-container lg:h-[80vh]">
-				<div class="md:content-container lg:w-[700px] lg:space-y-12 mx-2">
+				<div class="md:content-container lg:w-[700px] sm:space-y-6 lg:space-y-12 mx-2">
 					<div
 						class="hidden lg:block sticky top-12 z-101 bg-transparent h-12 mx-2 "
 						style="backdrop-filter: blur(10px)"

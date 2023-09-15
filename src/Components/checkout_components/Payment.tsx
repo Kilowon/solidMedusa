@@ -12,6 +12,7 @@ import {
 	PaymentRequestButton
 } from 'solid-stripe'
 import { useNavigate } from 'solid-start'
+import { currencyFormat } from '~/lib/helpers/currency'
 
 export default function Payment() {
 	const { medusa } = useGlobalContext()
@@ -36,7 +37,14 @@ export default function Payment() {
 			when={stripe() && paymentSessionQuery?.data?.cart?.payment_session?.provider_id === 'stripe'}
 			fallback={<div>Loading stripe</div>}
 		>
-			<div>Stripe</div>
+			<header class="flex items-center justify-between my-3">
+				<div class=" flex items-center py-1.8">
+					<NumberIcons />
+					<h1 class="text-base font-500 text-text_2 tracking-tighter ">Payment</h1>
+				</div>
+				<div class="hidden md:flex md:space-x-8"></div>
+			</header>
+
 			<Show when={paymentSessionQuery?.isSuccess}>
 				<Elements
 					stripe={stripe()}
@@ -64,6 +72,9 @@ export default function Payment() {
 			</Show>
 		</Show>
 	)
+}
+export function NumberIcons() {
+	return <div class="w-5 h-5 mr-1 md:mr-2 md:ml-1 i-ph-number-circle-five-fill" />
 }
 
 export function CheckoutForm(props: { clientSecret: string }) {
@@ -114,18 +125,20 @@ export function CheckoutForm(props: { clientSecret: string }) {
 	}
 
 	return (
-		<div class="space-y-4">
+		<div class="space-y-12">
 			<form onSubmit={handleSubmit}>
 				<PaymentElement />
 				<div class="py-2"></div>
 				<CheckoutButtons clientSecret={props.clientSecret} />
 				<div class="py-2"></div>
 
-				<button class="mt-5 bg-transparent">Pay</button>
+				<button class="mt-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1">
+					Pay - {currencyFormat(queryCart?.data?.cart?.total, 'USD')}
+				</button>
 			</form>
 			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-16 text-text_2 text-sm">
 				<div>
-					<div>Shipping:</div>
+					<div class="font-500">Shipping:</div>
 					<div>{queryCart?.data?.cart?.shipping_address?.company}</div>
 					<div class="flex space-x-2">
 						<div>{queryCart?.data?.cart?.shipping_address?.first_name}</div>
@@ -143,7 +156,7 @@ export function CheckoutForm(props: { clientSecret: string }) {
 				</div>
 
 				<div>
-					<div>Billing:</div>
+					<div class="font-500">Billing:</div>
 					<div>{queryCart?.data?.cart?.shipping_address?.company}</div>
 					<div class="flex space-x-2">
 						<div>{queryCart?.data?.cart?.billing_address?.first_name}</div>

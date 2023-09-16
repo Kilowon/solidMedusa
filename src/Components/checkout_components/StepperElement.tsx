@@ -87,24 +87,25 @@ export function StepperElement(props: StepperProps) {
 				</li>
 			</Show>
 			<Show when={props.elementState === 'complete'}>
-				<li class="relative flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-surface  after:border-4 after:inline-block">
-					{/* <div class="i-ic-twotone-check-circle absolute top-0 left-0 lg:left-0 w-10 h-10 lg:w-12 lg:h-12 text-green-6/70 text-xl" /> */}
-					<span
-						onMouseDown={() => handleClick(props.title)}
-						onKeyDown={event => {
-							if (event.code === 'Enter') {
-								handleClick(props.title)
-							}
-						}}
-						title={props.title}
-						role="button"
-						tabindex="0"
-						class="flex items-center justify-center w-10 h-10 bg-surface rounded-full lg:h-12 lg:w-12 shrink-0"
-					>
-						<div class="  text-accent_5 hover:cursor-pointer relative">
-							<Icon icon={props.title} />
-						</div>
-					</span>
+				<li class="relative flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-accent_5/30 after:border-4 after:inline-block">
+					<div class="flex items-center justify-center w-11 h-11 bg-accent_5/50 rounded-full lg:h-13 lg:w-13 shrink-0 z-01 ">
+						<span
+							onMouseDown={() => handleClick(props.title)}
+							onKeyDown={event => {
+								if (event.code === 'Enter') {
+									handleClick(props.title)
+								}
+							}}
+							title={props.title}
+							role="button"
+							tabindex="0"
+							class="flex items-center justify-center w-10 h-10 bg-surface rounded-full lg:h-12 lg:w-12 shrink-0"
+						>
+							<div class="  text-accent_5/80 hover:cursor-pointer relative">
+								<Icon icon={props.title} />
+							</div>
+						</span>
+					</div>
 				</li>
 			</Show>
 			<Show when={props.elementState === 'queued'}>

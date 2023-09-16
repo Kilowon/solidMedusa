@@ -25,6 +25,7 @@ import { createQuery } from '@tanstack/solid-query'
 import CartCore from '~/Components/Core/CartCore'
 import Payment from '~/Components/checkout_components/Payment'
 import Express from '~/Components/checkout_components/Express'
+import { TransitionGroup } from 'solid-transition-group'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -305,14 +306,14 @@ export default function CheckoutPage() {
 					setMobileDrawer={setMobileDrawer}
 				/>
 			</div>
-			<div class="mx-3 md:mx-11.5 lg:mx-3 md:content-container lg:hidden">
+			<div class="mx-3 md:px-15 lg:mx-3 lg:content-container lg:hidden">
 				<Stepper
 					formCompleted={formCompleted}
 					setShowForm={setShowForm}
 					showForm={showForm}
 				/>
 			</div>
-			<div class="md:flex md:content-container lg:h-[80vh]">
+			<div class="md:flex md:content-container lg:min-h-[80vh]">
 				<div class="md:content-container lg:w-[700px] sm:space-y-6 lg:space-y-12 mx-2">
 					<div
 						class="hidden lg:block sticky top-12 z-101 bg-transparent h-12 mx-2 "
@@ -324,16 +325,41 @@ export default function CheckoutPage() {
 							showForm={showForm}
 						/>
 					</div>
-					<Show when={showForm()?.customer === 'active'}>
-						<input
-							type="text"
-							autofocus
-							style="display:none"
-						/>
-						<Express />
-						<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
+					<TransitionGroup
+						onEnter={(el, done) => {
+							const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+								duration: 1000
+							})
+							a.finished.then(done)
+						}}
+						onExit={(el, done) => {
+							const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+								duration: 200
+							})
+							a.finished.then(done)
+						}}
+					>
 						<Show when={showForm()?.customer === 'active'}>
-							<Customer
+							<input
+								type="text"
+								autofocus
+								style="display:none"
+							/>
+							<Express />
+							<div class="hidden md:flex items-center justify-center text-2xl m-2">or</div>
+							<Show when={showForm()?.customer === 'active'}>
+								<Customer
+									setShowForm={setShowForm}
+									showForm={showForm}
+									setFormCompleted={setFormCompleted}
+									formCompleted={formCompleted}
+									cart={queryCart.data?.cart}
+								/>
+							</Show>
+						</Show>
+
+						<Show when={showForm()?.shipping === 'active'}>
+							<Shipping
 								setShowForm={setShowForm}
 								showForm={showForm}
 								setFormCompleted={setFormCompleted}
@@ -341,40 +367,30 @@ export default function CheckoutPage() {
 								cart={queryCart.data?.cart}
 							/>
 						</Show>
-					</Show>
-
-					<Show when={showForm()?.shipping === 'active'}>
-						<Shipping
-							setShowForm={setShowForm}
-							showForm={showForm}
-							setFormCompleted={setFormCompleted}
-							formCompleted={formCompleted}
-							cart={queryCart.data?.cart}
-						/>
-					</Show>
-					<Show when={showForm().carrier === 'active'}>
-						<Carrier
-							setShowForm={setShowForm}
-							showForm={showForm}
-							setFormCompleted={setFormCompleted}
-							formCompleted={formCompleted}
-							cart={queryCart.data?.cart}
-						/>
-					</Show>
-					<Show when={showForm()?.billing === 'active'}>
-						<Billing
-							setShowForm={setShowForm}
-							showForm={showForm}
-							setFormCompleted={setFormCompleted}
-							formCompleted={formCompleted}
-							cart={queryCart.data?.cart}
-						/>
-					</Show>
-					<Show when={showForm()?.payment === 'active'}>
-						<Payment />
-					</Show>
+						<Show when={showForm().carrier === 'active'}>
+							<Carrier
+								setShowForm={setShowForm}
+								showForm={showForm}
+								setFormCompleted={setFormCompleted}
+								formCompleted={formCompleted}
+								cart={queryCart.data?.cart}
+							/>
+						</Show>
+						<Show when={showForm()?.billing === 'active'}>
+							<Billing
+								setShowForm={setShowForm}
+								showForm={showForm}
+								setFormCompleted={setFormCompleted}
+								formCompleted={formCompleted}
+								cart={queryCart.data?.cart}
+							/>
+						</Show>
+						<Show when={showForm()?.payment === 'active'}>
+							<Payment />
+						</Show>
+					</TransitionGroup>
 				</div>
-				<div class="hidden lg:flex lg:items-center lg:w-[433px] mx-auto ">
+				<div class="hidden lg:flex lg:items-center lg:w-[433px]  mx-auto ">
 					<CartCore variant="checkout" />
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import { Show, createSignal, onMount, createEffect } from 'solid-js'
+import { Show, createSignal, onMount, createEffect, Suspense } from 'solid-js'
 import { loadScript } from '@paypal/paypal-js'
 import ExpressShipping from '~/Components/checkout_components/ExpressShipping'
 import { createQuery } from '@tanstack/solid-query'
@@ -75,25 +75,27 @@ export default function Express() {
 	})
 
 	return (
-		<div class="m-1 md:m-2 space-y-3 md:space-y-3 ">
-			<ExpressShipping />
-			<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
+		<Suspense fallback={<div>Loading...</div>}>
+			<div class="m-1 md:m-2 space-y-3 md:space-y-3 ">
+				<ExpressShipping />
+				<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
 
-			<Show when={paypalLoaded()}>
-				<div
-					onClick={() => console.log('PAYPAL PAYMENT')}
-					ref={el => (paypalButtonRef = el)}
-				></div>
-			</Show>
-			<Show when={true}>
-				<Elements
-					stripe={stripe()}
-					clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
-				>
-					<ExpressStripeButtons clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
-				</Elements>
-			</Show>
-		</div>
+				<Show when={paypalLoaded()}>
+					<div
+						onClick={() => console.log('PAYPAL PAYMENT')}
+						ref={el => (paypalButtonRef = el)}
+					></div>
+				</Show>
+				<Show when={true}>
+					<Elements
+						stripe={stripe()}
+						clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
+					>
+						<ExpressStripeButtons clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
+					</Elements>
+				</Show>
+			</div>
+		</Suspense>
 	)
 }
 

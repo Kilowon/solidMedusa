@@ -13,6 +13,8 @@ import {
 } from 'solid-stripe'
 import { useNavigate } from 'solid-start'
 import { currencyFormat } from '~/lib/helpers/currency'
+import { loadScript } from '@paypal/paypal-js'
+import { createEffect } from 'solid-js'
 
 export default function Payment() {
 	const { medusa } = useGlobalContext()
@@ -76,6 +78,9 @@ export function CheckoutForm(props: { clientSecret: string }) {
 	const stripe = useStripe()
 	const elements = useElements()
 	const navigate = useNavigate()
+	let paypalButtons: any
+	let paypalButtonRef: HTMLElement
+	const [paypalLoaded, setPaypalLoaded] = createSignal(false)
 
 	const paymentSessionAuthorize = createQuery(() => ({
 		queryKey: ['cart'],
@@ -116,8 +121,51 @@ export function CheckoutForm(props: { clientSecret: string }) {
 		}
 	}
 
+	onMount(async () => {
+		const paypal = await loadScript({
+			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+			buyerCountry: 'US',
+			components: ['buttons'],
+			commit: false
+		}).catch(err => {
+			console.log('Failed to load Paypal script', err)
+		})
+
+		if (paypal && paypal.Buttons) {
+			paypalButtons = paypal.Buttons({
+				style: {
+					layout: 'vertical',
+					color: 'gold',
+					shape: 'rect',
+					label: 'paypal',
+					tagline: false,
+					height: 42
+				},
+				createOrder: function (data: any, actions: any) {
+					return actions.order.create({
+						purchase_units: [
+							{
+								amount: {
+									value: `${queryCart.data?.cart?.total}`,
+									currency_code: 'USD'
+								}
+							}
+						]
+					})
+				}
+			})
+			setPaypalLoaded(true)
+		}
+	})
+
+	createEffect(() => {
+		if (paypalLoaded() && paypalButtons && paypalButtonRef) {
+			paypalButtons.render(paypalButtonRef)
+		}
+	})
+
 	return (
-		<div class="space-y-12">
+		<div class="">
 			<header class="flex items-center justify-between my-3">
 				<div class=" flex items-center md:py-1.8">
 					<NumberIcons />
@@ -128,14 +176,17 @@ export function CheckoutForm(props: { clientSecret: string }) {
 			<Show when={true}>
 				<form onSubmit={handleSubmit}>
 					<PaymentElement />
-					<div class="py-2"></div>
-					<CheckoutButtons clientSecret={props.clientSecret} />
-					<div class="py-2"></div>
 
-					<button class="mt-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1 font-500">
+					<button class="my-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1 font-500">
 						Pay - {currencyFormat(queryCart?.data?.cart?.total, 'USD')}
 					</button>
 				</form>
+			</Show>
+			<Show when={paypalLoaded()}>
+				<div
+					onClick={() => console.log('PAYPAL PAYMENT')}
+					ref={el => (paypalButtonRef = el)}
+				></div>
 			</Show>
 			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-16 text-text_2 text-sm">
 				<div>

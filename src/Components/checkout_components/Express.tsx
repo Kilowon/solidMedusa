@@ -5,14 +5,7 @@ import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { loadStripe } from '@stripe/stripe-js'
 import type { PaymentRequestPaymentMethodEvent } from '@stripe/stripe-js'
-import {
-	Elements,
-	useElements,
-	useStripe,
-	LinkAuthenticationElement,
-	PaymentElement,
-	PaymentRequestButton
-} from 'solid-stripe'
+import { Elements, useStripe, LinkAuthenticationElement, PaymentElement, PaymentRequestButton } from 'solid-stripe'
 import { useNavigate } from 'solid-start'
 
 export default function Express() {
@@ -97,14 +90,14 @@ export default function Express() {
 					stripe={stripe()}
 					clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
 				>
-					<CheckoutButtons clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
+					<ExpressStripeButtons clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
 				</Elements>
 			</Show>
 		</div>
 	)
 }
 
-export function CheckoutButtons(props: { clientSecret: string }) {
+export function ExpressStripeButtons(props: { clientSecret: string }) {
 	const stripe = useStripe()
 	const { queryCart } = useGlobalContext()
 	console.log(import.meta.env.VITE_APP_URL, 'env')

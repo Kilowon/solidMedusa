@@ -32,7 +32,8 @@ const [useMedusa, setMedusa] = createSignal<Medusa>(newMedusa())
 function newMedusa() {
 	const medusa = new Medusa({
 		maxRetries: 3,
-		baseUrl: import.meta.env.VITE_PUBLIC_MEDUSA_BACKEND_URL
+		baseUrl: import.meta.env.VITE_PUBLIC_MEDUSA_BACKEND_URL,
+		publishableApiKey: import.meta.env.VITE_MEDUSA_API_KEY
 	})
 	return medusa
 }

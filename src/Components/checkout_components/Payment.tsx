@@ -3,6 +3,7 @@ import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { loadStripe } from '@stripe/stripe-js'
 import type { PaymentRequestPaymentMethodEvent } from '@stripe/stripe-js'
+import { Transition } from 'solid-transition-group'
 import {
 	Elements,
 	useElements,
@@ -26,46 +27,60 @@ export default function Payment() {
 		setStripe(result)
 	})
 
-	// Trigger Medusa payment session and submit payment
-	const paymentSessionQuery = createQuery(() => ({
+	const paymentSessionStripe = createQuery(() => ({
 		queryKey: ['cart'],
-		queryFn: () => medusa?.carts.createPaymentSessions(queryCart.data?.cart?.id),
+		queryFn: () => medusa?.carts.setPaymentSession(queryCart.data?.cart?.id, { provider_id: 'stripe' }),
 		enabled: true,
 		cacheTime: 3 * 60 * 1000
 	}))
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<Show
-				when={stripe() && paymentSessionQuery?.data?.cart?.payment_session?.provider_id === 'stripe'}
-				fallback={<div>Loading stripe</div>}
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 800
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 200
+					})
+					a.finished.then(done)
+				}}
 			>
-				<Show when={paymentSessionQuery?.isSuccess}>
-					<Elements
-						stripe={stripe()}
-						clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
-						options={{
-							layout: {
-								type: 'accordion',
-								defaultCollapsed: true,
-								radios: true,
-								spacedAccordionItems: true
-							},
-							defaultValues: {
-								billingDetails: {
-									name: `${queryCart?.data?.cart?.billing_address?.first_name} ${queryCart?.data?.cart?.billing_address?.last_name}`,
-									email: queryCart?.data?.cart?.email,
-									address: {
-										postal_code: queryCart?.data?.cart?.billing_address?.postal_code
+				<Show
+					when={stripe() && paymentSessionStripe?.data?.cart?.payment_session?.provider_id === 'stripe'}
+					fallback={<div>Loading stripe</div>}
+				>
+					<Show when={paymentSessionStripe?.isSuccess}>
+						<Elements
+							stripe={stripe()}
+							clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret}
+							options={{
+								layout: {
+									type: 'accordion',
+									defaultCollapsed: true,
+									radios: true,
+									spacedAccordionItems: true
+								},
+								defaultValues: {
+									billingDetails: {
+										name: `${queryCart?.data?.cart?.billing_address?.first_name} ${queryCart?.data?.cart?.billing_address?.last_name}`,
+										email: queryCart?.data?.cart?.email,
+										address: {
+											postal_code: queryCart?.data?.cart?.billing_address?.postal_code
+										}
 									}
 								}
-							}
-						}}
-					>
-						<CheckoutForm clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
-					</Elements>
+							}}
+						>
+							<CheckoutForm clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret} />
+						</Elements>
+					</Show>
 				</Show>
-			</Show>
+			</Transition>
 		</Suspense>
 	)
 }
@@ -190,7 +205,7 @@ export function CheckoutForm(props: { clientSecret: string }) {
 					ref={el => (paypalButtonRef = el)}
 				></div>
 			</Show>
-			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-16 text-text_2 text-sm">
+			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-30 justify-center items-center text-text_2 text-sm min-h-15vh">
 				<div>
 					<div class="font-500">Shipping:</div>
 					<div>{queryCart?.data?.cart?.shipping_address?.company}</div>

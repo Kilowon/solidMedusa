@@ -26,8 +26,8 @@ function PlausibleScript() {
 	onMount(() => {
 		const script = document.createElement('script')
 		script.defer = true
-		script.dataset.domain = 'shauns.cool'
-		script.src = 'https://plausible.shauns.cool/js/script.js'
+		script.dataset.domain = import.meta.env.VITE_PLAUSIBLE_DOMAIN
+		script.src = import.meta.env.VITE_PLAUSIBLE_SCRIPT_SRC
 		document.head.appendChild(script)
 	})
 

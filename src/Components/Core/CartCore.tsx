@@ -133,7 +133,7 @@ export default function CartCore(props: CartCoreProps) {
 																class={clsx(
 																	'font-500 line-clamp-2 text-ellipsis',
 																	props.variant === 'primary' && 'md:text-lg',
-																	props.variant === 'checkout' && 'text-xs',
+																	props.variant === 'checkout' && 'text-xs min-w-40',
 																	props.variant === 'panel' && 'text-xs',
 																	props.variant === 'mobile-checkout' && 'text-xs',
 																	props.variant === 'mobile-panel' && 'text-xs'

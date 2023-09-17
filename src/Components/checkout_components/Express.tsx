@@ -46,7 +46,7 @@ export default function Express() {
 			console.log('Failed to load Paypal script', err)
 		})
 
-		if (paypal && paypal.Buttons) {
+		if (paypal && paypal.Buttons && queryCart.data?.cart?.total) {
 			paypalButtons = paypal.Buttons({
 				style: {
 					layout: 'horizontal',

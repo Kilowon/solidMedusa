@@ -328,7 +328,7 @@ export default function CheckoutPage() {
 					<TransitionGroup
 						onEnter={(el, done) => {
 							const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-								duration: 1000
+								duration: 500
 							})
 							a.finished.then(done)
 						}}

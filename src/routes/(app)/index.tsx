@@ -40,7 +40,7 @@ export default function App() {
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function App() {
 	const featuredData = createQuery(() => ({
 		queryKey: ['featured_data'],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/featured_constructor?fields=*.item.*.*.*`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/featured_constructor?fields=*.item.*.*.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

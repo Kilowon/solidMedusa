@@ -159,7 +159,7 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['primary_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/main_hero`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

@@ -85,7 +85,7 @@ export default function Account() {
 				customer_id: currentCustomer?.data?.customer?.id
 			}
 
-			const response = await fetch(`https://direct.shauns.cool/items/customer`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/customer`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default function Account() {
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -716,7 +716,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 
 			const response = await fetch(
-				`https://direct.shauns.cool/items/main_review?filter[customer_id][_eq]=${props.currentCustomer?.id}`,
+				`${import.meta.env.VITE_DIRECTUS_URL}/items/main_review?filter[customer_id][_eq]=${props.currentCustomer?.id}`,
 				{
 					method: 'GET',
 					headers: {
@@ -856,7 +856,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														user_name: userName()
 													}
 
-													const response = await fetch(`https://direct.shauns.cool/items/main_review`, {
+													const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_review`, {
 														method: 'POST',
 														headers: {
 															'Content-Type': 'application/json',
@@ -882,7 +882,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														product_name: productId().name
 													}
 
-													const response = await fetch(`https://direct.shauns.cool/items/product`, {
+													const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product`, {
 														method: 'POST',
 														headers: {
 															'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ export function CleanHero() {
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/main_hero`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export function CleanHero() {
 		queryKey: ['featured_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/featured_components?fields=*.*.*`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/featured_components?fields=*.*.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

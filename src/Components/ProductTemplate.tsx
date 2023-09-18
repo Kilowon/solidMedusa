@@ -19,7 +19,7 @@ export default function ProductTemplate(props: {
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default function ProductTemplate(props: {
 	const draftReviewData = createQuery(() => ({
 		queryKey: ['draft_review_data', props.productInfo?.title],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/product/Product-01?fields=*,reviews.*`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function ProductTemplate(props: {
 		queryKey: ['display_container_data', props.productInfo?.title],
 		queryFn: async function () {
 			const response = await fetch(
-				`https://direct.shauns.cool/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,
+				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,
 				{
 					method: 'GET',
 					headers: {

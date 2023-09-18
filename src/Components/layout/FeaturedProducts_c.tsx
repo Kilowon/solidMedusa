@@ -100,7 +100,7 @@ export default function FeaturedProductsLgExtended(props: {
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
-			const response = await fetch(`https://direct.shauns.cool/items/Primary`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
 				method: 'GET',
 
 				headers: {

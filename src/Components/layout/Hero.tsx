@@ -16,7 +16,7 @@ export function Hero() {
 		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`https://direct.shauns.cool/items/Hero`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Hero`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

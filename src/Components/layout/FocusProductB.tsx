@@ -234,7 +234,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 						</div>
 						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center overflow-hidden')}>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=focus-product-b`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=focus-product-b`}
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
@@ -264,7 +264,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 					>
 						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center   overflow-hidden')}>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image_2?.id}?key=focus-product-b`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=focus-product-b`}
 								loading="eager"
 								alt="main image"
 								class=" object-fill "
@@ -416,7 +416,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 						</div>
 						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center   overflow-hidden')}>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image_3?.id}?key=focus-product-b`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=focus-product-b`}
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}

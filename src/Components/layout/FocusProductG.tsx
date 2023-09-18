@@ -237,7 +237,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 												)}
 											>
 												<img
-													src={`https://direct.shauns.cool/assets/${props.item.image_3?.id}?key=200-avif`}
+													src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
 													height={600}
 													width={600}
 													alt={props.item.title || 'main image'}
@@ -266,7 +266,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 												)}
 											>
 												<img
-													src={`https://direct.shauns.cool/assets/${props.item.image_2?.id}?key=200-avif`}
+													src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
 													height={600}
 													width={600}
 													alt={props.item.title || 'main image'}
@@ -321,7 +321,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 										)}
 									>
 										<img
-											src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+											src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
 											height={600}
 											width={600}
 											alt={props.item.title || 'main image'}
@@ -376,7 +376,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 													>
 														<Show when={item.item?.image}>
 															<img
-																src={`https://direct.shauns.cool/assets/${item.item?.image}?key=100-webp`}
+																src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
 																loading="lazy"
 																alt={item.item?.title}
 																role="img"

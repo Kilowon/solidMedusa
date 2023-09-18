@@ -126,7 +126,7 @@ export default function Root() {
 
 				<link
 					rel="preconnect"
-					href="https://direct.shauns.cool/items/Primary"
+					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}
 				/>
 				<PlausibleScript />
 			</Head>

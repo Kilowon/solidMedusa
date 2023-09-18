@@ -138,7 +138,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								)}
 							>
 								<img
-									src={`https://direct.shauns.cool/assets/${props.item.image_2?.id}?key=200-avif`}
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
 									class="object-cover object-center min-h-100px z-5 "
@@ -164,7 +164,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								)}
 							>
 								<img
-									src={`https://direct.shauns.cool/assets/${props.item.image_3?.id}?key=200-avif`}
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
 									class="object-cover object-center min-h-100px z-5 "
@@ -303,7 +303,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 							)}
 						>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
@@ -444,7 +444,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								)}
 							>
 								<img
-									src={`https://direct.shauns.cool/assets/${props.item.image_2?.id}?key=200-avif`}
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
 									class="object-cover object-center min-h-100px z-5 "
@@ -470,7 +470,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								)}
 							>
 								<img
-									src={`https://direct.shauns.cool/assets/${props.item.image_3?.id}?key=200-avif`}
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
 									loading="eager"
 									alt="main image"
 									class="object-cover object-center min-h-100px z-5 "
@@ -497,7 +497,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 							)}
 						>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
@@ -609,7 +609,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 							)}
 						>
 							<img
-								src={`https://direct.shauns.cool/assets/${props.item.image?.id}?key=600-avif`}
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}

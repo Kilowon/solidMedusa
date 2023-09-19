@@ -125,15 +125,22 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
-					<div class="flex justify-center items-center">
+					<div
+						class={clsx(
+							'flex  items-center ',
+							props.item.component_variant === 'center' && 'justify-center',
+							props.item.component_variant === 'default' && 'justify-between flex-row-reverse min-w-80vw',
+							props.item.component_variant === 'left' && 'justify-between flex-row-reverse xl:min-w-[80vw] lg:min-w-98vw '
+						)}
+					>
 						<div class="flex flex-col ">
 							<div class="flex  justify-center  ">
 								<div
 									class={clsx(
 										'text-text_2 z-10 flex flex-col items-center ',
 										props.item.component_variant === 'center' && 'lg:min-w-[300px] max-w-400px',
-										props.item.component_variant === 'default' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12',
-										props.item.component_variant === 'left' && 'min-w-[600px] max-w-800px space-y-3 lg:space-y-12'
+										props.item.component_variant === 'default' && 'min-w-[40vw] max-w-[40vw] space-y-3 lg:space-y-12',
+										props.item.component_variant === 'left' && 'min-w-[41.5vw] max-w-[41.5vw]  space-y-3 lg:space-y-12'
 									)}
 								>
 									<div>
@@ -142,7 +149,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												'flex flex-col ',
 												props.item.component_variant === 'center' && '',
 												props.item.component_variant === 'default' && ' space-y-8',
-												props.item.component_variant === 'left' && ' space-y-8'
+												props.item.component_variant === 'left' && ' space-y-8 '
 											)}
 										>
 											<Show when={props.item?.component_variant !== 'center'}>

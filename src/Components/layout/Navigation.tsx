@@ -211,14 +211,12 @@ export default function Navigation(props: any) {
 						role="button"
 						tabindex="0"
 					>
-						<div
-							class={openCart() ? 'flex text-2xl p-5 text-accent_6 h-full relative' : 'flex text-2xl p-5 h-full relative '}
-						>
+						<div class={openCart() ? 'flex text-2xl p-5  h-full relative' : 'flex text-2xl p-5 h-full relative '}>
 							<div class="i-ion-cart-outline w-5.5 h-5.5 lg:w-7 lg:h-7 hover:cursor-pointer"></div>
 							<div
 								class={
 									openCart()
-										? 'w-3.5 h-3.5  lg:w-5 lg:h-5 absolute top-3 right-3 bg-accent_6 text-[0.6rem]  lg:text-xs text-normal_1 font-500 flex items-center justify-center rounded-full'
+										? 'w-3.5 h-3.5  lg:w-5 lg:h-5 absolute top-3 right-3 bg-text_2 text-[0.6rem]  lg:text-xs text-normal_1 font-500 flex items-center justify-center rounded-full'
 										: 'w-3.5 h-3.5  lg:w-5 lg:h-5 absolute top-3 right-3 bg-text_2  text-[0.6rem]  lg:text-xs text-normal_1 font-500 flex items-center justify-center rounded-full'
 								}
 							>

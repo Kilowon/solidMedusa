@@ -48,13 +48,20 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 		enabled: false
 	}))
 
-	const [categories, categoriesServerState] = createSignal([])
+	const [categories, setCategories] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
 
 	createEffect(() => {
-		categoriesServerState(queryCategories.data?.product_categories)
-		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
+		setCategories(queryCategories.data?.product_categories)
+
+		// Find the parent category
+		const parentCategory: any = categories()?.find(
+			(category: any) => category.name === import.meta.env.VITE_MENU_CATEGORY_BASE
+		)
+
+		// Filter the categories where parent_category_id matches the parent category's id
+		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === parentCategory?.id))
 	}, [queryCategories])
 
 	const [selectedRoot, setSelectedRoot] = createSignal(rootCategories())
@@ -121,7 +128,11 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 							</Show>
 							<For each={selectedRoot()}>
 								{(collection: any, index) => {
-									if (collection?.parent_category_id !== null && index() === 0) {
+									if (
+										collection?.parent_category_id !== null &&
+										index() === 0 &&
+										collection?.parent_category?.name !== import.meta.env.VITE_MENU_CATEGORY_BASE
+									) {
 										return (
 											<div class="flex text-sm justify-between space-x-0.5 capitalize py-1">
 												<A

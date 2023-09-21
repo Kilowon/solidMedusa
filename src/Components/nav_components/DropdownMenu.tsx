@@ -41,12 +41,19 @@ export default function DropdownMenu(props: {
 		enabled: false
 	}))
 
-	const [categories, categoriesServerState] = createSignal([])
+	const [categories, setCategories] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
 	createEffect(() => {
-		categoriesServerState(queryCategories.data?.product_categories)
-		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === null))
+		setCategories(queryCategories.data?.product_categories)
+
+		// Find the parent category
+		const parentCategory: any = categories()?.find(
+			(category: any) => category.name === import.meta.env.VITE_MENU_CATEGORY_BASE
+		)
+
+		// Filter the categories where parent_category_id matches the parent category's id
+		setRootCategories(categories()?.filter((category: any) => category.parent_category_id === parentCategory?.id))
 	}, [queryCategories])
 
 	function matchCollections(currentFeatured: any, primaryData: any) {

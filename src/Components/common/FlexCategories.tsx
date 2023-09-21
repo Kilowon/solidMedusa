@@ -25,16 +25,20 @@ export function FlexCategories(props: any) {
 							}}
 						>
 							<For each={props.parentCategories()}>
-								{(category: any) => (
-									<li class="flex flex-row whitespace-nowrap space-x-0.5 text-xs lg:text-base flex items-center text-gray-8">
-										<A href={`/categories/${category?.handle}`}>
-											<div class={category?.name === props.currentCategory?.()[0]?.name ? 'flex' : ''}>{category?.name}</div>
-										</A>
-										<div class={' font-bold lg:text-xl '}>
-											<div class={category?.category_children?.length === 0 ? '' : 'i-ic-outline-chevron-right'} />
-										</div>
-									</li>
-								)}
+								{(category: any) => {
+									if (category?.name === import.meta.env.VITE_MENU_CATEGORY_BASE) return
+
+									return (
+										<li class="flex flex-row whitespace-nowrap space-x-0.5 text-xs lg:text-base flex items-center text-gray-8">
+											<A href={`/categories/${category?.handle}`}>
+												<div class={category?.name === props.currentCategory?.()[0]?.name ? 'flex' : ''}>{category?.name}</div>
+											</A>
+											<div class={' font-bold lg:text-xl '}>
+												<div class={category?.category_children?.length === 0 ? '' : 'i-ic-outline-chevron-right'} />
+											</div>
+										</li>
+									)
+								}}
 							</For>
 						</TransitionGroup>
 					</ol>

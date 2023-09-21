@@ -74,9 +74,9 @@ export default function App() {
 	}))
 
 	return (
-		<main class="min-h-[100vh] ">
+		<main class="min-h-[100vh]  ">
 			<CleanHero />
-			<div class="min-h-[100vh]">
+			<div class="min-h-[100vh] snap-y snap-mandatory">
 				<div
 					ref={el}
 					class="w-90% h-5 bg-transparent"
@@ -93,7 +93,7 @@ export default function App() {
 								if (item.item.status === 'archived') return
 
 								return (
-									<div>
+									<div class="snap-start">
 										<Show when={item?.item?.type === 'featured_products_a'}>
 											<FeaturedProducts
 												variant={item?.item?.variant}

@@ -47,9 +47,9 @@ function MetaTags() {
 
 	return (
 		<>
-			<Meta
+			{/* 	<Meta
 				http-equiv="Strict-Transport-Security"
-				content="max-age=63072000 includeSubDomains"
+				content="max-age=63072000 includeSubDomains preload"
 			/>
 			<Meta
 				http-equiv="X-Content-Type-Options"
@@ -66,7 +66,7 @@ function MetaTags() {
 			<Meta
 				http-equiv="Content-Security-Policy"
 				content="default-src https: data: "
-			/>
+			/> */}
 		</>
 	)
 }

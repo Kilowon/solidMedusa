@@ -34,7 +34,7 @@ export default function Express() {
 		cacheTime: 3 * 60 * 1000
 	}))
 
-	onMount(async () => {
+	/* 	onMount(async () => {
 		const paypal = await loadScript({
 			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
 			intent: 'authorize',
@@ -67,8 +67,8 @@ export default function Express() {
 									currency_code: 'USD'
 								}
 							}
-						]
-						/* payment_source: {
+						],
+						payment_source: {
 							paypal: {
 								return_url: `${import.meta.env.VITE_APP_URL}/checkout/success`,
 								cancel_url: `${import.meta.env.VITE_APP_URL}/checkout/cancel`,
@@ -79,7 +79,7 @@ export default function Express() {
 								landing_page: 'LOGIN',
 								shipping_preference: 'SET_PROVIDED_ADDRESS'
 							}
-						} */
+						}
 					})
 				},
 				onApprove: async (data: OnApproveData, actions: OnApproveActions) => {
@@ -92,7 +92,7 @@ export default function Express() {
 			})
 			setPaypalLoaded(true)
 		}
-	})
+	}) */
 
 	const paymentSessionAuthorize = createQuery(() => ({
 		queryKey: ['cart'],
@@ -165,9 +165,9 @@ export default function Express() {
 				<ExpressShipping />
 				<div class="  font-500 text-text_2 text-base tracking-tighter ">Express Checkout</div>
 
-				<Show when={paypalLoaded()}>
+				{/* <Show when={paypalLoaded()}>
 					<div ref={el => (paypalButtonRef = el)}></div>
-				</Show>
+				</Show> */}
 				<Show when={true}>
 					<Elements
 						stripe={stripe()}
@@ -254,10 +254,12 @@ export function ExpressStripeButtons(props: { clientSecret: string }) {
 	}
 
 	return (
-		<PaymentRequestButton
-			paymentRequest={paymentRequest}
-			onPaymentMethod={handlePaymentRequest}
-			style={{ paymentRequestButton: { theme: 'light', height: '42px', type: 'default', buttonSpacing: 'vertical' } }}
-		/>
+		<Show when={queryCart?.data?.cart?.total > 0}>
+			<PaymentRequestButton
+				paymentRequest={paymentRequest}
+				onPaymentMethod={handlePaymentRequest}
+				style={{ paymentRequestButton: { theme: 'light', height: '42px', type: 'default', buttonSpacing: 'vertical' } }}
+			/>
+		</Show>
 	)
 }

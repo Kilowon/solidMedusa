@@ -138,7 +138,8 @@ export function CheckoutForm(props: { clientSecret: string }) {
 		}
 	}
 
-	onMount(async () => {
+	//Paypal on hold for now
+	/* onMount(async () => {
 		const paypal = await loadScript({
 			clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
 			buyerCountry: 'US',
@@ -173,13 +174,13 @@ export function CheckoutForm(props: { clientSecret: string }) {
 			})
 			setPaypalLoaded(true)
 		}
-	})
+	}) */
 
-	createEffect(() => {
+	/* createEffect(() => {
 		if (paypalLoaded() && paypalButtons && paypalButtonRef) {
 			paypalButtons.render(paypalButtonRef)
 		}
-	})
+	}) */
 
 	return (
 		<div class="">
@@ -199,12 +200,12 @@ export function CheckoutForm(props: { clientSecret: string }) {
 					</button>
 				</form>
 			</Show>
-			<Show when={paypalLoaded()}>
+			{/* <Show when={paypalLoaded()}>
 				<div
 					onClick={() => console.log('PAYPAL PAYMENT')}
 					ref={el => (paypalButtonRef = el)}
 				></div>
-			</Show>
+			</Show> */}
 			<div class="space-y-4 sm:space-y-auto sm:flex sm:space-x-30 justify-center items-center text-text_2 text-sm min-h-15vh">
 				<div>
 					<div class="font-500">Shipping:</div>

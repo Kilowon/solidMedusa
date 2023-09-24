@@ -47,7 +47,7 @@ function MetaTags() {
 
 	return (
 		<>
-			{/* 	<Meta
+			<Meta
 				http-equiv="Strict-Transport-Security"
 				content="max-age=63072000 includeSubDomains preload"
 			/>
@@ -66,7 +66,11 @@ function MetaTags() {
 			<Meta
 				http-equiv="Content-Security-Policy"
 				content="default-src https: data: "
-			/> */}
+			/>
+			<Meta
+				http-equiv="Referrer-Policy"
+				content="strict-origin-when-cross-origin"
+			/>
 		</>
 	)
 }
@@ -96,7 +100,7 @@ export default function Root() {
 		>
 			<Head>
 				<MetaTags />
-				<Title>Store</Title>
+				<Title>{import.meta.env.VITE_STORE_NAME}</Title>
 				<Meta charset="utf-8" />
 
 				<Meta
@@ -105,7 +109,7 @@ export default function Root() {
 				/>
 				<Meta
 					name="description"
-					content="SolidJs-MedusaJs-Ecommerce-Starter"
+					content={import.meta.env.VITE_STORE_DESCRIPTION}
 				/>
 				<Meta
 					name="robots"
@@ -113,15 +117,11 @@ export default function Root() {
 				/>
 				<Meta
 					name="keywords"
-					content="SolidJs, MedusaJs, Ecommerce, Starter"
-				/>
-				<Meta
-					name="author"
-					content="SolidJs-MedusaJs-Ecommerce-Starter"
+					content={import.meta.env.VITE_STORE_KEYWORDS}
 				/>
 				<Link
 					rel="icon"
-					href="/favicon.ico"
+					href={import.meta.env.VITE_STORE_FAVICON}
 				/>
 
 				<link

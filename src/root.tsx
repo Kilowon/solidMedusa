@@ -34,7 +34,7 @@ function PlausibleScript() {
 	return null
 }
 
-function MetaTags() {
+export function MetaTags() {
 	let shouldRender = false
 
 	onMount(() => {

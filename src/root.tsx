@@ -65,7 +65,7 @@ function MetaTags() {
 			/>
 			<Meta
 				http-equiv="Content-Security-Policy"
-				content="default-src https: data: "
+				content="default-src 'self' modernedge.app *.modernedge.app direct.shauns.cool services.shauns.cool endpoint.shauns.cool ; img-src https://*; child-src 'none'; "
 			/>
 			<Meta
 				http-equiv="Referrer-Policy"

@@ -186,6 +186,7 @@ export function ExpressStripeButtons(props: { clientSecret: string }) {
 	const { queryCart } = useGlobalContext()
 	console.log(import.meta.env.VITE_APP_URL, 'env')
 	// Declare payment metadata (amounts must match payment intent)
+	if (queryCart?.data?.cart?.total <= 0) return
 	const paymentRequest = {
 		country: 'US',
 		currency: 'usd',
@@ -194,7 +195,6 @@ export function ExpressStripeButtons(props: { clientSecret: string }) {
 		requestPayerEmail: true,
 		requestPayerPhone: true,
 		requestShipping: true,
-		returnURL: `${import.meta.env.VITE_APP_URL}/checkout/success`,
 		displayItems: [
 			{
 				label: 'Subtotal',

@@ -169,12 +169,12 @@ export default function Express() {
 					<div ref={el => (paypalButtonRef = el)}></div>
 				</Show> */}
 				<Show when={true}>
-					<Elements
+					{/* 	<Elements
 						stripe={stripe()}
 						clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret}
 					>
 						<ExpressStripeButtons clientSecret={paymentSessionQuery?.data?.cart?.payment_session?.data?.client_secret} />
-					</Elements>
+					</Elements> */}
 				</Show>
 			</div>
 		</Suspense>

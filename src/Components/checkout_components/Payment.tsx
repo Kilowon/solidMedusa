@@ -34,6 +34,12 @@ export default function Payment() {
 		cacheTime: 3 * 60 * 1000
 	}))
 
+	createEffect(() => {
+		console.log(paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret, 'client_secret')
+		console.log(paymentSessionStripe?.data?.cart?.payment_session?.provider_id, 'provider_id')
+		console.log(paymentSessionStripe?.data?.cart, 'CART')
+	})
+
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
 			<Transition

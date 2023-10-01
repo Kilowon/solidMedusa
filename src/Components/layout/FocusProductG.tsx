@@ -290,7 +290,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 											<Show when={props.item?.call_to_action}>
 												<div class="flex items-center hover:underline text-sm font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
 													<A
-														href="/store/Store"
+														href={props.item?.action_url || '/store/Store'}
 														class="text- z-2 tracking-tight"
 													>
 														{props.item?.call_to_action}

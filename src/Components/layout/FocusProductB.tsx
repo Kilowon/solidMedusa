@@ -217,7 +217,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 										<Show when={props.item.call_to_action}>
 											<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
 												<A
-													href="/store/Store"
+													href={props.item?.action_url || '/store/Store'}
 													class="text- z-2 tracking-tight"
 												>
 													{props.item.call_to_action}
@@ -318,7 +318,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 									<Show when={props.item.call_to_action_2}>
 										<div class="flex items-center hover:underline text-xs   bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
 											<A
-												href="/store/Store"
+												href={props.item?.action_url || '/store/Store'}
 												class=" z-2 tracking-tight "
 											>
 												{props.item.call_to_action_2}
@@ -404,7 +404,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 									<Show when={props.item.call_to_action_3}>
 										<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
 											<A
-												href="/store/Store"
+												href={props.item?.action_url || '/store/Store'}
 												class="text- z-2 tracking-tight"
 											>
 												{props.item.call_to_action_3}

@@ -129,7 +129,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						class={clsx(
 							'flex  items-center ',
 							props.item.component_variant === 'center' && 'justify-center',
-							props.item.component_variant === 'default' && 'justify-between flex-row-reverse min-w-80vw',
+							props.item.component_variant === 'default' && 'justify-between flex-row min-w-80vw',
 							props.item.component_variant === 'left' && 'justify-between flex-row-reverse xl:min-w-[80vw] lg:min-w-98vw '
 						)}
 					>
@@ -296,7 +296,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 													<Show when={props.item?.call_to_action}>
 														<div class="flex items-center hover:underline text-sm font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
 															<A
-																href="/store/Store"
+																href={props.item?.action_url || '/store/Store'}
 																class="text- z-2 tracking-tight"
 															>
 																{props.item?.call_to_action}
@@ -557,7 +557,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										<Show when={props.item?.call_to_action}>
 											<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
 												<A
-													href="/store/Store"
+													href={props.item?.action_url || '/store/Store'}
 													class="text- z-2 tracking-tight"
 												>
 													{props.item?.call_to_action}
@@ -731,7 +731,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 										<Show when={props.item?.call_to_action}>
 											<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
 												<A
-													href="/store/Store"
+													href={props.item?.action_url || '/store/Store'}
 													class="text- z-2 tracking-tight"
 												>
 													{props.item?.call_to_action}
@@ -831,7 +831,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 												<Show when={props.item?.call_to_action}>
 													<div class="flex items-center hover:underline text-xs font-500 bg-accent_6 text-accenttext_1 px-2.5 py-1 rounded-1 ">
 														<A
-															href="/store/Store"
+															href={props.item?.action_url || '/store/Store'}
 															class="text- z-2 tracking-tight"
 														>
 															{props.item?.call_to_action}

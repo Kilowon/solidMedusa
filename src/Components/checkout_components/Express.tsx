@@ -186,52 +186,63 @@ export function ExpressStripeButtons(props: { clientSecret: string }) {
 	const { queryCart } = useGlobalContext()
 	console.log(import.meta.env.VITE_APP_URL, 'env')
 	// Declare payment metadata (amounts must match payment intent)
-	if (queryCart?.data?.cart?.total <= 0) return
-	const paymentRequest = {
-		country: 'US',
-		currency: 'usd',
-		total: { label: 'Demo total', amount: queryCart?.data?.cart?.total },
-		requestPayerName: true,
-		requestPayerEmail: true,
-		requestPayerPhone: true,
-		requestShipping: true,
-		displayItems: [
-			{
-				label: 'Subtotal',
-				amount: queryCart?.data?.cart?.subtotal || 0
-			},
-			{
-				label: 'Shipping',
-				amount: queryCart?.data?.cart?.shipping_total || 0
-			},
-			{
-				label: 'Tax',
-				amount: queryCart?.data?.cart?.tax_total || 0
-			},
-			{
-				label: 'Total',
-				amount: queryCart?.data?.cart?.total || 0
-			}
-		],
-		shippingOptions: [
-			{
-				id: 'free-shipping',
-				label: 'Free shipping',
-				detail: 'Arrives in 5 to 7 days',
-				amount: 0
 
-				// selected: true
-			},
-			{
-				id: 'express-shipping',
-				label: 'Express shipping',
-				detail: 'Arrives in 1 to 3 days',
-				amount: 599
-
-				// selected: false
-			}
-		]
+	async function awaitPaymentRequest() {
+		setTimeout(() => {
+			return paymentRequest
+		}, 500)
 	}
+
+	const [paymentRequest, setPaymentRequest] = createSignal<any | null>(null)
+
+	createEffect(async () => {
+		if (queryCart?.data?.cart?.total > 0) {
+			const newPaymentRequest = await awaitPaymentRequest()
+			setPaymentRequest(newPaymentRequest)
+		} else {
+			setPaymentRequest({
+				country: 'US',
+				currency: 'usd',
+				total: { label: 'Demo total', amount: queryCart?.data?.cart?.total },
+				requestPayerName: true,
+				requestPayerEmail: true,
+				requestPayerPhone: true,
+				requestShipping: true,
+				displayItems: [
+					{
+						label: 'Subtotal',
+						amount: queryCart?.data?.cart?.subtotal || 0
+					},
+					{
+						label: 'Shipping',
+						amount: queryCart?.data?.cart?.shipping_total || 0
+					},
+					{
+						label: 'Tax',
+						amount: queryCart?.data?.cart?.tax_total || 0
+					},
+					{
+						label: 'Total',
+						amount: queryCart?.data?.cart?.total || 0
+					}
+				],
+				shippingOptions: [
+					{
+						id: 'free-shipping',
+						label: 'Free shipping',
+						detail: 'Arrives in 5 to 7 days',
+						amount: 0
+					},
+					{
+						id: 'express-shipping',
+						label: 'Express shipping',
+						detail: 'Arrives in 1 to 3 days',
+						amount: 599
+					}
+				]
+			})
+		}
+	})
 
 	async function handlePaymentRequest(ev: PaymentRequestPaymentMethodEvent) {
 		// Create payment intent server side
@@ -256,7 +267,7 @@ export function ExpressStripeButtons(props: { clientSecret: string }) {
 	return (
 		<Show when={queryCart?.data?.cart?.total > 0}>
 			<PaymentRequestButton
-				paymentRequest={paymentRequest}
+				paymentRequest={paymentRequest()}
 				onPaymentMethod={handlePaymentRequest}
 				style={{ paymentRequestButton: { theme: 'light', height: '42px', type: 'default', buttonSpacing: 'vertical' } }}
 			/>

@@ -7,7 +7,6 @@ import { TextInput } from '~/Components/checkout_components/TextInput'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
-import { Image } from '@unpic/solid'
 import { TransitionGroup } from 'solid-transition-group'
 import { Customer } from '~/types/models'
 import { currencyFormat } from '~/lib/helpers/currency'
@@ -906,20 +905,14 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 														tabindex="0" // add tabindex attribute to make the div focusable
 													>
 														<Show when={item.thumbnail}>
-															<Image
-																width={50}
-																height={50}
+															<img
 																src={item.thumbnail}
 																alt={item.title}
 																class="-mb-px mr-2 rounded-md col-span-1 sm:col-span-1"
-															></Image>
+															/>
 														</Show>
 														<Show when={!item.thumbnail}>
-															<Image
-																width={50}
-																height={50}
-																src={`https://fakeimg.pl/100x100?text=X&font=poppins`}
-															></Image>
+															<img src={`https://fakeimg.pl/100x100?text=X&font=poppins`} />
 														</Show>
 														<div class="max-w-[300px] col-span-5 sm:col-span-6 flex items-center">
 															<div class="line-clamp-2   ellipsis text-xs ">{item.title}</div>

@@ -37,7 +37,6 @@
 		"@tanstack/solid-query": "^5.0.0-beta.4",
 		"@unocss/preset-web-fonts": "^0.50.4",
 		"@unocss/reset": "^0.50.4",
-		"@unpic/solid": "^0.0.18",
 		"clsx": "^1.2.1",
 		"plausible-tracker": "^0.3.8",
 		"solid-js": "^1.7.3",

@@ -1,9 +1,10 @@
-import { Show, For, createSignal, onMount, createEffect } from 'solid-js'
+import { Show, For, createSignal, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
-import { Motion, Presence } from '@motionone/solid'
+//import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
+import { TransitionGroup } from 'solid-transition-group'
 
 import { createQuery } from '@tanstack/solid-query'
 
@@ -117,16 +118,31 @@ export function CleanHero() {
 
 	return (
 		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess && filteredSlides().length > 0}>
-			<Presence
+			{/* 	<Presence
 				exitBeforeEnter={true}
 				initial={false}
-			>
-				<Rerun on={count()}>
-					<Motion.div
+			> */}
+			<Rerun on={count()}>
+				{/* <Motion.div
 						onPressStart={() => false}
 						animate={{ opacity: [1, 0, 1], transition: { duration: 1.0 } }}
 						exit={{ opacity: 0, transition: { duration: 0.5 } }}
-					>
+					> */}
+				<TransitionGroup
+					onEnter={(el, done) => {
+						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+							duration: 8000
+						})
+						a.finished.then(done)
+					}}
+					onExit={(el, done) => {
+						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+							duration: 2000
+						})
+						a.finished.then(done)
+					}}
+				>
+					<Show when={heroData.isSuccess}>
 						<div
 							class="min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row 
 		"
@@ -201,10 +217,12 @@ export function CleanHero() {
 								</div>
 							</A>
 						</div>
-						<div class="h-5vw w-99svw bg-transparent"></div>
-					</Motion.div>
-				</Rerun>
-			</Presence>
+					</Show>
+					<div class="h-5vw w-99svw bg-transparent"></div>
+					{/* </Motion.div> */}
+				</TransitionGroup>
+			</Rerun>
+			{/* </Presence> */}
 		</Show>
 	)
 }

@@ -3,7 +3,7 @@ import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
-import { Image } from '@unpic/solid'
+
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import {
 	openCart,
@@ -128,11 +128,9 @@ export default function Navigation(props: any) {
 						>
 							<Suspense>
 								<Show when={primaryData.isSuccess && primaryData?.data?.data?.title_icon}>
-									<Image
+									<img
 										src={primaryData?.data?.data?.title_icon}
 										alt={primaryData?.data?.data?.title}
-										height={50}
-										width={100}
 									/>
 								</Show>
 

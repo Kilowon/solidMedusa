@@ -25,6 +25,44 @@ export default function Products() {
 		enabled: !!params.handle && !!queryCart?.data?.cart?.id
 	}))
 
+	const primaryData = createQuery(() => ({
+		queryKey: ['primary_data'],
+		queryFn: async function () {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				}
+			})
+			const data = await response.json()
+			return data
+		},
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
+	}))
+
+	const socialData = createQuery(() => ({
+		queryKey: ['social_card_data', params.handle],
+		queryFn: async function () {
+			const response = await fetch(
+				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${queryProduct?.data?.products[0]?.id}?fields=*.item.*.*.*`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json'
+					}
+				}
+			)
+			const data = await response.json()
+			return data
+		},
+		retry: 0,
+		enabled: queryProduct.isSuccess ? true : false
+	}))
+
 	createEffect(() => {
 		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			queryProduct.refetch()
@@ -35,16 +73,44 @@ export default function Products() {
 		<div>
 			<Title>{queryProduct?.data?.products[0]?.title}</Title>
 			<Meta
-				itemProp="description"
+				name="description"
 				content={queryProduct?.data?.products[0]?.description}
 			/>
 			<Meta
-				itemProp="og:title"
+				name="og:title"
 				content={queryProduct?.data?.products[0]?.title}
 			/>
 			<Meta
-				itemProp="image"
+				name="image"
 				content={queryProduct?.data?.products[0]?.thumbnail}
+			/>
+			<Meta
+				name="twitter:title"
+				content={socialData?.data?.data?.twitter_title || queryProduct?.data?.products[0]?.title}
+			/>
+			<Meta
+				name="twitter:description"
+				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description}
+			/>
+			<Meta
+				name="twitter:site"
+				content={primaryData?.data?.data?.twitter_card_site}
+			/>{' '}
+			<Meta
+				name="twitter:domain"
+				content={primaryData?.data?.data?.twitter_card_domain}
+			/>
+			<Meta
+				name="twitter:image"
+				content={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${socialData?.data?.data?.image}`}
+			/>
+			<Meta
+				name="twitter:summary"
+				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description}
+			/>
+			<Meta
+				name="twitter:card"
+				content={'summary_large_image'}
 			/>
 			<main class="min-h-[100vh]">
 				<Show when={queryProduct?.data?.products[0]?.handle === params.handle}>

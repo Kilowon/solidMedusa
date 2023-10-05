@@ -102,7 +102,6 @@ export default function Root() {
 				<MetaTags />
 				<Title>{import.meta.env.VITE_STORE_NAME}</Title>
 				<Meta charset="utf-8" />
-
 				<Meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
@@ -119,11 +118,38 @@ export default function Root() {
 					name="keywords"
 					content={import.meta.env.VITE_STORE_KEYWORDS}
 				/>
+				<Meta
+					name="twitter:title"
+					content={import.meta.env.VITE_OL_TITLE || ''}
+				/>
+				<Meta
+					name="twitter:description"
+					content={import.meta.env.VITE_OL_DESC || ''}
+				/>
+				<Meta
+					name="twitter:site"
+					content={import.meta.env.VITE_OL_SITE || ''}
+				/>{' '}
+				<Meta
+					name="twitter:domain"
+					content={import.meta.env.VITE_OL_DOMAIN || ''}
+				/>
+				<Meta
+					name="twitter:image"
+					content={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${import.meta.env.VITE_OL_LOGO}`}
+				/>
+				<Meta
+					name="twitter:summary"
+					content={import.meta.env.VITE_OL_DESC || ''}
+				/>
+				<Meta
+					name="twitter:card"
+					content={'summary_large_image'}
+				/>
 				<Link
 					rel="icon"
 					href={import.meta.env.VITE_STORE_FAVICON}
 				/>
-
 				<link
 					rel="preconnect"
 					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}

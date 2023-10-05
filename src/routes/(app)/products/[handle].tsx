@@ -29,7 +29,9 @@ export default function Products() {
 		enabled: !!params.handle && !!queryCart?.data?.cart?.id
 	}))
 
-	const primaryData = createQuery(() => ({
+	//TODO: need to SSR this data for cards to work
+
+	/* 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
@@ -65,7 +67,7 @@ export default function Products() {
 		},
 		retry: 0,
 		enabled: false
-	}))
+	})) */
 
 	createEffect(() => {
 		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
@@ -73,7 +75,7 @@ export default function Products() {
 		}
 	})
 
-	createEffect(() => {
+	/* createEffect(() => {
 		if (queryProduct.isSuccess) {
 			socialData.refetch()
 		}
@@ -85,10 +87,10 @@ export default function Products() {
 			setTwitterTitle(socialData?.data?.data?.twitter_title)
 			setTwitterDescription(socialData?.data?.data?.twitter_description)
 		}
-	})
+	}) */
 
 	return (
-		<Show when={socialData.isSuccess}>
+		<div>
 			<Title>{queryProduct?.data?.products[0]?.title || ''}</Title>
 			<Meta
 				name="description"
@@ -102,7 +104,7 @@ export default function Products() {
 				name="image"
 				content={queryProduct?.data?.products[0]?.thumbnail || ''}
 			/>
-			<Meta
+			{/* <Meta
 				name="twitter:title"
 				content={socialData?.data?.data?.twitter_title || queryProduct?.data?.products[0]?.title || ''}
 			/>
@@ -133,7 +135,7 @@ export default function Products() {
 			<Meta
 				name="twitter:card"
 				content={'summary_large_image'}
-			/>
+			/> */}
 			<main class="min-h-[100vh]">
 				<Show when={queryProduct?.data?.products[0]?.handle === params.handle}>
 					<StoreProvider product={queryProduct?.data?.products[0]}>
@@ -150,6 +152,6 @@ export default function Products() {
 					</StoreProvider>
 				</Show>
 			</main>
-		</Show>
+		</div>
 	)
 }

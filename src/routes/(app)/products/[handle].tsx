@@ -88,7 +88,7 @@ export default function Products() {
 	})
 
 	return (
-		<div>
+		<Show when={socialData.isSuccess}>
 			<Title>{queryProduct?.data?.products[0]?.title || ''}</Title>
 			<Meta
 				name="description"
@@ -150,6 +150,6 @@ export default function Products() {
 					</StoreProvider>
 				</Show>
 			</main>
-		</div>
+		</Show>
 	)
 }

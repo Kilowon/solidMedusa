@@ -1,16 +1,20 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta } from 'solid-start'
-import { createEffect, Show } from 'solid-js'
+import { createEffect, Show, createSignal } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
 import { createQuery } from '@tanstack/solid-query'
+import { create } from 'domain'
 
 export default function Products() {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
-
 	const params = useParams()
+
+	const [twitterImage, setTwitterImage] = createSignal('')
+	const [twitterTitle, setTwitterTitle] = createSignal('')
+	const [twitterDescription, setTwitterDescription] = createSignal('')
 
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
@@ -60,7 +64,7 @@ export default function Products() {
 			return data
 		},
 		retry: 0,
-		enabled: queryProduct.isSuccess ? true : false
+		enabled: false
 	}))
 
 	createEffect(() => {
@@ -69,44 +73,62 @@ export default function Products() {
 		}
 	})
 
+	createEffect(() => {
+		if (queryProduct.isSuccess) {
+			socialData.refetch()
+		}
+	})
+
+	createEffect(() => {
+		if (socialData.isSuccess) {
+			setTwitterImage(socialData?.data?.data?.twitter_image)
+			setTwitterTitle(socialData?.data?.data?.twitter_title)
+			setTwitterDescription(socialData?.data?.data?.twitter_description)
+		}
+	})
+
 	return (
 		<div>
-			<Title>{queryProduct?.data?.products[0]?.title}</Title>
+			<Title>{queryProduct?.data?.products[0]?.title || ''}</Title>
 			<Meta
 				name="description"
-				content={queryProduct?.data?.products[0]?.description}
+				content={queryProduct?.data?.products[0]?.description || ''}
 			/>
 			<Meta
 				name="og:title"
-				content={queryProduct?.data?.products[0]?.title}
+				content={queryProduct?.data?.products[0]?.title || ''}
 			/>
 			<Meta
 				name="image"
-				content={queryProduct?.data?.products[0]?.thumbnail}
+				content={queryProduct?.data?.products[0]?.thumbnail || ''}
 			/>
 			<Meta
 				name="twitter:title"
-				content={socialData?.data?.data?.twitter_title || queryProduct?.data?.products[0]?.title}
+				content={socialData?.data?.data?.twitter_title || queryProduct?.data?.products[0]?.title || ''}
 			/>
 			<Meta
 				name="twitter:description"
-				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description}
+				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description || ''}
 			/>
 			<Meta
 				name="twitter:site"
-				content={primaryData?.data?.data?.twitter_card_site}
+				content={primaryData?.data?.data?.twitter_card_site || ''}
 			/>{' '}
 			<Meta
 				name="twitter:domain"
-				content={primaryData?.data?.data?.twitter_card_domain}
+				content={primaryData?.data?.data?.twitter_card_domain || ''}
 			/>
 			<Meta
 				name="twitter:image"
-				content={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${socialData?.data?.data?.image}`}
+				content={
+					socialData.isSuccess && socialData?.data?.data?.twitter_image
+						? `${import.meta.env.VITE_DIRECTUS_URL}/assets/${twitterImage()}`
+						: `${import.meta.env.VITE_DIRECTUS_URL}/assets/${primaryData?.data?.data?.twitter_fallback_image}`
+				}
 			/>
 			<Meta
 				name="twitter:summary"
-				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description}
+				content={socialData?.data?.data?.twitter_description || queryProduct?.data?.products[0]?.description || ''}
 			/>
 			<Meta
 				name="twitter:card"

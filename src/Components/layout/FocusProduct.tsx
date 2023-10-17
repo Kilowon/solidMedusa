@@ -1,4 +1,4 @@
-import { Show, For } from 'solid-js'
+import { Show, For, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
@@ -109,6 +109,10 @@ interface FeaturedProps {
 export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 	const { medusa } = useGlobalContext()
 
+	createEffect(() => {
+		console.log('THIS', props.item.image_3?.id !== undefined)
+	})
+
 	return (
 		<Show when={true}>
 			<div
@@ -118,7 +122,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 				<Show when={getWindowSize().width > 1023}>
 					<div class="flex ">
 						<div class="flex flex-col justify-center space-y-18 min-h-600px">
-							<Show when={props.item.image_2?.id !== null}>
+							<Show when={props.item.image_2?.id !== undefined}>
 								<div
 									class={clsx(
 										'max-w-200px max-h-200px  min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
@@ -146,7 +150,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 									/>
 								</div>
 							</Show>
-							<Show when={props.item.image_3?.id !== null}>
+							<Show when={props.item.image_2?.id !== undefined}>
 								<div
 									class={clsx(
 										'max-w-200px max-h-200px min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
@@ -428,59 +432,64 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 
 					<div class="space-x-2 flex ">
 						<div class="flex flex-col justify-start space-y-2 ">
-							<div
-								class={clsx(
-									'max-w-200px max-h-200px  min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
-									props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-									props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-									props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-									props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-									props.item.background_colors_b === 'surface' && 'bg-surface',
-									props.item.background_colors_b === 'text_4' && 'bg-text_4',
-									props.item.background_colors_b === 'text_5' && 'bg-text_5',
-									props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-									props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-									props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-									props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-									props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-									props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-									props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
-								)}
-							>
-								<img
-									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
-									loading="eager"
-									alt="main image"
-									class="object-cover object-center min-h-100px z-5 "
-								/>
-							</div>
-							<div
-								class={clsx(
-									'max-w-200px max-h-200px min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
-									props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-									props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-									props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-									props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-									props.item.background_colors_b === 'surface' && 'bg-surface',
-									props.item.background_colors_b === 'text_4' && 'bg-text_4',
-									props.item.background_colors_b === 'text_5' && 'bg-text_5',
-									props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-									props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-									props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-									props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-									props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-									props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-									props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
-								)}
-							>
-								<img
-									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
-									loading="eager"
-									alt="main image"
-									class="object-cover object-center min-h-100px z-5 "
-								/>
-							</div>
+							<Show when={props.item.image_2?.id !== undefined}>
+								<div
+									class={clsx(
+										'max-w-200px max-h-200px  min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
+										props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+										props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+										props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+										props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+										props.item.background_colors_b === 'surface' && 'bg-surface',
+										props.item.background_colors_b === 'text_4' && 'bg-text_4',
+										props.item.background_colors_b === 'text_5' && 'bg-text_5',
+										props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+										props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+										props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+										props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+										props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+										props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+										props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+									)}
+								>
+									<img
+										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
+										loading="eager"
+										alt="main image"
+										class="object-cover object-center min-h-100px z-5 "
+									/>
+								</div>
+							</Show>
+							<Show when={props.item.image_3?.id !== undefined}>
+								<div
+									class={clsx(
+										'max-w-200px max-h-200px min-h-200px  flex  justify-center  rounded-3 overflow-hidden',
+										props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+										props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+										props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+										props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+										props.item.background_colors_b === 'surface' && 'bg-surface',
+										props.item.background_colors_b === 'text_4' && 'bg-text_4',
+										props.item.background_colors_b === 'text_5' && 'bg-text_5',
+										props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+										props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+										props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
+										props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
+										props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
+										props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
+										props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+									)}
+								>
+									<img
+										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
+										loading="eager"
+										alt="main image"
+										class="object-cover object-center min-h-100px z-5 "
+									/>
+								</div>
+							</Show>
 						</div>
+
 						<div
 							class={clsx(
 								'max-w-600px max-h-600px min-h-400px   flex items-center justify-center overflow-hidden rounded-2 relative ',

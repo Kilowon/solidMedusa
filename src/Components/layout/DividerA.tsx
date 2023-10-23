@@ -212,7 +212,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 												loading="lazy"
 												alt={item.item?.title}
 												role="img"
-												class=" object-fill grayscale-100 contrast-50 min-w-70px max-w-70px mx-10
+												class=" object-fill grayscale-100 contrast-50 min-w-70px max-w-70px mx-5
 
 																		"
 											/>

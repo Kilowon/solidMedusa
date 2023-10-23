@@ -153,7 +153,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 											)}
 										>
 											<Show when={props.item?.component_variant !== 'center'}>
-												<div class="space-y-1 ">
+												<div class="pb-6 space-y-1  ">
 													<div
 														class={clsx(
 															' tracking-tighter text-text_2   font-500 z-2  text-start',

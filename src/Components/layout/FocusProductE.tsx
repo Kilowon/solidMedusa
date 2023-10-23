@@ -128,7 +128,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								<div>
 									<div class="lg:flex flex-col space-y-2 ">
 										<Show when={props.item?.component_variant === 'default' || getWindowSize().width <= 1023}>
-											<div>
+											<div class="mb-8">
 												<Show when={props.item.tags?.length > 0}>
 													<ul class="flex space-x-2">
 														<For each={props.item.tags}>

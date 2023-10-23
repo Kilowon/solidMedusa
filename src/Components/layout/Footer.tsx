@@ -4,7 +4,6 @@ import { A } from 'solid-start'
 
 const FooterCTA = lazy(() => import('~/Components/layout/FooterCTA'))
 const FooterNav = lazy(() => import('~/Components/layout/FooterNav'))
-const MECTA = lazy(() => import('~/Components/layout/MECTA'))
 
 export default function Footer() {
 	return (
@@ -27,7 +26,6 @@ export default function Footer() {
 			</Transition>
 			<CallToAction />
 			<FooterNav />
-			<MECTA />
 		</footer>
 	)
 }

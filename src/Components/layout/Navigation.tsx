@@ -3,7 +3,6 @@ import { A } from 'solid-start'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
-
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import {
 	openCart,

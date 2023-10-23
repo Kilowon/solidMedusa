@@ -2,8 +2,8 @@ import { createEffect, createSignal, lazy, Suspense } from 'solid-js'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { isClient } from '@solid-primitives/utils'
 
-const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
-
+/* const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
+ */
 const [size, setSize] = createSignal(getWindowSize())
 
 export default function FooterCTA() {
@@ -17,9 +17,9 @@ export default function FooterCTA() {
 		<div class=" w-full">
 			<div class=" ">
 				<div>
-					<Suspense fallback={<div>FOOTER</div>}>
+					{/* <Suspense fallback={<div>FOOTER</div>}>
 						<FeaturedProducts variant="footer" />
-					</Suspense>
+					</Suspense> */}
 				</div>
 			</div>
 		</div>

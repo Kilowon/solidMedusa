@@ -105,11 +105,11 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					' max-w-99svw my-20 lg:mb-auto lg:mt-auto  justify-center mx-2 relative',
-					props.item?.component_variant === 'default' && 'flex  flex-col items-center min-h-[950px]',
-					props.item?.component_variant === 'right' && 'flex  flex-col items-center min-h-[950px]',
-					props.item?.component_variant === 'three' && 'flex   items-center min-h-[750px]',
-					props.item?.component_variant === 'nine' && 'flex   items-center min-h-[950px] lg:flex-col xl:flex-row'
+					' max-w-99svw my-20 lg:mb-auto lg:mt-auto  justify-center mx-2 relative  py-10',
+					props.item?.component_variant === 'default' && 'flex  flex-col items-center ',
+					props.item?.component_variant === 'right' && 'flex  flex-col items-center ',
+					props.item?.component_variant === 'three' && 'flex   items-center ',
+					props.item?.component_variant === 'nine' && 'flex   items-center  lg:flex-col xl:flex-row'
 				)}
 			>
 				<Show when={getWindowSize().width > 640}>
@@ -186,7 +186,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 max-w-20px
+																			class=" object-fill grayscale-100 contrast-50 max-w-30px 
 																
 																"
 																		/>
@@ -360,6 +360,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 												>
 													<For each={props.item.items}>
 														{(item: any) => {
+															console.log(item?.item?.action_url, 'URL')
 															return (
 																<li class="flex  ">
 																	<div
@@ -398,7 +399,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																		<Show when={item.item?.call_to_action}>
 																			<div class="flex items-center hover:underline text-xs font-500  bg-accent_6 text-accenttext_1 px-1 py-0.25 rounded-1 ">
 																				<A
-																					href={props.item?.action_url || '/store/Store'}
+																					href={`${item?.item?.action_url}` || '/store/Store'}
 																					class="text- z-2 tracking-tight"
 																				>
 																					{item.item?.call_to_action}
@@ -607,7 +608,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																	<Show when={item.item?.call_to_action}>
 																		<div class="flex items-center hover:underline text-xs font-500  bg-accent_6 text-accenttext_1 px-1 py-0.25 rounded-1 ">
 																			<A
-																				href={props.item?.action_url || '/store/Store'}
+																				href={item?.item?.action_url || '/store/Store'}
 																				class="text- z-2 tracking-tight"
 																			>
 																				{item.item?.call_to_action}

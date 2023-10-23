@@ -25,6 +25,10 @@ const FocusProductF = lazy(() => import('~/Components/layout/FocusProductF'))
 
 const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 
+const FocusProductH = lazy(() => import('~/Components/layout/FocusProductH'))
+
+const DividerA = lazy(() => import('~/Components/layout/DividerA'))
+
 export default function App() {
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
@@ -81,12 +85,11 @@ export default function App() {
 					ref={el}
 					class="w-90% h-5 bg-transparent"
 				></div>
-
+				<div>{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS */}</div>
 				<Suspense>
 					<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
 						<For each={featuredData.data?.data?.builder_blocks}>
 							{item => {
-								if (item.item.location !== 'hero') return
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
 									if (item.item.status === 'draft') return
 								}
@@ -136,12 +139,19 @@ export default function App() {
 										<Show when={item?.item?.type === 'focus_product_g'}>
 											<FocusProductG item={item.item} />
 										</Show>
+										<Show when={item?.item?.type === 'focus_product_h'}>
+											<FocusProductH item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'divider_a'}>
+											<DividerA item={item.item} />
+										</Show>
 									</div>
 								)
 							}}
 						</For>
 					</Show>
 				</Suspense>
+				<div>{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS */}</div>
 			</div>
 		</main>
 	)

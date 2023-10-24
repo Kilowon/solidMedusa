@@ -26,6 +26,8 @@ const FocusProductF = lazy(() => import('~/Components/layout/FocusProductF'))
 
 const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 
+const DividerA = lazy(() => import('~/Components/layout/DividerA'))
+
 export default function DisplayContainer(props: { data: any }) {
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
@@ -99,6 +101,9 @@ export default function DisplayContainer(props: { data: any }) {
 										</Show>
 										<Show when={item?.item?.type === 'focus_product_g'}>
 											<FocusProductG item={item.item} />
+										</Show>
+										<Show when={item?.item?.type === 'divider_a'}>
+											<DividerA item={item.item} />
 										</Show>
 									</div>
 								)

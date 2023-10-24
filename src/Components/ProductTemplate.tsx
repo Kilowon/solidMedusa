@@ -108,7 +108,9 @@ export default function ProductTemplate(props: {
 						</div>
 					</div>
 				</div>
-				<DisplayContainer data={displayContainerData} />
+				<Show when={displayContainerData.isSuccess}>
+					<DisplayContainer data={displayContainerData} />
+				</Show>
 				<div class="hidden lg:flex lg:content-container justify-center">
 					<Show
 						when={

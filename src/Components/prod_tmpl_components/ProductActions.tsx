@@ -128,7 +128,7 @@ export default function ProductActions(props: {
 	})
 
 	return (
-		<Show when={props.productInfo && reviewData.isSuccess}>
+		<Show when={props.productInfo}>
 			<Toaster
 				position="top-right"
 				gutter={8}
@@ -148,7 +148,11 @@ export default function ProductActions(props: {
 			<div class="flex flex-col space-y-4  mx-2">
 				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
 					<div class="lg:space-y-2">
-						<Show when={reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'}>
+						<Show
+							when={
+								reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'
+							}
+						>
 							<div class="flex items-center space-x-2">
 								<div class="text-xl">
 									<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
@@ -259,6 +263,7 @@ export default function ProductActions(props: {
 					<ProductInformationTabs
 						productInfo={props.productInfo}
 						rating={reviewData.data?.data}
+						reviewAvailable={reviewData.isSuccess}
 					/>
 				</div>
 			</div>
@@ -408,7 +413,11 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	)
 }
 
-export function ProductInformationTabs(props: { productInfo: Product; rating: any }) {
+export function ProductInformationTabs(props: {
+	productInfo: Product
+	rating: any
+	reviewAvailable: boolean
+}): JSX.Element {
 	const [activeTab, setActiveTab] = createSignal({
 		description: 'active',
 		info: 'inactive',
@@ -557,7 +566,7 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 							</div>
 						</button>
 					</li>
-					<Show when={props.rating?.reviews || import.meta.env.VITE_DRAFT_SITE === 'true'}>
+					<Show when={(props.reviewAvailable && props.rating?.reviews) || import.meta.env.VITE_DRAFT_SITE === 'true'}>
 						<li
 							class=""
 							role="presentation"
@@ -728,7 +737,10 @@ export function ProductInformationTabs(props: { productInfo: Product; rating: an
 						</div>
 					</Show>
 					<Show
-						when={activeTab().reviews === 'active' && (props.rating?.reviews || import.meta.env.VITE_DRAFT_SITE === 'true')}
+						when={
+							activeTab().reviews === 'active' &&
+							((props.reviewAvailable && props.rating?.reviews) || import.meta.env.VITE_DRAFT_SITE === 'true')
+						}
 					>
 						<div
 							class={clsx(

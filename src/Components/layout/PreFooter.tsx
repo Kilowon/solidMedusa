@@ -25,7 +25,7 @@ const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
-export default function DisplayContainer(props: { data: any }) {
+export default function PreFooter(props: { data: any }) {
 	let el: HTMLDivElement | undefined
 	const [isVisible, setIsVisible] = createSignal(false)
 	const [delay, setDelay] = createSignal(0.1)
@@ -37,6 +37,9 @@ export default function DisplayContainer(props: { data: any }) {
 		}
 	})
 
+	createEffect(() => {
+		console.log('FOOTER POOPY POOP', props.data?.data?.data?.PreFooter)
+	})
 	return (
 		<main>
 			<div>
@@ -47,12 +50,16 @@ export default function DisplayContainer(props: { data: any }) {
 
 				<Suspense>
 					<Show when={isVisible()}>
-						<For each={props.data?.data?.data?.product_info}>
+						<For each={props.data?.data?.data?.PreFooter}>
 							{item => {
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
 									if (item.item.status === 'draft') return
 								}
 								if (item.item.status === 'archived') return
+
+								createEffect(() => {
+									console.log('FOOTER POOP', item.item)
+								})
 
 								return (
 									<div>

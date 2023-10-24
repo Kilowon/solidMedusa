@@ -1,4 +1,4 @@
-import { Show, For, createEffect, createSignal } from 'solid-js'
+import { Show, For, createSignal } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'

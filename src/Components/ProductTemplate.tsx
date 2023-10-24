@@ -5,6 +5,7 @@ import { Product } from '~/types/models'
 import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
 import { createQuery } from '@tanstack/solid-query'
 import DisplayContainer from './layout/DisplayContainer'
+import PreFooter from './layout/PreFooter'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -121,10 +122,14 @@ export default function ProductTemplate(props: {
 					>
 						<ReviewsDisplay rating={reviewData.data?.data} />
 					</Show>
+
 					<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
 						<ReviewsDisplay rating={draftReviewData.data?.data} />
 					</Show>
 				</div>
+				<Show when={displayContainerData.isSuccess}>
+					<PreFooter data={displayContainerData} />
+				</Show>
 			</main>
 		</Show>
 	)

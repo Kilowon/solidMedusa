@@ -27,3 +27,7 @@ export { menuDrawer, setMenuDrawer }
 const [isScroll, setIsScroll] = createSignal(true)
 
 export { isScroll, setIsScroll }
+
+const [isVisible, setIsVisible] = createSignal(false)
+
+export { isVisible, setIsVisible }

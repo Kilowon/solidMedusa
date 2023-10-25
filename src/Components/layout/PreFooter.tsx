@@ -26,30 +26,16 @@ const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
 export default function PreFooter(props: { data: any }) {
-	let el: HTMLDivElement | undefined
-	const [isVisible, setIsVisible] = createSignal(false)
-	const [delay, setDelay] = createSignal(0.1)
-	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
-
-	createEffect(() => {
-		if (visible()) {
-			setIsVisible(true)
-		}
-	})
-
 	createEffect(() => {
 		console.log('FOOTER POOPY POOP', props.data?.data?.data?.PreFooter)
 	})
 	return (
 		<main>
 			<div>
-				<div
-					ref={el}
-					class="w-90% h-5 bg-transparent"
-				></div>
+				<div class="w-90% h-5 bg-transparent"></div>
 
 				<Suspense>
-					<Show when={isVisible()}>
+					<Show when={true}>
 						<For each={props.data?.data?.data?.PreFooter}>
 							{item => {
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {

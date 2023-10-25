@@ -26,9 +26,6 @@ const FocusProductG = lazy(() => import('~/Components/layout/FocusProductG'))
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
 export default function PreFooter(props: { data: any }) {
-	createEffect(() => {
-		console.log('FOOTER POOPY POOP', props.data?.data?.data?.PreFooter)
-	})
 	return (
 		<main>
 			<div>
@@ -42,10 +39,6 @@ export default function PreFooter(props: { data: any }) {
 									if (item.item.status === 'draft') return
 								}
 								if (item.item.status === 'archived') return
-
-								createEffect(() => {
-									console.log('FOOTER POOP', item.item)
-								})
 
 								return (
 									<div>

@@ -115,10 +115,6 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 	const { medusa } = useGlobalContext()
 	const [size, setSize] = createSignal(getWindowSize().width)
 
-	createEffect(() => {
-		console.log('DividerA', props.item)
-	})
-
 	return (
 		<Show when={size() > 1024}>
 			<div

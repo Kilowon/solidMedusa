@@ -1,4 +1,4 @@
-import { Show, For, createSignal } from 'solid-js'
+import { Show, For, createSignal, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
@@ -115,6 +115,10 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 	const { medusa } = useGlobalContext()
 	const [size, setSize] = createSignal(getWindowSize().width)
 
+	createEffect(() => {
+		console.log('DividerA', props.item)
+	})
+
 	return (
 		<Show when={size() > 1024}>
 			<div
@@ -140,9 +144,9 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 					class={clsx(
 						'flex  items-center ',
 						props.item.component_variant === 'center' && 'flex-col py-2 sm:py-10',
-						props.item.component_variant === 'default' && 'justify-between flex-row min-w-80vw py-2 sm:py-25',
+						props.item.component_variant === 'default' && 'justify-between flex-row min-w-80vw py-2 sm:py-15',
 						props.item.component_variant === 'left' &&
-							'justify-between flex-row-reverse xl:min-w-[80vw] lg:min-w-98vw py-2 sm:py-25 '
+							'justify-between flex-row-reverse xl:min-w-[80vw] lg:min-w-98vw py-2 sm:py-15 '
 					)}
 				>
 					<div class="flex flex-col items-center">

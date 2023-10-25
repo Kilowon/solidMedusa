@@ -128,6 +128,7 @@ export default function ProductTemplate(props: {
 					</Show>
 				</div>
 				<Show when={displayContainerData.isSuccess}>
+					<div>TEST</div>
 					<PreFooter data={displayContainerData} />
 				</Show>
 			</main>

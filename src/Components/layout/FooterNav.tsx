@@ -60,7 +60,7 @@ export default function FooterNav() {
 
 	return (
 		<div class="max-w-[1440px] w-full mx-auto  flex flex-col gap-y-8 pt-16 pb-8 z-1">
-			<div class="flex items-center space-x-4">
+			<div class="flex items-center space-x-4 pl-5">
 				<A
 					href="/"
 					class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-bold uppercase no-underline hover:underline"

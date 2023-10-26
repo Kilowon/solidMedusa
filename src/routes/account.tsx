@@ -260,26 +260,7 @@ export default function Account() {
 										<div class="text-sm sm:text-lg text-text_2">Account Information</div>
 										<ProductInformationTabs currentCustomer={currentCustomer?.data?.customer} />
 									</div>
-									<div class="mt-auto flex-shrink">
-										<div class="space-y-3">
-											<div>
-												<div class="flex items-center space-x-3 ">
-													<div class="i-wpf-faq h-4 w-4 sm:w-6 sm:h-6 text-text_2" />
-													<div class="text-sm lg:text-lg">Questions? </div>
-												</div>
-												<div class="text-xs lg:text-sm">Please visit out FAQ section for more information</div>
-											</div>
-											<div>
-												<div class="flex items-center space-x-3">
-													<div class="i-mdi-email-edit-outline h-4 w-4 sm:w-6 sm:h-6 text-text_2" />
-													<div class="text-sm lg:text-lg">Something wrong? </div>
-												</div>
-												<div class="text-xs lg:text-sm">
-													If you spotted something wrong with your order please contact us support@modernedge.com
-												</div>
-											</div>
-										</div>
-									</div>
+									<div class="py-40"></div>
 								</div>
 							</div>
 						</Show>

@@ -291,7 +291,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 
 											<h1
 												class={clsx(
-													'tracking-tighter text-text_2   font-700 z-2  text-start ',
+													'tracking-tighter text-text_2   font-700 z-2  text-start pl-1',
 													props.item.text_size_b === 'text-xs' && 'text-xs',
 													props.item.text_size_b === 'text-sm' && 'text-sm',
 													props.item.text_size_b === 'text-base' && 'text-base',

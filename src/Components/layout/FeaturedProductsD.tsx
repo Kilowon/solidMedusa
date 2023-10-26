@@ -360,7 +360,6 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 												>
 													<For each={props.item.items}>
 														{(item: any) => {
-															console.log(item?.item?.action_url, 'URL')
 															return (
 																<li class="flex  ">
 																	<div

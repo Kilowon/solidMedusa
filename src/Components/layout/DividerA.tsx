@@ -385,9 +385,9 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 					<div
 						class={clsx(
 							'flex  items-center ',
-							props.item.component_variant === 'center' && 'flex-col py-2 sm:py-10',
-							props.item.component_variant === 'default' && 'flex-col py-2 sm:py-10',
-							props.item.component_variant === 'left' && 'flex-col py-2 sm:py-10'
+							props.item.component_variant === 'center' && 'flex-col py-5 sm:py-10',
+							props.item.component_variant === 'default' && 'flex-col py-5 sm:py-10',
+							props.item.component_variant === 'left' && 'flex-col py-5 sm:py-10'
 						)}
 					>
 						<div class="flex flex-col items-center">
@@ -397,15 +397,15 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 									props.item.text_size === 'text-xs' && 'text-xs',
 									props.item.text_size === 'text-sm' && 'text-sm',
 									props.item.text_size === 'text-base' && 'text-base',
-									props.item.text_size === 'text-lg' && 'text-base sm:text-lg',
-									props.item.text_size === 'text-xl' && 'text-base sm:text-xl',
-									props.item.text_size === 'text-2xl' && 'text-base sm:text-2xl',
-									props.item.text_size === 'text-3xl' && 'text-base sm:text-3xl',
-									props.item.text_size === 'text-4xl' && 'text-base sm:text-4xl',
-									props.item.text_size === 'text-5xl' && 'text-base sm:text-5xl',
-									props.item.text_size === 'text-6xl' && 'text-base sm:text-6xl',
-									props.item.text_size === 'text-7xl' && 'text-base sm:text-7xl',
-									props.item.text_size === 'text-8xl' && 'text-base sm:text-8xl '
+									props.item.text_size === 'text-lg' && 'text-xl sm:text-lg',
+									props.item.text_size === 'text-xl' && 'text-xl sm:text-xl',
+									props.item.text_size === 'text-2xl' && 'text-xl sm:text-2xl',
+									props.item.text_size === 'text-3xl' && 'text-xl sm:text-3xl',
+									props.item.text_size === 'text-4xl' && 'text-xl sm:text-4xl',
+									props.item.text_size === 'text-5xl' && 'text-xl sm:text-5xl',
+									props.item.text_size === 'text-6xl' && 'text-xl sm:text-6xl',
+									props.item.text_size === 'text-7xl' && 'text-xl sm:text-7xl',
+									props.item.text_size === 'text-8xl' && 'text-xl sm:text-8xl '
 								)}
 							>
 								{props.item.title}
@@ -415,7 +415,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 									<div class="flex items-center hover:underline bg-accent_6 text-accenttext_1 p-1 px-2  rounded-1 ">
 										<A
 											href={props.item?.action_url || '/store/Store'}
-											class="text-sm z-2 tracking-tight"
+											class="text-xs z-2 tracking-tight"
 										>
 											{props.item.call_to_action || 'Shop All'}
 										</A>
@@ -455,7 +455,8 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 													props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 												)}
 											></div>
-											<div class="flex flex-col justify-start items-start max-w-70 space-y-2 ml-2">
+
+											<div class="flex flex-col justify-start items-start max-w-70 space-y-0.5 ml-2">
 												<Show when={item.item?.title}>
 													<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
 												</Show>

@@ -152,7 +152,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 					{/* //One */}
 					<div
 						class={clsx(
-							'flex flex-col justify-between  max-h-600px min-h-600px rounded-4 overflow-hidden ',
+							'flex flex-col justify-between  max-h-600px min-h-600px rounded-2 overflow-hidden ',
 							props.item.background_colors === 'normal_1' && 'bg-normal_1',
 							props.item.background_colors === 'normal_2' && 'bg-normal_2',
 							props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -245,7 +245,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 					{/* //Two */}
 					<div
 						class={clsx(
-							'flex flex-col   min-h-600px rounded-4 overflow-hidden ',
+							'flex flex-col   min-h-600px rounded-2 overflow-hidden ',
 							props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 							props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 							props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -332,7 +332,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 					{/* //Three */}
 					<div
 						class={clsx(
-							'flex flex-col justify-end  max-h-600px min-h-600px rounded-4 overflow-hidden ',
+							'flex flex-col justify-end  max-h-600px min-h-600px rounded-2 overflow-hidden ',
 							props.item.background_colors_c === 'normal_1' && 'bg-normal_1',
 							props.item.background_colors_c === 'normal_2' && 'bg-normal_2',
 							props.item.background_colors_c === 'normal_3' && 'bg-normal_3',

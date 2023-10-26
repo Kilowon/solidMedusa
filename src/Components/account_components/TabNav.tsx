@@ -53,7 +53,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						</div>
 					</button>
 				</li>
-				<li
+				{/* <li
 					class=""
 					role="presentation"
 				>
@@ -96,8 +96,8 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 							<div class="text-0.65rem sm:text-base">Profile</div>
 						</div>
 					</button>
-				</li>
-				<li
+				</li> */}
+				{/* <li
 					class=""
 					role="presentation"
 				>
@@ -141,7 +141,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 							<div class="text-0.65rem sm:text-base">Orders</div>
 						</div>
 					</button>
-				</li>
+				</li> */}
 				<li
 					class=""
 					role="presentation"
@@ -186,7 +186,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 						</div>
 					</button>
 				</li>
-				<li
+				{/* <li
 					class=""
 					role="presentation"
 				>
@@ -230,7 +230,7 @@ export default function TabNav(props: { activeTab: any; setActiveTab: any }) {
 							<div class="text-0.65rem sm:text-base">Wish List</div>
 						</div>
 					</button>
-				</li>
+				</li> */}
 			</ul>
 		</div>
 	)

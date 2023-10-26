@@ -470,7 +470,7 @@ export function OverviewActiveTab(props: { currentCustomer: Customer }) {
 												aria-hidden="true"
 												class="fixed top-0 left-0 right-0 z-50  overflow-x-hidden overflow-y-auto md:inset-0 bg-transparent min-w-100svw sm:min-w-800px "
 											>
-												<div class="relative sm:w-full md:max-w-2xl md:max-h-full bg-transparent">
+												<div class="relative sm:w-full md:max-w-2xl md:max-h-full bg-transparent overflow-scroll max-h-90svh">
 													{/*  <!-- Modal content --> */}
 													<div class="relative bg-normal_2 rounded-lg shadow border-1 border-surface ">
 														{/*  <!-- Modal header --> */}
@@ -787,7 +787,7 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 	})
 
 	return (
-		<div class="sm:p-4 rounded-lg bg-normal_1  space-y-3 text-sm">
+		<div class="p-1 sm:p-4 rounded-lg bg-normal_1  space-y-3 text-sm">
 			<Show when={props.currentCustomer?.orders && currentUserReviews.isSuccess}>
 				<div class="text-sm sm:text-lg text-text_2">Items that need a review:</div>
 				<ul class="space-y-2">

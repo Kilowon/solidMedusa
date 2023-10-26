@@ -482,8 +482,8 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 				</Show>
 				<Show when={getWindowSize().width <= 640}>
 					<div class={clsx(' max-w-90svw  flex-col items-center')}>
-						<div class="lg:flex justify-center items-center my-8 ">
-							<div class="flex flex-col   my-8 ">
+						<div class="lg:flex justify-center items-center my-2 ">
+							<div class="flex flex-col   my-2 ">
 								<div
 									class={clsx(
 										' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',

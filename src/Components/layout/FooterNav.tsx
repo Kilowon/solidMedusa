@@ -2,7 +2,6 @@ import { createEffect, createSignal, For, Show, Accessor } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
-import { Transition } from 'solid-transition-group'
 
 export default function FooterNav() {
 	const { medusa } = useGlobalContext()
@@ -58,28 +57,60 @@ export default function FooterNav() {
 		return match
 	}
 
+	createEffect(() => {
+		console.log('Primary Data', primaryData.data?.data?.title)
+	})
+
 	return (
-		<div class="max-w-[1440px] w-full mx-auto  flex flex-col gap-y-8 pt-16 pb-8 z-1">
-			<div class="flex items-center space-x-4 pl-5">
-				<A
-					href="/"
-					class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-bold uppercase no-underline hover:underline"
-				>
-					Modern Edge
-				</A>
-				<A
-					href="/"
-					class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
-				>
-					Returns & Shipping
-				</A>
-				<A
-					href="/"
-					class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
-				>
-					Contact Us
-				</A>
-			</div>
+		<div class="max-w-[1440px] w-full mx-auto  flex flex-col  gap-y-8 pt-16 pb-8 z-1">
+			<Show when={primaryData.isSuccess}>
+				<div class=" flex-col sm:flex-row sm:items-center space-y-10  pl-5">
+					<A
+						href="/"
+						class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-bold uppercase no-underline hover:underline"
+					>
+						{primaryData.data?.data?.title}
+					</A>
+					<div class="space-y-5 sm:space-y-auto sm:space-x-5 flex flex-col sm:flex-row">
+						<A
+							href="/info/about"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							{primaryData.data?.data?.contact_title}
+						</A>{' '}
+						<A
+							href="/info/faq"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							{primaryData.data?.data?.faq_title}
+						</A>
+						<A
+							href="/info/tos"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							{primaryData.data?.data?.tos_title}
+						</A>
+						<A
+							href="/info/return"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							{primaryData.data?.data?.return_title}
+						</A>
+						<A
+							href="/info/refund"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							{primaryData.data?.data?.refund_title}
+						</A>
+						<A
+							href="/account"
+							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+						>
+							Account
+						</A>
+					</div>
+				</div>
+			</Show>
 			<div class="flex flex-col gap-y-6 sm:flex-row items-start justify-between">
 				<div>
 					<Show when={primaryData.isSuccess}>

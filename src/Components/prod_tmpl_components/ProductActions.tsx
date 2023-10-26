@@ -80,6 +80,10 @@ export default function ProductActions(props: {
 		enabled: !!props.params && !!queryCart?.data?.cart?.id
 	}))
 
+	createEffect(()=> {
+		console.log(!!props.params,!!queryCart?.data?.cart?.id,"PRODUCTPAGEVIS")
+	})
+
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {

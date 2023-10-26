@@ -117,16 +117,16 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'lg:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center my-25 sm:my-50 lg:my-auto   mx-2',
+					'py-5 lg:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center sm:my-50 lg:my-auto   mx-2',
 					props.item.component_variant === 'left' && 'lg:flex-row-reverse'
 				)}
 			>
 				<Show when={getWindowSize().width > 640}>
 					<div class="lg:flex flex-col ">
 						<div class="lg:flex  justify-center  ">
-							<div class="text-text_2 z-10 lg:flex flex-col lg:min-w-[600px] lg:max-w-800px items-center space-y-3 lg:space-y-12 ">
+							<div class="text-text_2 z-10 lg:flex flex-col lg:min-w-[600px] lg:max-w-800px items-center lg:space-y-12 ">
 								<div>
-									<div class="lg:flex flex-col space-y-2 ">
+									<div class="lg:flex lg:flex-col sm:space-y-2 ">
 										<Show when={props.item?.component_variant === 'default' || getWindowSize().width <= 1023}>
 											<div class="mb-8">
 												<Show when={props.item.tags?.length > 0}>
@@ -332,8 +332,8 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 				</Show>
 				<Show when={getWindowSize().width <= 640}>
 					<div class={clsx(' max-w-90svw  flex-col items-center')}>
-						<div class="lg:flex justify-center items-center my-8 ">
-							<div class="flex flex-col   my-8 ">
+						<div class="lg:flex justify-center items-center my-2 ">
+							<div class="flex flex-col    ">
 								<div
 									class={clsx(
 										' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',
@@ -377,7 +377,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 
 						<div class="flex flex-col ">
 							<div class={clsx('', props.item?.component_variant === 'default' && ' ')}>
-								<div class="text-text_2 z-10 flex items-center space-y-3 lg:space-y-12 ">
+								<div class="text-text_2 z-10 flex items-center  lg:space-y-12 ">
 									<div>
 										<div class="flex  ">
 											<ul class={clsx('grid grid-cols-2  gap-x-6 gap-y-3.75 min-w-70')}>

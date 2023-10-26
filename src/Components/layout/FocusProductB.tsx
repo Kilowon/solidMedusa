@@ -145,7 +145,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 	return (
 		<Show when={true}>
 			<div
-				class="py-10 max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-y-8 lg:space-y-auto lg:space-x-8 mx-2 my-25 sm:my-50 lg:my-auto 
+				class="sm:py-10 max-w-[99svw] lg:mb-auto lg:mt-auto  flex items-center  md:justify-center flex-col lg:flex-row space-y-8 lg:space-y-auto lg:space-x-8 mx-2 my-25 sm:my-50 lg:my-auto 
 		"
 			>
 				<Show when={true}>

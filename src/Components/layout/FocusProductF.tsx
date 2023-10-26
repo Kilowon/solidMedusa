@@ -119,9 +119,9 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 			<div
 				class={clsx(
 					'  max-w-99svw  flex flex-col lg:flex-row justify-center mx-2 ',
-					props.item.component_variant === 'left' && 'flex-row-reverse py-10 items-center',
-					props.item.component_variant === 'default' && 'py-10 items-center',
-					props.item.component_variant === 'center' && ' py-10 items-center lg:items-end mb-15'
+					props.item.component_variant === 'left' && 'flex-row-reverse py-5 sm:py-10  items-center',
+					props.item.component_variant === 'default' && 'py-5 sm:py-10  items-center',
+					props.item.component_variant === 'center' && ' py-5 sm:py-10  items-center lg:items-end mb-15'
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>

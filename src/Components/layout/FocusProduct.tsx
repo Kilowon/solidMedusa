@@ -116,7 +116,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 	return (
 		<Show when={true}>
 			<div
-				class="sm:py-10  max-w-99svw lg:mb-auto lg:mt-auto  flex flex-col lg:flex-row items-center lg:space-x-8 justify-center my-25 sm:my-50  mx-2 
+				class="sm:py-10  max-w-99svw lg:mb-auto lg:mt-auto  flex flex-col lg:flex-row items-center lg:space-x-8 justify-center mx-2 
 		"
 			>
 				<Show when={getWindowSize().width > 1023}>

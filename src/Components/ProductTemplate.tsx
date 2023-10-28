@@ -18,7 +18,7 @@ export default function ProductTemplate(props: {
 	useStore: any
 }): JSX.Element {
 	const reviewData = createQuery(() => ({
-		queryKey: ['review_data', props.productInfo?.title],
+		queryKey: ['review_data', props.productInfo?.id],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -36,7 +36,7 @@ export default function ProductTemplate(props: {
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 
 	const draftReviewData = createQuery(() => ({
-		queryKey: ['draft_review_data', props.productInfo?.title],
+		queryKey: ['draft_review_data', props.productInfo?.id],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -53,7 +53,7 @@ export default function ProductTemplate(props: {
 	}))
 
 	const displayContainerData = createQuery(() => ({
-		queryKey: ['display_container_data', props.productInfo?.title],
+		queryKey: ['display_container_data', props.productInfo?.id],
 		queryFn: async function () {
 			const response = await fetch(
 				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,

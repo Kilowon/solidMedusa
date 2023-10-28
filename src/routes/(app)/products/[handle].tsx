@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta } from 'solid-start'
-import { createEffect, Show, createSignal } from 'solid-js'
+import { createEffect, Show, createSignal, onMount } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -69,11 +69,15 @@ export default function Products() {
 		enabled: false
 	})) */
 
-	createEffect(() => {
+	onMount(() => {
 		console.log(queryProduct?.data?.products[0]?.handle, params.handle)
 		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			queryProduct.refetch()
 		}
+	})
+
+	createEffect(() => {
+		console.log('QUERY PRODUCT', queryProduct.isSuccess, queryProduct.isFetching)
 	})
 
 	/* createEffect(() => {

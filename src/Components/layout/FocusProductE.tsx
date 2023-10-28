@@ -228,7 +228,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																<Show when={item.item?.call_to_action}>
 																	<div class="flex items-center hover:underline text-xs font-500  bg-accent_6 text-accenttext_1 px-1 py-0.25 rounded-1 ">
 																		<A
-																			href={props.item?.action_url || '/store/Store'}
+																			href={item.item?.action_url || '/store/Store'}
 																			class="text- z-2 tracking-tight"
 																		>
 																			{item.item?.call_to_action}
@@ -332,7 +332,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 				</Show>
 				<Show when={getWindowSize().width <= 640}>
 					<div class={clsx(' max-w-90svw  flex-col items-center')}>
-						<div class="lg:flex justify-center items-center my-2 ">
+						<div class="lg:flex justify-center items-center my- ">
 							<div class="flex flex-col    ">
 								<div
 									class={clsx(
@@ -421,7 +421,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																	<Show when={item.item?.call_to_action}>
 																		<div class="flex items-center hover:underline text-xs font-500  bg-accent_6 text-accenttext_1 px-1 py-0.25 rounded-1 ">
 																			<A
-																				href={props.item?.action_url || '/store/Store'}
+																				href={item.item?.action_url || '/store/Store'}
 																				class="text- z-2 tracking-tight"
 																			>
 																				{item.item?.call_to_action}

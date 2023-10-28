@@ -19,6 +19,7 @@ import '@unocss/reset/tailwind-compat.css'
 import { GlobalContextProvider } from '~/Context/Providers'
 import { StoreProvider } from '~/Context/StoreContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
+import { SolidQueryDevtools } from '@tanstack/solid-query-devtools'
 import clsx from 'clsx'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 
@@ -75,8 +76,6 @@ export function MetaTags() {
 	)
 }
 
-//@ts-ignore
-const SolidQueryDevtools = unstable_clientOnly(() => import('@adeora/solid-query-devtools'))
 import { openCart, openMenu, cartDrawer, menuDrawer } from '~/state'
 
 const queryClient = new QueryClient()
@@ -166,7 +165,6 @@ export default function Root() {
 					)}
 				>
 					<QueryClientProvider client={queryClient}>
-						<SolidQueryDevtools />
 						<GlobalContextProvider>
 							<StoreProvider>
 								<Suspense
@@ -186,6 +184,7 @@ export default function Root() {
 								</Suspense>
 							</StoreProvider>
 						</GlobalContextProvider>
+						<SolidQueryDevtools initialIsOpen={false} />
 					</QueryClientProvider>
 				</ErrorBoundary>
 				<Scripts />

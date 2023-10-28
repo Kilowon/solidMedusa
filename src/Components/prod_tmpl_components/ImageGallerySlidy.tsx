@@ -4,13 +4,16 @@ import { fade } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
+import { create } from 'domain'
+import { time } from 'console'
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
 	productInfo: any | undefined
 	params: any
 }) {
-	const [slides, setSlides] = createSignal<never[]>([])
+	const [slides, setSlides] = createSignal<any[]>([])
+	const [currentSlide, setCurrentSlide] = createSignal<any[]>([])
 	const [location, setLocation] = createSignal(useLocation().pathname)
 	// Slidy has a bug where it shutters the image when you have less than 3 slides so this is a workaround that just adds the first slide to the end of the array until there are 3 slides if there are less than 3 slides provided or if no images are provided we throw in a placeholder image
 	createEffect(() => {
@@ -54,6 +57,13 @@ export default function ImageGallerySlidy(props: {
 		}
 	})
 
+	// And this effect prevents Images loading before the DOM is ready prevents error
+	createEffect(() => {
+		setTimeout(() => {
+			setCurrentSlide(slides())
+		}, 250)
+	})
+
 	return (
 		<Show when={location() === useLocation().pathname && slides().length > 0}>
 			<div class="md:flex md:items-start md:relative bg-transparent">
@@ -75,7 +85,7 @@ export default function ImageGallerySlidy(props: {
 					}}
 				>
 					<Slidy
-						slides={slides()}
+						slides={currentSlide()}
 						thumbnail={false}
 						clamp={0}
 						loop={true}

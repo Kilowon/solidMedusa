@@ -6,6 +6,7 @@ import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
 import { createQuery } from '@tanstack/solid-query'
 import DisplayContainer from './layout/DisplayContainer'
 import PreFooter from './layout/PreFooter'
+import { ErrorBoundary } from 'solid-start'
 
 export default function ProductTemplate(props: {
 	images: { url: string; id: string }[] | undefined
@@ -18,7 +19,7 @@ export default function ProductTemplate(props: {
 	useStore: any
 }): JSX.Element {
 	const reviewData = createQuery(() => ({
-		queryKey: ['review_data', props.productInfo?.id],
+		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -36,7 +37,7 @@ export default function ProductTemplate(props: {
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 
 	const draftReviewData = createQuery(() => ({
-		queryKey: ['draft_review_data', props.productInfo?.id],
+		queryKey: ['draft_review_data', props.productInfo?.title],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -53,7 +54,7 @@ export default function ProductTemplate(props: {
 	}))
 
 	const displayContainerData = createQuery(() => ({
-		queryKey: ['display_container_data', props.productInfo?.id],
+		queryKey: ['display_container_data', props.productInfo?.title],
 		queryFn: async function () {
 			const response = await fetch(
 				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,
@@ -87,11 +88,13 @@ export default function ProductTemplate(props: {
 			<main>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
-						<ImageGallerySlidy
-							images={props.images}
-							productInfo={props.productInfo}
-							params={props.params}
-						/>
+						<ErrorBoundary>
+							<ImageGallerySlidy
+								images={props.images}
+								productInfo={props.productInfo}
+								params={props.params}
+							/>
+						</ErrorBoundary>
 					</div>
 					<div class="">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
@@ -129,7 +132,7 @@ export default function ProductTemplate(props: {
 				</div>
 				<Show when={displayContainerData.isSuccess}>
 					<PreFooter data={displayContainerData} />
-				</Show>
+				</Show>{' '}
 			</main>
 		</Show>
 	)

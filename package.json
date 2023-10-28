@@ -9,7 +9,7 @@
 	"devDependencies": {
 		"@slidy/animation": "^1.0.7",
 		"@slidy/easing": "^1.0.5",
-		"@slidy/plugins": "^1.1.0",
+		"@slidy/plugins": "^1.2.0",
 		"@types/node": "^18.11.18",
 		"esbuild": "^0.14.54",
 		"postcss": "^8.4.21",
@@ -23,7 +23,7 @@
 		"@modular-forms/solid": "^0.13.2",
 		"@motionone/solid": "^10.16.2",
 		"@paypal/paypal-js": "^7.0.2",
-		"@slidy/solid": "^1.4.0",
+		"@slidy/solid": "^1.5.0",
 		"@solid-primitives/geolocation": "^1.4.6",
 		"@solid-primitives/intersection-observer": "^2.1.2",
 		"@solid-primitives/keyed": "^1.2.0",

@@ -80,10 +80,6 @@ export default function ProductActions(props: {
 		enabled: !!props.params && !!queryCart?.data?.cart?.id
 	}))
 
-	createEffect(()=> {
-		console.log(!!props.params,!!queryCart?.data?.cart?.id,"PRODUCTPAGEVIS")
-	})
-
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {
@@ -125,10 +121,6 @@ export default function ProductActions(props: {
 		if (queryProduct.isSuccess) {
 			reviewData.refetch()
 		}
-	})
-
-	createEffect(() => {
-		console.log(queryProduct.data)
 	})
 
 	return (

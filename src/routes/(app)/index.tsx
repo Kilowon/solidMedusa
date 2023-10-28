@@ -2,6 +2,7 @@ import { CleanHero } from '~/Components/layout/CleanHero'
 import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { ErrorBoundary } from 'solid-start'
 
 const FeaturedProducts = lazy(() => import('~/Components/layout/FeaturedProducts'))
 
@@ -80,7 +81,7 @@ export default function App() {
 	}))
 
 	return (
-		<main class="min-h-[100vh]  ">
+		<main class="min-h-[100vh]">
 			<CleanHero />
 			<div class="min-h-[100vh] snap-y snap-mandatory">
 				<div
@@ -90,71 +91,81 @@ export default function App() {
 				<div>
 					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
 				</div>
-				<Suspense>
-					<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
-						<For each={featuredData.data?.data?.builder_blocks}>
-							{item => {
-								if (import.meta.env.VITE_DRAFT_SITE === 'false') {
-									if (item.item.status === 'draft') return
-								}
-								if (item.item.status === 'archived') return
+				<ErrorBoundary
+					fallback={(e: Error) => (
+						<>
+							{console.error(e)}
+							{/* <NotFound /> */}
+						</>
+					)}
+				>
+					<Suspense>
+						<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
+							<For each={featuredData.data?.data?.builder_blocks}>
+								{item => {
+									if (item?.item === null) return
+									if (import.meta.env.VITE_DRAFT_SITE === 'false') {
+										if (item.item.status === 'draft') return
+									}
+									if (item.item.status === 'archived') return
 
-								return (
-									<div class="snap-start">
-										<Show when={item?.item?.type === 'featured_products_a'}>
-											<FeaturedProducts
-												variant={item?.item?.variant}
-												item={item.item}
-											/>
-										</Show>
-										<Show when={item?.item?.type === 'featured_products_b'}>
-											<FeaturedProductsLg
-												variant={item?.item?.variant}
-												item={item.item}
-											/>
-										</Show>
-										<Show when={item?.item?.type === 'featured_products_c'}>
-											<FeaturedProductsLgExtended
-												variant={item?.item?.variant}
-												item={item.item}
-											/>
-										</Show>
-										<Show when={item?.item?.type === 'featured_products_d'}>
-											<FeaturedProductsD item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_a'}>
-											<FocusProduct item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_b'}>
-											<FocusProductB item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_c'}>
-											<FocusProductC item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_d'}>
-											<FocusProductD item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_e'}>
-											<FocusProductE item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_f'}>
-											<FocusProductF item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_g'}>
-											<FocusProductG item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'focus_product_h'}>
-											<FocusProductH item={item.item} />
-										</Show>
-										<Show when={item?.item?.type === 'divider_a'}>
-											<DividerA item={item.item} />
-										</Show>
-									</div>
-								)
-							}}
-						</For>
-					</Show>
-				</Suspense>
+									return (
+										<div class="snap-start">
+											<Show when={item?.item?.type === 'featured_products_a'}>
+												<FeaturedProducts
+													variant={item?.item?.variant}
+													item={item.item}
+												/>
+											</Show>
+											<Show when={item?.item?.type === 'featured_products_b'}>
+												<FeaturedProductsLg
+													variant={item?.item?.variant}
+													item={item.item}
+												/>
+											</Show>
+											<Show when={item?.item?.type === 'featured_products_c'}>
+												<FeaturedProductsLgExtended
+													variant={item?.item?.variant}
+													item={item.item}
+												/>
+											</Show>
+											<Show when={item?.item?.type === 'featured_products_d'}>
+												<FeaturedProductsD item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_a'}>
+												<FocusProduct item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_b'}>
+												<FocusProductB item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_c'}>
+												<FocusProductC item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_d'}>
+												<FocusProductD item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_e'}>
+												<FocusProductE item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_f'}>
+												<FocusProductF item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_g'}>
+												<FocusProductG item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'focus_product_h'}>
+												<FocusProductH item={item.item} />
+											</Show>
+											<Show when={item?.item?.type === 'divider_a'}>
+												<DividerA item={item.item} />
+											</Show>
+										</div>
+									)
+								}}
+							</For>
+						</Show>
+					</Suspense>
+				</ErrorBoundary>
 				<div>{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS */}</div>
 			</div>
 		</main>

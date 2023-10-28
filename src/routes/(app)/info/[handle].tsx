@@ -6,9 +6,7 @@ import { useParams } from 'solid-start'
 export default function Info(props: { handle: string }) {
 	const params = useParams()
 
-	createEffect(() => {
-		console.log(params.handle)
-	})
+	const [paramsCurrent, setParamsCurrent] = createSignal(params)
 
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
@@ -62,11 +60,17 @@ export default function Info(props: { handle: string }) {
 		}
 	}
 
+	createEffect(() => {
+		if (paramsCurrent().handle !== params.handle) {
+			setParamsCurrent(params)
+		}
+	})
+
 	return (
 		<div class="flex justify-center min-h-60vh">
 			<div class="pt-20 px-5">
-				<div class="pb-20 text-2xl font-700">{getTitleContent(params)}</div>
-				<div class="whitespace-break-spaces max-w-200 text-sm">{getBodyContent(params)}</div>
+				<div class="pb-20 text-2xl font-700">{getTitleContent(paramsCurrent())}</div>
+				<div class="whitespace-break-spaces max-w-200 text-sm">{getBodyContent(paramsCurrent())}</div>
 			</div>
 		</div>
 	)

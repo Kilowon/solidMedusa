@@ -17,6 +17,8 @@ export default function Categories() {
 	const { queryCart } = useGlobalContext()
 	const { medusa } = useGlobalContext()
 
+	const [singleProduct, setSingleProduct] = createSignal({} as any)
+
 	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
@@ -114,8 +116,8 @@ export default function Categories() {
 	})
 	createEffect(() => {
 		if (queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products?.length === 1) {
-			const singleProduct = queryCategoryProducts.data.products[0]
-			navigate(`/products/${singleProduct.handle}`)
+			setSingleProduct(queryCategoryProducts.data.products[0])
+			navigate(`/products/${singleProduct()?.handle}`)
 		}
 	})
 

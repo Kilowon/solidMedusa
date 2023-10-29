@@ -31,6 +31,7 @@ export default function Products() {
 		enabled: !!params.handle && !!queryCart?.data?.cart?.id
 	}))
 
+	//This prevents a race condition where the product is not loaded before the page is rendered
 	createEffect(() => {
 		if (queryProduct?.data?.products[0]?.handle === params.handle) {
 			setTimeout(() => {

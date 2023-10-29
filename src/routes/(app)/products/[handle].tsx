@@ -12,6 +12,8 @@ export default function Products() {
 	const { queryCart } = useGlobalContext()
 	const params = useParams()
 
+	const [currentParams, setCurrentParams] = createSignal(params.handle)
+
 	const [twitterImage, setTwitterImage] = createSignal('')
 	const [twitterTitle, setTwitterTitle] = createSignal('')
 	const [twitterDescription, setTwitterDescription] = createSignal('')
@@ -28,6 +30,14 @@ export default function Products() {
 		cacheTime: 25 * 60 * 1000,
 		enabled: !!params.handle && !!queryCart?.data?.cart?.id
 	}))
+
+	createEffect(() => {
+		if (queryProduct?.data?.products[0]?.handle === params.handle) {
+			setTimeout(() => {
+				setCurrentParams(params.handle)
+			}, 250)
+		}
+	})
 
 	//TODO: need to SSR this data for cards to work
 
@@ -137,7 +147,7 @@ export default function Products() {
 				content={'summary_large_image'}
 			/> */}
 			<main class="min-h-[100vh]">
-				<Show when={queryProduct?.data?.products[0]?.handle === params.handle}>
+				<Show when={currentParams() === params.handle}>
 					<StoreProvider product={queryProduct?.data?.products[0]}>
 						<ProductTemplate
 							images={queryProduct?.data?.products[0]?.images}

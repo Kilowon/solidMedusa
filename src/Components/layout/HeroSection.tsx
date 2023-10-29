@@ -1,14 +1,13 @@
-import { Show, For, createSignal, onMount } from 'solid-js'
+import { Show, For, createSignal, onMount, createEffect } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
-//import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { TransitionGroup } from 'solid-transition-group'
-
 import { createQuery } from '@tanstack/solid-query'
+import clsx from 'clsx'
 
-export function CleanHero() {
+export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
@@ -31,26 +30,6 @@ export function CleanHero() {
 		enabled: false
 	}))
 
-	/* 	const featuredData = createQuery(() => ({
-		queryKey: ['featured_data'],
-		queryFn: async function () {
-			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/featured_components?fields=*.*.*`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					Authorization: `Bearer ${bearerToken}`
-				}
-			})
-			const data = await response.json()
-			return data
-		},
-		cacheTime: 15 * 60 * 1000,
-		retry: 0,
-		enabled: true
-	}))
- */
 	const queryCategories = createQuery(() => ({
 		queryKey: ['categories_list'],
 		queryFn: async function () {
@@ -89,7 +68,7 @@ export function CleanHero() {
 		if (heroData.isSuccess) {
 			setFilteredSlides(
 				slideStatusCheck(
-					heroData?.data?.data?.hero_info,
+					heroData?.data?.data?.Hero_infor,
 					(import.meta.env.VITE_DRAFT_SITE === 'false' ? 'published' : 'draft') as any
 				)
 			)
@@ -112,22 +91,18 @@ export function CleanHero() {
 	}
 
 	function slideStatusCheck(slides: [any], status: 'published' | 'draft' | 'archived') {
-		const filtered = slides.filter((slide: any) => slide.status === status || slide.status === 'published')
+		const filtered = slides.filter((slide: any) => slide?.item?.status === status || slide?.item?.status === 'published')
 		return filtered
 	}
 
+	createEffect(() => {
+		console.log('FILTERED SLIDES', filteredSlides())
+		console.log('HERO INFOR', heroData?.data?.data?.Hero_infor)
+	})
+
 	return (
-		<Show when={heroData.isSuccess && queryCategories.isSuccess && heroData.isSuccess && filteredSlides().length > 0}>
-			{/* 	<Presence
-				exitBeforeEnter={true}
-				initial={false}
-			> */}
+		<Show when={heroData.isSuccess && queryCategories.isSuccess && filteredSlides().length > 0}>
 			<Rerun on={count()}>
-				{/* <Motion.div
-						onPressStart={() => false}
-						animate={{ opacity: [1, 0, 1], transition: { duration: 1.0 } }}
-						exit={{ opacity: 0, transition: { duration: 0.5 } }}
-					> */}
 				<TransitionGroup
 					onEnter={(el, done) => {
 						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -144,20 +119,58 @@ export function CleanHero() {
 				>
 					<Show when={heroData.isSuccess}>
 						<div
-							class="min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row 
-		"
+							class={clsx(
+								' min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_4' && 'bg-normal_4',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'surface' && 'bg-surface',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_4' && 'bg-text_4',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_5' && 'bg-text_5',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_4' && 'bg-accent_4',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_5' && 'bg-accent_5',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_6' && 'bg-accent_6',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_7' && 'bg-accent_7',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_8' && 'bg-accent_8',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_9' && 'bg-accent_9',
+								filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_10' && 'bg-accent_10'
+							)}
 						>
 							<div class="flex flex-col">
 								<div class="flex flex-grow w-full  h-1/3"></div>
 								<div class="flex flex-col justify-center h-35svh h-1/3 lg:h-auto ">
-									<div class="text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ">
+									<div
+										class={clsx(
+											' text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_1' && 'text-normal_1',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_2' && 'text-normal_2',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_3' && 'text-normal_3',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_4' && 'text-normal_4',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'surface' && 'text-surface',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_1' && 'text-text_1',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_2' && 'text-text_2',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_3' && 'text-text_3',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_4' && 'text-text_4',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_5' && 'text-text_5',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_1' && 'text-accenttext_1',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_2' && 'text-accenttext_2',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_4' && 'text-accent_4',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_5' && 'text-accent_5',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_6' && 'text-accent_6',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_7' && 'text-accent_7',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_8' && 'text-accent_8',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_9' && 'text-accent_9',
+											filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_10' && 'text-accent_10'
+										)}
+									>
 										<div>
 											<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-												<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl drop-shadow-md font-700 z-2 lg:text-balance text-center text-balance">
-													{filteredSlides()?.[currentIndex()]?.header}
+												<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance">
+													{filteredSlides()?.[currentIndex()]?.item?.header}
 												</h1>
-												<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl drop-shadow-md font-500 z-2 lg:text-balance  text-center text-balance ">
-													{filteredSlides()?.[currentIndex()]?.subtitle}
+												<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance ">
+													{filteredSlides()?.[currentIndex()]?.item?.subtitle}
 												</h2>
 											</div>
 										</div>
@@ -167,7 +180,7 @@ export function CleanHero() {
 													href="/store/Store"
 													class="text- z-2 tracking-tight"
 												>
-													{filteredSlides()?.[currentIndex()]?.call_to_action}
+													{filteredSlides()?.[currentIndex()]?.item?.call_to_action}
 												</A>
 											</div>
 											<div class="flex space-x-2">
@@ -193,11 +206,13 @@ export function CleanHero() {
 							</div>
 							<A
 								class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-								href={filteredSlides()?.[currentIndex()]?.call_to_action_href || '/store/Store'}
+								href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
 							>
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img
-										src={filteredSlides()?.[currentIndex()]?.image}
+										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+											filteredSlides()?.[currentIndex()]?.item?.image?.id
+										}?key=hero-large`}
 										loading="eager"
 										alt="main image"
 										class="w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left"
@@ -205,7 +220,9 @@ export function CleanHero() {
 								</Show>
 								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
 									<img
-										src={filteredSlides()?.[currentIndex()]?.mobile_image}
+										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+											filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+										}?key=hero-small`}
 										loading="eager"
 										alt="main image"
 										class="   min-h-292px object-cover object-left "
@@ -213,16 +230,14 @@ export function CleanHero() {
 								</Show>
 
 								<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
-									{filteredSlides()?.[currentIndex()]?.image_tagline}
+									{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
 								</div>
 							</A>
 						</div>
 					</Show>
 					<div class="h-5vw w-99svw bg-transparent"></div>
-					{/* </Motion.div> */}
 				</TransitionGroup>
 			</Rerun>
-			{/* </Presence> */}
 		</Show>
 	)
 }

@@ -1,4 +1,4 @@
-import { CleanHero } from '~/Components/layout/CleanHero'
+import { HeroSection } from '~/Components/layout/HeroSection'
 import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
@@ -82,7 +82,8 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<CleanHero />
+			<HeroSection />
+
 			<div class="min-h-[100vh] snap-y snap-mandatory">
 				<div
 					ref={el}

@@ -1,17 +1,16 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta } from 'solid-start'
+import { useParams, Title, Meta, useNavigate } from 'solid-start'
 import { createEffect, Show, createSignal } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
 import { createQuery } from '@tanstack/solid-query'
-import { create } from 'domain'
 
 export default function Products() {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 	const params = useParams()
-
+	const navigate = useNavigate()
 	const [currentParams, setCurrentParams] = createSignal(params.handle)
 
 	const [twitterImage, setTwitterImage] = createSignal('')
@@ -37,6 +36,12 @@ export default function Products() {
 			setTimeout(() => {
 				setCurrentParams(params.handle)
 			}, 250)
+		}
+	})
+
+	createEffect(() => {
+		if (queryProduct?.data?.products.length === 0) {
+			navigate('/404')
 		}
 	})
 

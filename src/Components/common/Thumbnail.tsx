@@ -11,7 +11,7 @@ export type ThumbnailProps = {
 	images?: MedusaImage[] | null
 	size?: string | 'small' | 'medium' | 'large' | 'full'
 	title?: string | null
-	variant?: 'wide' | 'default' | 'tall' | 'default_cart'
+	variant?: 'wide' | 'default' | 'tall' | 'default_cart' | 'square'
 	bgVariant?: 'default' | 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
 }
 
@@ -36,7 +36,8 @@ export function Thumbnail(props: ThumbnailProps) {
 					'relative aspect-[100/75]  ',
 					props.variant === 'default' && 'aspect-[29/34]',
 					props.variant === 'tall' && 'aspect-[75/100]',
-					props.variant === 'wide' && 'aspect-[100/75]'
+					props.variant === 'wide' && 'aspect-[100/75]',
+					props.variant === 'square' && 'aspect-[100/100]'
 				)}
 			>
 				<div></div>

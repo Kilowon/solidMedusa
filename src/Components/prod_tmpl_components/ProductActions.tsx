@@ -160,7 +160,12 @@ export default function ProductActions(props: {
 							</div>
 						</Show>
 
-						<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
+						<Show
+							when={
+								draftReviewData.isSuccess &&
+								(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
+							}
+						>
 							<div class="flex items-center space-x-2">
 								<div class="text-xl">
 									<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
@@ -562,7 +567,13 @@ export function ProductInformationTabs(props: {
 							</div>
 						</button>
 					</li>
-					<Show when={(props.reviewAvailable && props.rating?.reviews) || import.meta.env.VITE_DRAFT_SITE === 'true'}>
+					<Show
+						when={
+							(props.reviewAvailable && props.rating?.reviews) ||
+							import.meta.env.VITE_DRAFT_SITE === 'true' ||
+							import.meta.env.VITE_DEMO_SITE === 'true'
+						}
+					>
 						<li
 							class=""
 							role="presentation"
@@ -735,7 +746,9 @@ export function ProductInformationTabs(props: {
 					<Show
 						when={
 							activeTab().reviews === 'active' &&
-							((props.reviewAvailable && props.rating?.reviews) || import.meta.env.VITE_DRAFT_SITE === 'true')
+							((props.reviewAvailable && props.rating?.reviews) ||
+								import.meta.env.VITE_DRAFT_SITE === 'true' ||
+								import.meta.env.VITE_DEMO_SITE === 'true')
 						}
 					>
 						<div
@@ -745,15 +758,19 @@ export function ProductInformationTabs(props: {
 								//activeTab().reviews === 'inactive' && 'hidden'
 							)}
 						>
-							<Show when={import.meta.env.VITE_DRAFT_SITE === 'false'}>
+							<Show when={import.meta.env.VITE_DRAFT_SITE === 'false' && import.meta.env.VITE_DEMO_SITE === 'false'}>
 								<div>
 									<ReviewsDisplay rating={props.rating} />
 								</div>
 							</Show>
-							<Show when={import.meta.env.VITE_DRAFT_SITE === 'true'}>
-								<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
-									<ReviewsDisplay rating={draftReviewData.data?.data} />
-								</Show>
+
+							<Show
+								when={
+									draftReviewData.isSuccess &&
+									(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
+								}
+							>
+								<ReviewsDisplay rating={draftReviewData.data?.data} />
 							</Show>
 						</div>
 					</Show>

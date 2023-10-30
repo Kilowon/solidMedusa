@@ -126,7 +126,12 @@ export default function ProductTemplate(props: {
 						<ReviewsDisplay rating={reviewData.data?.data} />
 					</Show>
 
-					<Show when={draftReviewData.isSuccess && import.meta.env.VITE_DRAFT_SITE === 'true'}>
+					<Show
+						when={
+							draftReviewData.isSuccess &&
+							(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
+						}
+					>
 						<ReviewsDisplay rating={draftReviewData.data?.data} />
 					</Show>
 				</div>

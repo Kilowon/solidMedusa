@@ -247,7 +247,7 @@ export function CardB(props: { item: FeaturedProps['item'] }) {
 			</div>
 			<div class="flex items-center absolute bottom-0 ">
 				<div class="text-text_2  z-10 flex flex-row items-center w-85 lg:w-90">
-					<div class="lg:w-65% px-2">
+					<div class="lg:w-65%">
 						<div class="flex justify-center items-center space-y-4">
 							<h1
 								class={clsx(

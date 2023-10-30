@@ -177,7 +177,7 @@ export function HeroSection() {
 										<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
 											<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1">
 												<A
-													href="/store/Store"
+													href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
 													class="text- z-2 tracking-tight"
 												>
 													{filteredSlides()?.[currentIndex()]?.item?.call_to_action}
@@ -206,7 +206,7 @@ export function HeroSection() {
 							</div>
 							<A
 								class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-								href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
+								href={filteredSlides()?.[currentIndex()]?.item?.image_Href || '/store/Store'}
 							>
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img

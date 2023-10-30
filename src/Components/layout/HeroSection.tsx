@@ -206,7 +206,7 @@ export function HeroSection() {
 							</div>
 							<A
 								class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-								href={filteredSlides()?.[currentIndex()]?.item?.image_Href || '/store/Store'}
+								href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
 							>
 								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
 									<img

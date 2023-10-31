@@ -1,4 +1,5 @@
 import { JSX, For, Show, createEffect, createMemo, createSignal } from 'solid-js'
+import { A } from 'solid-start'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
@@ -156,7 +157,12 @@ export default function ProductActions(props: {
 
 								<div class="text-text_2 ">|</div>
 
-								<div class="text-text_2 underline ">{reviewData.data?.data?.total_reviews} reviews</div>
+								<A
+									href={'#ratings'}
+									class="text-text_2 underline cursor-pointer"
+								>
+									{reviewData.data?.data?.total_reviews} reviews
+								</A>
 							</div>
 						</Show>
 
@@ -173,7 +179,12 @@ export default function ProductActions(props: {
 
 								<div class="text-text_2 ">|</div>
 
-								<div class="text-text_2 underline ">{draftReviewData.data?.data?.total_reviews} reviews</div>
+								<A
+									href={'#ratings'}
+									class="text-text_2 underline cursor-pointer"
+								>
+									{draftReviewData.data?.data?.total_reviews} reviews
+								</A>
 							</div>
 						</Show>
 						<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
@@ -770,6 +781,8 @@ export function ProductInformationTabs(props: {
 									(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
 								}
 							>
+								{' '}
+								<div id="ratings"></div>
 								<ReviewsDisplay rating={draftReviewData.data?.data} />
 							</Show>
 						</div>

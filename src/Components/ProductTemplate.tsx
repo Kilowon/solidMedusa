@@ -132,6 +132,7 @@ export default function ProductTemplate(props: {
 							(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
 						}
 					>
+						<div id="ratings"></div>
 						<ReviewsDisplay rating={draftReviewData.data?.data} />
 					</Show>
 				</div>

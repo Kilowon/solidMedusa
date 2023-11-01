@@ -30,15 +30,16 @@ export default function Payment() {
 	const paymentSessionStripe = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: () => medusa?.carts.setPaymentSession(queryCart.data?.cart?.id, { provider_id: 'stripe' }),
-		enabled: true,
-		cacheTime: 3 * 60 * 1000
+		enabled: false
 	}))
 
 	createEffect(() => {
+		console.log(stripe(), 'stripe')
 		console.log(paymentSessionStripe.isSuccess, 'isSuccess')
 		console.log(paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret, 'client_secret')
 		console.log(paymentSessionStripe?.data?.cart?.payment_session?.provider_id, 'provider_id')
 		console.log(paymentSessionStripe?.data?.cart, 'CART')
+		console.log('SHOW', stripe() && paymentSessionStripe?.data?.cart?.payment_session?.provider_id === 'stripe')
 	})
 
 	return (

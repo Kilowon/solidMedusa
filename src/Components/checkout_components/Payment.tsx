@@ -23,8 +23,10 @@ export default function Payment() {
 	const [stripe, setStripe] = createSignal<any>(null)
 
 	onMount(async () => {
-		const result = await loadStripe(import.meta.env.VITE_PUBLIC_STRIPE_KEY)
-		setStripe(result)
+		if (stripe() === null) {
+			const result = await loadStripe(import.meta.env.VITE_PUBLIC_STRIPE_KEY)
+			setStripe(result)
+		}
 	})
 
 	const paymentSessionStripe = createQuery(() => ({
@@ -33,6 +35,12 @@ export default function Payment() {
 		enabled: true
 	}))
 
+	/* 	createEffect(() => {
+		if (paymentSessionStripe.isSuccess) {
+			console.log(paymentSessionStripe?.data?.cart?.payment_session?.provider_id, 'paymentSessionStripe')
+		}
+	})
+
 	createEffect(() => {
 		console.log(stripe(), 'stripe')
 		console.log(paymentSessionStripe.isSuccess, 'isSuccess')
@@ -40,11 +48,11 @@ export default function Payment() {
 		console.log(paymentSessionStripe?.data?.cart?.payment_session?.provider_id, 'provider_id')
 		console.log(paymentSessionStripe?.data?.cart, 'CART')
 		console.log('SHOW', stripe() && paymentSessionStripe?.data?.cart?.payment_session?.provider_id === 'stripe')
-	})
+	}) */
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<Transition
+			{/* <Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
 						duration: 250
@@ -57,38 +65,31 @@ export default function Payment() {
 					})
 					a.finished.then(done)
 				}}
+			> */}
+			<Show
+				when={
+					stripe() &&
+					paymentSessionStripe?.data?.cart?.payment_session?.provider_id === 'stripe' &&
+					paymentSessionStripe.isSuccess
+				}
+				fallback={<div>Loading stripe</div>}
 			>
-				<Show
-					when={stripe() && paymentSessionStripe?.data?.cart?.payment_session?.provider_id === 'stripe'}
-					fallback={<div>Loading stripe</div>}
+				<Elements
+					stripe={stripe()}
+					clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret}
+					options={{
+						layout: {
+							type: 'accordion',
+							defaultCollapsed: true,
+							radios: true,
+							spacedAccordionItems: true
+						}
+					}}
 				>
-					<Show when={paymentSessionStripe?.isSuccess}>
-						<Elements
-							stripe={stripe()}
-							clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret}
-							options={{
-								layout: {
-									type: 'accordion',
-									defaultCollapsed: true,
-									radios: true,
-									spacedAccordionItems: true
-								},
-								defaultValues: {
-									billingDetails: {
-										name: `${queryCart?.data?.cart?.billing_address?.first_name} ${queryCart?.data?.cart?.billing_address?.last_name}`,
-										email: queryCart?.data?.cart?.email,
-										address: {
-											postal_code: queryCart?.data?.cart?.billing_address?.postal_code
-										}
-									}
-								}
-							}}
-						>
-							<CheckoutForm clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret} />
-						</Elements>
-					</Show>
-				</Show>
-			</Transition>
+					<CheckoutForm clientSecret={paymentSessionStripe?.data?.cart?.payment_session?.data?.client_secret} />
+				</Elements>
+			</Show>
+			{/* </Transition> */}
 		</Suspense>
 	)
 }
@@ -255,7 +256,7 @@ export function CheckoutForm(props: { clientSecret: string }) {
 	)
 }
 
-export function CheckoutButtons(props: { clientSecret: string }) {
+/* export function CheckoutButtons(props: { clientSecret: string }) {
 	const stripe = useStripe()
 	const { queryCart } = useGlobalContext()
 
@@ -334,3 +335,4 @@ export function CheckoutButtons(props: { clientSecret: string }) {
 		/>
 	)
 }
+ */

@@ -26,6 +26,7 @@ import CartCore from '~/Components/Core/CartCore'
 import Payment from '~/Components/checkout_components/Payment'
 import Express from '~/Components/checkout_components/Express'
 import { TransitionGroup } from 'solid-transition-group'
+import { create } from 'domain'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -206,6 +207,10 @@ export default function CheckoutPage() {
 	const [mobileDrawer, setMobileDrawer] = createSignal({
 		checkout: 'active',
 		cart: 'hidden'
+	})
+
+	createEffect(() => {
+		console.log('FORMCOMPLETE', formCompleted())
 	})
 
 	createEffect(() => {
@@ -1257,11 +1262,16 @@ export function Carrier(props: CarrierProps) {
 					...props.formCompleted(),
 					carrier: 'complete'
 				})
-				props.setShowForm({
-					...props.showForm(),
-					carrier: 'hidden',
-					payment: 'active'
-				})
+				if (mutateCarriers.isSuccess) {
+					//prevents race condition in Stripes Element Component ... I think Tanstack cache takes a few ms for the large cart blob??
+					setTimeout(() => {
+						props.setShowForm({
+							...props.showForm(),
+							carrier: 'hidden',
+							payment: 'active'
+						})
+					}, 250)
+				}
 			}
 
 			if (props.formCompleted().billing === 'queued') {

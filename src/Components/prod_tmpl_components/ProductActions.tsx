@@ -791,7 +791,6 @@ export function ProductInformationTabs(props: {
 									<ReviewsDisplay rating={props.rating} />
 								</div>
 							</Show>
-
 							<Show
 								when={
 									draftReviewData.isSuccess &&
@@ -1045,7 +1044,7 @@ export function ReviewsDisplay(props: { rating: any }) {
 						</For>
 					</div>
 				</div>
-				<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
+				<div class="flex justify-end items-center space-x-6 font-500 text-text_2 pt-2">
 					<button
 						onClick={handlePrevPage}
 						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"

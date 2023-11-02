@@ -1,13 +1,12 @@
 import { createEffect, Show, createSignal, For } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
-import clsx from 'clsx'
 import { currencyFormat } from '~/lib/helpers/currency'
-import { useNavigate, useParams, A } from 'solid-start'
+import { useParams, A } from 'solid-start'
 
 export default function Order() {
 	const params = useParams()
-	const navigate = useNavigate()
+
 	const { medusa } = useGlobalContext()
 
 	const [orderNumber, setOrderNumber] = createSignal<any>('')
@@ -23,7 +22,7 @@ export default function Order() {
 	}))
 
 	createEffect(() => {
-		if (currentOrder?.data?.order?.display_id !== params.handle) {
+		if (currentOrder?.data?.order?.id !== params.handle) {
 			currentOrder.refetch()
 		}
 	})

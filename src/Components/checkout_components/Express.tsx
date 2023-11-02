@@ -30,8 +30,7 @@ export default function Express() {
 	const paymentSessionQuery = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: () => medusa?.carts.createPaymentSessions(queryCart.data?.cart?.id),
-		enabled: true,
-		cacheTime: 3 * 60 * 1000
+		enabled: true
 	}))
 
 	/* 	onMount(async () => {

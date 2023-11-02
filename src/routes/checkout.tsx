@@ -804,7 +804,7 @@ export function Customer(props: CustomerProps) {
 
 				<div class="h-[100%]">
 					{/* This is a hack fix for chromium browsers default focus on mobile.... the autofocus={false} was not working ... this prevents the keyboard popping the page and hidding the express buttons  */}
-					<Show when={customerDelayPassed() === 'show'}>
+					{/* <Show when={customerDelayPassed() === 'show'}>
 						<Field
 							name="emailDelayFake"
 							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
@@ -822,29 +822,29 @@ export function Customer(props: CustomerProps) {
 								/>
 							)}
 						</Field>
-					</Show>
+					</Show> */}
 					{/* //email */}
-					<Show when={customerDelayPassed() === 'hidden'}>
-						<Field
-							name="email"
-							validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
-						>
-							{(field, props) => (
-								<TextInput
-									{...props}
-									value={field.value}
-									error={field.error}
-									type="email"
-									//description="We'll send your order confirmation here."
-									label="Email"
-									placeholder="example@email.com"
-									required
-								/>
-							)}
-						</Field>
-					</Show>
+					{/* <Show when={customerDelayPassed() === 'hidden'}> */}
+					<Field
+						name="email"
+						validate={[required('Please enter your email.'), email('The email address is badly formatted.')]}
+					>
+						{(field, props) => (
+							<TextInput
+								{...props}
+								value={field.value}
+								error={field.error}
+								type="email"
+								//description="We'll send your order confirmation here."
+								label="Email"
+								placeholder="example@email.com"
+								required
+							/>
+						)}
+					</Field>
+					{/* </Show> */}
 					{/* //password */}
-					<Show when={getValues(customerForm)?.checkbox?.signup || getValues(customerForm)?.checkbox?.signin}>
+					{/* <Show when={getValues(customerForm)?.checkbox?.signup || getValues(customerForm)?.checkbox?.signin}>
 						<Field
 							name="password"
 							validate={[
@@ -864,9 +864,9 @@ export function Customer(props: CustomerProps) {
 								/>
 							)}
 						</Field>
-					</Show>
+					</Show> */}
 					{/* //make account */}
-					<div class="flex justify-between my-4">
+					{/* <div class="flex justify-between my-4">
 						<Field
 							name="checkbox.signup"
 							type="boolean"
@@ -893,7 +893,7 @@ export function Customer(props: CustomerProps) {
 								/>
 							)}
 						</Field>
-					</div>
+					</div> */}
 					<FormFooter of={customerForm} />
 				</div>
 			</Form>

@@ -30,7 +30,7 @@ export default function Payment() {
 	const paymentSessionStripe = createQuery(() => ({
 		queryKey: ['cart'],
 		queryFn: () => medusa?.carts.setPaymentSession(queryCart.data?.cart?.id, { provider_id: 'stripe' }),
-		enabled: false
+		enabled: true
 	}))
 
 	createEffect(() => {
@@ -47,13 +47,13 @@ export default function Payment() {
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 800
+						duration: 250
 					})
 					a.finished.then(done)
 				}}
 				onExit={(el, done) => {
 					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-						duration: 200
+						duration: 0
 					})
 					a.finished.then(done)
 				}}

@@ -5,6 +5,7 @@ import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
 import { createQuery } from '@tanstack/solid-query'
+import { Transition } from 'solid-transition-group'
 
 export default function Products() {
 	const { medusa } = useGlobalContext()
@@ -153,20 +154,35 @@ export default function Products() {
 				content={'summary_large_image'}
 			/> */}
 			<main class="min-h-[100vh]">
-				<Show when={currentParams() === params.handle}>
-					<StoreProvider product={queryProduct?.data?.products[0]}>
-						<ProductTemplate
-							images={queryProduct?.data?.products[0]?.images}
-							productInfo={queryProduct?.data?.products[0]}
-							params={params?.handle}
-							updateOptions={useStore().updateOptions}
-							options={useStore().options}
-							inStock={useStore().inStock}
-							variant={useStore().variant}
-							useStore={useStore}
-						/>
-					</StoreProvider>
-				</Show>
+				<Transition
+					onEnter={(el, done) => {
+						const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+							duration: 350
+						})
+						a.finished.then(done)
+					}}
+					onExit={(el, done) => {
+						const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+							duration: 0
+						})
+						a.finished.then(done)
+					}}
+				>
+					<Show when={currentParams() === params.handle}>
+						<StoreProvider product={queryProduct?.data?.products[0]}>
+							<ProductTemplate
+								images={queryProduct?.data?.products[0]?.images}
+								productInfo={queryProduct?.data?.products[0]}
+								params={params?.handle}
+								updateOptions={useStore().updateOptions}
+								options={useStore().options}
+								inStock={useStore().inStock}
+								variant={useStore().variant}
+								useStore={useStore}
+							/>
+						</StoreProvider>
+					</Show>
+				</Transition>
 			</main>
 		</div>
 	)

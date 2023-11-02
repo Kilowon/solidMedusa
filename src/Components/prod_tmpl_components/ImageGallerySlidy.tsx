@@ -4,8 +4,6 @@ import { fade } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
-import { create } from 'domain'
-import { time } from 'console'
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
@@ -90,14 +88,13 @@ export default function ImageGallerySlidy(props: {
 						clamp={0}
 						loop={true}
 						// @ts-ignore
-						animation={fade}
+
 						background={false}
 						progress={true}
 						counter={false}
 						sensity={5}
 						gravity={0.75}
 						snap="center"
-						autoplay={true}
 						easing={linear}
 					/>
 				</div>

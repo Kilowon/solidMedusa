@@ -32,7 +32,7 @@ export default function PreFooter(props: { data: any }) {
 				<div class="w-90% h-5 bg-transparent"></div>
 
 				<Suspense>
-					<Show when={true}>
+					<Show when={props?.data?.data?.data?.PreFooter.length > 0}>
 						<For each={props.data?.data?.data?.PreFooter}>
 							{item => {
 								if (import.meta.env.VITE_DRAFT_SITE === 'false') {

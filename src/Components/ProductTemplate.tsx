@@ -1,25 +1,41 @@
 import ImageGallerySlidy from '~/Components/prod_tmpl_components/ImageGallerySlidy'
 import ProductActions from '~/Components/prod_tmpl_components/ProductActions'
-import { JSX, Show } from 'solid-js'
+import { JSX, Show, createEffect, createSignal } from 'solid-js'
 import { Product } from '~/types/models'
 import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
 import { createQuery } from '@tanstack/solid-query'
 import DisplayContainer from './layout/DisplayContainer'
 import PreFooter from './layout/PreFooter'
 import { ErrorBoundary } from 'solid-start'
+import { useParams } from 'solid-start'
+import { useGlobalContext } from '~/Context/Providers'
 
 export default function ProductTemplate(props: {
-	images: { url: string; id: string }[] | undefined
-	productInfo: Product
-	params: any
 	updateOptions: any
 	options: any
 	inStock: any
 	variant: any
 	useStore: any
 }): JSX.Element {
+	const params = useParams()
+	const { medusa } = useGlobalContext()
+	const { queryCart } = useGlobalContext()
+
+	const queryProduct = createQuery(() => ({
+		queryKey: ['Product-Page', params.handle],
+		queryFn: async function () {
+			const product = await medusa?.products.list({
+				handle: params.handle,
+				cart_id: queryCart.data?.cart.id
+			})
+			return product
+		},
+		cacheTime: 25 * 60 * 1000,
+		enabled: false
+	}))
+
 	const reviewData = createQuery(() => ({
-		queryKey: ['review_data', props.productInfo?.title],
+		queryKey: ['review_data', queryProduct?.data?.products[0].title],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -37,7 +53,7 @@ export default function ProductTemplate(props: {
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 
 	const draftReviewData = createQuery(() => ({
-		queryKey: ['draft_review_data', props.productInfo?.title],
+		queryKey: ['draft_review_data', queryProduct?.data?.products[0]?.title],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/product/Product-01?fields=*,reviews.*`, {
 				method: 'GET',
@@ -50,14 +66,14 @@ export default function ProductTemplate(props: {
 			return data
 		},
 		retry: 0,
-		enabled: true
+		enabled: queryProduct.isSuccess
 	}))
 
 	const displayContainerData = createQuery(() => ({
-		queryKey: ['display_container_data', props.productInfo?.title],
+		queryKey: ['display_container_data', queryProduct?.data?.products[0]?.title],
 		queryFn: async function () {
 			const response = await fetch(
-				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${props.productInfo?.id}?fields=*.item.*.*.*`,
+				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${queryProduct?.data?.products[0]?.id}?fields=*.item.*.*.*`,
 				{
 					method: 'GET',
 					headers: {
@@ -69,77 +85,74 @@ export default function ProductTemplate(props: {
 			const data = await response.json()
 			return data
 		},
-		retry: 0
+		retry: 0,
+		enabled: queryProduct.isSuccess
 	}))
 
+	createEffect(() => {
+		console.log(params.handle)
+	})
+
 	return (
-		<Show
-			when={
-				props.productInfo &&
-				props.images &&
-				props.inStock &&
-				props.options &&
-				props.params &&
-				props.updateOptions &&
-				props.useStore &&
-				props.variant
-			}
-		>
-			<main>
+		<main>
+			<Show when={queryProduct.isSuccess}>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full">
 						<ErrorBoundary>
 							<ImageGallerySlidy
-								images={props.images}
-								productInfo={props.productInfo}
-								params={props.params}
+								images={queryProduct?.data?.products[0]?.images}
+								productInfo={queryProduct?.data?.products[0]}
+								params={params?.handle}
 							/>
 						</ErrorBoundary>
 					</div>
+
 					<div class="">
 						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
 							<div>
 								<ProductActions
-									productInfo={props.productInfo}
+									productInfo={queryProduct?.data?.products[0]}
 									updateOptions={props.updateOptions}
 									options={props.options}
 									inStock={props.inStock}
 									variant={props.variant}
 									useStore={props.useStore}
-									params={props.params}
 								/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<Show when={displayContainerData.isSuccess}>
-					<DisplayContainer data={displayContainerData} />
-				</Show>
-				<div class="hidden lg:flex lg:content-container justify-center">
-					<Show
-						when={
-							reviewData.isSuccess &&
-							reviewData?.data?.data?.reviews?.length > 0 &&
-							import.meta.env.VITE_DRAFT_SITE === 'false'
-						}
-					>
-						<ReviewsDisplay rating={reviewData.data?.data} />
-					</Show>
+			</Show>
 
-					<Show
-						when={
-							draftReviewData.isSuccess &&
-							(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
-						}
-					>
-						<div id="ratings"></div>
-						<ReviewsDisplay rating={draftReviewData.data?.data} />
-					</Show>
-				</div>
-				<Show when={displayContainerData.isSuccess}>
-					<PreFooter data={displayContainerData} />
-				</Show>{' '}
-			</main>
-		</Show>
+			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess}>
+				<DisplayContainer data={displayContainerData} />
+			</Show>
+			<div class="hidden lg:flex lg:content-container justify-center">
+				<Show
+					when={
+						reviewData.isSuccess &&
+						reviewData?.data?.data?.reviews?.length > 0 &&
+						import.meta.env.VITE_DRAFT_SITE === 'false' &&
+						queryProduct.isSuccess
+					}
+				>
+					<ReviewsDisplay rating={reviewData.data?.data} />
+				</Show>
+
+				<Show
+					when={
+						draftReviewData.isSuccess &&
+						(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true') &&
+						queryProduct.isSuccess
+					}
+				>
+					<div id="ratings"></div>
+					<ReviewsDisplay rating={draftReviewData.data?.data} />
+				</Show>
+			</div>
+			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess}>
+				<PreFooter data={displayContainerData} />
+			</Show>
+		</main>
 	)
 }

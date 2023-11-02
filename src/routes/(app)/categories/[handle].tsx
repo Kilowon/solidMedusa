@@ -9,6 +9,7 @@ import { createQuery } from '@tanstack/solid-query'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import { Transition } from 'solid-transition-group'
 
 export default function Categories() {
 	const params = useParams()
@@ -43,6 +44,7 @@ export default function Categories() {
 			const product = await medusa?.productCategories?.list({ limit: 200 })
 			return product
 		},
+		retry: 0,
 		enabled: false
 	}))
 
@@ -58,14 +60,16 @@ export default function Categories() {
 			setCategory(filterCategories())
 			return product
 		},
+		retry: 0,
 		enabled: !!currentCategoryId() && !!queryCart?.data?.cart?.id
 	}))
 
-	createEffect(() => {
+	//Causes a loop when item is empty
+	/* 	createEffect(() => {
 		if (!queryCategoryProducts?.data?.products[0]?.handle || queryCategoryProducts.data?.products?.length === undefined) {
 			queryCategoryProducts.refetch()
 		}
-	})
+	}) */
 
 	function filterCategories() {
 		if (!queryCategories?.data?.product_categories) return
@@ -124,7 +128,7 @@ export default function Categories() {
 	return (
 		<main class="min-h-[100vh]">
 			<Suspense>
-				<Show when={currentCategory()}>
+				<Show when={currentCategory() && queryCategoryProducts.data?.products?.length > 1}>
 					<Title>{currentCategory?.()[0]?.name}</Title>
 					<Meta
 						itemProp="description"
@@ -147,41 +151,32 @@ export default function Categories() {
 										<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
 											<For each={queryCategoryProducts.data?.products}>
 												{(product: any, index) => {
-													let el: HTMLLIElement | undefined
-													const [isVisible, setIsVisible] = createSignal(false)
-													const [delay, setDelay] = createSignal(0)
-													const visible = createVisibilityObserver({ threshold: 0.2 })(() => el)
-
-													createEffect(() => {
-														if (visible()) {
-															setIsVisible(true)
-															setDelay((index() % 4) * 0.3)
-														}
-													})
-
 													return (
-														<li ref={el}>
+														<li>
 															<Suspense>
-																<Show when={index() > 7 || isVisible()}>
-																	<Presence initial>
-																		<Rerun on={index}>
-																			<Motion
-																				animate={{ opacity: [3, 1] }}
-																				transition={{ duration: 0.5, delay: index() * 0.1, easing: 'ease-in-out' }}
-																			>
-																				<ProductPreview
-																					{...product}
-																					wish={primaryData?.data?.data?.category_wish}
-																					tag={primaryData?.data?.data?.category_tag}
-																					component_type="standard"
-																				/>
-																			</Motion>
-																		</Rerun>
-																	</Presence>
-																</Show>
-																<Show when={!isVisible()}>
-																	<div class="w-[100px] h-[275px]"></div>
-																</Show>
+																<Transition
+																	onEnter={(el, done) => {
+																		const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+																			duration: 500
+																		})
+																		a.finished.then(done)
+																	}}
+																	onExit={(el, done) => {
+																		const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+																			duration: 0
+																		})
+																		a.finished.then(done)
+																	}}
+																>
+																	<Show when={product !== undefined && params.handle}>
+																		<ProductPreview
+																			{...product}
+																			wish={primaryData?.data?.data?.category_wish}
+																			tag={primaryData?.data?.data?.category_tag}
+																			component_type="standard"
+																		/>
+																	</Show>
+																</Transition>
 															</Suspense>
 														</li>
 													)

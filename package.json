@@ -44,7 +44,7 @@
 		"solid-start": "^0.2.26",
 		"solid-stripe": "^0.4.0",
 		"solid-toast": "^0.5.0",
-		"solid-transition-group": "^0.2.2",
+		"solid-transition-group": "^0.2.3",
 		"undici": "^5.15.1",
 		"unocss": "^0.50.4",
 		"unocss-preset-scrollbar": "^0.2.1"

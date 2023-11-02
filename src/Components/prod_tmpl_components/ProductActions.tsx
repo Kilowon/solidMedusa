@@ -1,5 +1,5 @@
-import { JSX, For, Show, createEffect, createMemo, createSignal } from 'solid-js'
-import { A } from 'solid-start'
+import { JSX, For, Show, createEffect, createMemo, createSignal, Suspense } from 'solid-js'
+import { A, useParams } from 'solid-start'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
@@ -8,6 +8,7 @@ import { TransitionGroup } from 'solid-transition-group'
 import toast, { Toaster } from 'solid-toast'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
+import { Transition } from 'solid-transition-group'
 
 interface CurrentVariant {
 	id: string
@@ -35,12 +36,11 @@ export default function ProductActions(props: {
 	inStock: any
 	variant: any
 	useStore: any
-	params: any
 }): JSX.Element {
 	const { addToCart } = useStore()
-	const { variant } = useStore()
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
+	const params = useParams()
 
 	const [currentVariant, setCurrentVariant] = createSignal<CurrentVariant>()
 	const [rating, setRating] = createSignal(3)
@@ -72,13 +72,13 @@ export default function ProductActions(props: {
 	})
 
 	const queryProduct = createQuery(() => ({
-		queryKey: ['Product-Page', props.params.handle],
+		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
-			const product = await medusa?.products.list({ handle: props.params, cart_id: queryCart.data?.cart.id })
+			const product = await medusa?.products.list({ handle: params?.handle, cart_id: queryCart.data?.cart.id })
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: !!props.params && !!queryCart?.data?.cart?.id
+		enabled: !!params?.handle && !!queryCart?.data?.cart?.id
 	}))
 
 	const reviewData = createQuery(() => ({
@@ -125,161 +125,178 @@ export default function ProductActions(props: {
 	})
 
 	return (
-		<Show when={props.productInfo}>
-			<Toaster
-				position="top-right"
-				gutter={8}
-				containerClassName=""
-				containerStyle={{
-					'z-index': 200
+		<Suspense fallback={<div>Loading...</div>}>
+			<TransitionGroup
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 500
+					})
+					a.finished.then(done)
 				}}
-				toastOptions={{
-					className: '',
-					duration: 1500,
-					style: {
-						background: '#363636',
-						color: '#fff'
-					}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 0
+					})
+					a.finished.then(done)
 				}}
-			/>
-			<div class="flex flex-col space-y-4  mx-2">
-				<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
-					<div class="lg:space-y-2">
-						<Show
-							when={
-								reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'
-							}
-						>
-							<div class="flex items-center space-x-2">
-								<div class="text-xl">
-									<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
-								</div>
-
-								<div class="text-text_2 ">|</div>
-
-								<A
-									href={'#ratings'}
-									class="text-text_2 underline cursor-pointer"
-								>
-									{reviewData.data?.data?.total_reviews} reviews
-								</A>
-							</div>
-						</Show>
-
-						<Show
-							when={
-								draftReviewData.isSuccess &&
-								(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
-							}
-						>
-							<div class="flex items-center space-x-2">
-								<div class="text-xl">
-									<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
-								</div>
-
-								<div class="text-text_2 ">|</div>
-
-								<A
-									href={'#ratings'}
-									class="text-text_2 underline cursor-pointer"
-								>
-									{draftReviewData.data?.data?.total_reviews} reviews
-								</A>
-							</div>
-						</Show>
-						<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
-					</div>
-					<div>
-						<Show when={currentVariant()?.original_price}>
-							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
-								<div class="space-x-2">
-									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
-								</div>
-							) : (
-								<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
-									<span class="text-xl line-through font-semibold">
-										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
-									</span>
-									<span class="text-xl text-accent_3 font-semibold ">
-										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
-									</span>
-									<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
-										on sale
-									</span>
-								</div>
-							)}
-						</Show>
-					</div>
-				</div>
-
-				<Show when={props.productInfo?.options.length === 1}>
-					<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
-						<For each={props.productInfo?.options}>
-							{option => {
-								return (
-									<div>
-										<OptionSelect
-											option={option}
-											current={props.options}
-											updateOptions={props.updateOptions}
-											title={option.title}
-										/>
-									</div>
-								)
-							}}
-						</For>
-					</div>
-				</Show>
-				<Show when={props.productInfo?.options.length > 1}>
-					<div class="gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6 space-y-2">
-						<For each={props.productInfo?.options}>
-							{option => {
-								return (
-									<div>
-										<OptionSelectViable
-											option={option}
-											current={props.options}
-											updateOptions={props.updateOptions}
-											title={option.title}
-											productInfo={props.productInfo}
-										/>
-									</div>
-								)
-							}}
-						</For>
-					</div>
-				</Show>
-				<div>
-					<button
-						onClick={() => {
-							addToCart()
-							notify()
+			>
+				<Show when={props.productInfo}>
+					<Toaster
+						position="top-right"
+						gutter={8}
+						containerClassName=""
+						containerStyle={{
+							'z-index': 200
 						}}
-						disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
-						class={clsx(
-							'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
-							isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
-							isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_2/70 border-text_1',
-							isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
-						)}
-					>
-						{isProductPurchasable() === 'valid'
-							? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
-							: ''}
-						{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
-						{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
-					</button>
-				</div>
-
-				<div>
-					<ProductInformationTabs
-						productInfo={props.productInfo}
-						rating={reviewData.data?.data}
-						reviewAvailable={reviewData.isSuccess}
+						toastOptions={{
+							className: '',
+							duration: 1500,
+							style: {
+								background: '#363636',
+								color: '#fff'
+							}
+						}}
 					/>
-				</div>
-			</div>
-		</Show>
+					<div class="flex flex-col space-y-4  mx-2">
+						<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
+							<div class="lg:space-y-2">
+								<Show
+									when={
+										reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'
+									}
+								>
+									<div class="flex items-center space-x-2">
+										<div class="text-xl">
+											<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
+										</div>
+
+										<div class="text-text_2 ">|</div>
+
+										<A
+											href={'#ratings'}
+											class="text-text_2 underline cursor-pointer"
+										>
+											{reviewData.data?.data?.total_reviews} reviews
+										</A>
+									</div>
+								</Show>
+
+								<Show
+									when={
+										draftReviewData.isSuccess &&
+										(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
+									}
+								>
+									<div class="flex items-center space-x-2">
+										<div class="text-xl">
+											<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
+										</div>
+
+										<div class="text-text_2 ">|</div>
+
+										<A
+											href={'#ratings'}
+											class="text-text_2 underline cursor-pointer"
+										>
+											{draftReviewData.data?.data?.total_reviews} reviews
+										</A>
+									</div>
+								</Show>
+								<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
+							</div>
+							<div>
+								<Show when={currentVariant()?.original_price}>
+									{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
+										<div class="space-x-2">
+											<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+										</div>
+									) : (
+										<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
+											<span class="text-xl line-through font-semibold">
+												{currencyFormat(Number(currentVariant()?.original_price), 'US')}
+											</span>
+											<span class="text-xl text-accent_3 font-semibold ">
+												{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
+											</span>
+											<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
+												on sale
+											</span>
+										</div>
+									)}
+								</Show>
+							</div>
+						</div>
+
+						<Show when={props.productInfo?.options.length === 1}>
+							<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
+								<For each={props.productInfo?.options}>
+									{option => {
+										return (
+											<div>
+												<OptionSelect
+													option={option}
+													current={props.options}
+													updateOptions={props.updateOptions}
+													title={option.title}
+												/>
+											</div>
+										)
+									}}
+								</For>
+							</div>
+						</Show>
+						<Show when={props.productInfo?.options.length > 1}>
+							<div class="gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6 space-y-2">
+								<For each={props.productInfo?.options}>
+									{option => {
+										return (
+											<div>
+												<OptionSelectViable
+													option={option}
+													current={props.options}
+													updateOptions={props.updateOptions}
+													title={option.title}
+													productInfo={props.productInfo}
+												/>
+											</div>
+										)
+									}}
+								</For>
+							</div>
+						</Show>
+						<div>
+							<button
+								onClick={() => {
+									addToCart()
+									notify()
+								}}
+								disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
+								class={clsx(
+									'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
+									isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
+									isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_2/70 border-text_1',
+									isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
+								)}
+							>
+								{isProductPurchasable() === 'valid'
+									? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
+									: ''}
+								{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
+								{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
+							</button>
+						</div>
+
+						<div>
+							<ProductInformationTabs
+								productInfo={props.productInfo}
+								rating={reviewData.data?.data}
+								reviewAvailable={reviewData.isSuccess}
+							/>
+						</div>
+					</div>
+				</Show>
+			</TransitionGroup>
+		</Suspense>
 	)
 }
 

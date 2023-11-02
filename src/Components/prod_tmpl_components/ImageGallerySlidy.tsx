@@ -4,6 +4,7 @@ import { fade } from '@slidy/animation'
 import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
+import { Transition } from 'solid-transition-group'
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
@@ -63,42 +64,55 @@ export default function ImageGallerySlidy(props: {
 	})
 
 	return (
-		<Show when={location() === useLocation().pathname && slides().length > 0}>
-			<div class="md:flex md:items-start md:relative bg-transparent">
-				<div
-					id="gallery"
-					class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
-					style={{
-						'--slidy-slide-radius': '3px',
-						'--slidy-slide-height': '93%',
-						'--slidy-progress-thumb-color': '#263C59',
-						'--slidy-progress-track-color': '#e3e3e3',
-						'--slidy-height': '100%',
-						'--slidy-slide-bg-color': 'transparent',
-						'--slidy-slide-object-fit': 'contain',
-						'--slidy-arrow-bg': '#ff',
-						'--slidy-arrow-icon-color': '#263C59',
+		<Transition
+			onEnter={(el, done) => {
+				const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+					duration: 250
+				})
+				a.finished.then(done)
+			}}
+			onExit={(el, done) => {
+				const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+					duration: 0
+				})
+				a.finished.then(done)
+			}}
+		>
+			<Show when={location() === useLocation().pathname && currentSlide().length > 0}>
+				<div class="md:flex md:items-start md:relative bg-transparent">
+					<div
+						id="gallery"
+						class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
+						style={{
+							'--slidy-slide-radius': '3px',
+							'--slidy-slide-height': '93%',
+							'--slidy-progress-thumb-color': '#263C59',
+							'--slidy-progress-track-color': '#e3e3e3',
+							'--slidy-height': '100%',
+							'--slidy-slide-bg-color': 'transparent',
+							'--slidy-slide-object-fit': 'contain',
+							'--slidy-arrow-bg': '#ff',
+							'--slidy-arrow-icon-color': '#263C59',
 
-						'--slidy-arrow-size': '2.5rem'
-					}}
-				>
-					<Slidy
-						slides={currentSlide()}
-						thumbnail={false}
-						clamp={0}
-						loop={true}
-						// @ts-ignore
-
-						background={false}
-						progress={true}
-						counter={false}
-						sensity={5}
-						gravity={0.75}
-						snap="center"
-						easing={linear}
-					/>
+							'--slidy-arrow-size': '2.5rem'
+						}}
+					>
+						<Slidy
+							slides={currentSlide()}
+							thumbnail={false}
+							clamp={1}
+							loop={true}
+							// @ts-ignore
+							background={false}
+							progress={false}
+							counter={false}
+							sensity={5}
+							gravity={0.75}
+							snap="center"
+						/>
+					</div>
 				</div>
-			</div>
-		</Show>
+			</Show>
+		</Transition>
 	)
 }

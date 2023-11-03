@@ -1270,7 +1270,7 @@ export function Carrier(props: CarrierProps) {
 							carrier: 'hidden',
 							payment: 'active'
 						})
-					}, 250)
+					}, 500)
 				}
 			}
 

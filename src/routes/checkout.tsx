@@ -1258,13 +1258,13 @@ export function Carrier(props: CarrierProps) {
 		mutateCarriers.refetch()
 		setTimeout(() => {
 			if (props.formCompleted().billing === 'complete') {
-				props.setFormCompleted?.({
-					...props.formCompleted(),
-					carrier: 'complete'
-				})
 				if (mutateCarriers.isSuccess) {
 					//prevents race condition in Stripes Element Component ... I think Tanstack cache takes a few ms for the large cart blob??
 					setTimeout(() => {
+						props.setFormCompleted?.({
+							...props.formCompleted(),
+							carrier: 'complete'
+						})
 						props.setShowForm({
 							...props.showForm(),
 							carrier: 'hidden',
@@ -1294,8 +1294,15 @@ export function Carrier(props: CarrierProps) {
 		queryFn: async function () {
 			const response = await medusa?.shippingOptions.listCartOptions(props.cart?.id)
 			return response
-		}
+		},
+		enabled: false
 	}))
+
+	createEffect(() => {
+		if (queryCarriers?.data?.shipping_options?.length === undefined) {
+			queryCarriers.refetch()
+		}
+	})
 
 	const mutateCarriers = createQuery(() => ({
 		queryKey: ['cart'],

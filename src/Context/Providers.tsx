@@ -208,7 +208,8 @@ export function GlobalContextProvider(props: any) {
 			const product = await medusa.productCategories.list({ limit: '200' })
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000,
+		refetchOnWindowFocus: false
 	}))
 
 	const [categories, categoriesServerState] = createSignal([])
@@ -243,7 +244,9 @@ export function GlobalContextProvider(props: any) {
 			})
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
+
+		cacheTime: 15 * 60 * 1000,
+		refetchOnWindowFocus: false
 		//enabled: false
 	}))
 

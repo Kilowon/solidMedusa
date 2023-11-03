@@ -476,9 +476,19 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 			const response = await fetchProduct(medusa, queryCart, props.item.variant.product.handle)
 			return response
 		},
-		cacheTime: 15 * 60 * 1000
-		//staleTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
 	}))
+
+	createEffect(() => {
+		if (
+			props.item?.variant?.product?.handle &&
+			queryLineItem?.data?.products[0]?.handle !== props.item?.variant?.product?.handle
+		) {
+			queryLineItem.refetch()
+		}
+	})
 
 	return (
 		<div>
@@ -552,9 +562,18 @@ export function ItemOptions(props: { cart: any; item: any; variant: CartCoreProp
 			const response = await getProductInfo(medusa, props.cart, props.item.variant.product.id)
 			return response
 		},
-		cacheTime: 15 * 60 * 1000
+		cacheTime: 15 * 60 * 1000,
+		retry: 0,
+		enabled: false
 		//staleTime: 15 * 60 * 1000
 	}))
+
+	createEffect(() => {
+		if (props.item?.variant?.product?.id && queryLineItem?.data?.product?.id !== props.item?.variant?.product?.id) {
+			queryLineItem.refetch()
+		}
+	})
+
 	return (
 		<div>
 			<Show when={queryLineItem?.data?.product}>

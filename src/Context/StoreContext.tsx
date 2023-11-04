@@ -1,14 +1,12 @@
-import { deleteLineItem, addLineItem, updateLineItem } from '~/Services/medusaAPI'
+import { updateLineItem } from '~/Services/medusaAPI'
 import Medusa from '@medusajs/medusa-js'
 import { Cart, ProductVariant } from '~/types/types'
 import { createContext, useContext, createMemo, createSignal, createEffect } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { Product } from '~/types/models'
-import { currencyFormat, findCheapestPrice } from '~/lib/helpers/currency'
 import { Accessor } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
-import { create } from 'domain'
 
 interface StoreContextValue {
 	deleteItem: (lineId: string) => void

@@ -1,13 +1,13 @@
-import { JSX, For, Show, createEffect, createMemo, createSignal, Suspense } from 'solid-js'
+import { JSX, For, Show, createEffect, createMemo, createSignal, Suspense, onCleanup } from 'solid-js'
 import { A, useParams } from 'solid-start'
 import { Product } from '~/types/models'
 import clsx from 'clsx'
 import { useStore } from '~/Context/StoreContext'
 import { currencyFormat } from '~/lib/helpers/currency'
-import { TransitionGroup } from 'solid-transition-group'
 import toast, { Toaster } from 'solid-toast'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
+import { TransitionGroup } from 'solid-transition-group'
 import { Transition } from 'solid-transition-group'
 
 interface CurrentVariant {
@@ -125,178 +125,191 @@ export default function ProductActions(props: {
 	})
 
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<TransitionGroup
-				onEnter={(el, done) => {
-					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 500
-					})
-					a.finished.then(done)
-				}}
-				onExit={(el, done) => {
-					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-						duration: 0
-					})
-					a.finished.then(done)
-				}}
+		<TransitionGroup
+			moveClass="transition-opacity duration-500"
+			name="fade"
+			onEnter={(el, done) => {
+				const a = el.animate([{ opacity: 0.1 }, { opacity: 1 }], {
+					iterations: 1,
+					easing: 'ease-in-out',
+					timeline: new AnimationTimeline(),
+					duration: 500
+				})
+				a.finished.then(done)
+			}}
+			onExit={(el, done) => {
+				const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+					duration: 0
+				})
+				a.finished.then(done)
+			}}
+		>
+			<Show
+				when={
+					currentVariant() !== null &&
+					(props.productInfo?.options.length === 1 || props.productInfo?.options.length > 1) &&
+					((reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false') ||
+						(draftReviewData.isSuccess &&
+							(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')))
+				}
+				keyed
 			>
-				<Show when={props.productInfo}>
-					<Toaster
-						position="top-right"
-						gutter={8}
-						containerClassName=""
-						containerStyle={{
-							'z-index': 200
-						}}
-						toastOptions={{
-							className: '',
-							duration: 1500,
-							style: {
-								background: '#363636',
-								color: '#fff'
-							}
-						}}
-					/>
-					<div class="flex flex-col space-y-4  mx-2">
-						<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
-							<div class="lg:space-y-2">
-								<Show
-									when={
-										reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'
-									}
-								>
-									<div class="flex items-center space-x-2">
-										<div class="text-xl">
-											<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
-										</div>
+				<Toaster
+					position="top-right"
+					gutter={8}
+					containerClassName=""
+					containerStyle={{
+						'z-index': 200
+					}}
+					toastOptions={{
+						className: '',
+						duration: 1500,
+						style: {
+							background: '#363636',
+							color: '#fff'
+						}
+					}}
+				/>
 
-										<div class="text-text_2 ">|</div>
-
-										<A
-											href={'#ratings'}
-											class="text-text_2 underline cursor-pointer"
-										>
-											{reviewData.data?.data?.total_reviews} reviews
-										</A>
-									</div>
-								</Show>
-
-								<Show
-									when={
-										draftReviewData.isSuccess &&
-										(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
-									}
-								>
-									<div class="flex items-center space-x-2">
-										<div class="text-xl">
-											<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
-										</div>
-
-										<div class="text-text_2 ">|</div>
-
-										<A
-											href={'#ratings'}
-											class="text-text_2 underline cursor-pointer"
-										>
-											{draftReviewData.data?.data?.total_reviews} reviews
-										</A>
-									</div>
-								</Show>
-								<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
-							</div>
-							<div>
-								<Show when={currentVariant()?.original_price}>
-									{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
-										<div class="space-x-2">
-											<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
-										</div>
-									) : (
-										<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
-											<span class="text-xl line-through font-semibold">
-												{currencyFormat(Number(currentVariant()?.original_price), 'US')}
-											</span>
-											<span class="text-xl text-accent_3 font-semibold ">
-												{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
-											</span>
-											<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
-												on sale
-											</span>
-										</div>
-									)}
-								</Show>
-							</div>
-						</div>
-
-						<Show when={props.productInfo?.options.length === 1}>
-							<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
-								<For each={props.productInfo?.options}>
-									{option => {
-										return (
-											<div>
-												<OptionSelect
-													option={option}
-													current={props.options}
-													updateOptions={props.updateOptions}
-													title={option.title}
-												/>
-											</div>
-										)
-									}}
-								</For>
-							</div>
-						</Show>
-						<Show when={props.productInfo?.options.length > 1}>
-							<div class="gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6 space-y-2">
-								<For each={props.productInfo?.options}>
-									{option => {
-										return (
-											<div>
-												<OptionSelectViable
-													option={option}
-													current={props.options}
-													updateOptions={props.updateOptions}
-													title={option.title}
-													productInfo={props.productInfo}
-												/>
-											</div>
-										)
-									}}
-								</For>
-							</div>
-						</Show>
-						<div>
-							<button
-								onClick={() => {
-									addToCart()
-									notify()
-								}}
-								disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
-								class={clsx(
-									'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
-									isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
-									isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_2/70 border-text_1',
-									isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
-								)}
+				<div class="flex flex-col space-y-4  mx-2">
+					<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
+						<div class="lg:space-y-2">
+							<Show
+								when={
+									reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'
+								}
 							>
-								{isProductPurchasable() === 'valid'
-									? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
-									: ''}
-								{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
-								{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
-							</button>
-						</div>
+								<div class="flex items-center space-x-2">
+									<div class="text-xl">
+										<StarIconRequest rating={reviewData.data?.data?.overall_rating} />
+									</div>
 
+									<div class="text-text_2 ">|</div>
+
+									<A
+										href={'#ratings'}
+										class="text-text_2 underline cursor-pointer"
+									>
+										{reviewData.data?.data?.total_reviews} reviews
+									</A>
+								</div>
+							</Show>
+
+							<Show
+								when={
+									draftReviewData.isSuccess &&
+									(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')
+								}
+							>
+								<div class="flex items-center space-x-2">
+									<div class="text-xl">
+										<StarIconRequest rating={draftReviewData.data?.data?.overall_rating} />
+									</div>
+
+									<div class="text-text_2 ">|</div>
+
+									<A
+										href={'#ratings'}
+										class="text-text_2 underline cursor-pointer"
+									>
+										{draftReviewData.data?.data?.total_reviews} reviews
+									</A>
+								</div>
+							</Show>
+							<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
+						</div>
 						<div>
-							<ProductInformationTabs
-								productInfo={props.productInfo}
-								rating={reviewData.data?.data}
-								reviewAvailable={reviewData.isSuccess}
-							/>
+							{/* <Show when={currentVariant()?.original_price}> */}
+							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
+								<div class="space-x-2">
+									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+								</div>
+							) : (
+								<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
+									<span class="text-xl line-through font-semibold">
+										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
+									</span>
+									<span class="text-xl text-accent_3 font-semibold ">
+										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
+									</span>
+									<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
+										on sale
+									</span>
+								</div>
+							)}
+							{/* </Show> */}
 						</div>
 					</div>
-				</Show>
-			</TransitionGroup>
-		</Suspense>
+
+					<Show when={props.productInfo?.options.length === 1}>
+						<div class="grid grid-cols-2 gap-3 lg:my-8 lg:flex lg:flex-col lg:gap-y-6">
+							<For each={props.productInfo?.options}>
+								{option => {
+									return (
+										<div>
+											<OptionSelect
+												option={option}
+												current={props.options}
+												updateOptions={props.updateOptions}
+												title={option.title}
+											/>
+										</div>
+									)
+								}}
+							</For>
+						</div>
+					</Show>
+					<Show when={props.productInfo?.options.length > 1}>
+						<div class="gap-3 justify-self-start lg:my-8 lg:flex lg:flex-col lg:gap-y-6 space-y-2">
+							<For each={props.productInfo?.options}>
+								{option => {
+									return (
+										<div>
+											<OptionSelectViable
+												option={option}
+												current={props.options}
+												updateOptions={props.updateOptions}
+												title={option.title}
+												productInfo={props.productInfo}
+											/>
+										</div>
+									)
+								}}
+							</For>
+						</div>
+					</Show>
+					<div>
+						<button
+							onClick={() => {
+								addToCart()
+								notify()
+							}}
+							disabled={isProductPurchasable() === 'invalid' || isProductPurchasable() === 'out-of-stock'}
+							class={clsx(
+								'w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-sm border transition-colors duration-200 disabled:opacity-75 disabled:hover:bg-text_2 disabled:hover:text-accenttext_1',
+								isProductPurchasable() === 'valid' && 'text-accenttext_1 bg-accent_2 border-accent_2 hover:bg-accent_2/80',
+								isProductPurchasable() === 'invalid' && 'text-accenttext_1 bg-text_2/70 border-text_1',
+								isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
+							)}
+						>
+							{isProductPurchasable() === 'valid'
+								? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
+								: ''}
+							{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
+							{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}
+						</button>
+					</div>
+
+					<div>
+						<ProductInformationTabs
+							productInfo={props.productInfo}
+							rating={reviewData.data?.data}
+							reviewAvailable={reviewData.isSuccess}
+						/>
+					</div>
+				</div>
+			</Show>
+		</TransitionGroup>
 	)
 }
 
@@ -1004,61 +1017,59 @@ export function ReviewsDisplay(props: { rating: any }) {
 	}
 
 	return (
-		<Show when={true}>
-			<div class={clsx('p-4 rounded-lg bg-normal_1 space-y-3 text-sm lg:min-w-80% lg:max-w-80% xl:max-w-95%')}>
-				<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
-					<button
-						onClick={handlePrevPage}
-						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
-					>
-						Previous
-					</button>
-					<button
-						onClick={handleNextPage}
-						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
-					>
-						Next
-					</button>
-				</div>
-				<div>
-					<div class="sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-6 xl:grid-cols-3 xl:gap-4 ">
-						<div class="flex flex-col justify-between">
-							<CustomerOverallReviews rating={props.rating} />
-							<span class="flex mx-2 border border-normal_3 border-1"></span>
-						</div>
-
-						<For each={props.rating?.reviews.slice((currentPage() - 1) * reviewsPerPage, currentPage() * reviewsPerPage)}>
-							{(review, index) => {
-								return (
-									<div>
-										<CustomerIndividualReviews
-											review={{ customer: review.user_body, owner: review.owner_body }}
-											rating={review.user_rating}
-											name={{ customer: review.user_name, owner: review.owner_name }}
-											date={{ customer: review.user_date, owner: review.owner_date }}
-											title={review.user_title}
-										/>
-									</div>
-								)
-							}}
-						</For>
+		<div class={clsx('p-4 rounded-lg bg-normal_1 space-y-3 text-sm lg:min-w-80% lg:max-w-80% xl:max-w-95%')}>
+			<div class="flex justify-end items-center space-x-6 font-500 text-text_2">
+				<button
+					onClick={handlePrevPage}
+					class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+				>
+					Previous
+				</button>
+				<button
+					onClick={handleNextPage}
+					class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+				>
+					Next
+				</button>
+			</div>
+			<div>
+				<div class="sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-6 xl:grid-cols-3 xl:gap-4 ">
+					<div class="flex flex-col justify-between">
+						<CustomerOverallReviews rating={props.rating} />
+						<span class="flex mx-2 border border-normal_3 border-1"></span>
 					</div>
-				</div>
-				<div class="flex justify-end items-center space-x-6 font-500 text-text_2 pt-2">
-					<button
-						onClick={handlePrevPage}
-						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
-					>
-						Previous
-					</button>
-					<button
-						onClick={handleNextPage}
-						class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
-					>
-						Next
-					</button>
+
+					<For each={props.rating?.reviews.slice((currentPage() - 1) * reviewsPerPage, currentPage() * reviewsPerPage)}>
+						{(review, index) => {
+							return (
+								<div>
+									<CustomerIndividualReviews
+										review={{ customer: review.user_body, owner: review.owner_body }}
+										rating={review.user_rating}
+										name={{ customer: review.user_name, owner: review.owner_name }}
+										date={{ customer: review.user_date, owner: review.owner_date }}
+										title={review.user_title}
+									/>
+								</div>
+							)
+						}}
+					</For>
 				</div>
 			</div>
-		</Show>
+			<div class="flex justify-end items-center space-x-6 font-500 text-text_2 pt-2">
+				<button
+					onClick={handlePrevPage}
+					class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+				>
+					Previous
+				</button>
+				<button
+					onClick={handleNextPage}
+					class="bg-normal_2 p-1 rounded-sm text-text_2 hover:bg-normal_3 hover:text-text_1 transition-all duration-200"
+				>
+					Next
+				</button>
+			</div>
+		</div>
 	)
 }

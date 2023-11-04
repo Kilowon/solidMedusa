@@ -21,6 +21,8 @@ export default function ProductTemplate(props: {
 	const { medusa } = useGlobalContext()
 	const { queryCart } = useGlobalContext()
 
+	const [complete, setComplete] = createSignal(false)
+
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
@@ -90,7 +92,11 @@ export default function ProductTemplate(props: {
 	}))
 
 	createEffect(() => {
-		console.log(params.handle)
+		if (queryProduct.isSuccess) {
+			setTimeout(() => {
+				setComplete(true)
+			}, 500)
+		}
 	})
 
 	return (
@@ -124,7 +130,7 @@ export default function ProductTemplate(props: {
 				</div>
 			</Show>
 
-			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess}>
+			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess && complete()}>
 				<DisplayContainer data={displayContainerData} />
 			</Show>
 			<div class="hidden lg:flex lg:content-container justify-center">
@@ -133,7 +139,8 @@ export default function ProductTemplate(props: {
 						reviewData.isSuccess &&
 						reviewData?.data?.data?.reviews?.length > 0 &&
 						import.meta.env.VITE_DRAFT_SITE === 'false' &&
-						queryProduct.isSuccess
+						queryProduct.isSuccess &&
+						complete()
 					}
 				>
 					<ReviewsDisplay rating={reviewData.data?.data} />
@@ -143,14 +150,15 @@ export default function ProductTemplate(props: {
 					when={
 						draftReviewData.isSuccess &&
 						(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true') &&
-						queryProduct.isSuccess
+						queryProduct.isSuccess &&
+						complete()
 					}
 				>
 					<div id="ratings"></div>
 					<ReviewsDisplay rating={draftReviewData.data?.data} />
 				</Show>
 			</div>
-			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess}>
+			<Show when={displayContainerData.isSuccess && queryProduct.isSuccess && complete()}>
 				<PreFooter data={displayContainerData} />
 			</Show>
 		</main>

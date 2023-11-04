@@ -17,6 +17,8 @@ export default function Products() {
 	const [twitterTitle, setTwitterTitle] = createSignal('')
 	const [twitterDescription, setTwitterDescription] = createSignal('')
 
+	//TODO: Popping after redirect to another product page or from catagory page and randomly on refresh
+
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {

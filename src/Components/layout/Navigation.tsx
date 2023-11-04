@@ -60,47 +60,50 @@ export default function Navigation(props: any) {
 				</Show>
 				<nav class="flex items-center justify-center w-full">
 					<div class="absolute left-0  p-4 z-10">
-						<div>
-							<div
-								onMouseOver={() => {
-									setPreloader(true)
-								}}
-								onFocus={() => {
-									setPreloader(true)
-								}}
-								onclick={e => {
-									e.stopPropagation()
+						<div
+							onMouseOver={() => {
+								setPreloader(true)
+							}}
+							onFocus={() => {
+								setPreloader(true)
+							}}
+							onclick={e => {
+								if (getWindowSize().width > 1023) {
 									setOpenMenu(!openMenu())
+									setOpenCart(false)
+								}
+
+								if (getWindowSize().width <= 1023) {
+									setMenuDrawer({ menu: 'active' })
+									setCartDrawer({ cart: 'hidden' })
+								}
+							}}
+							onKeyDown={e => {
+								if (e.key === 'Enter') {
+									setOpenMenu(true)
 									setOpenCart(false)
 									setMenuDrawer({ menu: 'active' })
 									setCartDrawer({ cart: 'hidden' })
-								}}
-								onKeyDown={e => {
-									if (e.key === 'Enter') {
-										setOpenMenu(true)
-										setOpenCart(false)
-										setMenuDrawer({ menu: 'active' })
-										setCartDrawer({ cart: 'hidden' })
-									}
-									if (e.key === 'Escape') {
-										setOpenMenu(false)
-										setMenuDrawer({ menu: 'hidden' })
-									}
-								}}
-								title="Main Menu"
-								role="button"
-								tabindex="0"
-								onkeypress={e => {
-									if (e.key === 'Enter') {
-										setMenuDrawer({ menu: 'active' })
-									}
-									if (e.key === 'Escape') {
-										setMenuDrawer({ menu: 'hidden' })
-									}
-								}}
-							>
-								<div class="i-ic-round-menu w-5.5 h-5.5  lg:w-7 lg:h-7  hover:cursor-pointer z-80" />
-							</div>
+								}
+								if (e.key === 'Escape') {
+									setOpenMenu(false)
+									setMenuDrawer({ menu: 'hidden' })
+								}
+							}}
+							title="Main Menu"
+							role="button"
+							tabindex="0"
+							onkeypress={e => {
+								if (e.key === 'Enter') {
+									setMenuDrawer({ menu: 'active' })
+								}
+								if (e.key === 'Escape') {
+									setMenuDrawer({ menu: 'hidden' })
+								}
+							}}
+						>
+							<div class="i-ic-round-menu w-5.5 h-5.5  lg:w-7 lg:h-7  hover:cursor-pointer z-80" />
+
 							<Suspense>
 								<Show when={getWindowSize().width > 1023 && preloader() === true}>
 									<DropdownMenu

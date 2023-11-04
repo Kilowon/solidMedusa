@@ -127,39 +127,17 @@ export default function Home() {
 		>
 			<Navigation />
 
-			<Show when={heroData.isSuccess}>
-				<div>
-					<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
-						<img
-							src={heroData?.data?.data?.hero_info[0].image}
-							loading="eager"
-							alt="image preloading"
-							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left"
-						/>
-					</Show>
-					<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
-						<img
-							src={heroData?.data?.data?.hero_info[0].mobile_image}
-							loading="eager"
-							alt="image preloading"
-							class="opacity-[1%] w-[1px] h-[1px] object-cover object-left "
-						/>
-					</Show>
-				</div>
-			</Show>
-
 			<Outlet />
 			<div
 				ref={el}
 				class="w-100% h-5 bg-transparent"
 			></div>
-			<Suspense>
-				<Show when={isVisible() && primaryData.isSuccess}>
-					<div class="min-h-[50vh]">
-						<Footer />
-					</div>
-				</Show>
-			</Suspense>
+
+			<Show when={isVisible() && primaryData.isSuccess}>
+				<div class="min-h-[50vh]">
+					<Footer />
+				</div>
+			</Show>
 		</div>
 	)
 }

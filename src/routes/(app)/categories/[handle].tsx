@@ -146,45 +146,43 @@ export default function Categories() {
 									parentCategories={parentCategories}
 									currentCategory={currentCategory}
 								/>
-								<Suspense>
-									<Show when={queryCategoryProducts.isSuccess}>
-										<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
-											<For each={queryCategoryProducts.data?.products}>
-												{(product: any, index) => {
-													return (
-														<li>
-															<Suspense>
-																<Transition
-																	onEnter={(el, done) => {
-																		const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-																			duration: 500
-																		})
-																		a.finished.then(done)
-																	}}
-																	onExit={(el, done) => {
-																		const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-																			duration: 0
-																		})
-																		a.finished.then(done)
-																	}}
-																>
-																	<Show when={product !== undefined && params.handle}>
-																		<ProductPreview
-																			{...product}
-																			wish={primaryData?.data?.data?.category_wish}
-																			tag={primaryData?.data?.data?.category_tag}
-																			component_type="standard"
-																		/>
-																	</Show>
-																</Transition>
-															</Suspense>
-														</li>
-													)
-												}}
-											</For>
-										</ul>
-									</Show>
-								</Suspense>
+
+								<Show when={queryCategoryProducts.isSuccess}>
+									<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
+										<For each={queryCategoryProducts.data?.products}>
+											{(product: any, index) => {
+												return (
+													<li>
+														<Transition
+															onEnter={(el, done) => {
+																const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+																	duration: 500
+																})
+																a.finished.then(done)
+															}}
+															onExit={(el, done) => {
+																const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+																	duration: 0
+																})
+																a.finished.then(done)
+															}}
+														>
+															<Show when={product !== undefined && params.handle}>
+																<ProductPreview
+																	{...product}
+																	wish={primaryData?.data?.data?.category_wish}
+																	tag={primaryData?.data?.data?.category_tag}
+																	component_type="standard"
+																/>
+															</Show>
+														</Transition>
+													</li>
+												)
+											}}
+										</For>
+									</ul>
+								</Show>
+
 								{/* <SingleLineSlider
 							slideVisible={6}
 							categoryProducts={categoryProducts}

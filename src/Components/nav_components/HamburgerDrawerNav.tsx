@@ -7,6 +7,8 @@ import { isServer } from 'solid-js/web'
 import { Transition } from 'solid-transition-group'
 import { on } from 'events'
 
+//TODO: Hard to diagnose but the mobile menu will not refocus to the main page after closing on the catagory page
+
 type ShowForm = {
 	menu: 'active' | 'hidden'
 }
@@ -89,30 +91,30 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 	}
 
 	return (
-		<div>
-			<div
-				class={`fixed inset-0 bg-normal_2/70 backdrop-blur-10px z-200 transition-all duration-250 ease-in-out ${
-					props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none '
-				}`}
-				onClick={event => {
-					if (event.target === event.currentTarget) {
-						props.setMenuDrawer({ menu: 'hidden' })
-					}
-				}}
-			>
+		<Show when={selectedRoot()?.length > 0 && primaryData.isSuccess && props.menuDrawer().menu === 'active'}>
+			<div>
 				<div
-					class="i-ph-x-bold absolute right-3 top-4 w-5 h-5"
+					class={`fixed inset-0 bg-normal_2/70 backdrop-blur-10px z-200 transition-all duration-250 ease-in-out ${
+						props.menuDrawer().menu === 'active' ? '' : 'opacity-0 pointer-events-none '
+					}`}
 					onClick={event => {
 						if (event.target === event.currentTarget) {
 							props.setMenuDrawer({ menu: 'hidden' })
 						}
 					}}
-				/>
-				<div
-					class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-normal_1 z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 `}
-					style={{ overflow: 'auto' }}
 				>
-					<Show when={selectedRoot()?.length > 0 && primaryData.isSuccess}>
+					<div
+						class="i-ph-x-bold absolute right-3 top-4 w-5 h-5"
+						onClick={event => {
+							if (event.target === event.currentTarget) {
+								props.setMenuDrawer({ menu: 'hidden' })
+							}
+						}}
+					/>
+					<div
+						class={`fixed top-12 left-0 h-full w-[95vw] sm:w-[40vw] bg-normal_1 z-200 transform rounded-sm transition-transform duration-500 ease-in-out p-2 `}
+						style={{ overflow: 'auto' }}
+					>
 						<ol class=" text-sm font-500 space-y-2 h-[120vh] ">
 							<Show when={backButton() === 'active'}>
 								<button
@@ -245,9 +247,9 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 								</Show>
 							</div>
 						</ol>
-					</Show>
+					</div>
 				</div>
 			</div>
-		</div>
+		</Show>
 	)
 }

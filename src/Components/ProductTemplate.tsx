@@ -103,7 +103,7 @@ export default function ProductTemplate(props: {
 		<main>
 			<Show when={queryProduct.isSuccess}>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
-					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-80vh md:min-h-auto">
+					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-65vh md:min-h-auto">
 						<ErrorBoundary>
 							<ImageGallerySlidy
 								images={queryProduct?.data?.products[0]?.images}

@@ -133,11 +133,11 @@ export default function Home() {
 				class="w-100% h-5 bg-transparent"
 			></div>
 
-			<Show when={isVisible() && primaryData.isSuccess}>
-				<div class="min-h-[50vh]">
+			<div class="min-h-150vh md:min-h-50vh">
+				<Show when={primaryData.isSuccess}>
 					<Footer />
-				</div>
-			</Show>
+				</Show>
+			</div>
 		</div>
 	)
 }

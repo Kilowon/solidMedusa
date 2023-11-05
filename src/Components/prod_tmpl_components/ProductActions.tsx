@@ -8,7 +8,6 @@ import toast, { Toaster } from 'solid-toast'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { TransitionGroup } from 'solid-transition-group'
-import { Transition } from 'solid-transition-group'
 
 interface CurrentVariant {
 	id: string
@@ -71,15 +70,17 @@ export default function ProductActions(props: {
 		}
 	})
 
-	const queryProduct = createQuery(() => ({
+	/* 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page', params.handle],
 		queryFn: async function () {
 			const product = await medusa?.products.list({ handle: params?.handle, cart_id: queryCart.data?.cart.id })
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: !!params?.handle && !!queryCart?.data?.cart?.id
-	}))
+		enabled: !!params?.handle && !!queryCart?.data?.cart?.id,
+		refetchOnWindowFocus: false,
+		refetchOnMount: false
+	})) */
 
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
@@ -98,7 +99,8 @@ export default function ProductActions(props: {
 			return data
 		},
 		retry: 0,
-		enabled: false
+		enabled: props.productInfo?.id !== undefined,
+		refetchOnWindowFocus: false
 	}))
 
 	const draftReviewData = createQuery(() => ({
@@ -115,25 +117,21 @@ export default function ProductActions(props: {
 			return data
 		},
 		retry: 0,
-		enabled: false
+		enabled: false,
+		refetchOnWindowFocus: false
 	}))
 
-	createEffect(() => {
-		if (queryProduct.isSuccess) {
+	/* 	createEffect(() => {
+		if (queryProduct.isSuccess && !reviewData.isSuccess) {
 			reviewData.refetch()
 		}
 	})
-
+ */
 	return (
 		<TransitionGroup
-			moveClass="transition-opacity duration-500"
-			name="fade"
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0.1 }, { opacity: 1 }], {
-					iterations: 1,
-					easing: 'ease-in-out',
-					timeline: new AnimationTimeline(),
-					duration: 500
+					duration: 250
 				})
 				a.finished.then(done)
 			}}

@@ -1,6 +1,6 @@
 import { useGlobalContext } from '~/Context/Providers'
 import { useParams, Title, Meta, useNavigate } from 'solid-start'
-import { createEffect, Show, createSignal } from 'solid-js'
+import { createEffect, Show, createSignal, onMount } from 'solid-js'
 import ProductTemplate from '~/Components/ProductTemplate'
 import { useStore } from '~/Context/StoreContext'
 import { StoreProvider } from '~/Context/StoreContext'
@@ -29,17 +29,24 @@ export default function Products() {
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: !!params.handle && !!queryCart?.data?.cart?.id
+		enabled: false
 	}))
 
-	//This prevents a race condition where the product is not loaded before the page is rendered
+	onMount(() => {
+		console.log(queryProduct?.data?.products[0]?.handle, params.handle)
+		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
+			queryProduct.refetch()
+		}
+	})
+
+	/* 	//This prevents a race condition where the product is not loaded before the page is rendered
 	createEffect(() => {
 		if (queryProduct?.data?.products[0]?.handle === params.handle) {
 			setTimeout(() => {
 				setCurrentParams(params.handle)
 			}, 50)
 		}
-	})
+	}) */
 
 	createEffect(() => {
 		if (queryProduct?.data?.products.length === 0) {

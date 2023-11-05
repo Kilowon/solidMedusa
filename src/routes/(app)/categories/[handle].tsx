@@ -1,5 +1,5 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { useParams, Title, Meta, useNavigate } from 'solid-start'
+import { useParams, Title, Meta, useNavigate, A } from 'solid-start'
 import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
@@ -147,7 +147,7 @@ export default function Categories() {
 									currentCategory={currentCategory}
 								/>
 
-								<Show when={queryCategoryProducts.isSuccess}>
+								<Show when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length > 1}>
 									<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
 										<For each={queryCategoryProducts.data?.products}>
 											{(product: any, index) => {
@@ -193,6 +193,18 @@ export default function Categories() {
 						/> */}
 							</div>
 						</Show>
+					</div>
+				</Show>
+				<Show when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length === 0}>
+					<div class="text-center mt-40">
+						<h1 class="text-2xl text-text_2 font-bold">No Products Found</h1>
+						<div class="py-5"></div>
+						<A
+							href="/"
+							class="bg-surface p-2 rounded-2"
+						>
+							Go Back
+						</A>
 					</div>
 				</Show>
 			</Suspense>

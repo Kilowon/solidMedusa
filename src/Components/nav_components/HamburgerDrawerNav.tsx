@@ -1,13 +1,9 @@
 import { For } from 'solid-js/web'
-import { createSignal, Show, Suspense, SuspenseList, Accessor, createEffect, onMount } from 'solid-js'
+import { createSignal, Show, Accessor, createEffect, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
-import { isServer } from 'solid-js/web'
 import { Transition } from 'solid-transition-group'
-import { on } from 'events'
-
-//TODO: Hard to diagnose but the mobile menu will not refocus to the main page after closing on the catagory page
 
 type ShowForm = {
 	menu: 'active' | 'hidden'

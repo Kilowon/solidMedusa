@@ -58,16 +58,16 @@ export default function CartCore(props: CartCoreProps) {
 	return (
 		<SuspenseList revealOrder="together">
 			<Show when={isServer === false && queryCart?.data?.cart?.items && sortedItems()}>
-				<div class=" text-sm text-text_3 z-50">
+				<div class=" text-sm text-text_3 z-50 ">
 					<Show when={queryCart?.data?.cart?.items?.length > 0}>
 						<div
 							class={clsx(
 								'',
-								props.variant === 'primary' && 'lg:flex lg:space-x-10 min-h-200vh lg:min-h-120vh',
+								props.variant === 'primary' && 'lg:flex lg:space-x-10 min-h-200vh lg:min-h-120vh ',
 								props.variant === 'checkout' && '',
 								props.variant === 'panel' && '',
 								props.variant === 'mobile-checkout' && '',
-								props.variant === 'mobile-panel' && ''
+								props.variant === 'mobile-panel' && 'max-h-95vh mx-auto overflow-y-scroll'
 							)}
 						>
 							<ol

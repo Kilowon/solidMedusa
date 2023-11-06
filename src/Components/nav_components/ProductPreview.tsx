@@ -101,7 +101,7 @@ const ProductPreview = (props: ProductPreviewProps) => {
 									</div>
 								</Show>
 								<Show when={props.variants?.[0]?.original_price !== props.variants?.[0]?.calculated_price}>
-									<div class="line-through text-[10px] absolute top-1 left-16">
+									<div class="line-through text-[10px] ">
 										{props.variants?.[0]?.original_price
 											? currencyFormat(Number(props.variants?.[0]?.original_price), 'USD')
 											: ''}

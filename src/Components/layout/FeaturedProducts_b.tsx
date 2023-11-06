@@ -151,34 +151,36 @@ export default function FeaturedProductsLg(props: { variant: FeaturedProps['vari
 						}
 					>
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-6 lg:gap-x-8 lg:gap-y-12 my-18">
-							<li class="col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance max-w-60">
-								<div class="space-y-1">
-									<Show when={props.item.top_line_tag?.length > 0}>
-										<ul class="flex space-x-2">
-											<For each={props.item.top_line_tag}>
-												{(item: any) => {
-													return (
-														<li class="flex items-center justify-center text-xs  xl:text-sm font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
-															{item}
-														</li>
-													)
-												}}
-											</For>
-										</ul>
-									</Show>
-									<Show when={props.item.title}>
-										<h3 class=" text-lg  xl:text-4xl font-500 text-text_1 tracking-tighter text-balance">{props.item.title}</h3>
-									</Show>
-									<Show when={props.item.sub_title_bottom}>
-										<h4 class=" text-md   xl:text-sm font-500 text-text_2 tracking-tighter text-balance">
-											{props.item.sub_title_bottom}
-										</h4>
-									</Show>
-									<Show when={props.item.description}>
-										<p class="text-xs xl:text-sm text-text_3 tracking-normal text-balance">{props.item.description}</p>
-									</Show>
-								</div>
-							</li>
+							<Show when={props.item.title}>
+								<li class="col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance max-w-60">
+									<div class="space-y-1">
+										<Show when={props.item.top_line_tag?.length > 0}>
+											<ul class="flex space-x-2">
+												<For each={props.item.top_line_tag}>
+													{(item: any) => {
+														return (
+															<li class="flex items-center justify-center text-xs  xl:text-sm font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
+																{item}
+															</li>
+														)
+													}}
+												</For>
+											</ul>
+										</Show>
+										<Show when={props.item.title}>
+											<h3 class=" text-lg  xl:text-4xl font-500 text-text_1 tracking-tighter text-balance">{props.item.title}</h3>
+										</Show>
+										<Show when={props.item.sub_title_bottom}>
+											<h4 class=" text-md   xl:text-sm font-500 text-text_2 tracking-tighter text-balance">
+												{props.item.sub_title_bottom}
+											</h4>
+										</Show>
+										<Show when={props.item.description}>
+											<p class="text-xs xl:text-sm text-text_3 tracking-normal text-balance">{props.item.description}</p>
+										</Show>
+									</div>
+								</li>
+							</Show>
 							<For each={queryCollection?.data?.products}>
 								{(product, index) => {
 									let el: HTMLLIElement | undefined

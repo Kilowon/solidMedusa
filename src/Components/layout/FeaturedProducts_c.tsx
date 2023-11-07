@@ -37,6 +37,8 @@ interface FeaturedProps {
 		variant: string
 		description: string
 		type: string
+		component_type: 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
+		extended_type: 'extended' | 'default'
 	}
 }
 
@@ -162,7 +164,7 @@ export default function FeaturedProductsLgExtended(props: {
 												<For each={props.item.top_line_tag}>
 													{(item: any) => {
 														return (
-															<li class="flex items-center justify-center text-xs  xl:text-sm font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
+															<li class="flex items-center justify-center text-sm font-500 px-1.5 text-normal_1 bg-accent_6 tracking-tighter text-balance rounded-0.5">
 																{item}
 															</li>
 														)
@@ -171,16 +173,14 @@ export default function FeaturedProductsLgExtended(props: {
 											</ul>
 										</Show>
 										<Show when={props.item.title}>
-											<h3 class=" text-sm  xl:text-4xl font-500 text-text_1 tracking-tighter text-balance">{props.item.title}</h3>
+											<h3 class=" text-4xl font-500 text-text_1 tracking-tighter text-balance">{props.item.title}</h3>
 										</Show>
 										<Show when={props.item.sub_title_bottom}>
-											<h4 class=" text-xs   xl:text-sm font-500 text-text_2 tracking-tighter text-balance">
-												{props.item.sub_title_bottom}
-											</h4>
+											<h4 class=" text-sm font-500 text-text_2 tracking-tighter text-balance">{props.item.sub_title_bottom}</h4>
 										</Show>
 									</div>
 									<Show when={props.item.description}>
-										<p class="text-xs xl:text-sm text-text_3 tracking-normal text-balance">{props.item.description}</p>
+										<p class="text-sm text-text_3 tracking-normal text-balance">{props.item.description}</p>
 									</Show>
 								</li>
 							</Show>
@@ -229,7 +229,8 @@ export default function FeaturedProductsLgExtended(props: {
 																{...product}
 																wish={primaryData?.data?.data?.product_wish}
 																tag={primaryData?.data?.data?.product_tag}
-																component_type={'extended'}
+																component_type={props.item.component_type}
+																extended_type={props.item.extended_type}
 															/>
 														</Motion>
 													</Rerun>

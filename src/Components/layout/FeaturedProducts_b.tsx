@@ -37,6 +37,8 @@ interface FeaturedProps {
 		variant: string
 		description: string
 		type: string
+		component_type: 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
+		extended_type: 'extended' | 'default'
 	}
 }
 
@@ -226,7 +228,8 @@ export default function FeaturedProductsLg(props: { variant: FeaturedProps['vari
 																{...product}
 																wish={primaryData?.data?.data?.product_wish}
 																tag={primaryData?.data?.data?.product_tag}
-																component_type={'standard'}
+																component_type={props.item.component_type}
+																extended_type={props.item.extended_type}
 															/>
 														</Motion>
 													</Rerun>

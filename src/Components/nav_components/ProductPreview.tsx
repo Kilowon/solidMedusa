@@ -2,9 +2,10 @@ import { A } from 'solid-start'
 import { ProductPreviewType } from '~/types/global'
 import Thumbnail from '~/Components/common/Thumbnail'
 import { currencyFormat } from '~/lib/helpers/currency'
-import { Show, onMount, createSignal, For } from 'solid-js'
+import { Show, onMount, createSignal, For, createEffect } from 'solid-js'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
+import { create } from 'domain'
 
 interface ProductPreviewProps extends ProductPreviewType {
 	handleClick: () => void
@@ -19,7 +20,8 @@ interface ProductPreviewProps extends ProductPreviewType {
 	tags: string[]
 	subtitle: string
 	description: string
-	component_type: 'extended' | 'standard'
+	component_type: 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
+	extended_type: 'extended' | 'default'
 }
 
 const ProductPreview = (props: ProductPreviewProps) => {
@@ -60,6 +62,13 @@ const ProductPreview = (props: ProductPreviewProps) => {
 		}
 	})
 
+	createEffect(() => {
+		console.log('type', props.component_type)
+	})
+	createEffect(() => {
+		console.log('type', props.extended_type)
+	})
+
 	return (
 		<Show when={props.title}>
 			<A href={`/products/${props.handle}`}>
@@ -77,22 +86,27 @@ const ProductPreview = (props: ProductPreviewProps) => {
 					/>
 					<div
 						class={clsx(
-							'flex flex-col justify-between text-xs lg:text-base text-text_2 space-y-1 relative',
-							bgVariant() === 'default' && '',
-							bgVariant() === 'type_1' && 'rounded-md bg-surface overflow-hidden',
-							bgVariant() === 'type_2' && 'rounded-b-md bg-surface overflow-hidden border border-normal_4 ',
-							bgVariant() === 'type_3' && 'bg-normal_1 rounded-b-md border border-normal_4 ',
-
-							bgVariant() === 'type_4' && 'bg-normal_1 rounded-b-md border border-normal_4 shadow-sm shadow-text_5/50',
-							bgVariant() === 'type_5' &&
-								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-sm shadow-text_5/50',
-
-							bgVariant() === 'type_6' &&
-								'rounded-b-md bg-surface overflow-hidden border border-normal_4 shadow-md shadow-text_5/50 '
+							'flex flex-col justify-between  text-text_2 space-y-1 relative',
+							props.component_type === 'type_1' && 'text-xs lg:text-base',
+							props.component_type === 'type_2' && 'text-base',
+							props.component_type === 'type_3' && '',
+							props.component_type === 'type_4' && '',
+							props.component_type === 'type_5' && '',
+							props.component_type === 'type_6' && ''
 						)}
 					>
 						<div class="flex justify-between pt-0.5 px-1 relative ">
-							<div class="flex space-x-1 text-xs xl:text-base font-500 tracking-tight ">
+							<div
+								class={clsx(
+									'flex space-x-1  font-500 tracking-tight',
+									props.component_type === 'type_1' && 'text-xs xl:text-base',
+									props.component_type === 'type_2' && 'text-base',
+									props.component_type === 'type_3' && '',
+									props.component_type === 'type_4' && '',
+									props.component_type === 'type_5' && '',
+									props.component_type === 'type_6' && ''
+								)}
+							>
 								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
 									<div class="">
 										{props.variants?.[0]?.original_price
@@ -158,17 +172,39 @@ const ProductPreview = (props: ProductPreviewProps) => {
 									</div>
 								</Show>
 								<div class="space-y-1">
-									<h5 class="text-xs xl:text-sm font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip">
+									<h5
+										class={clsx(
+											'font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip',
+											props.component_type === 'type_1' && 'text-xs xl:text-sm',
+											props.component_type === 'type_2' && 'text-sm',
+											props.component_type === 'type_3' && '',
+											props.component_type === 'type_4' && '',
+											props.component_type === 'type_5' && '',
+											props.component_type === 'type_6' && ''
+										)}
+									>
 										{props.title}
 									</h5>
 									<p class="hidden">{props.description}</p>
-									<Show when={props.component_type === 'extended'}>
-										<h6 class="text-xs text-text_4 line-clamp-2 text-ellipsis text-clip">{props.subtitle}</h6>
+									<Show when={props.extended_type === 'extended'}>
+										<h6
+											class={clsx(
+												' text-text_4 line-clamp-2 text-ellipsis text-clip',
+												props.component_type === 'type_1' && 'text-xs',
+												props.component_type === 'type_2' && 'text-xs',
+												props.component_type === 'type_3' && '',
+												props.component_type === 'type_4' && '',
+												props.component_type === 'type_5' && '',
+												props.component_type === 'type_6' && ''
+											)}
+										>
+											{props.subtitle}
+										</h6>
 									</Show>
 								</div>
 							</div>
 						</div>
-						<Show when={props.component_type === 'extended' && mouseOver() === true}>
+						<Show when={props.extended_type === 'extended' && mouseOver() === true}>
 							<div class="w-full flex justify-start h-3.5 absolute bottom--4 z-30">
 								<button class="text-xs h-1 bg-accent_4 text-accenttext_1 rounded-1 flex items-center w-full"></button>
 							</div>

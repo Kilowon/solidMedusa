@@ -5,7 +5,7 @@ import { currencyFormat } from '~/lib/helpers/currency'
 import { Show, onMount, createSignal, For, createEffect } from 'solid-js'
 import clsx from 'clsx'
 import { createQuery } from '@tanstack/solid-query'
-import { create } from 'domain'
+import { getWindowSize } from '@solid-primitives/resize-observer'
 
 interface ProductPreviewProps extends ProductPreviewType {
 	handleClick: () => void
@@ -136,7 +136,9 @@ const ProductPreview = (props: ProductPreviewProps) => {
 											sale
 										</div>
 									</Show>
-									<Show when={props?.tags.length}>
+									<Show
+										when={props?.tags.length && props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}
+									>
 										<For each={props?.tags}>
 											{(tag: any, index) => {
 												if (index() < 1)

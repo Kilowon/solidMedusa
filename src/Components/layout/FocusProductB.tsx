@@ -1,6 +1,5 @@
 import { Show, For } from 'solid-js'
 import { A } from 'solid-start'
-import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
 import clsx from 'clsx'
 

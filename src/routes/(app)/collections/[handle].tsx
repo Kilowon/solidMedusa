@@ -212,7 +212,10 @@ export default function Collection() {
 														>
 															<ProductPreview
 																{...product}
-																component_type="standard"
+																wish={primaryData?.data?.data?.store_wish}
+																tag={primaryData?.data?.data?.store_tag}
+																component_type="type_1"
+																extended_type="default"
 															/>
 														</Motion>
 													</Rerun>

@@ -102,10 +102,6 @@ export default function Collection() {
 		}
 	}
 
-	createEffect(() => {
-		console.log('currentFeatured', primaryDataFeatured())
-	})
-
 	return (
 		<main class="min-h-[100vh]">
 			<Transition

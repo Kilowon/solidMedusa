@@ -89,10 +89,10 @@ const ProductPreview = (props: ProductPreviewProps) => {
 							'flex flex-col justify-between  text-text_2 space-y-1 relative',
 							props.component_type === 'type_1' && 'text-xs lg:text-base',
 							props.component_type === 'type_2' && 'text-base',
-							props.component_type === 'type_3' && '',
-							props.component_type === 'type_4' && '',
-							props.component_type === 'type_5' && '',
-							props.component_type === 'type_6' && ''
+							props.component_type === 'type_3' && 'text-base',
+							props.component_type === 'type_4' && 'text-base',
+							props.component_type === 'type_5' && 'text-base',
+							props.component_type === 'type_6' && 'text-base'
 						)}
 					>
 						<div class="flex justify-between pt-0.5 px-1 relative ">
@@ -101,10 +101,10 @@ const ProductPreview = (props: ProductPreviewProps) => {
 									'flex space-x-1  font-500 tracking-tight',
 									props.component_type === 'type_1' && 'text-xs xl:text-base',
 									props.component_type === 'type_2' && 'text-base',
-									props.component_type === 'type_3' && '',
-									props.component_type === 'type_4' && '',
-									props.component_type === 'type_5' && '',
-									props.component_type === 'type_6' && ''
+									props.component_type === 'type_3' && 'text-base',
+									props.component_type === 'type_4' && 'text-lg',
+									props.component_type === 'type_5' && 'text-lg',
+									props.component_type === 'type_6' && 'text-lg'
 								)}
 							>
 								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
@@ -177,10 +177,10 @@ const ProductPreview = (props: ProductPreviewProps) => {
 											'font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip',
 											props.component_type === 'type_1' && 'text-xs xl:text-sm',
 											props.component_type === 'type_2' && 'text-sm',
-											props.component_type === 'type_3' && '',
-											props.component_type === 'type_4' && '',
-											props.component_type === 'type_5' && '',
-											props.component_type === 'type_6' && ''
+											props.component_type === 'type_3' && 'text-lg',
+											props.component_type === 'type_4' && 'text-xl',
+											props.component_type === 'type_5' && 'text-2xl',
+											props.component_type === 'type_6' && 'text-3xl tracking-tighter text-balance'
 										)}
 									>
 										{props.title}
@@ -192,10 +192,10 @@ const ProductPreview = (props: ProductPreviewProps) => {
 												' text-text_4 line-clamp-2 text-ellipsis text-clip',
 												props.component_type === 'type_1' && 'text-xs',
 												props.component_type === 'type_2' && 'text-xs',
-												props.component_type === 'type_3' && '',
-												props.component_type === 'type_4' && '',
-												props.component_type === 'type_5' && '',
-												props.component_type === 'type_6' && ''
+												props.component_type === 'type_3' && 'text-xs',
+												props.component_type === 'type_4' && 'text-base',
+												props.component_type === 'type_5' && 'text-base',
+												props.component_type === 'type_6' && 'text-base'
 											)}
 										>
 											{props.subtitle}

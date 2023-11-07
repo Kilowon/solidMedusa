@@ -8,6 +8,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
+import clsx from 'clsx'
 
 interface Collection {
 	id: string
@@ -125,7 +126,25 @@ export default function Collection() {
 					<Show when={queryCollection?.data?.products && primaryData.isSuccess}>
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16 sm:my-20">
 							<Show when={primaryDataFeatured()?.item?.title}>
-								<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+								<li
+									class={clsx(
+										' col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance   w-full py-10 px-2 lg:py-auto lg:px-auto lg:p-2 rounded-1 lg:p-4 ',
+										primaryDataFeatured()?.item?.background_colors === 'normal_1' && 'bg-normal_1',
+										primaryDataFeatured()?.item?.background_colors === 'normal_2' && 'bg-normal_2',
+										primaryDataFeatured()?.item?.background_colors === 'normal_3' && 'bg-normal_3',
+										primaryDataFeatured()?.item?.background_colors === 'normal_4' && 'bg-normal_4',
+										primaryDataFeatured()?.item?.background_colors === 'surface' && 'bg-surface',
+										primaryDataFeatured()?.item?.background_colors === 'text_4' && 'bg-text_4',
+										primaryDataFeatured()?.item?.background_colors === 'text_5' && 'bg-text_5',
+										primaryDataFeatured()?.item?.background_colors === 'accent_4' && 'bg-accent_4',
+										primaryDataFeatured()?.item?.background_colors === 'accent_5' && 'bg-accent_5',
+										primaryDataFeatured()?.item?.background_colors === 'accent_6' && 'bg-accent_6',
+										primaryDataFeatured()?.item?.background_colors === 'accent_7' && 'bg-accent_7',
+										primaryDataFeatured()?.item?.background_colors === 'accent_8' && 'bg-accent_8',
+										primaryDataFeatured()?.item?.background_colors === 'accent_9' && 'bg-accent_9',
+										primaryDataFeatured()?.item?.background_colors === 'accent_10' && 'bg-accent_10'
+									)}
+								>
 									<div class="space-y-1">
 										<Show when={primaryDataFeatured()?.item?.top_line_tag?.length > 0}>
 											<ul class="flex space-x-2">
@@ -140,7 +159,23 @@ export default function Collection() {
 												</For>
 											</ul>
 										</Show>
-										<h1 class=" text-sm  xl:text-[1.2svw] font-500  text-text_1 tracking-tighter text-balance">
+										<h1
+											class={clsx(
+												' font-700 text-text_2 tracking-tighter text-balance',
+												primaryDataFeatured()?.item?.text_size === 'text-xs' && 'text-xs',
+												primaryDataFeatured()?.item?.text_size === 'text-sm' && 'text-sm',
+												primaryDataFeatured()?.item?.text_size === 'text-base' && 'text-base',
+												primaryDataFeatured()?.item?.text_size === 'text-lg' && 'text-xl lg:text-lg',
+												primaryDataFeatured()?.item?.text_size === 'text-xl' && 'text-xl lg:text-xl',
+												primaryDataFeatured()?.item?.text_size === 'text-2xl' && 'text-xl lg:text-2xl',
+												primaryDataFeatured()?.item?.text_size === 'text-3xl' && 'text-xl lg:text-3xl',
+												primaryDataFeatured()?.item?.text_size === 'text-4xl' && 'text-xl lg:text-4xl',
+												primaryDataFeatured()?.item?.text_size === 'text-5xl' && 'text-xl lg:text-5xl',
+												primaryDataFeatured()?.item?.text_size === 'text-6xl' && 'text-xl lg:text-6xl',
+												primaryDataFeatured()?.item?.text_size === 'text-7xl' && 'text-xl lg:text-7xl',
+												primaryDataFeatured()?.item?.text_size === 'text-8xl' && 'text-xl lg:text-8xl'
+											)}
+										>
 											{primaryDataFeatured()?.item?.title}
 										</h1>
 										<h2 class=" text-xs   xl:text-sm font-500  text-text_2 tracking-tighter text-balance">

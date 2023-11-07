@@ -56,9 +56,9 @@ export default function Store() {
 			<div class="mx-1 sm:mx-auto sm:content-container mt-5 sm:mt-25 space-y-5">
 				<Show when={queryAllProducts?.data?.products}>
 					<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-1 sm:gap-4 sm:my-20">
-						<li class="col-span-1 sm:col-span-1 grid justify-self-center content-center space-y-4 text-balance">
+						<li class="col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance   w-full py-10 px-2 lg:py-auto lg:px-auto rounded-1 lg:p-4 bg-surface">
 							<div class="space-y-1">
-								<h1 class=" text-sm  xl:text-[1.2svw] font-500  text-text_1 tracking-tighter text-balance">
+								<h1 class=" text-base  xl:text-2xl font-700  text-text_2 tracking-tighter text-balance">
 									{primaryData?.data?.data?.everything_title}
 								</h1>
 							</div>

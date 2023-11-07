@@ -186,7 +186,7 @@ export default function FeaturedProductsLg(props: { variant: FeaturedProps['vari
 							<Show when={props.item.title}>
 								<li
 									class={clsx(
-										' col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance   w-full py-10 px-2 lg:py-auto lg:px-auto lg:p-2 rounded-1 lg:p-4 ',
+										' col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance   w-full py-10 px-2 lg:py-auto lg:px-auto rounded-1 lg:p-4 ',
 										props.item.background_colors === 'normal_1' && 'bg-normal_1',
 										props.item.background_colors === 'normal_2' && 'bg-normal_2',
 										props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -225,14 +225,14 @@ export default function FeaturedProductsLg(props: { variant: FeaturedProps['vari
 													props.item.text_size === 'text-sm' && 'text-sm',
 													props.item.text_size === 'text-base' && 'text-base',
 													props.item.text_size === 'text-lg' && 'text-lg',
-													props.item.text_size === 'text-xl' && 'text-xl',
-													props.item.text_size === 'text-2xl' && 'text-2xl',
-													props.item.text_size === 'text-3xl' && 'text-3xl',
-													props.item.text_size === 'text-4xl' && 'text-4xl',
-													props.item.text_size === 'text-5xl' && 'text-5xl',
-													props.item.text_size === 'text-6xl' && 'text-6xl',
-													props.item.text_size === 'text-7xl' && 'text-7xl',
-													props.item.text_size === 'text-8xl' && 'text-8xl'
+													props.item.text_size === 'text-xl' && 'text-xl lg:text-xl',
+													props.item.text_size === 'text-2xl' && 'text-2xl lg:text-2xl',
+													props.item.text_size === 'text-3xl' && 'text-2xl lg:text-3xl',
+													props.item.text_size === 'text-4xl' && 'text-2xl lg:text-4xl',
+													props.item.text_size === 'text-5xl' && 'text-2xl lg:text-5xl',
+													props.item.text_size === 'text-6xl' && 'text-2xl lg:text-6xl',
+													props.item.text_size === 'text-7xl' && 'text-2xl lg:text-7xl',
+													props.item.text_size === 'text-8xl' && 'text-2xl lg:text-8xl'
 												)}
 											>
 												{props.item.title}

@@ -228,14 +228,14 @@ export default function FeaturedProductsLgExtended(props: {
 													props.item.text_size === 'text-sm' && 'text-sm',
 													props.item.text_size === 'text-base' && 'text-base',
 													props.item.text_size === 'text-lg' && 'text-lg',
-													props.item.text_size === 'text-xl' && 'text-xl',
-													props.item.text_size === 'text-2xl' && 'text-2xl',
-													props.item.text_size === 'text-3xl' && 'text-3xl',
-													props.item.text_size === 'text-4xl' && 'text-4xl',
-													props.item.text_size === 'text-5xl' && 'text-5xl',
-													props.item.text_size === 'text-6xl' && 'text-6xl',
-													props.item.text_size === 'text-7xl' && 'text-7xl',
-													props.item.text_size === 'text-8xl' && 'text-8xl'
+													props.item.text_size === 'text-xl' && 'text-xl lg:text-xl',
+													props.item.text_size === 'text-2xl' && 'text-2xl lg:text-2xl',
+													props.item.text_size === 'text-3xl' && 'text-2xl lg:text-3xl',
+													props.item.text_size === 'text-4xl' && 'text-2xl lg:text-4xl',
+													props.item.text_size === 'text-5xl' && 'text-2xl lg:text-5xl',
+													props.item.text_size === 'text-6xl' && 'text-2xl lg:text-6xl',
+													props.item.text_size === 'text-7xl' && 'text-2xl lg:text-7xl',
+													props.item.text_size === 'text-8xl' && 'text-2xl lg:text-8xl'
 												)}
 											>
 												{props.item.title}

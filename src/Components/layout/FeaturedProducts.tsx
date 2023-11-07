@@ -226,15 +226,15 @@ export default function FeaturedProducts(props: { variant: FeaturedProps['varian
 													props.item.text_size === 'text-xs' && 'text-xs',
 													props.item.text_size === 'text-sm' && 'text-sm',
 													props.item.text_size === 'text-base' && 'text-base',
-													props.item.text_size === 'text-lg' && 'text-lg',
-													props.item.text_size === 'text-xl' && 'text-xl',
-													props.item.text_size === 'text-2xl' && 'text-2xl',
-													props.item.text_size === 'text-3xl' && 'text-3xl',
-													props.item.text_size === 'text-4xl' && 'text-4xl',
-													props.item.text_size === 'text-5xl' && 'text-5xl',
-													props.item.text_size === 'text-6xl' && 'text-6xl',
-													props.item.text_size === 'text-7xl' && 'text-7xl',
-													props.item.text_size === 'text-8xl' && 'text-8xl'
+													props.item.text_size === 'text-lg' && 'text-xl lg:text-lg',
+													props.item.text_size === 'text-xl' && 'text-xl lg:text-xl',
+													props.item.text_size === 'text-2xl' && 'text-xl lg:text-2xl',
+													props.item.text_size === 'text-3xl' && 'text-xl lg:text-3xl',
+													props.item.text_size === 'text-4xl' && 'text-xl lg:text-4xl',
+													props.item.text_size === 'text-5xl' && 'text-xl lg:text-5xl',
+													props.item.text_size === 'text-6xl' && 'text-xl lg:text-6xl',
+													props.item.text_size === 'text-7xl' && 'text-xl lg:text-7xl',
+													props.item.text_size === 'text-8xl' && 'text-xl lg:text-8xl'
 												)}
 											>
 												{props.item.title}

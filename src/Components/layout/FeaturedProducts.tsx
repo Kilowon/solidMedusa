@@ -8,6 +8,7 @@ import { Motion, Presence } from '@motionone/solid'
 import { Rerun } from '@solid-primitives/keyed'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 import { getWindowSize } from '@solid-primitives/resize-observer'
+import clsx from 'clsx'
 
 interface Collection {
 	id: string
@@ -39,6 +40,35 @@ interface FeaturedProps {
 		type: string
 		component_type: 'type_1' | 'type_2' | 'type_3' | 'type_4' | 'type_5' | 'type_6'
 		extended_type: 'extended' | 'default'
+		text_size:
+			| 'text-xs'
+			| 'text-sm'
+			| 'text-base'
+			| 'text-lg'
+			| 'text-xl'
+			| 'text-2xl'
+			| 'text-3xl'
+			| 'text-4xl'
+			| 'text-5xl'
+			| 'text-6xl'
+			| 'text-7xl'
+			| 'text-8xl'
+
+		background_colors:
+			| 'normal_1'
+			| 'normal_2'
+			| 'normal_3'
+			| 'normal_4'
+			| 'surface'
+			| 'text_4'
+			| 'text_5'
+			| 'accent_4'
+			| 'accent_5'
+			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
 	}
 }
 
@@ -156,7 +186,25 @@ export default function FeaturedProducts(props: { variant: FeaturedProps['varian
 					>
 						<ol class="row-start-1 col-start-1 col-span-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-6 lg:gap-x-8 lg:gap-y-12 my-18 px-1">
 							<Show when={props.item.title}>
-								<li class="col-span-1 sm:col-span-1 grid  content-center space-y-4 text-balance max-w-60">
+								<li
+									class={clsx(
+										' col-span-1 sm:col-span-1 grid content-center space-y-4 text-balance   w-full py-10 px-2 lg:py-auto lg:px-auto lg:p-2 rounded-1 lg:p-4 ',
+										props.item.background_colors === 'normal_1' && 'bg-normal_1',
+										props.item.background_colors === 'normal_2' && 'bg-normal_2',
+										props.item.background_colors === 'normal_3' && 'bg-normal_3',
+										props.item.background_colors === 'normal_4' && 'bg-normal_4',
+										props.item.background_colors === 'surface' && 'bg-surface',
+										props.item.background_colors === 'text_4' && 'bg-text_4',
+										props.item.background_colors === 'text_5' && 'bg-text_5',
+										props.item.background_colors === 'accent_4' && 'bg-accent_4',
+										props.item.background_colors === 'accent_5' && 'bg-accent_5',
+										props.item.background_colors === 'accent_6' && 'bg-accent_6',
+										props.item.background_colors === 'accent_7' && 'bg-accent_7',
+										props.item.background_colors === 'accent_8' && 'bg-accent_8',
+										props.item.background_colors === 'accent_9' && 'bg-accent_9',
+										props.item.background_colors === 'accent_10' && 'bg-accent_10'
+									)}
+								>
 									<div class="space-y-1">
 										<Show when={props.item.top_line_tag?.length > 0}>
 											<ul class="flex space-x-2">
@@ -172,7 +220,25 @@ export default function FeaturedProducts(props: { variant: FeaturedProps['varian
 											</ul>
 										</Show>
 										<Show when={props.item?.title}>
-											<h3 class=" text-xl  xl:text-4xl font-500 text-text_1 tracking-tighter text-balance">{props.item.title}</h3>
+											<h3
+												class={clsx(
+													' font-700 text-text_2 tracking-tighter text-balance',
+													props.item.text_size === 'text-xs' && 'text-xs',
+													props.item.text_size === 'text-sm' && 'text-sm',
+													props.item.text_size === 'text-base' && 'text-base',
+													props.item.text_size === 'text-lg' && 'text-lg',
+													props.item.text_size === 'text-xl' && 'text-xl',
+													props.item.text_size === 'text-2xl' && 'text-2xl',
+													props.item.text_size === 'text-3xl' && 'text-3xl',
+													props.item.text_size === 'text-4xl' && 'text-4xl',
+													props.item.text_size === 'text-5xl' && 'text-5xl',
+													props.item.text_size === 'text-6xl' && 'text-6xl',
+													props.item.text_size === 'text-7xl' && 'text-7xl',
+													props.item.text_size === 'text-8xl' && 'text-8xl'
+												)}
+											>
+												{props.item.title}
+											</h3>
 										</Show>
 										<Show when={props.item.sub_title_bottom}>
 											<h4 class=" text-xs   xl:text-sm font-500 text-text_2 tracking-tighter text-balance">

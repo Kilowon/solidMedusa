@@ -102,9 +102,9 @@ const ProductPreview = (props: ProductPreviewProps) => {
 									props.component_type === 'type_1' && 'text-xs xl:text-base',
 									props.component_type === 'type_2' && 'text-base',
 									props.component_type === 'type_3' && 'text-base',
-									props.component_type === 'type_4' && 'text-lg',
-									props.component_type === 'type_5' && 'text-lg',
-									props.component_type === 'type_6' && 'text-lg'
+									props.component_type === 'type_4' && 'text-lg lg:text-base',
+									props.component_type === 'type_5' && 'text-lg lg:text-base',
+									props.component_type === 'type_6' && 'text-lg lg:text-base'
 								)}
 							>
 								<Show when={props.variants?.[0]?.original_price === props.variants?.[0]?.calculated_price}>
@@ -177,10 +177,10 @@ const ProductPreview = (props: ProductPreviewProps) => {
 											'font-500 tracking-tight text-text_3  line-clamp-2 text-ellipsis text-clip',
 											props.component_type === 'type_1' && 'text-xs xl:text-sm',
 											props.component_type === 'type_2' && 'text-sm',
-											props.component_type === 'type_3' && 'text-lg',
-											props.component_type === 'type_4' && 'text-xl',
-											props.component_type === 'type_5' && 'text-2xl',
-											props.component_type === 'type_6' && 'text-3xl tracking-tighter text-balance'
+											props.component_type === 'type_3' && 'text-lg tracking-tight text-balance',
+											props.component_type === 'type_4' && 'text-xl lg:text-lg tracking-tighter text-balance',
+											props.component_type === 'type_5' && 'text-2xl lg:text-lg tracking-tighter text-balance',
+											props.component_type === 'type_6' && 'text-3xl lg:text-lg tracking-tighter text-balance'
 										)}
 									>
 										{props.title}
@@ -193,9 +193,9 @@ const ProductPreview = (props: ProductPreviewProps) => {
 												props.component_type === 'type_1' && 'text-xs',
 												props.component_type === 'type_2' && 'text-xs',
 												props.component_type === 'type_3' && 'text-xs',
-												props.component_type === 'type_4' && 'text-base',
-												props.component_type === 'type_5' && 'text-base',
-												props.component_type === 'type_6' && 'text-base'
+												props.component_type === 'type_4' && 'text-sm lg:text-xs',
+												props.component_type === 'type_5' && 'text-sm lg:text-xs',
+												props.component_type === 'type_6' && 'text-sm lg:text-xs'
 											)}
 										>
 											{props.subtitle}

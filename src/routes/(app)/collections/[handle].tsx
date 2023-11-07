@@ -171,9 +171,9 @@ export default function Collection() {
 												primaryDataFeatured()?.item?.text_size === 'text-3xl' && 'text-xl lg:text-3xl',
 												primaryDataFeatured()?.item?.text_size === 'text-4xl' && 'text-xl lg:text-4xl',
 												primaryDataFeatured()?.item?.text_size === 'text-5xl' && 'text-xl lg:text-5xl',
-												primaryDataFeatured()?.item?.text_size === 'text-6xl' && 'text-xl lg:text-6xl',
-												primaryDataFeatured()?.item?.text_size === 'text-7xl' && 'text-xl lg:text-7xl',
-												primaryDataFeatured()?.item?.text_size === 'text-8xl' && 'text-xl lg:text-8xl'
+												primaryDataFeatured()?.item?.text_size === 'text-6xl' && 'text-xl lg:text-5xl',
+												primaryDataFeatured()?.item?.text_size === 'text-7xl' && 'text-xl lg:text-5xl',
+												primaryDataFeatured()?.item?.text_size === 'text-8xl' && 'text-xl lg:text-5xl'
 											)}
 										>
 											{primaryDataFeatured()?.item?.title}

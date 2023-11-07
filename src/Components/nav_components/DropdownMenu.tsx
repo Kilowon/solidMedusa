@@ -106,23 +106,30 @@ export default function DropdownMenu(props: {
 											</A>
 										</div>
 										<Show when={primaryData.isSuccess && collections()?.collections.length > 0}>
-											<For each={primaryData?.data?.data?.main_page_component_block}>
+											<For each={primaryData?.data?.data?.menu_collection}>
 												{collection => {
-													if (collection.status === 'archived') return
+													createEffect(() => {
+														console.log('PLOOP', matchCollections(collections()?.collections, collection?.item?.variant))
+													})
+
+													if (collection?.item?.status === 'archived') return
 
 													if (import.meta.env.VITE_DRAFT_SITE === 'false') {
-														if (collection.status === 'draft') return
+														if (collection?.item?.status === 'draft') return
 													}
 
-													if (collection?.menu_status !== 'menu')
+													if (collection?.item?.menu_status !== 'menu')
 														createEffect(() => {
-															console.log(matchCollections(collections()?.collections, collection.variant))
+															console.log(matchCollections(collections()?.collections, collection?.item?.variant))
 														})
-													if (collection?.menu_status === 'menu')
+
+													if (collection?.item?.menu_status === 'menu')
 														return (
 															<div class="text-sm text-sm  text-accent_6 mr-6 font-500">
 																<A
-																	href={`/collections/${matchCollections(collections()?.collections, collection.variant)[0]?.handle}`}
+																	href={`/collections/${
+																		matchCollections(collections()?.collections, collection?.item?.variant)[0]?.handle
+																	}`}
 																	onClick={e => {
 																		e.stopPropagation()
 
@@ -135,7 +142,7 @@ export default function DropdownMenu(props: {
 																		}
 																	}}
 																>
-																	{collection.menu_title}
+																	{collection?.item?.menu_title}
 																</A>
 															</div>
 														)

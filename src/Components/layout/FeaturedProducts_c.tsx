@@ -127,7 +127,7 @@ export default function FeaturedProductsLgExtended(props: {
 	})
 
 	function matchCollections(currentFeatured: any) {
-		let match = primaryData?.data?.data?.main_page_component_block.filter(
+		let match = primaryData?.data?.data?.menu_collection?.filter(
 			(block: any) => block.variant === currentFeatured?.metadata?.location
 		)
 		if (match?.length > 0) {

@@ -101,7 +101,7 @@ export default function App() {
 					)}
 				>
 					<Suspense>
-						<Show when={isVisible() && primaryData.isSuccess && featuredData.isSuccess}>
+						<Show when={featuredData.isSuccess}>
 							<For each={featuredData.data?.data?.builder_blocks}>
 								{item => {
 									if (item?.item === null) return
@@ -112,24 +112,33 @@ export default function App() {
 
 									return (
 										<div class="snap-start">
-											<Show when={item?.item?.type === 'featured_products_a'}>
-												<FeaturedProducts
-													variant={item?.item?.variant}
-													item={item.item}
-												/>
-											</Show>
-											<Show when={item?.item?.type === 'featured_products_b'}>
-												<FeaturedProductsLg
-													variant={item?.item?.variant}
-													item={item.item}
-												/>
-											</Show>
-											<Show when={item?.item?.type === 'featured_products_c'}>
-												<FeaturedProductsLgExtended
-													variant={item?.item?.variant}
-													item={item.item}
-												/>
-											</Show>
+											<ErrorBoundary
+												fallback={(e: Error) => (
+													<>
+														{console.error(e)}
+														{/* <NotFound /> */}
+													</>
+												)}
+											>
+												<Show when={item?.item?.type === 'featured_products_a'}>
+													<FeaturedProducts
+														variant={item?.item?.variant}
+														item={item.item}
+													/>
+												</Show>
+												<Show when={item?.item?.type === 'featured_products_b'}>
+													<FeaturedProductsLg
+														variant={item?.item?.variant}
+														item={item.item}
+													/>
+												</Show>
+												<Show when={item?.item?.type === 'featured_products_c'}>
+													<FeaturedProductsLgExtended
+														variant={item?.item?.variant}
+														item={item.item}
+													/>
+												</Show>
+											</ErrorBoundary>
 											<Show when={item?.item?.type === 'featured_products_d'}>
 												<FeaturedProductsD item={item.item} />
 											</Show>

@@ -159,7 +159,7 @@ export function GlobalContextProvider(props: any) {
 		queryKey: ['primary_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
-			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary?fields=*.item.*.*.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

@@ -122,16 +122,14 @@ export default function FeaturedProducts(props: { variant: FeaturedProps['varian
 			setPrimaryDataFeatured(matchCollections(currentFeatured()))
 		}
 	})
-
 	function matchCollections(currentFeatured: any) {
-		let match = primaryData?.data?.data?.main_page_component_block.filter(
+		let match = primaryData?.data?.data?.menu_collection?.filter(
 			(block: any) => block.variant === currentFeatured?.metadata?.location
 		)
 		if (match?.length > 0) {
 			return match[0]
 		}
 	}
-
 	createEffect(() => {
 		console.log('currentFeatured', primaryDataFeatured())
 	})

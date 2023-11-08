@@ -84,10 +84,10 @@ export default function App() {
 		<main class="min-h-[100vh]">
 			<HeroSection />
 
-			<div class="min-h-[100vh] snap-y snap-mandatory">
+			<div class="min-h-[100vh] ">
 				<div
 					ref={el}
-					class="w-90% h-5 bg-transparent"
+					class="w-90% h-10 bg-transparent"
 				></div>
 				<div>
 					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
@@ -101,7 +101,7 @@ export default function App() {
 					)}
 				>
 					<Suspense>
-						<Show when={featuredData.isSuccess}>
+						<Show when={isVisible() && featuredData.isSuccess}>
 							<For each={featuredData.data?.data?.builder_blocks}>
 								{item => {
 									if (item?.item === null) return

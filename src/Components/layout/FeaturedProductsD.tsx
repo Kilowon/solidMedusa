@@ -123,8 +123,8 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 						)}
 					>
 						<Show when={props.item?.component_variant === 'default' || props.item?.component_variant === 'right'}>
-							<div class="lg:flex justify-center items-center my-8">
-								<div class="flex flex-col  max-w-120 min-w-100 my-8 lg:my-auto">
+							<div class="lg:flex justify-between items-center my-8">
+								<div class="flex flex-col  max-w-150 min-w-100 my-8 lg:my-auto">
 									<div
 										class={clsx(
 											' tracking-tighter text-text_2   font-500 z-2  text-start text-balance',
@@ -146,7 +146,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 									</div>
 									<h1
 										class={clsx(
-											'tracking-tighter text-text_2   font-700 z-2  text-start',
+											'tracking-tighter text-text_2 font-700 z-2 text-start text-balance tracking-tighter ',
 											props.item.text_size === 'text-xs' && 'text-xs',
 											props.item.text_size === 'text-sm' && 'text-sm',
 											props.item.text_size === 'text-base' && 'text-base',
@@ -164,7 +164,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 										{props.item.title}
 									</h1>
 								</div>
-								<div class="  lg:max-w-245  flex">
+								<div class="  lg:max-w-195  flex">
 									<ul
 										class={clsx(
 											'',
@@ -194,11 +194,13 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																</div>
 
 																<Show when={item.item?.title}>
-																	<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
+																	<div class="font-700 text-text_3 text-sm tracking-tighter  px-2 flex items-center">
+																		{item.item.title}
+																	</div>
 																</Show>
 															</div>
 															<Show when={item.item?.sub_title}>
-																<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																<div class="font-500 text-text_3 text-xs tracking-tighter text-balance ">{item.item.sub_title}</div>
 															</Show>
 														</div>
 													</li>
@@ -361,22 +363,22 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 													<For each={props.item.items}>
 														{(item: any) => {
 															return (
-																<li class="flex  ">
-																	<div
-																		class={clsx(
-																			' flex  justify-center items-center  rounded-3 overflow-hidden',
-																			props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-																			props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-																			props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-																			props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-																			props.item.background_colors_b === 'surface' && 'bg-surface',
-																			props.item.background_colors_b === 'text_4' && 'bg-text_4',
-																			props.item.background_colors_b === 'text_5' && 'bg-text_5',
-																			props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-																			props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																			props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
-																		)}
-																	>
+																<li
+																	class={clsx(
+																		'flex rounded-1.5 px-1.5',
+																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
+																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
+																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
+																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
+																		props.item.background_colors_b === 'surface' && 'bg-surface',
+																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
+																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
+																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
+																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
+																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6'
+																	)}
+																>
+																	<div class={clsx('flex justify-center items-center  rounded-3 overflow-hidden')}>
 																		<img
 																			src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=200-avif`}
 																			loading="eager"

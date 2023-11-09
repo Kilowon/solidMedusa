@@ -92,15 +92,15 @@ export default function App() {
 		<main class="min-h-[100vh]">
 			<Suspense fallback={<div>Loading...</div>}>
 				<HeroSection />
+
+				<div class="pb-10"></div>
+
+				<div
+					ref={el}
+					class="w-90% h-10 bg-red-700"
+				></div>
 			</Suspense>
-			<div class="pb-10"></div>
 			<div class="min-h-[100vh] ">
-				<Show when={primaryData.isSuccess && delay()}>
-					<div
-						ref={el}
-						class="w-90% h-10 bg-red-700"
-					></div>
-				</Show>
 				<div>
 					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
 				</div>

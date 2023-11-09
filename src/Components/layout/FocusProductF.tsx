@@ -82,6 +82,23 @@ interface FeaturedProps {
 			| 'accent_8'
 			| 'accent_9'
 			| 'accent_10'
+
+		background_colors_c:
+			| 'normal_1'
+			| 'normal_2'
+			| 'normal_3'
+			| 'normal_4'
+			| 'surface'
+			| 'text_4'
+			| 'text_5'
+			| 'accent_4'
+			| 'accent_5'
+			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
+
 		menu_status: string
 		menu_title: string
 		location: string
@@ -118,10 +135,24 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'  max-w-99svw  flex flex-col lg:flex-row justify-center mx-2 ',
+					'  max-w-100svw  flex flex-col lg:flex-row justify-center px-2 ',
 					props.item.component_variant === 'left' && 'flex-row-reverse py-5 sm:py-10  items-center',
 					props.item.component_variant === 'default' && 'py-5 sm:py-10  items-center',
-					props.item.component_variant === 'center' && ' py-5 sm:py-10  items-center lg:items-end mb-15'
+					props.item.component_variant === 'center' && ' py-5 sm:py-10  items-center lg:items-end mb-15',
+					props.item.background_colors_c === 'normal_1' && 'bg-normal_1',
+					props.item.background_colors_c === 'normal_2' && 'bg-normal_2',
+					props.item.background_colors_c === 'normal_3' && 'bg-normal_3',
+					props.item.background_colors_c === 'normal_4' && 'bg-normal_4',
+					props.item.background_colors_c === 'surface' && 'bg-surface',
+					props.item.background_colors_c === 'text_4' && 'bg-text_4',
+					props.item.background_colors_c === 'text_5' && 'bg-text_5',
+					props.item.background_colors_c === 'accent_4' && 'bg-accent_4',
+					props.item.background_colors_c === 'accent_5' && 'bg-accent_5',
+					props.item.background_colors_c === 'accent_6' && 'bg-accent_6',
+					props.item.background_colors_c === 'accent_7' && 'bg-accent_7',
+					props.item.background_colors_c === 'accent_8' && 'bg-accent_8',
+					props.item.background_colors_c === 'accent_9' && 'bg-accent_9',
+					props.item.background_colors_c === 'accent_10' && 'bg-accent_10'
 				)}
 			>
 				<Show when={getWindowSize().width > 1023}>
@@ -143,8 +174,8 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 									class={clsx(
 										'text-text_2 z-10 flex flex-col items-center ',
 										props.item.component_variant === 'center' && 'lg:min-w-[300px] max-w-400px',
-										props.item.component_variant === 'default' && 'min-w-170 max-w-185 space-y-3 lg:space-y-12',
-										props.item.component_variant === 'left' && 'min-w-170 max-w-185  space-y-3 lg:space-y-12'
+										props.item.component_variant === 'default' && 'min-w-170 max-w-195 space-y-3 ',
+										props.item.component_variant === 'left' && 'min-w-170 max-w-195  space-y-3 '
 									)}
 								>
 									<div>
@@ -157,7 +188,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 											)}
 										>
 											<Show when={props.item?.component_variant !== 'center'}>
-												<div class="pb-6 space-y-1  ">
+												<div class="pb-2   ">
 													<div
 														class={clsx(
 															' tracking-tighter text-text_2   font-500 z-2  text-start',
@@ -179,7 +210,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 													</div>
 													<h1
 														class={clsx(
-															'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces',
+															'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces mb-8',
 															props.item.text_size === 'text-xs' && 'text-xs',
 															props.item.text_size === 'text-sm' && 'text-sm',
 															props.item.text_size === 'text-base' && 'text-base',
@@ -233,24 +264,28 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 														}
 
 														return (
-															<li class="flex items-start justify-start">
+															<li
+																class={clsx(
+																	'flex items-start justify-start rounded-1 p-2',
+																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_4' && 'bg-normal_4 border border-text_2/50',
+																	props.item.background_colors_b === 'surface' && 'bg-surface border border-text_2/50',
+																	props.item.background_colors_b === 'text_4' && 'bg-text_4 border border-text_2/50',
+																	props.item.background_colors_b === 'text_5' && 'bg-text_5 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10 border border-text_2/50'
+																)}
+															>
 																<div
 																	class={clsx(
-																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
-																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-																		props.item.background_colors_b === 'surface' && 'bg-surface',
-																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
-																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
-																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current min-h-18 h-full'
 																	)}
 																>
 																	<Show when={item.item?.image}>
@@ -259,13 +294,14 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px
+																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px mx-2
 
 																		"
 																		/>
 																	</Show>
 																</div>
-																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2 px-2">
 																	<Show when={item.item?.title}>
 																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
 																	</Show>

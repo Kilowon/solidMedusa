@@ -69,6 +69,18 @@ interface FeaturedProps {
 			| 'accent_5'
 			| 'accent_6'
 
+		background_colors_c:
+			| 'normal_1'
+			| 'normal_2'
+			| 'normal_3'
+			| 'normal_4'
+			| 'surface'
+			| 'text_4'
+			| 'text_5'
+			| 'accent_4'
+			| 'accent_5'
+			| 'accent_6'
+
 		menu_status: string
 		menu_title: string
 		location: string
@@ -176,25 +188,26 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 										<For each={props.item.icons}>
 											{(item: any) => {
 												return (
-													<li class="flex items-start justify-start ">
-														<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
-															<div class="flex flex-start  w-full">
-																<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden w-10% fill-current')}>
+													<li class="flex items-center justify-center ">
+																<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden fill-current min-w-40px ')}>
 																	<Show when={item.item?.image}>
 																		<img
 																			src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 max-w-30px 
+																			class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px
 																
 																"
 																		/>
 																	</Show>
 																</div>
+																<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
+														<div class="flex flex-col justify-start items-start min-w-40% pb-1 ml-2">
+															<div class="flex flex-start  w-full">
 
 																<Show when={item.item?.title}>
-																	<div class="font-700 text-text_3 text-sm tracking-tighter  px-2 flex items-center">
+																	<div class="font-700 text-text_3 text-sm tracking-tighter   flex items-center pb-1">
 																		{item.item.title}
 																	</div>
 																</Show>
@@ -229,7 +242,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 												height={600}
 												width={600}
 												alt={props.item.title || 'main image'}
-												class={clsx('object-cover object-center min-h-450px z-5')}
+												class={clsx('object-cover object-center min-h-450px z-5 p-2')}
 											/>
 										</div>
 									</Show>
@@ -237,7 +250,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 							</div>
 						</Show>
 						<Show when={props.item?.component_variant === 'three' || props.item?.component_variant === 'nine'}>
-							<div class="flex flex-col justify-start items-start space-y-8  my-8 lg:my-auto lg:mx-8">
+							<div class="flex flex-col justify-start items-start space-y-8  my-8 lg:my-auto lg:mr-2">
 								<div class="flex flex-col  max-w-120">
 									<div
 										class={clsx(
@@ -293,29 +306,29 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 										<For each={props.item.icons}>
 											{(item: any) => {
 												return (
-													<li class="flex items-start justify-start">
-														<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
-															<div class="flex flex-start  w-full">
-																<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden w-10% fill-current')}>
-																	<Show when={item.item?.image}>
-																		<img
-																			src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
-																			loading="lazy"
-																			alt={item.item?.title}
-																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 max-w-25px 
+													<li class="flex items-center justify-center  rounded-1">
+															<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden w-10% fill-current min-w-15')}>
+																<Show when={item.item?.image}>
+																	<img
+																		src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
+																		loading="lazy"
+																		alt={item.item?.title}
+																		role="img"
+																		class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px 
 																
 																"
-																		/>
-																	</Show>
-																</div>
-
+																	/>
+																</Show>
+															</div>
+															<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 max-h-20"></div>
+														<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2 p-2">
+															<div class="flex flex-start  w-full">
 																<Show when={item.item?.title}>
 																	<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
 																</Show>
 															</div>
 															<Show when={item.item?.sub_title}>
-																<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																<div class="font-500 text-text_3 text-xs tracking-tighte text-balance ">{item.item.sub_title}</div>
 															</Show>
 														</div>
 													</li>
@@ -422,7 +435,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 
 											props.item?.component_variant === 'default' && 'ml-17',
 											props.item?.component_variant === 'right' && 'mr-17',
-											props.item?.component_variant === 'three' && ' ml-2 lg:mx-8'
+											props.item?.component_variant === 'three' && ' ml-2 '
 										)}
 									>
 										<Show when={props.item?.component_variant === 'default' || props.item?.component_variant === 'right'}>
@@ -453,7 +466,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 										<Show when={props.item?.component_variant === 'three'}>
 											<div
 												class={clsx(
-													'max-w-600px max-h-600px min-h-600px flex  lg:hidden   xl:flex items-center justify-center overflow-hidden rounded-2 relative ',
+													'max-w-600px max-h-600px min-h-600px flex  lg:hidden   xl:flex items-center justify-center overflow-hidden rounded-2  ',
 													props.item.background_colors === 'normal_1' && 'bg-normal_1',
 													props.item.background_colors === 'normal_2' && 'bg-normal_2',
 													props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -471,7 +484,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 													height={600}
 													width={600}
 													alt={props.item.title || 'main image'}
-													class={clsx('object-cover object-center min-h-450px z-5')}
+													class={clsx('object-cover object-center min-h-450px z-5 p-2')}
 												/>
 											</div>
 										</Show>

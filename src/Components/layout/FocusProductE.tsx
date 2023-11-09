@@ -81,6 +81,22 @@ interface FeaturedProps {
 			| 'accent_9'
 			| 'accent_10'
 
+		background_colors_c:
+			| 'normal_1'
+			| 'normal_2'
+			| 'normal_3'
+			| 'normal_4'
+			| 'surface'
+			| 'text_4'
+			| 'text_5'
+			| 'accent_4'
+			| 'accent_5'
+			| 'accent_6'
+			| 'accent_7'
+			| 'accent_8'
+			| 'accent_9'
+			| 'accent_10'
+
 		menu_status: string
 		menu_title: string
 		location: string
@@ -117,7 +133,21 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					'py-5 lg:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center sm:my-20 lg:my-auto mx-2 '
+					'py-5 lg:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center sm:my-20 lg:my-auto px-2 ',
+					props.item.background_colors_c === 'normal_1' && 'bg-normal_1',
+					props.item.background_colors_c === 'normal_2' && 'bg-normal_2',
+					props.item.background_colors_c === 'normal_3' && 'bg-normal_3',
+					props.item.background_colors_c === 'normal_4' && 'bg-normal_4',
+					props.item.background_colors_c === 'surface' && 'bg-surface',
+					props.item.background_colors_c === 'text_4' && 'bg-text_4',
+					props.item.background_colors_c === 'text_5' && 'bg-text_5',
+					props.item.background_colors_c === 'accent_4' && 'bg-accent_4',
+					props.item.background_colors_c === 'accent_5' && 'bg-accent_5',
+					props.item.background_colors_c === 'accent_6' && 'bg-accent_6',
+					props.item.background_colors_c === 'accent_7' && 'bg-accent_7',
+					props.item.background_colors_c === 'accent_8' && 'bg-accent_8',
+					props.item.background_colors_c === 'accent_9' && 'bg-accent_9',
+					props.item.background_colors_c === 'accent_10' && 'bg-accent_10'
 				)}
 			>
 				<Show when={getWindowSize().width > 640}>
@@ -336,7 +366,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								<img
 									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item?.image.id}?key=600-avif`}
 									alt={props.item.title || 'main image'}
-									class={clsx('object-cover object-left min-h-600px z-5')}
+									class={clsx('object-cover object-left min-h-600px z-5 p-2')}
 								/>
 							</div>
 						</div>

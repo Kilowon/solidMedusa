@@ -117,7 +117,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 
 	return (
 		<>
-			<Show when={size() > 1023}>
+			<Show when={size() > 1300}>
 				<div
 					class={clsx(
 						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  my-10 w-full',
@@ -191,24 +191,28 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 							<For each={props.item.icons}>
 								{(item: any, index) => {
 									return (
-										<li class="flex  items-start justify-start">
+										<li
+											class={clsx(
+												'flex  items-start justify-start rounded-1 mx-2 p-2 ',
+												props.item.background_colors_b === 'normal_1' && 'bg-normal_1 border-1 border-text_2/50',
+												props.item.background_colors_b === 'normal_2' && 'bg-normal_2 border-1 border-text_2/50',
+												props.item.background_colors_b === 'normal_3' && 'bg-normal_3 border-1 border-text_2/50',
+												props.item.background_colors_b === 'normal_4' && 'bg-normal_4 border-1 border-text_2/50',
+												props.item.background_colors_b === 'surface' && 'bg-surface border-1 border-text_2/50',
+												props.item.background_colors_b === 'text_4' && 'bg-text_4 border-1 border-text_2/50',
+												props.item.background_colors_b === 'text_5' && 'bg-text_5 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_4' && 'bg-accent_4 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_5' && 'bg-accent_5 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_6' && 'bg-accent_6 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_7' && 'bg-accent_7 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_8' && 'bg-accent_8 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_9' && 'bg-accent_9 border-1 border-text_2/50',
+												props.item.background_colors_b === 'accent_10' && 'bg-accent_10 border-1 border-text_2/50'
+											)}
+										>
 											<div
 												class={clsx(
-													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-75px fill-current',
-													props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-													props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-													props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-													props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-													props.item.background_colors_b === 'surface' && 'bg-surface',
-													props.item.background_colors_b === 'text_4' && 'bg-text_4',
-													props.item.background_colors_b === 'text_5' && 'bg-text_5',
-													props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-													props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-													props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-													props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-													props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-													props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-													props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-75px fill-current min-h-20'
 												)}
 											>
 												<Show when={item.item?.image}>
@@ -223,7 +227,8 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 													/>
 												</Show>
 											</div>
-											<div class="flex flex-col justify-start items-start max-w-70 space-y-2 ml-2">
+											<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
+											<div class="flex flex-col justify-start items-start max-w-70 space-y-2 ml-2 pl-2">
 												<Show when={item.item?.title}>
 													<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
 												</Show>
@@ -240,7 +245,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 					</div>
 				</div>
 			</Show>
-			<Show when={size() <= 1023 && size() > 620}>
+			<Show when={size() <= 1300 && size() > 620}>
 				<div
 					class={clsx(
 						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  my-10 w-full',
@@ -305,32 +310,36 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 						<ul
 							class={clsx(
 								'',
-								props.item?.component_variant === 'center' && 'flex flex-row py-10  ',
-								props.item?.component_variant === 'default' && 'flex flex-row py-10 ',
-								props.item?.component_variant === 'left' && 'flex flex-row py-10 '
+								props.item?.component_variant === 'center' && 'flex flex-row py-10  px-2',
+								props.item?.component_variant === 'default' && 'flex flex-row py-10 px-2',
+								props.item?.component_variant === 'left' && 'flex flex-row py-10 px-2'
 							)}
 						>
 							<For each={props.item.icons}>
 								{(item: any, index) => {
 									return (
-										<li class="flex  items-start justify-start">
+										<li
+											class={clsx(
+												' flex  items-center justify- p-2 m-2 rounded-1',
+												props.item.background_colors_b === 'normal_1' && 'bg-normal_1 border border-text_2',
+												props.item.background_colors_b === 'normal_2' && 'bg-normal_2 border border-text_2',
+												props.item.background_colors_b === 'normal_3' && 'bg-normal_3 border border-text_2',
+												props.item.background_colors_b === 'normal_4' && 'bg-normal_4 border border-text_2',
+												props.item.background_colors_b === 'surface' && 'bg-surface border border-text_2',
+												props.item.background_colors_b === 'text_4' && 'bg-text_4 border border-text_2',
+												props.item.background_colors_b === 'text_5' && 'bg-text_5 border border-text_2',
+												props.item.background_colors_b === 'accent_4' && 'bg-accent_4 border border-text_2',
+												props.item.background_colors_b === 'accent_5' && 'bg-accent_5 border border-text_2',
+												props.item.background_colors_b === 'accent_6' && 'bg-accent_6 border border-text_2',
+												props.item.background_colors_b === 'accent_7' && 'bg-accent_7 border border-text_2',
+												props.item.background_colors_b === 'accent_8' && 'bg-accent_8 border border-text_2',
+												props.item.background_colors_b === 'accent_9' && 'bg-accent_9 border border-text_2',
+												props.item.background_colors_b === 'accent_10' && 'bg-accent_10 border border-text_2'
+											)}
+										>
 											<div
 												class={clsx(
-													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-25px fill-current',
-													props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-													props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-													props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-													props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-													props.item.background_colors_b === 'surface' && 'bg-surface',
-													props.item.background_colors_b === 'text_4' && 'bg-text_4',
-													props.item.background_colors_b === 'text_5' && 'bg-text_5',
-													props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-													props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-													props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-													props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-													props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-													props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-													props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-40px fill-current min-h-20'
 												)}
 											>
 												<Show when={item.item?.image}>
@@ -339,12 +348,13 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 														loading="lazy"
 														alt={item.item?.title}
 														role="img"
-														class=" object-fill grayscale-100 contrast-50 sm:min-w-25px sm:max-w-25px 
+														class=" object-fill grayscale-100 contrast-50 sm:min-w-40px sm:max-w-40px mx-2
 
-																	"
+																"
 													/>
 												</Show>
 											</div>
+											<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 max-h-30 xl:max-h-20"></div>
 											<div class="flex flex-col justify-start items-start max-w-70 space-y-2 ml-2">
 												<Show when={item.item?.title}>
 													<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
@@ -390,29 +400,29 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 							props.item.component_variant === 'left' && 'flex-col py-5 sm:py-10'
 						)}
 					>
-						<div class="flex flex-col items-center">
+						<div class="flex flex-col justify-center items-center">
 							<h1
 								class={clsx(
-									'tracking-tighter text-text_2   font-700 z-2  text-start px-8 max-w-130',
+									'tracking-tighter text-balance text-text_2 text-center font-700 z-2 px-8 ',
 									props.item.text_size === 'text-xs' && 'text-xs',
 									props.item.text_size === 'text-sm' && 'text-sm',
 									props.item.text_size === 'text-base' && 'text-base',
 									props.item.text_size === 'text-lg' && 'text-xl sm:text-lg',
 									props.item.text_size === 'text-xl' && 'text-xl sm:text-xl',
-									props.item.text_size === 'text-2xl' && 'text-xl sm:text-2xl',
-									props.item.text_size === 'text-3xl' && 'text-xl sm:text-3xl',
-									props.item.text_size === 'text-4xl' && 'text-xl sm:text-4xl',
-									props.item.text_size === 'text-5xl' && 'text-xl sm:text-5xl',
-									props.item.text_size === 'text-6xl' && 'text-xl sm:text-6xl',
-									props.item.text_size === 'text-7xl' && 'text-xl sm:text-7xl',
-									props.item.text_size === 'text-8xl' && 'text-xl sm:text-8xl '
+									props.item.text_size === 'text-2xl' && 'text-2xl sm:text-2xl',
+									props.item.text_size === 'text-3xl' && 'text-2xl sm:text-3xl',
+									props.item.text_size === 'text-4xl' && 'text-2xl sm:text-4xl',
+									props.item.text_size === 'text-5xl' && 'text-2xl sm:text-5xl',
+									props.item.text_size === 'text-6xl' && 'text-2xl sm:text-6xl',
+									props.item.text_size === 'text-7xl' && 'text-2xl sm:text-7xl',
+									props.item.text_size === 'text-8xl' && 'text-2xl sm:text-8xl '
 								)}
 							>
 								{props.item.title}
 							</h1>
 							<Show when={props.item.call_to_action !== null}>
-								<div class="flex items-end pr-10 pt-5">
-									<div class="flex items-center hover:underline bg-accent_6 text-accenttext_1 p-1 px-2  rounded-1 ">
+								<div class="flex items-end  pt-5">
+									<div class="flex justify-center items-center hover:underline bg-accent_6 text-accenttext_1 p-1 px-2  rounded-1 ">
 										<A
 											href={props.item?.action_url || '/store/Store'}
 											class="text-xs z-2 tracking-tight"
@@ -438,7 +448,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 										<li class="flex  items-start justify-start">
 											<div
 												class={clsx(
-													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-25px fill-current',
+													' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-25px fill-current p-2 rounded-1',
 													props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 													props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 													props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -454,16 +464,34 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 													props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
 													props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
 												)}
-											></div>
+											>
+												<div
+													class={clsx(
+														' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-40px fill-current min-h-20'
+													)}
+												>
+													<Show when={item.item?.image}>
+														<img
+															src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
+															loading="lazy"
+															alt={item.item?.title}
+															role="img"
+															class=" object-fill grayscale-100 contrast-50 min-w-40px max-w-40px mx-2
 
-											<div class="flex flex-col justify-start items-start max-w-70 space-y-0.5 ml-2">
-												<Show when={item.item?.title}>
-													<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
-												</Show>
+																"
+														/>
+													</Show>
+													<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 h-full min-h-15 max-h-30"></div>
+												</div>{' '}
+												<div class="flex flex-col justify-start items-start max-w-70 space-y-0.5 ml-2">
+													<Show when={item.item?.title}>
+														<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
+													</Show>
 
-												<Show when={item.item?.sub_title}>
-													<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
-												</Show>
+													<Show when={item.item?.sub_title}>
+														<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+													</Show>
+												</div>
 											</div>
 										</li>
 									)

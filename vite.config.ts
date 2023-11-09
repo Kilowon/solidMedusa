@@ -10,8 +10,10 @@ export default defineConfig({
 	assetsInclude: ['**/*.ttf'],
 	plugins: [
 		solid({
+			exclude: ['**/types'],
 			ssr: false
 		}),
+
 		unocssPlugin({
 			presets: [
 				presetScrollbar({

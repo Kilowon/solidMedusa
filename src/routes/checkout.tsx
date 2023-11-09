@@ -26,7 +26,6 @@ import CartCore from '~/Components/Core/CartCore'
 import Payment from '~/Components/checkout_components/Payment'
 import Express from '~/Components/checkout_components/Express'
 import { TransitionGroup } from 'solid-transition-group'
-import { create } from 'domain'
 
 type PaymentForm = {
 	emailDelayFake: string

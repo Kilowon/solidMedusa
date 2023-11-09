@@ -8,7 +8,8 @@ netlify
 
 # dependencies
 /node_modules
-
+# Types for TS
+/types
 # IDEs and editors
 /.idea
 .project

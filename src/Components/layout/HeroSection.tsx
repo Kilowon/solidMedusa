@@ -6,6 +6,7 @@ import { Rerun } from '@solid-primitives/keyed'
 import { TransitionGroup } from 'solid-transition-group'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
+import { isServer } from 'solid-js/web'
 
 export function HeroSection() {
 	const { medusa } = useGlobalContext()
@@ -218,7 +219,7 @@ export function HeroSection() {
 										class="w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left"
 									/>
 								</Show>
-								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess}>
+								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess || isServer}>
 									<img
 										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
 											filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id

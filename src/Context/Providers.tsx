@@ -58,6 +58,8 @@ async function fetchRegion(): Promise<any> {
 
 const [saveCart, setSaveCart] = createSignal<Cart>(null)
 
+async function fetchSSRCart(): Promise<Cart> {}
+
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
 	const cart = await medusa.carts.create({ region_id: region.id })
@@ -65,6 +67,7 @@ async function fetchNewCart(): Promise<Cart> {
 	if (!isServer) {
 		localStorage.setItem('cart_id', saveCart()?.cart?.id)
 	}
+
 	return saveCart()
 }
 
@@ -95,7 +98,8 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false
+		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false,
+		deferStream: true
 	}))
 
 	const querySavedCart = createQuery(() => ({
@@ -170,9 +174,11 @@ export function GlobalContextProvider(props: any) {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
+		
 		retry: 0,
-		enabled: false
+		enabled: true,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	const heroData = createQuery(() => ({
@@ -190,15 +196,14 @@ export function GlobalContextProvider(props: any) {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
+
 		retry: 0,
-		enabled: false
+		enabled: true,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
-	onMount(() => {
-		primaryData.refetch()
-		heroData.refetch()
-	})
+	
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -209,7 +214,8 @@ export function GlobalContextProvider(props: any) {
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
-		refetchOnWindowFocus: false
+		refetchOnWindowFocus: false,
+		deferStream: false
 	}))
 
 	const [categories, categoriesServerState] = createSignal([])
@@ -246,7 +252,8 @@ export function GlobalContextProvider(props: any) {
 		},
 
 		cacheTime: 15 * 60 * 1000,
-		refetchOnWindowFocus: false
+		refetchOnWindowFocus: false,
+		deferStream: true
 		//enabled: false
 	}))
 

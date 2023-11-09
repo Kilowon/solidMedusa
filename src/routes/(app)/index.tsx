@@ -1,5 +1,5 @@
 import { HeroSection } from '~/Components/layout/HeroSection'
-import { lazy, Suspense, createSignal, createEffect, Show, For } from 'solid-js'
+import { lazy, Suspense, createSignal, createEffect, Show, For, onMount } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 import { ErrorBoundary } from 'solid-start'
@@ -31,11 +31,12 @@ const FocusProductH = lazy(() => import('~/Components/layout/FocusProductH'))
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
 import { isVisible, setIsVisible, activeObserver, setActiveObserver } from '~/state'
+import { time } from 'console'
 
 export default function App() {
 	let el: HTMLDivElement | undefined
 
-	const [delay, setDelay] = createSignal(0.1)
+	const [delay, setDelay] = createSignal(false)
 	const visible = createVisibilityObserver({ threshold: 0.1 })(() => el)
 
 	createEffect(() => {
@@ -81,6 +82,12 @@ export default function App() {
 		enabled: activeObserver()
 	}))
 
+	onMount(() => {
+		setTimeout(() => {
+			setDelay(true)
+		}, 1000)
+	})
+
 	return (
 		<main class="min-h-[100vh]">
 			<Suspense fallback={<div>Loading...</div>}>
@@ -88,10 +95,12 @@ export default function App() {
 			</Suspense>
 			<div class="pb-10"></div>
 			<div class="min-h-[100vh] ">
-				<div
-					ref={el}
-					class="w-90% h-10 bg-red-700"
-				></div>
+				<Show when={primaryData.isSuccess && delay()}>
+					<div
+						ref={el}
+						class="w-90% h-10 bg-red-700"
+					></div>
+				</Show>
 				<div>
 					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
 				</div>

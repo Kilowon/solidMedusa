@@ -30,7 +30,7 @@ const FocusProductH = lazy(() => import('~/Components/layout/FocusProductH'))
 
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
-import { isVisible, setIsVisible } from '~/state'
+import { isVisible, setIsVisible, setActiveObserver } from '~/state'
 
 export default function App() {
 	let el: HTMLDivElement | undefined
@@ -41,6 +41,7 @@ export default function App() {
 	createEffect(() => {
 		if (visible()) {
 			setIsVisible(true)
+			setActiveObserver(true)
 		}
 	})
 
@@ -82,8 +83,10 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<HeroSection />
-
+			<Suspense fallback={<div>Loading...</div>}>
+				<HeroSection />
+			</Suspense>
+		<div class="pb-10"></div>
 			<div class="min-h-[100vh] ">
 				<div
 					ref={el}

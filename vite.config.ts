@@ -11,7 +11,7 @@ export default defineConfig({
 	plugins: [
 		solid({
 			exclude: ['**/types'],
-			ssr: true
+			ssr: false
 		}),
 
 		unocssPlugin({

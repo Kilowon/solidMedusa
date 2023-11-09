@@ -31,3 +31,7 @@ export { isScroll, setIsScroll }
 const [isVisible, setIsVisible] = createSignal(false)
 
 export { isVisible, setIsVisible }
+
+const [activeObserver, setActiveObserver] = createSignal(false)
+
+export { activeObserver, setActiveObserver }

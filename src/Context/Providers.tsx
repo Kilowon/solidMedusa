@@ -1,7 +1,7 @@
 import { isServer } from 'solid-js/web'
 import { createContext, useContext, createSignal, createEffect, onMount } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
-
+import { activeObserver } from '~/state'
 //TODO: Becareful with imports from @medusajs/medusa-js as it will break the build process with too many imports it seems some webpack issue even though vite is used for the frontend
 //TODO: In the future we should move away from @medusajs/medusa-js and use the api directly - this could be a slight performance boost on client side start bundle size
 import Medusa from '@medusajs/medusa-js'
@@ -58,8 +58,6 @@ async function fetchRegion(): Promise<any> {
 
 const [saveCart, setSaveCart] = createSignal<Cart>(null)
 
-async function fetchSSRCart(): Promise<Cart> {}
-
 async function fetchNewCart(): Promise<Cart> {
 	const region = await fetchRegion()
 	const cart = await medusa.carts.create({ region_id: region.id })
@@ -98,7 +96,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false,
+		enabled: isServer || localStorage.getItem('cart_id') === null ? activeObserver() : false,
 		deferStream: true
 	}))
 
@@ -110,7 +108,8 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : true
+		enabled:
+			isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : activeObserver()
 	}))
 
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -174,7 +173,7 @@ export function GlobalContextProvider(props: any) {
 			const data = await response.json()
 			return data
 		},
-		
+
 		retry: 0,
 		enabled: true,
 		deferStream: false,
@@ -203,8 +202,6 @@ export function GlobalContextProvider(props: any) {
 		refetchOnWindowFocus: false
 	}))
 
-	
-
 	///////////////////////////////////////////////////////////////////////////
 
 	const queryCategories = createQuery(() => ({
@@ -215,8 +212,13 @@ export function GlobalContextProvider(props: any) {
 		},
 		cacheTime: 15 * 60 * 1000,
 		refetchOnWindowFocus: false,
-		deferStream: false
+		deferStream: true,
+		enabled: activeObserver()
 	}))
+
+	createEffect(() => {
+		console.log('ACTIVEOBSERVER', activeObserver())
+	})
 
 	const [categories, categoriesServerState] = createSignal([])
 
@@ -253,8 +255,8 @@ export function GlobalContextProvider(props: any) {
 
 		cacheTime: 15 * 60 * 1000,
 		refetchOnWindowFocus: false,
-		deferStream: true
-		//enabled: false
+		deferStream: true,
+		enabled: activeObserver()
 	}))
 
 	const [categoryProducts, setCategoryProducts] = createSignal([])
@@ -271,18 +273,10 @@ export function GlobalContextProvider(props: any) {
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
-		enabled: false
+		enabled: activeObserver()
 	}))
 
 	const [collections, setCollections] = createSignal([])
-
-	onMount(() => {
-		queryCollections.refetch()
-
-		/* setTimeout(() => {
-			setCollections(queryCollections?.data)
-		}, 350) */
-	})
 
 	return (
 		<GlobalContext.Provider

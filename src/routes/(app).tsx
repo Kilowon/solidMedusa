@@ -62,12 +62,6 @@ export default function Home() {
 		}
 	})
 
-	createEffect(() => {
-		if (visible()) {
-			setIsVisible(true)
-		}
-	})
-
 	return (
 		<div
 			class="bg-normal_1"
@@ -125,7 +119,9 @@ export default function Home() {
 					: {}
 			}
 		>
-			<Navigation />
+			<Suspense>
+				<Navigation />
+			</Suspense>
 
 			<Outlet />
 			<div
@@ -134,9 +130,11 @@ export default function Home() {
 			></div>
 
 			<div class="min-h-150vh md:min-h-50vh">
-				<Show when={primaryData.isSuccess}>
-					<Footer />
-				</Show>
+				<Suspense>
+					<Show when={primaryData.isSuccess && isVisible()}>
+						<Footer />
+					</Show>
+				</Suspense>
 			</div>
 		</div>
 	)

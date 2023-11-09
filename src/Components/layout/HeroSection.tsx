@@ -31,17 +31,6 @@ export function HeroSection() {
 		enabled: false
 	}))
 
-	const queryCategories = createQuery(() => ({
-		queryKey: ['categories_list'],
-		queryFn: async function () {
-			const product = await medusa?.productCategories.list({ limit: '200' })
-			return product
-		},
-		cacheTime: 15 * 60 * 1000,
-		retry: 0,
-		enabled: false
-	}))
-
 	const [currentIndex, setCurrentIndex] = createSignal(0)
 	const [count, setCount] = createSignal(0)
 	const [time, setTime] = createSignal(5000)
@@ -102,7 +91,7 @@ export function HeroSection() {
 	})
 
 	return (
-		<Show when={heroData.isSuccess && queryCategories.isSuccess && filteredSlides().length > 0}>
+		<Show when={heroData.isSuccess && filteredSlides().length > 0}>
 			<Rerun on={count()}>
 				<TransitionGroup
 					onEnter={(el, done) => {

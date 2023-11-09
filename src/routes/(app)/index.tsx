@@ -90,7 +90,7 @@ export default function App() {
 			<div class="min-h-[100vh] ">
 				<div
 					ref={el}
-					class="w-90% h-10 bg-transparent"
+					class="w-90% h-10 bg-red-700"
 				></div>
 				<div>
 					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}

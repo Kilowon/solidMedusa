@@ -30,7 +30,7 @@ const FocusProductH = lazy(() => import('~/Components/layout/FocusProductH'))
 
 const DividerA = lazy(() => import('~/Components/layout/DividerA'))
 
-import { isVisible, setIsVisible, setActiveObserver } from '~/state'
+import { isVisible, setIsVisible, activeObserver, setActiveObserver } from '~/state'
 
 export default function App() {
 	let el: HTMLDivElement | undefined
@@ -78,7 +78,7 @@ export default function App() {
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: true
+		enabled: activeObserver()
 	}))
 
 	return (
@@ -86,7 +86,7 @@ export default function App() {
 			<Suspense fallback={<div>Loading...</div>}>
 				<HeroSection />
 			</Suspense>
-		<div class="pb-10"></div>
+			<div class="pb-10"></div>
 			<div class="min-h-[100vh] ">
 				<div
 					ref={el}

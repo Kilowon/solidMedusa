@@ -140,10 +140,10 @@ export function HeroSection() {
 							>
 								<div>
 									<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-										<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20">
+										<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20 max-h-100">
 											{filteredSlides()?.[currentIndex()]?.item?.header || ''}
 										</h1>
-										<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 ">
+										<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 max-h-50">
 											{filteredSlides()?.[currentIndex()]?.item?.subtitle || ''}
 										</h2>
 									</div>
@@ -186,7 +186,7 @@ export function HeroSection() {
 							<div
 								class={clsx(
 									'',
-									isServer && 'min-w-[1210px] h-[765px]',
+									isServer && 'min-w-[1210px] h-[765px] bg-red-700',
 									getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
 									getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
 								)}

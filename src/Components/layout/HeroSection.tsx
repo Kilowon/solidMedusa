@@ -1,4 +1,4 @@
-import { Show, For, createSignal, onMount, createEffect } from 'solid-js'
+import { Show, For, createSignal, onMount, createEffect, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
@@ -91,7 +91,7 @@ export function HeroSection() {
 	})
 
 	return (
-		<Show when={heroData.isSuccess && filteredSlides().length > 0}>
+		<Show when={filteredSlides().length > 0}>
 			<Rerun on={count()}>
 				<TransitionGroup
 					onEnter={(el, done) => {
@@ -198,26 +198,31 @@ export function HeroSection() {
 								class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
 								href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
 							>
-								<Show when={getWindowSize().width > 1023 && heroData.isSuccess}>
-									<img
-										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-											filteredSlides()?.[currentIndex()]?.item?.image?.id
-										}?key=hero-large`}
-										loading="eager"
-										alt="main image"
-										class="w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left"
-									/>
-								</Show>
-								<Show when={getWindowSize().width <= 1023 && heroData.isSuccess || isServer}>
-									<img
-										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-											filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-										}?key=hero-small`}
-										loading="eager"
-										alt="main image"
-										class="   min-h-292px object-cover object-left "
-									/>
-								</Show>
+								<img
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+										filteredSlides()?.[currentIndex()]?.item?.image?.id
+									}?key=hero-large`}
+									loading="eager"
+									alt="main image"
+									class={clsx(
+										'"w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left',
+
+										getWindowSize().width <= 1023 && 'hidden'
+									)}
+								/>
+
+								<img
+									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+										filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+									}?key=hero-small`}
+									loading="eager"
+									alt="main image"
+									class={clsx(
+										' min-h-292px object-cover object-left',
+
+										getWindowSize().width > 1023 && 'hidden'
+									)}
+								/>
 
 								<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
 									{filteredSlides()?.[currentIndex()]?.item?.image_tagline}

@@ -113,7 +113,7 @@ export function HeroSection() {
 				>
 					<div class="flex flex-col">
 						<div class="flex flex-grow w-full  h-1/3"></div>
-						<div class="flex flex-col justify-center h-35svh h-1/3 lg:h-auto ">
+						<div class="flex flex-col justify-center min-h-35svh min-w-25vw lg:min-h-auto ">
 							<div
 								class={clsx(
 									' text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ',
@@ -140,16 +140,16 @@ export function HeroSection() {
 							>
 								<div>
 									<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-										<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance">
-											{filteredSlides()?.[currentIndex()]?.item?.header}
+										<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20">
+											{filteredSlides()?.[currentIndex()]?.item?.header || ''}
 										</h1>
-										<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance ">
-											{filteredSlides()?.[currentIndex()]?.item?.subtitle}
+										<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 ">
+											{filteredSlides()?.[currentIndex()]?.item?.subtitle || ''}
 										</h2>
 									</div>
 								</div>
 								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
-									<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1">
+									<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 min-w-30 min-h-8">
 										<A
 											href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
 											class="text- z-2 tracking-tight"
@@ -178,7 +178,7 @@ export function HeroSection() {
 						</div>
 						<div class="flex flex-grow h-1/3"></div>
 					</div>
-					<Suspense fallback={<ImagePlaceHolder class={`w-[${1210}px] h-[${765}px]`} />}>
+					<Suspense>
 						<A
 							class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
 							href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
@@ -205,6 +205,7 @@ export function HeroSection() {
 											}?key=hero-small`
 									)}
 									width={1210}
+									height={765}
 									decoding="sync"
 									loading="eager"
 									fetchpriority="high"

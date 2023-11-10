@@ -36,6 +36,7 @@ export function HeroSection() {
 	const [endWait, setEndWait] = createSignal(15000)
 	const [totalLength, setTotalLength] = createSignal(0)
 	const [filteredSlides, setFilteredSlides] = createSignal<any>([''])
+	const [view, setView] = createSignal(false)
 
 	function heroCarousel() {
 		if (!heroSlidesActive()) return
@@ -61,6 +62,7 @@ export function HeroSection() {
 					(import.meta.env.VITE_DRAFT_SITE === 'false' ? 'published' : 'draft') as any
 				)
 			)
+			setView(true)
 		}
 		if (heroData.isSuccess) {
 			setTime(heroData?.data?.data?.pause_between * 1000)
@@ -90,7 +92,7 @@ export function HeroSection() {
 	})
 
 	return (
-		<Show when={filteredSlides().length > 0}>
+		<Show when={filteredSlides().length > 0 && view()}>
 			<Show when={heroData.isSuccess}>
 				<div
 					class={clsx(
@@ -186,7 +188,7 @@ export function HeroSection() {
 						<div
 							class={clsx(
 								'',
-								isServer && 'min-w-[1210px] h-[765px] bg-red-700',
+								isServer && 'min-w-[1210px] h-[765px]',
 								getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
 								getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
 							)}

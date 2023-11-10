@@ -204,6 +204,8 @@ export function HeroSection() {
 									}?key=hero-large`}
 									loading="eager"
 									alt="main image"
+									height={'765px'}
+									width={'1210px'}
 									class={clsx(
 										'"w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left',
 
@@ -217,6 +219,8 @@ export function HeroSection() {
 									}?key=hero-small`}
 									loading="eager"
 									alt="main image"
+									height={'292px'}
+									width={'375px'}
 									class={clsx(
 										' min-h-292px object-cover object-left',
 

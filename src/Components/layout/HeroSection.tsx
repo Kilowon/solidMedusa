@@ -92,134 +92,133 @@ export function HeroSection() {
 	})
 
 	return (
-		<Show when={filteredSlides().length > 0 && view()}>
-			<Show when={heroData.isSuccess}>
-				<div
-					class={clsx(
-						' min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_4' && 'bg-normal_4',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'surface' && 'bg-surface',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_4' && 'bg-text_4',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_5' && 'bg-text_5',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_4' && 'bg-accent_4',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_5' && 'bg-accent_5',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_6' && 'bg-accent_6',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_7' && 'bg-accent_7',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_8' && 'bg-accent_8',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_9' && 'bg-accent_9',
-						filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_10' && 'bg-accent_10'
-					)}
-				>
-					<div class="flex flex-col">
-						<div class="flex flex-grow w-full  h-1/3"></div>
-						<div class="flex flex-col justify-center min-h-35svh min-w-25vw lg:min-h-auto ">
-							<div
-								class={clsx(
-									' text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_1' && 'text-normal_1',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_2' && 'text-normal_2',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_3' && 'text-normal_3',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_4' && 'text-normal_4',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'surface' && 'text-surface',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_1' && 'text-text_1',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_2' && 'text-text_2',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_3' && 'text-text_3',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_4' && 'text-text_4',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_5' && 'text-text_5',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_1' && 'text-accenttext_1',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_2' && 'text-accenttext_2',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_4' && 'text-accent_4',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_5' && 'text-accent_5',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_6' && 'text-accent_6',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_7' && 'text-accent_7',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_8' && 'text-accent_8',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_9' && 'text-accent_9',
-									filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_10' && 'text-accent_10'
-								)}
-							>
-								<div>
-									<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-										<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20 max-h-100">
-											{filteredSlides()?.[currentIndex()]?.item?.header || ''}
-										</h1>
-										<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 max-h-50">
-											{filteredSlides()?.[currentIndex()]?.item?.subtitle || ''}
-										</h2>
-									</div>
+		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
+			<div
+				class={clsx(
+					' min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_4' && 'bg-normal_4',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'surface' && 'bg-surface',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_4' && 'bg-text_4',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'text_5' && 'bg-text_5',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_4' && 'bg-accent_4',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_5' && 'bg-accent_5',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_6' && 'bg-accent_6',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_7' && 'bg-accent_7',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_8' && 'bg-accent_8',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_9' && 'bg-accent_9',
+					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_10' && 'bg-accent_10'
+				)}
+			>
+				<div class="flex flex-col">
+					<div class="flex flex-grow w-full  h-1/3"></div>
+					<div class="flex flex-col justify-center min-h-35svh min-w-25vw lg:min-h-auto ">
+						<div
+							class={clsx(
+								' text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_1' && 'text-normal_1',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_2' && 'text-normal_2',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_3' && 'text-normal_3',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'normal_4' && 'text-normal_4',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'surface' && 'text-surface',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_1' && 'text-text_1',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_2' && 'text-text_2',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_3' && 'text-text_3',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_4' && 'text-text_4',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'text_5' && 'text-text_5',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_1' && 'text-accenttext_1',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accenttext_2' && 'text-accenttext_2',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_4' && 'text-accent_4',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_5' && 'text-accent_5',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_6' && 'text-accent_6',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_7' && 'text-accent_7',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_8' && 'text-accent_8',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_9' && 'text-accent_9',
+								filteredSlides()?.[currentIndex()]?.item?.text_color === 'accent_10' && 'text-accent_10'
+							)}
+						>
+							<div>
+								<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
+									<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20 max-h-100">
+										{filteredSlides()?.[currentIndex()]?.item?.header || ''}
+									</h1>
+									<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 max-h-50">
+										{filteredSlides()?.[currentIndex()]?.item?.subtitle || ''}
+									</h2>
 								</div>
-								<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
-									<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 min-w-30 min-h-8">
-										<A
-											href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
-											class="text- z-2 tracking-tight"
-										>
-											{filteredSlides()?.[currentIndex()]?.item?.call_to_action}
-										</A>
-									</div>
-									<div class="flex space-x-2">
-										<For each={filteredSlides()}>
-											{(item, index) => {
-												return (
-													<div>
-														<Show when={index() === currentIndex()}>
-															<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
-														</Show>
-														<Show when={index() !== currentIndex()}>
-															<div class="w-1.5 h-1.5 rounded-6 bg-accent_6/50" />
-														</Show>
-													</div>
-												)
-											}}
-										</For>
-									</div>
+							</div>
+							<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto">
+								<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 min-w-30 min-h-8">
+									<A
+										href={filteredSlides()?.[currentIndex()]?.item?.call_to_action_href || '/store/Store'}
+										class="text- z-2 tracking-tight"
+									>
+										{filteredSlides()?.[currentIndex()]?.item?.call_to_action}
+									</A>
+								</div>
+								<div class="flex space-x-2">
+									<For each={filteredSlides()}>
+										{(item, index) => {
+											return (
+												<div>
+													<Show when={index() === currentIndex()}>
+														<div class="w-1.5 h-1.5 rounded-6 bg-accent_6" />
+													</Show>
+													<Show when={index() !== currentIndex()}>
+														<div class="w-1.5 h-1.5 rounded-6 bg-accent_6/50" />
+													</Show>
+												</div>
+											)
+										}}
+									</For>
 								</div>
 							</div>
 						</div>
-						<div class="flex flex-grow h-1/3"></div>
 					</div>
-
-					<A
-						class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-						href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
-					>
-						<div
-							class={clsx(
-								'',
-								isServer && 'min-w-[1210px] h-[765px]',
-								getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
-								getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
-							)}
-						>
-							<Image
-								src={clsx(
-									'',
-									isServer && '',
-									getWindowSize().width > 1023 &&
-										`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-											filteredSlides()?.[currentIndex()]?.item?.image?.id
-										}?key=hero-large`,
-									getWindowSize().width <= 1023 &&
-										`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-											filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-										}?key=hero-small`
-								)}
-								width={1210}
-								height={765}
-								decoding="sync"
-								loading="eager"
-								fetchpriority="high"
-								class={clsx('"object-cover object-left')}
-							/>
-						</div>
-						<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
-							{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
-						</div>
-					</A>
+					<div class="flex flex-grow h-1/3"></div>
 				</div>
-			</Show>
+
+				<A
+					class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
+					href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
+				>
+					<div
+						class={clsx(
+							'',
+							isServer && 'min-w-[1210px] h-[765px]',
+							getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
+							getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
+						)}
+					>
+						<Image
+							src={clsx(
+								'',
+								isServer && '',
+								getWindowSize().width > 1023 &&
+									`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+										filteredSlides()?.[currentIndex()]?.item?.image?.id
+									}?key=hero-large`,
+								getWindowSize().width <= 1023 &&
+									`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+										filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+									}?key=hero-small`
+							)}
+							width={1210}
+							height={765}
+							decoding="sync"
+							loading="eager"
+							fetchpriority="high"
+							class={clsx('"object-cover object-left')}
+						/>
+					</div>
+					<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
+						{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
+					</div>
+				</A>
+			</div>
+
 			<div class="h-5vw w-99svw bg-transparent"></div>
 		</Show>
 	)

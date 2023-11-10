@@ -178,45 +178,44 @@ export function HeroSection() {
 						</div>
 						<div class="flex flex-grow h-1/3"></div>
 					</div>
-					<Suspense>
-						<A
-							class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-							href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
+
+					<A
+						class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
+						href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
+					>
+						<div
+							class={clsx(
+								'',
+								isServer && 'min-w-[1210px] h-[765px] bg-red-700',
+								getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
+								getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
+							)}
 						>
-							<div
-								class={clsx(
+							<Image
+								src={clsx(
 									'',
-									isServer && 'min-w-[1210px] h-[765px] bg-red-700',
-									getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
-									getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
+									isServer && '',
+									getWindowSize().width > 1023 &&
+										`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+											filteredSlides()?.[currentIndex()]?.item?.image?.id
+										}?key=hero-large`,
+									getWindowSize().width <= 1023 &&
+										`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+											filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+										}?key=hero-small`
 								)}
-							>
-								<Image
-									src={clsx(
-										'',
-										isServer && '',
-										getWindowSize().width > 1023 &&
-											`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-												filteredSlides()?.[currentIndex()]?.item?.image?.id
-											}?key=hero-large`,
-										getWindowSize().width <= 1023 &&
-											`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-												filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-											}?key=hero-small`
-									)}
-									width={1210}
-									height={765}
-									decoding="sync"
-									loading="eager"
-									fetchpriority="high"
-									class={clsx('"object-cover object-left')}
-								/>
-							</div>
-							<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
-								{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
-							</div>
-						</A>
-					</Suspense>
+								width={1210}
+								height={765}
+								decoding="sync"
+								loading="eager"
+								fetchpriority="high"
+								class={clsx('"object-cover object-left')}
+							/>
+						</div>
+						<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
+							{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
+						</div>
+					</A>
 				</div>
 			</Show>
 			<div class="h-5vw w-99svw bg-transparent"></div>

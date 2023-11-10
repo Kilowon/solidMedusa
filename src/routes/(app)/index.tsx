@@ -90,7 +90,7 @@ export default function App() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense>
 				<HeroSection />
 
 				<div class="pb-10"></div>

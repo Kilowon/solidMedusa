@@ -129,7 +129,7 @@ export default function Home() {
 				class="w-100% h-5 bg-transparent"
 			></div>
 
-			<div class="min-h-5vh md:min-h-50vh">
+			<div class="min-h-50">
 				<Suspense>
 					<Show when={primaryData.isSuccess && isVisible()}>
 						<Footer />

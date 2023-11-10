@@ -95,7 +95,7 @@ export function HeroSection() {
 		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
 			<div
 				class={clsx(
-					' min-h-[85svh] lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
+					'min-h-175 xl:min-h-250 lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
@@ -189,7 +189,7 @@ export function HeroSection() {
 							'',
 							isServer && 'min-w-[1210px] h-[765px]',
 							getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
-							getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
+							getWindowSize().width <= 1023 && ' w-[375px]'
 						)}
 					>
 						<Image
@@ -219,7 +219,7 @@ export function HeroSection() {
 				</A>
 			</div>
 
-			<div class="h-5vw w-99svw bg-transparent"></div>
+			{/* <div class="h-5vw w-99svw bg-transparent"></div> */}
 		</Show>
 	)
 }

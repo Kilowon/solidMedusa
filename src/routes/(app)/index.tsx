@@ -97,7 +97,7 @@ export default function App() {
 
 				<div
 					ref={el}
-					class="w-90% h-10 bg-red-700"
+					class="w-90% h-10 bg-transparent"
 				></div>
 			</Suspense>
 			<div class="min-h-[100vh] ">

@@ -1,4 +1,4 @@
-import { Show, For, createSignal, onMount, createEffect, Suspense } from 'solid-js'
+import { Show, For, createSignal, onMount, createEffect, Suspense, type ComponentProps, createResource } from 'solid-js'
 import { A } from 'solid-start'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
@@ -176,47 +176,80 @@ export function HeroSection() {
 						</div>
 						<div class="flex flex-grow h-1/3"></div>
 					</div>
-					<A
-						class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
-						href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
-					>
-						<img
-							src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-								filteredSlides()?.[currentIndex()]?.item?.image?.id
-							}?key=hero-large`}
-							loading="eager"
-							alt="main image"
-							height={'765px'}
-							width={'1210px'}
-							class={clsx(
-								'"w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left',
+					<Suspense fallback={<ImagePlaceHolder class={`w-[${1210}px] h-[${765}px]`} />}>
+						<A
+							class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
+							href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
+						>
+							<Image
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+									filteredSlides()?.[currentIndex()]?.item?.image?.id
+								}?key=hero-large`}
+								width={1210}
+								loading="eager"
+								alt="main image"
+								class={clsx(
+									'"w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left',
 
-								getWindowSize().width <= 1023 && 'hidden'
-							)}
-						/>
+									getWindowSize().width <= 1023 && 'hidden'
+								)}
+							/>
 
-						<img
-							src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-								filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-							}?key=hero-small`}
-							loading="eager"
-							alt="main image"
-							height={'292px'}
-							width={'375px'}
-							class={clsx(
-								' min-h-292px object-cover object-left',
+							<Image
+								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+									filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+								}?key=hero-small`}
+								loading="eager"
+								alt="main image"
+								height={'292px'}
+								width={'375px'}
+								class={clsx(
+									' min-h-292px object-cover object-left',
 
-								getWindowSize().width > 1023 && 'hidden'
-							)}
-						/>
+									getWindowSize().width > 1023 && 'hidden'
+								)}
+							/>
 
-						<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
-							{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
-						</div>
-					</A>
+							<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
+								{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
+							</div>
+						</A>
+					</Suspense>
 				</div>
 			</Show>
 			<div class="h-5vw w-99svw bg-transparent"></div>
 		</Show>
 	)
 }
+
+const Image = (props: ComponentProps<'img'>) => {
+	const [src] = createResource(
+		() => props.src,
+		async url => URL.createObjectURL(await (await fetch(url)).blob())
+	)
+	return (
+		<img
+			{...props}
+			src={src()}
+		/>
+	)
+}
+
+const ImagePlaceHolder = (props: any) => (
+	<div
+		classList={{
+			[`flex items-center justify-center bg-gray-300 rounded sm:w-96 dark:bg-gray-700`]: true,
+			[props.class]: props.class
+		}}
+	>
+		<svg
+			class={`w-10 h-10 text-gray-200 dark:text-gray-600`}
+			aria-hidden="true"
+			xmlns="http://www.w3.org/2000/svg"
+			fill="currentColor"
+			viewBox="0 0 20 18"
+		>
+			<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+		</svg>
+	</div>
+)

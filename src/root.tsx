@@ -172,8 +172,8 @@ export default function Root() {
 										<section class="flex justify-center h-[100vh] w-[100vw] p-16  bg-white text-xl">
 											<div class="flex flex-col items-center">
 												<div class="i-ic-round-menu  font-400 text-white">Loading.</div>
-												<div class="i-la-user-plus font-500 text-white">{`Loading..`}</div>
-												<div class="i-ion-cart-outline font-700 text-white">Loading...</div>
+												{/* <div class="i-la-user-plus font-500 text-white">{`Loading..`}</div>
+												<div class="i-ion-cart-outline font-700 text-white">Loading...</div> */}
 											</div>
 										</section>
 									}

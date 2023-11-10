@@ -1,5 +1,6 @@
 import { Show, For, createSignal, onMount, createEffect, Suspense, type ComponentProps, createResource } from 'solid-js'
 import { A } from 'solid-start'
+import { isServer } from 'solid-js/web'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
@@ -9,7 +10,7 @@ export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
-		queryKey: ['hero_data'],
+		queryKey: ['hero_data2'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero?fields=*.item.*.*.*`, {
@@ -25,7 +26,8 @@ export function HeroSection() {
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: false
+		enabled: true,
+		deferStream: false
 	}))
 
 	const [currentIndex, setCurrentIndex] = createSignal(0)
@@ -181,35 +183,34 @@ export function HeroSection() {
 							class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
 							href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
 						>
-							<Image
-								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-									filteredSlides()?.[currentIndex()]?.item?.image?.id
-								}?key=hero-large`}
-								width={1210}
-								loading="eager"
-								alt="main image"
+							<div
 								class={clsx(
-									'"w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153] object-cover object-left',
-
-									getWindowSize().width <= 1023 && 'hidden'
+									'',
+									isServer && 'min-w-[1210px] h-[765px]',
+									getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
+									getWindowSize().width <= 1023 && ' w-[375px] h-[375px]'
 								)}
-							/>
-
-							<Image
-								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-									filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-								}?key=hero-small`}
-								loading="eager"
-								alt="main image"
-								height={'292px'}
-								width={'375px'}
-								class={clsx(
-									' min-h-292px object-cover object-left',
-
-									getWindowSize().width > 1023 && 'hidden'
-								)}
-							/>
-
+							>
+								<Image
+									src={clsx(
+										'',
+										isServer && '',
+										getWindowSize().width > 1023 &&
+											`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+												filteredSlides()?.[currentIndex()]?.item?.image?.id
+											}?key=hero-large`,
+										getWindowSize().width <= 1023 &&
+											`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+												filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
+											}?key=hero-small`
+									)}
+									width={1210}
+									decoding="sync"
+									loading="eager"
+									fetchpriority="high"
+									class={clsx('"object-cover object-left')}
+								/>
+							</div>
 							<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">
 								{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
 							</div>
@@ -238,7 +239,7 @@ const Image = (props: ComponentProps<'img'>) => {
 const ImagePlaceHolder = (props: any) => (
 	<div
 		classList={{
-			[`flex items-center justify-center bg-gray-300 rounded sm:w-96 dark:bg-gray-700`]: true,
+			[`flex items-center justify-center bg-normal_1 rounded sm:w-96`]: true,
 			[props.class]: props.class
 		}}
 	>

@@ -119,9 +119,7 @@ export default function Home() {
 					: {}
 			}
 		>
-			<Suspense>
-				<Navigation />
-			</Suspense>
+			<Navigation />
 
 			<Outlet />
 			<div

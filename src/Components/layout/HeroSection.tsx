@@ -192,7 +192,7 @@ export function HeroSection() {
 							getWindowSize().width <= 1023 && ' w-[375px]'
 						)}
 					>
-						<Image
+						<img
 							src={clsx(
 								'',
 								isServer && '',

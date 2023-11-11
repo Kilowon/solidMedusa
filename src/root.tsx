@@ -178,7 +178,7 @@ export default function Root() {
 					crossorigin="anonymous"
 				/>
 				<Link
-					href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
+					href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
 					rel="stylesheet"
 				/>
 				{/* 	<PlausibleScript /> */}

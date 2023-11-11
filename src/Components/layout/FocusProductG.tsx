@@ -119,7 +119,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 
 	return (
 		<Show when={true}>
-			<div
+			<section
 				class={clsx(
 					'  max-w-99svw lg:mb-auto lg:mt-auto flex flex-col xl:flex-row  justify-center mx-2 ',
 
@@ -406,7 +406,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 				{/* <Show when={getWindowSize().width <= 1023}>
 					<div>NONE</div>
 				</Show> */}
-			</div>
+			</section>
 		</Show>
 	)
 }

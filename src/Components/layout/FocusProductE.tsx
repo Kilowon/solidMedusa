@@ -131,7 +131,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 
 	return (
 		<Show when={true}>
-			<div
+			<section
 				class={clsx(
 					'py-5 lg:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex items-center justify-center sm:my-20 lg:my-auto px-2 ',
 					props.item.background_colors_c === 'normal_1' && 'bg-normal_1',
@@ -483,7 +483,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-			</div>
+			</section>
 		</Show>
 	)
 }

@@ -21,9 +21,10 @@ export default function Home() {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: false
+		enabled: true,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	const heroData = createQuery(() => ({
@@ -41,9 +42,10 @@ export default function Home() {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: false
+		enabled: true,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	function hexToRgb(hex: any) {
@@ -122,18 +124,20 @@ export default function Home() {
 			<Navigation />
 
 			<Outlet />
-			<div
-				ref={el}
-				class="w-100% h-5 bg-transparent"
-			></div>
 
-			<div class="min-h-50">
-				<Suspense>
-					<Show when={primaryData.isSuccess && isVisible()}>
-						<Footer />
-					</Show>
-				</Suspense>
-			</div>
+			<Suspense>
+				<Show when={primaryData.isSuccess && heroData.isSuccess}>
+					<div class="min-h-50">
+						<div
+							ref={el}
+							class="w-100% h-5 bg-red-700"
+						></div>
+						<Show when={isVisible()}>
+							<Footer />
+						</Show>
+					</div>
+				</Show>
+			</Suspense>
 		</div>
 	)
 }

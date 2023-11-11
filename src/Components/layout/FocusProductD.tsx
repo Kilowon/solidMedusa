@@ -115,7 +115,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 
 	return (
 		<Show when={true}>
-			<div
+			<section
 				class={clsx(
 					'sm:py-10  max-w-99svw lg:mb-auto lg:mt-auto flex flex-col lg:flex-row items-center justify-center mx-2 my-25 sm:my-50 lg:my-auto',
 					props.item.component_variant === 'left' && 'flex-row-reverse'
@@ -607,7 +607,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 						</div>{' '}
 					</div>
 				</Show>
-			</div>
+			</section>
 		</Show>
 	)
 }

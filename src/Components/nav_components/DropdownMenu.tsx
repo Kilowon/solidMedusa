@@ -85,7 +85,7 @@ export default function DropdownMenu(props: {
 				<Show when={props.openMenu() && primaryData.isSuccess}>
 					<div class=" bg-normal_1 fixed top-16 left-0 px-5 rounded-br-5 select-none">
 						<div class="relative py-4">
-							<div class="">
+							<menu>
 								<div class="flex flex-col space-y-8 ">
 									<div class="flex flex-wrap">
 										<div class="text-sm  text-accent_6 mr-6 font-500">
@@ -235,7 +235,7 @@ export default function DropdownMenu(props: {
 										</Show>
 									</div>
 								</div>
-							</div>
+							</menu>
 						</div>
 					</div>
 				</Show>

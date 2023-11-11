@@ -133,7 +133,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 
 	return (
 		<Show when={true}>
-			<div
+			<section
 				class={clsx(
 					'  max-w-100svw  flex flex-col lg:flex-row justify-center px-2 ',
 					props.item.component_variant === 'left' && 'flex-row-reverse py-5 sm:py-10  items-center',
@@ -886,7 +886,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 						</div>
 					</div>
 				</Show>
-			</div>
+			</section>
 		</Show>
 	)
 }

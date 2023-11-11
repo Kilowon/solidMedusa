@@ -10,7 +10,7 @@ export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
-		queryKey: ['hero_data2'],
+		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero?fields=*.item.*.*.*`, {
@@ -26,7 +26,7 @@ export function HeroSection() {
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: true,
+		enabled: false,
 		deferStream: false
 	}))
 
@@ -93,7 +93,7 @@ export function HeroSection() {
 
 	return (
 		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
-			<div
+			<section
 				class={clsx(
 					'min-h-175 xl:min-h-250 lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
@@ -112,7 +112,7 @@ export function HeroSection() {
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_10' && 'bg-accent_10'
 				)}
 			>
-				<div class="flex flex-col">
+				<header class="flex flex-col">
 					<div class="flex flex-grow w-full  h-1/3"></div>
 					<div class="flex flex-col justify-center min-h-35svh min-w-25vw lg:min-h-auto ">
 						<div
@@ -178,7 +178,7 @@ export function HeroSection() {
 						</div>
 					</div>
 					<div class="flex flex-grow h-1/3"></div>
-				</div>
+				</header>
 
 				<A
 					class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
@@ -217,7 +217,7 @@ export function HeroSection() {
 						{filteredSlides()?.[currentIndex()]?.item?.image_tagline}
 					</div>
 				</A>
-			</div>
+			</section>
 
 			{/* <div class="h-5vw w-99svw bg-transparent"></div> */}
 		</Show>

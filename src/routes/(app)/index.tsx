@@ -89,7 +89,7 @@ export default function App() {
 	})
 
 	return (
-		<div class="min-h-200vh">
+		<div class="min-h-300vh">
 			<Suspense>
 				<HeroSection />
 

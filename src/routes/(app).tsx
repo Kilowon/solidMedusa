@@ -1,5 +1,5 @@
 import { lazy, Suspense, createSignal, createEffect, Show } from 'solid-js'
-import { Outlet } from 'solid-start'
+import { Outlet, Link } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 import { getWindowSize } from '@solid-primitives/resize-observer'
@@ -44,8 +44,7 @@ export default function Home() {
 		},
 		retry: 0,
 		enabled: true,
-		deferStream: false,
-		refetchOnWindowFocus: false
+		deferStream: false
 	}))
 
 	function hexToRgb(hex: any) {
@@ -136,6 +135,20 @@ export default function Home() {
 							<Footer />
 						</Show>
 					</div>
+					<Link
+						rel="preload"
+						as="image"
+						href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+							heroData?.data?.data?.Hero_infor?.[0]?.item?.image?.id
+						}?key=hero-large`}
+					/>
+					<Link
+						rel="preload"
+						as="image"
+						href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+							heroData?.data?.data?.Hero_infor?.[0]?.item?.mobile_image?.id
+						}?key=hero-small`}
+					/>
 				</Show>
 			</Suspense>
 		</div>

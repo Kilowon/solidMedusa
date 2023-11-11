@@ -1,5 +1,5 @@
 import { Show, For, createSignal, onMount, createEffect, Suspense, type ComponentProps, createResource } from 'solid-js'
-import { A, Link } from 'solid-start'
+import { A } from 'solid-start'
 import { isServer } from 'solid-js/web'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
@@ -192,20 +192,6 @@ export function HeroSection() {
 							getWindowSize().width <= 1023 && ' w-[375px]'
 						)}
 					>
-						<Link
-							rel="preload"
-							as="image"
-							href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-								filteredSlides()?.[currentIndex()]?.item?.image?.id
-							}?key=hero-large`}
-						/>
-						<Link
-							rel="preload"
-							as="image"
-							href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-								filteredSlides()?.[currentIndex()]?.item?.mobile_image?.id
-							}?key=hero-small`}
-						/>
 						<Image
 							src={clsx(
 								'',

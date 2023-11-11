@@ -149,11 +149,11 @@ export default function Root() {
 					rel="icon"
 					href={import.meta.env.VITE_STORE_FAVICON}
 				/>
-				<link
+				<Link
 					rel="preconnect"
 					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}
 				/>
-				<PlausibleScript />
+				{/* 	<PlausibleScript /> */}
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

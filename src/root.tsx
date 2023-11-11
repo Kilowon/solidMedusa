@@ -153,6 +153,18 @@ export default function Root() {
 					rel="preconnect"
 					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}
 				/>
+				<Link
+					rel="preload"
+					href={'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2'}
+				/>
+				<Link
+					rel="preload"
+					href={'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2'}
+				/>
+				<Link
+					rel="preload"
+					href={'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2'}
+				/>
 				{/* 	<PlausibleScript /> */}
 			</Head>
 			<Body class="font-poppins">

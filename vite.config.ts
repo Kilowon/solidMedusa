@@ -34,8 +34,7 @@ export default defineConfig({
 						poppins: [
 							{
 								name: 'Poppins',
-								weights: ['700', '400', '500'],
-								provider: 'none'
+								weights: ['700', '400', '500']
 							},
 							{
 								name: 'sans-serif',

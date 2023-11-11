@@ -155,15 +155,27 @@ export default function Root() {
 				/>
 				<Link
 					rel="preload"
-					href={'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2'}
+					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2"
+					as="style"
+					onload={e => {
+						e.currentTarget.rel = 'stylesheet'
+					}}
 				/>
 				<Link
 					rel="preload"
-					href={'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2'}
+					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2"
+					as="style"
+					onload={e => {
+						e.currentTarget.rel = 'stylesheet'
+					}}
 				/>
 				<Link
 					rel="preload"
-					href={'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2'}
+					href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2"
+					as="style"
+					onload={e => {
+						e.currentTarget.rel = 'stylesheet'
+					}}
 				/>
 				{/* 	<PlausibleScript /> */}
 			</Head>

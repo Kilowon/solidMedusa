@@ -29,13 +29,8 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'google', // default provider
+					provider: 'bunny',
 					fonts: {
-						// these will extend the default theme
-						/* sans: 'Roboto', */
-						/* mono: ['Fira Code', 'Fira Mono:400,700'], */
-						// custom ones
-
 						poppins: [
 							{
 								name: 'Poppins',

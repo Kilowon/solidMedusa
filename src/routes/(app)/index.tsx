@@ -89,7 +89,7 @@ export default function App() {
 	})
 
 	return (
-		<div class="min-h-800vh">
+		<div class="min-h-300vh">
 			<Suspense>
 				<HeroSection />
 
@@ -100,19 +100,21 @@ export default function App() {
 					class="w-90% h-10 bg-transparent"
 				></div>
 			</Suspense>
-			<main class="min-h-800vh ">
-				<div>
-					{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
-				</div>
-				<ErrorBoundary
-					fallback={(e: Error) => (
-						<>
-							{console.error(e)}
-							{/* <NotFound /> */}
-						</>
-					)}
-				>
-					<Suspense>
+			<ErrorBoundary
+				fallback={(e: Error) => (
+					<>
+						{console.error(e)}
+						{/* <NotFound /> */}
+					</>
+				)}
+			>
+				{' '}
+				<Suspense>
+					<main>
+						<div>
+							{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS ... IF you need to modify a component the best practice is to make a copy and modify that */}
+						</div>
+
 						<Show when={isVisible() && featuredData.isSuccess}>
 							<For each={featuredData.data?.data?.builder_blocks}>
 								{item => {
@@ -186,10 +188,10 @@ export default function App() {
 								}}
 							</For>
 						</Show>
-					</Suspense>
-				</ErrorBoundary>
-				<div>{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS */}</div>
-			</main>
+						<div>{/* THIS IS A SAFE AREA TO ADD CUSTOM COMPONENTS */}</div>
+					</main>
+				</Suspense>
+			</ErrorBoundary>
 		</div>
 	)
 }

@@ -29,12 +29,13 @@ export default defineConfig({
 				}),
 				presetUno(),
 				presetWebFonts({
-					provider: 'bunny',
+					provider: 'google',
 					fonts: {
 						poppins: [
 							{
 								name: 'Poppins',
-								weights: ['700', '400', '500']
+								weights: ['700', '400', '500'],
+								provider: 'none'
 							},
 							{
 								name: 'sans-serif',

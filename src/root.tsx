@@ -153,29 +153,33 @@ export default function Root() {
 					rel="preconnect"
 					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}
 				/>
-				<Link
+				{/* 	<Link
 					rel="preload"
 					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2"
 					as="style"
-					onload={e => {
-						e.currentTarget.rel = 'stylesheet'
-					}}
 				/>
 				<Link
 					rel="preload"
 					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2"
 					as="style"
-					onload={e => {
-						e.currentTarget.rel = 'stylesheet'
-					}}
 				/>
 				<Link
 					rel="preload"
 					href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2"
 					as="style"
-					onload={e => {
-						e.currentTarget.rel = 'stylesheet'
-					}}
+				/> */}
+				<Link
+					rel="preconnect"
+					href="https://fonts.googleapis.com"
+				/>
+				<Link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossorigin="anonymous"
+				/>
+				<Link
+					href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
+					rel="stylesheet"
 				/>
 				{/* 	<PlausibleScript /> */}
 			</Head>

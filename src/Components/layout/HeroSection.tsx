@@ -95,7 +95,7 @@ export function HeroSection() {
 		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
 			<section
 				class={clsx(
-					'min-h-175 xl:min-h-250 lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
+					'min-h-105vh xl:min-h-105vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
@@ -210,6 +210,7 @@ export function HeroSection() {
 							decoding="sync"
 							loading="eager"
 							fetchpriority="high"
+							alt="Hero Image"
 							class={clsx('"object-cover object-left')}
 						/>
 					</div>

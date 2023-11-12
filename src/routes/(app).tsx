@@ -129,7 +129,7 @@ export default function Home() {
 					<div class="min-h-50">
 						<div
 							ref={el}
-							class="w-100% h-5 bg-red-700"
+							class="w-100% h-5 bg-transparent"
 						></div>
 						<Show when={isVisible()}>
 							<Footer />

@@ -35,7 +35,8 @@ export default function Categories() {
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: false
+		enabled: false,
+		deferStream: true
 	}))
 
 	const queryCategories = createQuery(() => ({
@@ -45,7 +46,8 @@ export default function Categories() {
 			return product
 		},
 		retry: 0,
-		enabled: false
+		enabled: false,
+		deferStream: true
 	}))
 
 	const [currentCategoryId, setCurrentCategoryId] = createSignal([''])
@@ -61,7 +63,8 @@ export default function Categories() {
 			return product
 		},
 		retry: 0,
-		enabled: !!currentCategoryId() && !!queryCart?.data?.cart?.id
+		enabled: !!currentCategoryId() && !!queryCart?.data?.cart?.id,
+		deferStream: true
 	}))
 
 	//Causes a loop when item is empty

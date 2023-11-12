@@ -33,7 +33,8 @@ export default function ProductTemplate(props: {
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: false
+		enabled: queryCart.data?.cart.id !== undefined,
+		deferStream: true
 	}))
 
 	const reviewData = createQuery(() => ({
@@ -50,7 +51,8 @@ export default function ProductTemplate(props: {
 			return data
 		},
 		retry: 0,
-		enabled: false
+		enabled: false,
+		deferStream: true
 	}))
 	//TODO: make ReviewDisplay Show on width to prevent data from being fetched on mobile
 
@@ -68,7 +70,8 @@ export default function ProductTemplate(props: {
 			return data
 		},
 		retry: 0,
-		enabled: queryProduct.isSuccess
+		enabled: queryProduct.isSuccess,
+		deferStream: true
 	}))
 
 	const displayContainerData = createQuery(() => ({
@@ -88,7 +91,8 @@ export default function ProductTemplate(props: {
 			return data
 		},
 		retry: 0,
-		enabled: queryProduct.isSuccess
+		enabled: queryProduct.isSuccess,
+		deferStream: true
 	}))
 
 	createEffect(() => {
@@ -101,7 +105,7 @@ export default function ProductTemplate(props: {
 
 	return (
 		<main>
-			<Show when={queryProduct.isSuccess}>
+			<Show when={queryProduct.isSuccess && queryCart.data?.cart.id !== undefined}>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-65vh md:min-h-auto">
 						<ErrorBoundary>

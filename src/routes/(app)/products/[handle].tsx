@@ -29,7 +29,8 @@ export default function Products() {
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: true
+		enabled: queryCart.data?.cart.id !== undefined,
+		deferStream: true
 	}))
 
 	onMount(() => {
@@ -164,17 +165,19 @@ export default function Products() {
 				name="twitter:card"
 				content={'summary_large_image'}
 			/> */}
-			<main class="min-h-[100vh]">
-				<StoreProvider product={queryProduct?.data?.products[0]}>
-					<ProductTemplate
-						updateOptions={useStore().updateOptions}
-						options={useStore().options}
-						inStock={useStore().inStock}
-						variant={useStore().variant}
-						useStore={useStore}
-					/>
-				</StoreProvider>
-			</main>
+			<Show when={queryCart?.data?.cart?.id !== undefined}>
+				<main class="min-h-[100vh]">
+					<StoreProvider product={queryProduct?.data?.products[0]}>
+						<ProductTemplate
+							updateOptions={useStore().updateOptions}
+							options={useStore().options}
+							inStock={useStore().inStock}
+							variant={useStore().variant}
+							useStore={useStore}
+						/>
+					</StoreProvider>
+				</main>
+			</Show>
 		</div>
 	)
 }

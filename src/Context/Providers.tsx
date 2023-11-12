@@ -96,7 +96,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false,
+		enabled: !isServer && localStorage.getItem('cart_id') === null ? true : false,
 		deferStream: true
 	}))
 
@@ -108,7 +108,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : true
+		enabled: !isServer && !localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess ? false : true
 	}))
 
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])

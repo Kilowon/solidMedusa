@@ -96,7 +96,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled: isServer || localStorage.getItem('cart_id') === null ? activeObserver() : false,
+		enabled: isServer || localStorage.getItem('cart_id') === null ? true : false,
 		deferStream: true
 	}))
 
@@ -108,8 +108,7 @@ export function GlobalContextProvider(props: any) {
 			return cart
 		},
 		retry: 0,
-		enabled:
-			isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : activeObserver()
+		enabled: isServer || (!localStorage.getItem('cart_id') !== null && !!queryNewCart.isSuccess) ? false : true
 	}))
 
 	const [queue, setQueue] = createSignal<Array<() => Promise<any>>>([])
@@ -213,11 +212,11 @@ export function GlobalContextProvider(props: any) {
 		cacheTime: 15 * 60 * 1000,
 		refetchOnWindowFocus: false,
 		deferStream: true,
-		enabled: activeObserver()
+		enabled: true
 	}))
 
 	createEffect(() => {
-		console.log('ACTIVEOBSERVER', activeObserver())
+		console.log('ACTIVEOBSERVER', true)
 	})
 
 	const [categories, categoriesServerState] = createSignal([])
@@ -256,7 +255,7 @@ export function GlobalContextProvider(props: any) {
 		cacheTime: 15 * 60 * 1000,
 		refetchOnWindowFocus: false,
 		deferStream: true,
-		enabled: activeObserver()
+		enabled: true
 	}))
 
 	const [categoryProducts, setCategoryProducts] = createSignal([])
@@ -273,7 +272,7 @@ export function GlobalContextProvider(props: any) {
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
-		enabled: activeObserver()
+		enabled: true
 	}))
 
 	const [collections, setCollections] = createSignal([])

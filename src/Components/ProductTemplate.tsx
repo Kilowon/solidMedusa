@@ -24,7 +24,7 @@ export default function ProductTemplate(props: {
 	const [complete, setComplete] = createSignal(false)
 
 	const queryProduct = createQuery(() => ({
-		queryKey: ['Product-Page', params.handle],
+		queryKey: ['Product-Page-Template', params.handle],
 		queryFn: async function () {
 			const product = await medusa?.products.list({
 				handle: params.handle,
@@ -100,6 +100,12 @@ export default function ProductTemplate(props: {
 			setTimeout(() => {
 				setComplete(true)
 			}, 500)
+		}
+	})
+
+	createEffect(() => {
+		if (queryProduct?.data?.products[0]?.variants[0]?.original_price === null || 0) {
+			queryProduct.refetch()
 		}
 	})
 

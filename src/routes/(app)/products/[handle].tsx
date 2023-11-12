@@ -20,7 +20,7 @@ export default function Products() {
 	//TODO: Popping after redirect to another product page or from catagory page and randomly on refresh
 
 	const queryProduct = createQuery(() => ({
-		queryKey: ['Product-Page', params.handle],
+		queryKey: ['Product-Page-Provider', params.handle],
 		queryFn: async function () {
 			const product = await medusa?.products.list({
 				handle: params.handle,
@@ -28,7 +28,6 @@ export default function Products() {
 			})
 			return product
 		},
-		cacheTime: 25 * 60 * 1000,
 		enabled: queryCart.data?.cart.id !== undefined,
 		deferStream: true
 	}))

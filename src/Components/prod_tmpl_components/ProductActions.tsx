@@ -70,18 +70,6 @@ export default function ProductActions(props: {
 		}
 	})
 
-	/* 	const queryProduct = createQuery(() => ({
-		queryKey: ['Product-Page', params.handle],
-		queryFn: async function () {
-			const product = await medusa?.products.list({ handle: params?.handle, cart_id: queryCart.data?.cart.id })
-			return product
-		},
-		cacheTime: 25 * 60 * 1000,
-		enabled: !!params?.handle && !!queryCart?.data?.cart?.id,
-		refetchOnWindowFocus: false,
-		refetchOnMount: false
-	})) */
-
 	const reviewData = createQuery(() => ({
 		queryKey: ['review_data', props.productInfo?.title],
 		queryFn: async function () {

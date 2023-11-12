@@ -67,7 +67,7 @@ export default function ImageGallerySlidy(props: {
 		<Transition
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-					duration: 250
+					duration: 150
 				})
 				a.finished.then(done)
 			}}

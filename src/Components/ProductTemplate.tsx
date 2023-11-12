@@ -32,9 +32,9 @@ export default function ProductTemplate(props: {
 			})
 			return product
 		},
-		cacheTime: 25 * 60 * 1000,
 		enabled: queryCart.data?.cart.id !== undefined,
-		deferStream: true
+		deferStream: true,
+		refetchOnWindowFocus: false
 	}))
 
 	const reviewData = createQuery(() => ({

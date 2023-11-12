@@ -100,7 +100,8 @@ export default function ProductActions(props: {
 		},
 		retry: 0,
 		enabled: props.productInfo?.id !== undefined,
-		refetchOnWindowFocus: false
+		refetchOnWindowFocus: false,
+		deferStream: true
 	}))
 
 	const draftReviewData = createQuery(() => ({
@@ -118,7 +119,8 @@ export default function ProductActions(props: {
 		},
 		retry: 0,
 		enabled: false,
-		refetchOnWindowFocus: false
+		refetchOnWindowFocus: false,
+		deferStream: true
 	}))
 
 	/* 	createEffect(() => {
@@ -131,7 +133,7 @@ export default function ProductActions(props: {
 		<TransitionGroup
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0.1 }, { opacity: 1 }], {
-					duration: 250
+					duration: 150
 				})
 				a.finished.then(done)
 			}}

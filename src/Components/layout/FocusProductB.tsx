@@ -238,6 +238,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 								width={600}
 								alt={props.item.title || 'main image'}
 								class="object-cover "
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -264,7 +265,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 						<div class={clsx('max-w-430px max-h-340px  aspect-[23/17] flex items-center justify-center   overflow-hidden')}>
 							<img
 								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=focus-product-b`}
-								loading="eager"
+								loading="lazy"
 								alt="main image"
 								class=" object-fill "
 							/>
@@ -420,6 +421,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 								width={600}
 								alt={props.item.title || 'main image'}
 								class="object-cover"
+								loading="lazy"
 							/>
 						</div>
 					</div>

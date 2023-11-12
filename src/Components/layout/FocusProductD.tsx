@@ -203,7 +203,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 											>
 												<img
 													src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
-													loading="eager"
+													loading="lazy"
 													alt="main image"
 													class=" object-fill "
 												/>
@@ -229,7 +229,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 											>
 												<img
 													src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
-													loading="eager"
+													loading="lazy"
 													alt="main image"
 													class=" object-cover "
 												/>
@@ -434,7 +434,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 							>
 								<img
 									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
-									loading="eager"
+									loading="lazy"
 									alt="main image"
 									class="object-cover object-center z-5 "
 								/>
@@ -460,7 +460,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 							>
 								<img
 									src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
-									loading="eager"
+									loading="lazy"
 									alt="main image"
 									class="object-cover object-center z-5 "
 								/>
@@ -487,6 +487,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 						>
 							<img
 								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
+								loading="lazy"
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}
@@ -599,6 +600,7 @@ export default function FocusProductD(props: { item: FeaturedProps['item'] }) {
 						>
 							<img
 								src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image?.id}?key=600-avif`}
+								loading="lazy"
 								height={600}
 								width={600}
 								alt={props.item.title || 'main image'}

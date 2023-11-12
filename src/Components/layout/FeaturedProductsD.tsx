@@ -189,23 +189,24 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 											{(item: any) => {
 												return (
 													<li class="flex items-center justify-center ">
-																<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden fill-current min-w-40px ')}>
-																	<Show when={item.item?.image}>
-																		<img
-																			src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
-																			loading="lazy"
-																			alt={item.item?.title}
-																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px
+														<div
+															class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden fill-current min-w-40px ')}
+														>
+															<Show when={item.item?.image}>
+																<img
+																	src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
+																	loading="lazy"
+																	alt={item.item?.title}
+																	role="img"
+																	class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px
 																
 																"
-																		/>
-																	</Show>
-																</div>
-																<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
+																/>
+															</Show>
+														</div>
+														<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
 														<div class="flex flex-col justify-start items-start min-w-40% pb-1 ml-2">
 															<div class="flex flex-start  w-full">
-
 																<Show when={item.item?.title}>
 																	<div class="font-700 text-text_3 text-sm tracking-tighter   flex items-center pb-1">
 																		{item.item.title}
@@ -243,6 +244,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 												width={600}
 												alt={props.item.title || 'main image'}
 												class={clsx('object-cover object-center min-h-450px z-5 p-2')}
+												loading="lazy"
 											/>
 										</div>
 									</Show>
@@ -307,20 +309,24 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 											{(item: any) => {
 												return (
 													<li class="flex items-center justify-center  rounded-1">
-															<div class={clsx(' flex  justify-center items-center  rounded-0.5 overflow-hidden w-10% fill-current min-w-15')}>
-																<Show when={item.item?.image}>
-																	<img
-																		src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
-																		loading="lazy"
-																		alt={item.item?.title}
-																		role="img"
-																		class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px 
+														<div
+															class={clsx(
+																' flex  justify-center items-center  rounded-0.5 overflow-hidden w-10% fill-current min-w-15'
+															)}
+														>
+															<Show when={item.item?.image}>
+																<img
+																	src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=100-webp`}
+																	loading="lazy"
+																	alt={item.item?.title}
+																	role="img"
+																	class=" object-fill grayscale-100 contrast-50 max-w-40px min-w-40px 
 																
 																"
-																	/>
-																</Show>
-															</div>
-															<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 max-h-20"></div>
+																/>
+															</Show>
+														</div>
+														<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 max-h-20"></div>
 														<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2 p-2">
 															<div class="flex flex-start  w-full">
 																<Show when={item.item?.title}>
@@ -394,7 +400,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																	<div class={clsx('flex justify-center items-center  rounded-3 overflow-hidden')}>
 																		<img
 																			src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=200-avif`}
-																			loading="eager"
+																			loading="lazy"
 																			alt="main image"
 																			class=" object-fill max-w-190px max-h-190px min-w-100px min-h-100px "
 																		/>
@@ -460,6 +466,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 													width={600}
 													alt={props.item.title || 'main image'}
 													class={clsx('object-cover object-center min-h-450px z-5')}
+													loading="lazy"
 												/>
 											</div>
 										</Show>
@@ -485,6 +492,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 													width={600}
 													alt={props.item.title || 'main image'}
 													class={clsx('object-cover object-center min-h-450px z-5 p-2')}
+													loading="lazy"
 												/>
 											</div>
 										</Show>
@@ -603,7 +611,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																>
 																	<img
 																		src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${item.item?.image}?key=200-avif`}
-																		loading="eager"
+																		loading="lazy"
 																		alt="main image"
 																		class=" object-fill  "
 																	/>

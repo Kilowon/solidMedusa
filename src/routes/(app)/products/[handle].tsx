@@ -29,13 +29,16 @@ export default function Products() {
 			return product
 		},
 		cacheTime: 25 * 60 * 1000,
-		enabled: false
+		enabled: true
 	}))
 
 	onMount(() => {
 		console.log(queryProduct?.data?.products[0]?.handle, params.handle)
 		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			queryProduct.refetch()
+		}
+		if (queryProduct?.data?.products.length === 0) {
+			navigate('/404')
 		}
 	})
 

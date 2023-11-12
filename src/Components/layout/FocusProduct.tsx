@@ -144,7 +144,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								>
 									<img
 										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
-										loading="eager"
+										loading="lazy"
 										alt="main image"
 										class="object-cover object-center min-h-100px z-5 "
 									/>
@@ -172,7 +172,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								>
 									<img
 										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
-										loading="eager"
+										loading="lazy"
 										alt="main image"
 										class="object-cover object-center min-h-100px z-5 "
 									/>
@@ -316,6 +316,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								width={600}
 								alt={props.item.title || 'main image'}
 								class="object-cover object-left min-h-600px z-5"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -454,7 +455,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								>
 									<img
 										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_2?.id}?key=200-avif`}
-										loading="eager"
+										loading="lazy"
 										alt="main image"
 										class="object-cover object-center min-h-100px z-5 "
 									/>
@@ -482,7 +483,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								>
 									<img
 										src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image_3?.id}?key=200-avif`}
-										loading="eager"
+										loading="lazy"
 										alt="main image"
 										class="object-cover object-center min-h-100px z-5 "
 									/>
@@ -515,6 +516,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								width={600}
 								alt={props.item.title || 'main image'}
 								class="object-cover object-left min-h-600px z-5"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -627,6 +629,7 @@ export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 								width={600}
 								alt={props.item.title || 'main image'}
 								class="object-cover object-left  z-5"
+								loading="lazy"
 							/>
 						</div>{' '}
 					</div>

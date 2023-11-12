@@ -135,20 +135,24 @@ export default function Home() {
 							<Footer />
 						</Show>
 					</div>
-					<Link
-						rel="preload"
-						as="image"
-						href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-							heroData?.data?.data?.Hero_infor?.[0]?.item?.image?.id
-						}?key=hero-large`}
-					/>
-					<Link
-						rel="preload"
-						as="image"
-						href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-							heroData?.data?.data?.Hero_infor?.[0]?.item?.mobile_image?.id
-						}?key=hero-small`}
-					/>
+					<Show when={heroData?.data?.data?.Hero_infor?.[0]?.item?.image?.id !== undefined}>
+						<Link
+							rel="preload"
+							as="image"
+							href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+								heroData?.data?.data?.Hero_infor?.[0]?.item?.image?.id
+							}?key=hero-large`}
+						/>
+					</Show>
+					<Show when={heroData?.data?.data?.Hero_infor?.[0]?.item?.mobile_image?.id !== undefined}>
+						<Link
+							rel="preload"
+							as="image"
+							href={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+								heroData?.data?.data?.Hero_infor?.[0]?.item?.mobile_image?.id
+							}?key=hero-small`}
+						/>
+					</Show>
 				</Show>
 			</Suspense>
 		</div>

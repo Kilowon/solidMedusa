@@ -211,6 +211,7 @@ export function CardA(props: { item: FeaturedProps['item'] }) {
 					src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image}`}
 					alt={props.item.title || 'main image'}
 					class="object-cover"
+					loading="lazy"
 				/>
 			</div>
 		</div>
@@ -243,6 +244,7 @@ export function CardB(props: { item: FeaturedProps['item'] }) {
 					src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image}`}
 					alt={props.item.title || 'main image'}
 					class="object-cover"
+					loading="lazy"
 				/>
 			</div>
 			<div class="flex items-center absolute bottom-0 ">
@@ -366,6 +368,7 @@ export function CardC(props: { item: FeaturedProps['item'] }) {
 					src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image}`}
 					alt={props.item.title || 'main image'}
 					class="object-cover"
+					loading="lazy"
 				/>
 			</div>
 		</div>
@@ -396,6 +399,7 @@ export function CardD(props: { item: FeaturedProps['item'] }) {
 					src={`${import.meta.env.VITE_DIRECTUS_URL}/assets/${props.item.image}`}
 					alt={props.item.title || 'main image'}
 					class="object-cover"
+					loading="lazy"
 				/>
 			</div>
 		</div>

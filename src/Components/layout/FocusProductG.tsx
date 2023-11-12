@@ -241,7 +241,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 													height={600}
 													width={600}
 													alt={props.item.title || 'main image'}
-													class={clsx('object-contain object-center min-h-200px z-5')}
+													loading="lazy"
 												/>
 											</div>
 										</Show>
@@ -271,6 +271,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 													width={600}
 													alt={props.item.title || 'main image'}
 													class={clsx('object-contain object-center min-h-200px z-5')}
+													loading="lazy"
 												/>
 											</div>
 										</Show>
@@ -326,6 +327,7 @@ export default function FocusProductG(props: { item: FeaturedProps['item'] }) {
 											width={600}
 											alt={props.item.title || 'main image'}
 											class={clsx('object-contain object-center min-h-450px z-5')}
+											loading="lazy"
 										/>
 									</div>
 								</Show>

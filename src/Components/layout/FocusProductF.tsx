@@ -440,6 +440,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 									width={600}
 									alt={props.item.title || 'main image'}
 									class={clsx('object-cover object-center min-h-450px z-5')}
+									loading="lazy"
 								/>
 							</div>
 						</div>
@@ -633,6 +634,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 									width={600}
 									alt={props.item.title || 'main image'}
 									class={clsx('object-cover object-center min-h-450px z-5')}
+									loading="lazy"
 								/>
 							</div>
 						</div>
@@ -807,6 +809,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 									width={600}
 									alt={props.item.title || 'main image'}
 									class={clsx('object-cover object-center min-h-250px z-5')}
+									loading="lazy"
 								/>
 							</div>
 						</div>

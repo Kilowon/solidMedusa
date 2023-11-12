@@ -58,6 +58,12 @@ export default function Products() {
 		}
 	})
 
+	createEffect(() => {
+		if (queryProduct?.data?.products[0]?.variants[0]?.original_price === null || 0) {
+			queryProduct.refetch()
+		}
+	})
+
 	//TODO: need to SSR this data for cards to work
 
 	/* 	const primaryData = createQuery(() => ({

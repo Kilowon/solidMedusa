@@ -111,7 +111,14 @@ export default function ProductTemplate(props: {
 
 	return (
 		<main>
-			<Show when={queryProduct.isSuccess && queryCart.data?.cart.id !== undefined}>
+			<Show
+				when={
+					(queryProduct.isSuccess &&
+						queryCart.data?.cart.id !== undefined &&
+						queryProduct?.data?.products[0]?.variants[0]?.original_price !== null) ||
+					0
+				}
+			>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-65vh md:min-h-auto">
 						<ErrorBoundary>

@@ -24,10 +24,10 @@ export function HeroSection() {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
+
 		retry: 0,
-		enabled: false,
-		deferStream: false
+		enabled: true,
+		deferStream: true
 	}))
 
 	const [currentIndex, setCurrentIndex] = createSignal(0)

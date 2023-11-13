@@ -146,7 +146,7 @@ export default function Navigation(props: any) {
 								<Show when={primaryData.isSuccess || primaryData?.data?.data?.title}>
 									<div
 										title={primaryData?.data?.data?.title}
-										class="text-sm md:text-2xl h-8 min-w-43 font-semibold uppercase"
+										class="text-sm md:text-2xl xl:h-8 xl:min-w-43 font-700 uppercase"
 									>
 										{primaryData?.data?.data?.title}
 									</div>

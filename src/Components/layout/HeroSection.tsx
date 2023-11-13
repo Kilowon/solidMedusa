@@ -11,7 +11,13 @@ export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	createEffect(() => {
-		console.log('HERO SECTION', view())
+		console.log('HERO SECTION - view', view())
+	})
+	createEffect(() => {
+		console.log('HERO SECTION - success', heroData.isSuccess)
+	})
+	createEffect(() => {
+		console.log('HERO SECTION - length', filteredSlides().length > 0)
 	})
 
 	const heroData = createQuery(() => ({
@@ -31,7 +37,7 @@ export function HeroSection() {
 		},
 
 		retry: 0,
-		enabled: true,
+		enabled: false,
 		deferStream: true
 	}))
 

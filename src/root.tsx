@@ -26,7 +26,7 @@ import { getWindowSize } from '@solid-primitives/resize-observer'
 function PlausibleScript() {
 	onMount(() => {
 		const script = document.createElement('script')
-		script.defer = true
+		script.defer = false
 		script.dataset.domain = import.meta.env.VITE_PLAUSIBLE_DOMAIN
 		script.src = import.meta.env.VITE_PLAUSIBLE_SCRIPT_SRC
 		document.head.appendChild(script)
@@ -153,7 +153,16 @@ export default function Root() {
 					rel="preconnect"
 					href={`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`}
 				/>
-				{/* 	<Link
+				<Link
+					rel="preconnect"
+					href="https://fonts.googleapis.com"
+				/>
+				<Link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossorigin="anonymous"
+				/>
+				<Link
 					rel="preload"
 					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2"
 					as="style"
@@ -167,22 +176,8 @@ export default function Root() {
 					rel="preload"
 					href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2"
 					as="style"
-				/> */}
-				<Link
-					rel="preconnect"
-					href="https://fonts.googleapis.com"
 				/>
-				<Link
-					rel="preconnect"
-					href="https://fonts.gstatic.com"
-					crossorigin="anonymous"
-				/>
-				<Link
-					rel="preload"
-					href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
-					as="style"
-				/>
-				{/* 	<PlausibleScript /> */}
+				<PlausibleScript />
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

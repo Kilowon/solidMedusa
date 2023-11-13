@@ -95,7 +95,7 @@ export function HeroSection() {
 		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
 			<section
 				class={clsx(
-					'min-h-105vh xl:min-h-105vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial md:justify-center flex-col lg:flex-row ',
+					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
@@ -112,9 +112,9 @@ export function HeroSection() {
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'accent_10' && 'bg-accent_10'
 				)}
 			>
-				<header class="flex flex-col">
+				<header class="flex flex-col xl:pl-10">
 					<div class="flex flex-grow w-full  h-1/3"></div>
-					<div class="flex flex-col justify-center min-h-35svh min-w-25vw lg:min-h-auto ">
+					<div class="flex flex-col justify-center  min-h-35svh min-w-25vw lg:min-h-auto ">
 						<div
 							class={clsx(
 								' text-text_2 z-10 flex flex-col  md:max-w-[512px] lg:min-w-[470px] items-center space-y-3 lg:space-y-12 ',
@@ -141,10 +141,10 @@ export function HeroSection() {
 						>
 							<div>
 								<div class="flex flex-col items-center justify-center  sm:h-auto  mx-6 md:mx-auto space-y-1">
-									<h1 class=" tracking-tighter text-4xl  sm:text-5xl  lg:max-w-auto  lg:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20 max-h-100">
+									<h1 class=" tracking-tighter text-4xl    lg:max-w-auto  sm:text-6xl  font-700 z-2 lg:text-balance text-center text-balance min-w-60 min-h-20 ">
 										{filteredSlides()?.[currentIndex()]?.item?.header || ''}
 									</h1>
-									<h2 class=" tracking-tighter text-xl  sm:text-3xl  lg:max-w-auto   lg:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10 max-h-50">
+									<h2 class=" tracking-tighter text-xl  text-xl  lg:max-w-auto   sm:text-4xl  font-500 z-2 lg:text-balance  text-center text-balance min-w-40 min-h-10">
 										{filteredSlides()?.[currentIndex()]?.item?.subtitle || ''}
 									</h2>
 								</div>
@@ -188,8 +188,9 @@ export function HeroSection() {
 						class={clsx(
 							'',
 							isServer && 'min-w-[1210px] h-[765px]',
-							getWindowSize().width > 1023 && ' w-[1210px] h-[765px]',
-							getWindowSize().width <= 1023 && ' w-[375px]'
+							getWindowSize().width > 1023 && ' max-w-[1210px] max-h-[765px]',
+							getWindowSize().width <= 1023 && ' max-w-[1210px] max-h-[765px]',
+							getWindowSize().width <= 600 && ' max-w-[375px]'
 						)}
 					>
 						<img
@@ -211,7 +212,14 @@ export function HeroSection() {
 							loading="eager"
 							fetchpriority="high"
 							alt="Hero Image"
-							class={clsx('"object-cover object-left')}
+							class={clsx(
+								'object-cover object-left',
+
+								getWindowSize().width > 1500 && 'w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153]',
+								getWindowSize().width > 1023 && 'w-[1210px] max-h-[765px] min-h-[36rem] aspect-[242/153]',
+
+								getWindowSize().width <= 1023 && 'min-h-292px'
+							)}
 						/>
 					</div>
 					<div class="text-xs lg:text-sm xl:text-base text-text_2 xl:mt-1">

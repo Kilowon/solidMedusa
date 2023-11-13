@@ -35,3 +35,7 @@ export { isVisible, setIsVisible }
 const [activeObserver, setActiveObserver] = createSignal(false)
 
 export { activeObserver, setActiveObserver }
+
+const [view, setView] = createSignal(false)
+
+export { view, setView }

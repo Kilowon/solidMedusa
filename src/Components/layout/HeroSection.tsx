@@ -5,6 +5,7 @@ import { getWindowSize } from '@solid-primitives/resize-observer'
 import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
+import { view, setView } from '~/state'
 
 export function HeroSection() {
 	const { medusa } = useGlobalContext()
@@ -36,7 +37,6 @@ export function HeroSection() {
 	const [endWait, setEndWait] = createSignal(15000)
 	const [totalLength, setTotalLength] = createSignal(0)
 	const [filteredSlides, setFilteredSlides] = createSignal<any>([''])
-	const [view, setView] = createSignal(false)
 
 	function heroCarousel() {
 		if (!heroSlidesActive()) return

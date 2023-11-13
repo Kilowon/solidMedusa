@@ -252,8 +252,6 @@ export function GlobalContextProvider(props: any) {
 			return product
 		},
 
-		cacheTime: 15 * 60 * 1000,
-		refetchOnWindowFocus: false,
 		deferStream: true,
 		enabled: true
 	}))
@@ -272,6 +270,7 @@ export function GlobalContextProvider(props: any) {
 			return product
 		},
 		cacheTime: 15 * 60 * 1000,
+		deferStream: true,
 		enabled: true
 	}))
 

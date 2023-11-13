@@ -125,7 +125,6 @@ export default function Home() {
 			<Navigation />
 
 			<Outlet />
-
 			<Suspense>
 				<Show when={primaryData.isSuccess && heroData.isSuccess}>
 					<div class="min-h-50">

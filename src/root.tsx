@@ -162,21 +162,6 @@ export default function Root() {
 					href="https://fonts.gstatic.com"
 					crossorigin="anonymous"
 				/>
-				<Link
-					rel="preload"
-					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2"
-					as="style"
-				/>
-				<Link
-					rel="preload"
-					href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2"
-					as="style"
-				/>
-				<Link
-					rel="preload"
-					href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2"
-					as="style"
-				/>
 				<PlausibleScript />
 			</Head>
 			<Body class="font-poppins">

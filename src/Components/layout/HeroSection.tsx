@@ -10,6 +10,10 @@ import { view, setView } from '~/state'
 export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
+	createEffect(() => {
+		console.log('HERO SECTION', view())
+	})
+
 	const heroData = createQuery(() => ({
 		queryKey: ['hero_data'],
 		queryFn: async function () {

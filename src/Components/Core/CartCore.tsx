@@ -1,4 +1,4 @@
-import { For, Show, createSignal, createEffect, SuspenseList } from 'solid-js'
+import { For, Show, createSignal, createEffect, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
@@ -56,7 +56,7 @@ export default function CartCore(props: CartCoreProps) {
 	})
 
 	return (
-		<SuspenseList revealOrder="together">
+		<Suspense>
 			<Show when={isServer === false && queryCart?.data?.cart?.items && sortedItems()}>
 				<div class=" text-sm text-text_3 z-50 ">
 					<Show when={queryCart?.data?.cart?.items?.length > 0}>
@@ -379,7 +379,7 @@ export default function CartCore(props: CartCoreProps) {
 					</Show>
 				</div>
 			</Show>
-		</SuspenseList>
+		</Suspense>
 	)
 }
 

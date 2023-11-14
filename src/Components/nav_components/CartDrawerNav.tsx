@@ -36,7 +36,6 @@ export default function CartDrawerNav(props: {
 					if (e.target === e.currentTarget) {
 						props.setCartDrawer({ cart: 'hidden' })
 					}
-					console.log('OpenCart', props.cartDrawer())
 				}}
 			>
 				<div
@@ -48,7 +47,7 @@ export default function CartDrawerNav(props: {
 					}}
 				/>
 				<div
-					class={`fixed top-12 right-0 h-full w-[100vw] sm:w-[85vw] md:w-[45vw] bg-normal_1 z-200 transform rounded-sm  transition-transform duration-500 ease-in-out p-2 ${
+					class={`fixed top-12 right-0 h-full w-[100vw] sm:w-[85vw] md:w-[45vw] bg-normal_1 z-200 transform rounded-sm  transition-transform duration-250 ease-in-out p-2 ${
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>

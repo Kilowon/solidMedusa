@@ -87,10 +87,10 @@ export default function NotFound() {
 			<section class="flex items-center h-full p-16 text-text_2">
 				<div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
 					<div class="max-w-md text-center">
-						<h2 class="mb-8 font-extrabold text-9xl dark:text-gray-600">
+						<h2 class="mb-8 font-700 text-7xl sm:text-9xl dark:text-gray-600">
 							<span class="sr-only">Error</span>OOPS!
 						</h2>
-						<p class="text-2xl font-semibold md:text-3xl">Page not found</p>
+						<p class="text-2xl font-700 md:text-3xl">Page not found</p>
 						<p class="mt-4 mb-8 dark:text-gray-400">
 							Sorry, we couldn't find the page you were looking for and suggest you return to our home page
 						</p>

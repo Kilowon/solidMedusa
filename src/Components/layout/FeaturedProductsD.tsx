@@ -552,7 +552,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 											return (
 												<li class="flex items-start justify-start ">
 													<div class="flex flex-col justify-start items-start  space-y-2 ml-2">
-														<div class="flex flex-start min-h-40px">
+														<div class="flex justify-center items-center min-h-40px">
 															<div
 																class={clsx(
 																	' flex  justify-center items-center  rounded-0.5 overflow-hidden w-30px h-30px mr-2 fill-current'
@@ -570,10 +570,10 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 																	/>
 																</Show>
 															</div>
-
 															<Show when={item.item?.title}>
 																<div class="font-700 text-text_3 text-xs tracking-tighter w-100% ">{item.item.title}</div>
 															</Show>
+
 														</div>
 													</div>
 												</li>

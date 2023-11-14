@@ -481,7 +481,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 																"
 														/>
 													</Show>
-													<div class="border-1 border-r-text_2/50 h-full w-1 ml-2 h-full min-h-15 max-h-30"></div>
+													
 												</div>{' '}
 												<div class="flex flex-col justify-start items-start max-w-70 space-y-0.5 ml-2">
 													<Show when={item.item?.title}>
@@ -489,7 +489,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 													</Show>
 
 													<Show when={item.item?.sub_title}>
-														<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+														<div class="font-500 text-text_3 text-xs tracking-tighter text-balance">{item.item.sub_title}</div>
 													</Show>
 												</div>
 											</div>

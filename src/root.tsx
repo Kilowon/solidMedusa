@@ -26,7 +26,7 @@ import { getWindowSize } from '@solid-primitives/resize-observer'
 function PlausibleScript() {
 	onMount(() => {
 		const script = document.createElement('script')
-		script.defer = false
+		script.defer = true
 		script.dataset.domain = import.meta.env.VITE_PLAUSIBLE_DOMAIN
 		script.src = import.meta.env.VITE_PLAUSIBLE_SCRIPT_SRC
 		document.head.appendChild(script)
@@ -161,6 +161,10 @@ export default function Root() {
 					rel="preconnect"
 					href="https://fonts.gstatic.com"
 					crossorigin="anonymous"
+				/>
+				<Link
+					rel="preconnect"
+					href="https://plausible.shauns.cool/js/script.js"
 				/>
 				<PlausibleScript />
 			</Head>

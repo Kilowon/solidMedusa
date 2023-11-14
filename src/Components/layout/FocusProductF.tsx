@@ -818,29 +818,38 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 							<div class="flex  justify-center  ">
 								<div class={clsx('text-text_2 z-10 flex flex-col items-center ')}>
 									<div>
-										<div class={clsx('flex flex-col ')}>
-											<ul class={clsx('grid grid-cols-1 gap-x-6 gap-y-6')}>
+										<div class={clsx('flex ')}>
+										
+											<ul class={clsx('grid grid-cols-1 gap-y-2')}>
 												<For each={props.item.icons}>
 													{(item: any, index) => {
+														if (props.item?.component_variant === 'center') {
+															if (index() % 2 !== 0) return
+														}
+
 														return (
-															<li class="flex items-start justify-start">
+															<li
+																class={clsx(
+																	'flex items-start justify-start rounded-1 p-1',
+																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3 border border-text_2/50',
+																	props.item.background_colors_b === 'normal_4' && 'bg-normal_4 border border-text_2/50',
+																	props.item.background_colors_b === 'surface' && 'bg-surface border border-text_2/50',
+																	props.item.background_colors_b === 'text_4' && 'bg-text_4 border border-text_2/50',
+																	props.item.background_colors_b === 'text_5' && 'bg-text_5 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_4' && 'bg-accent_4 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_5' && 'bg-accent_5 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_6' && 'bg-accent_6 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_7' && 'bg-accent_7 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_8' && 'bg-accent_8 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_9' && 'bg-accent_9 border border-text_2/50',
+																	props.item.background_colors_b === 'accent_10' && 'bg-accent_10 border border-text_2/50'
+																)}
+															>
 																<div
 																	class={clsx(
-																		' flex  justify-center items-center  rounded-0.5 overflow-hidden max-w-25px min-w-25px fill-current',
-																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
-																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
-																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
-																		props.item.background_colors_b === 'normal_4' && 'bg-normal_4',
-																		props.item.background_colors_b === 'surface' && 'bg-surface',
-																		props.item.background_colors_b === 'text_4' && 'bg-text_4',
-																		props.item.background_colors_b === 'text_5' && 'bg-text_5',
-																		props.item.background_colors_b === 'accent_4' && 'bg-accent_4',
-																		props.item.background_colors_b === 'accent_5' && 'bg-accent_5',
-																		props.item.background_colors_b === 'accent_6' && 'bg-accent_6',
-																		props.item.background_colors_b === 'accent_7' && 'bg-accent_7',
-																		props.item.background_colors_b === 'accent_8' && 'bg-accent_8',
-																		props.item.background_colors_b === 'accent_9' && 'bg-accent_9',
-																		props.item.background_colors_b === 'accent_10' && 'bg-accent_10'
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-40px fill-current min-h-18 h-full'
 																	)}
 																>
 																	<Show when={item.item?.image}>
@@ -849,18 +858,19 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50  
+																			class=" object-fill grayscale-100 contrast-50 min-w-40px max-w-40px mx-2
 
 																		"
 																		/>
 																	</Show>
 																</div>
-																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
+																
+																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-4  ">
 																	<Show when={item.item?.title}>
-																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
+																		<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>
 																	</Show>
 																	<Show when={item.item?.sub_title}>
-																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter text-balance">{item.item.sub_title}</div>
 																	</Show>
 																</div>
 															</li>

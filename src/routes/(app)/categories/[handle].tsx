@@ -130,7 +130,20 @@ export default function Categories() {
 
 	return (
 		<main class="min-h-[100vh]">
-			<Suspense>
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 250
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 0
+					})
+					a.finished.then(done)
+				}}
+			>
 				<Show when={currentCategory() && queryCategoryProducts.data?.products?.length > 1}>
 					<Title>{currentCategory?.()[0]?.name}</Title>
 					<Meta
@@ -142,8 +155,8 @@ export default function Categories() {
 						content={currentCategory?.()[0]?.name}
 					/>
 
-					<div class="pt-1 lg:py-12 ">
-						<Show when={parentCategories() && currentCategory()}>
+					<Show when={parentCategories() && currentCategory()}>
+						<div class="pt-1 lg:py-12 ">
 							<div class="mx-1 sm:mx-auto sm:content-container sm:py-12 antialiased  ">
 								<FlexCategories
 									parentCategories={parentCategories}
@@ -156,29 +169,14 @@ export default function Categories() {
 											{(product: any, index) => {
 												return (
 													<li>
-														<Transition
-															onEnter={(el, done) => {
-																const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-																	duration: 500
-																})
-																a.finished.then(done)
-															}}
-															onExit={(el, done) => {
-																const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-																	duration: 0
-																})
-																a.finished.then(done)
-															}}
-														>
-															<Show when={product !== undefined && params.handle}>
-																<ProductPreview
-																	{...product}
-																	wish={primaryData?.data?.data?.category_wish}
-																	tag={primaryData?.data?.data?.category_tag}
-																	component_type="standard"
-																/>
-															</Show>
-														</Transition>
+														<Show when={product !== undefined && params.handle}>
+															<ProductPreview
+																{...product}
+																wish={primaryData?.data?.data?.category_wish}
+																tag={primaryData?.data?.data?.category_tag}
+																component_type="type_1"
+															/>
+														</Show>
 													</li>
 												)
 											}}
@@ -195,22 +193,37 @@ export default function Categories() {
 							currentSlide={currentSlide}
 						/> */}
 							</div>
-						</Show>
-					</div>
+						</div>
+					</Show>
 				</Show>
+			</Transition>
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 250
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 0
+					})
+					a.finished.then(done)
+				}}
+			>
 				<Show when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length === 0}>
 					<div class="text-center mt-40">
 						<h1 class="text-2xl text-text_2 font-bold">No Products Found</h1>
 						<div class="py-5"></div>
 						<A
 							href="/"
-							class="bg-surface p-2 rounded-2"
+							class="bg-accent_6 text-accenttext_1 p-2 rounded-2"
 						>
 							Go Back
 						</A>
 					</div>
 				</Show>
-			</Suspense>
+			</Transition>
 		</main>
 	)
 }

@@ -3,13 +3,10 @@ import { useParams, Title, Meta, useNavigate, A } from 'solid-start'
 import { createEffect, createSignal, Show, For, Suspense } from 'solid-js'
 import { FlexCategories } from '~/Components/common/FlexCategories'
 import 'solid-slider/slider.css'
-import { SingleLineSlider } from '~/Components/common/ProductSlider'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { createQuery } from '@tanstack/solid-query'
-import { Motion, Presence } from '@motionone/solid'
-import { Rerun } from '@solid-primitives/keyed'
-import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
 import { Transition } from 'solid-transition-group'
+import clsx from 'clsx'
 
 export default function Categories() {
 	const params = useParams()
@@ -144,7 +141,7 @@ export default function Categories() {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={currentCategory() && queryCategoryProducts.data?.products?.length > 1}>
+				<Show when={currentCategory()}>
 					<Title>{currentCategory?.()[0]?.name}</Title>
 					<Meta
 						itemProp="description"
@@ -163,7 +160,20 @@ export default function Categories() {
 									currentCategory={currentCategory}
 								/>
 
-								<Show when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length > 1}>
+								<Show
+									when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length > 1}
+									fallback={
+										<div
+											class={clsx(
+												'',
+												queryCategoryProducts.isFetching && 'w-full h-50 flex justify-center items-center animate-pulse',
+												!queryCategoryProducts.isFetching && 'hidden'
+											)}
+										>
+											Loading...
+										</div>
+									}
+								>
 									<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-1  sm:gap-x-4 gap-y-2 sm:gap-y-16">
 										<For each={queryCategoryProducts.data?.products}>
 											{(product: any, index) => {
@@ -211,8 +221,14 @@ export default function Categories() {
 					a.finished.then(done)
 				}}
 			>
-				<Show when={queryCategoryProducts.isSuccess && queryCategoryProducts.data?.products.length === 0}>
-					<div class="text-center mt-40">
+				<Show
+					when={
+						queryCategoryProducts.isSuccess &&
+						queryCategoryProducts.data?.products.length === 0 &&
+						!queryCategoryProducts.isFetching
+					}
+				>
+					<div class="text-center">
 						<h1 class="text-2xl text-text_2 font-bold">No Products Found</h1>
 						<div class="py-5"></div>
 						<A

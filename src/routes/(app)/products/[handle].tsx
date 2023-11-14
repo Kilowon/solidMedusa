@@ -33,7 +33,6 @@ export default function Products() {
 	}))
 
 	onMount(() => {
-		console.log(queryProduct?.data?.products[0]?.handle, params.handle)
 		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			queryProduct.refetch()
 		}

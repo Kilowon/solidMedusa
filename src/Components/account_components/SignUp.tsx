@@ -66,7 +66,7 @@ export default function SignUp(props: SideProps) {
 		setEmailValue(values.email)
 		setPasswordValue(values.password)
 		emailCheck.refetch()
-		console.log('emailcheck', emailCheck.isSuccess)
+
 		setTimeout(() => {
 			if (emailValue() && passwordValue() && emailCheck.isSuccess) {
 				createCustomer.refetch()
@@ -75,7 +75,6 @@ export default function SignUp(props: SideProps) {
 						setError('hidden')
 						queryCart.refetch()
 						props.currentCustomer.refetch()
-						console.log('customer created')
 					}
 					if (createCustomer.failureReason) {
 						setError('active')

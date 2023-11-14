@@ -217,10 +217,6 @@ export default function HamburgerDrawerNav(props: HamburgerNavProps) {
 												if (collection.status === 'draft') return
 											}
 
-											if (collection?.menu_status !== 'menu')
-												createEffect(() => {
-													console.log(matchCollections(collections()?.collections, collection.variant))
-												})
 											if (collection?.menu_status === 'menu')
 												return (
 													<div

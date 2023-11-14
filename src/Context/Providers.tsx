@@ -77,7 +77,6 @@ async function fetchSavedCart(): Promise<Cart> {
 			if (cart?.cart?.payment_authorized_at !== null) return fetchNewCart()
 			return cart
 		} catch (e) {
-			console.log(e)
 			return fetchNewCart()
 		}
 	}
@@ -215,18 +214,9 @@ export function GlobalContextProvider(props: any) {
 		enabled: true
 	}))
 
-	createEffect(() => {
-		console.log('ACTIVEOBSERVER', true)
-	})
-
 	const [categories, categoriesServerState] = createSignal([])
 
 	const [rootCategories, setRootCategories] = createSignal([])
-
-	createEffect(() => {
-		console.log('categories', rootCategories())
-		console.log('categories', import.meta.env.VITE_MENU_CATEGORY_BASE)
-	})
 
 	createEffect(() => {
 		categoriesServerState(queryCategories.data?.product_categories)

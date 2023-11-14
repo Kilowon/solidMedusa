@@ -70,7 +70,6 @@ export function StepperElement(props: StepperProps) {
 							onMouseDown={() => handleClick(props.title)}
 							onKeyDown={event => {
 								if (event.key === 'Enter') {
-									console.log('This should not trigger on tabout')
 									handleClick(props.title)
 								}
 							}}

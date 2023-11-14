@@ -714,10 +714,6 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 		enabled: props.currentCustomer?.id !== undefined
 	}))
 
-	createEffect(() => {
-		console.log(currentUserReviews.isSuccess)
-	})
-
 	function userProductReviewedList(currentId: string) {
 		let userProductReviews = new Set()
 		if (currentUserReviews.isSuccess) {
@@ -814,13 +810,6 @@ export function ReviewsActiveTab(props: { currentCustomer: Customer }) {
 													setOpen(false)
 												}
 											}
-
-											createEffect(() => {
-												console.log('CUR', currentProductId?.data?.variant.product_id)
-											})
-											createEffect(() => {
-												console.log('PROD', productId().id, productId().name)
-											})
 
 											const reviewMutate = createQuery(() => ({
 												queryKey: ['review_mutate'],

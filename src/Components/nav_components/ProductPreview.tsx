@@ -62,13 +62,6 @@ const ProductPreview = (props: ProductPreviewProps) => {
 		}
 	})
 
-	createEffect(() => {
-		console.log('type', props.component_type)
-	})
-	createEffect(() => {
-		console.log('type', props.extended_type)
-	})
-
 	return (
 		<Show when={props.title}>
 			<A href={`/products/${props.handle}`}>

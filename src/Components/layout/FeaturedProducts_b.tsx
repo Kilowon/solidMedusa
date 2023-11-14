@@ -268,16 +268,10 @@ export default function FeaturedProductsLg(props: { variant: FeaturedProps['vari
 										index() >= 3 &&
 										queryCollection?.data?.products?.length < 6
 									) {
-										console.log('SHORT', index())
 										return
 									}
-									/* 
-										if (getWindowSize().width < 639 && (index() - 1) % 2 === 0) {
-											console.log('here', index())
-											return
-										} */
+
 									if (getWindowSize().width > 1280 && index() >= 4 && queryCollection?.data?.products?.length < 7) {
-										console.log('here', index())
 										return
 									}
 

@@ -109,10 +109,6 @@ interface FeaturedProps {
 export default function FocusProduct(props: { item: FeaturedProps['item'] }) {
 	const { medusa } = useGlobalContext()
 
-	createEffect(() => {
-		console.log('THIS', props.item.image_3?.id !== undefined)
-	})
-
 	return (
 		<Show when={true}>
 			<section

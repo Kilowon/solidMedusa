@@ -99,7 +99,6 @@ export async function updateLineItem(
 
 export async function addLineItem(medusa: Medusa | null | undefined, cart: Cart, variantId: string, quantity: number) {
 	try {
-		console.log('CARTID', cart.data?.cart.id, variantId, quantity)
 		const data = await medusa?.carts.lineItems.create(cart.data?.cart.id, {
 			variant_id: variantId,
 			quantity

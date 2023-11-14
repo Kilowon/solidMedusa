@@ -108,20 +108,11 @@ export default function DropdownMenu(props: {
 										<Show when={primaryData.isSuccess && collections()?.collections.length > 0}>
 											<For each={primaryData?.data?.data?.menu_collection}>
 												{collection => {
-													createEffect(() => {
-														console.log('PLOOP', matchCollections(collections()?.collections, collection?.item?.variant))
-													})
-
 													if (collection?.item?.status === 'archived') return
 
 													if (import.meta.env.VITE_DRAFT_SITE === 'false') {
 														if (collection?.item?.status === 'draft') return
 													}
-
-													if (collection?.item?.menu_status !== 'menu')
-														createEffect(() => {
-															console.log(matchCollections(collections()?.collections, collection?.item?.variant))
-														})
 
 													if (collection?.item?.menu_status === 'menu')
 														return (
@@ -138,7 +129,6 @@ export default function DropdownMenu(props: {
 																	onKeyDown={e => {
 																		if (e.key === 'Escape') {
 																			return props.setOpenMenu(false)
-																			console.log(open())
 																		}
 																	}}
 																>
@@ -170,7 +160,6 @@ export default function DropdownMenu(props: {
 																			onKeyDown={e => {
 																				if (e.key === 'Escape') {
 																					return props.setOpenMenu(false)
-																					console.log(open())
 																				}
 																			}}
 																		>
@@ -193,7 +182,6 @@ export default function DropdownMenu(props: {
 																								onKeyDown={e => {
 																									if (e.key === 'Escape') {
 																										return props.setOpenMenu(false)
-																										console.log(open())
 																									}
 																								}}
 																							>

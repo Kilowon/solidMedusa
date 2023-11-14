@@ -45,10 +45,6 @@ export function StoreProvider(props: {
 	const { medusa } = useGlobalContext()
 
 	createEffect(() => {
-		console.log('OPTIONS', options())
-	})
-
-	createEffect(() => {
 		setProduct(props.product)
 	}, [props.product])
 
@@ -151,9 +147,6 @@ export function StoreProvider(props: {
 		return product()?.variants.find(v => v.id === variantId)
 	}, [options(), variantRecord(), product()?.variants])
 
-	createEffect(() => {
-		console.log('VARIANT', variant())
-	}, [variant])
 	// if product only has one variant, then select it
 	createEffect(() => {
 		if (props.product?.variants.length === 1) {

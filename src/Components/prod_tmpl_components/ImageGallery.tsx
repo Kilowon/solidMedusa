@@ -37,7 +37,6 @@ export default function ImageGallery(props: { images: { url: string; id: string 
 			<div class="flex flex-col flex-1 sm:mx-16 gap-y-4">
 				<For each={props.images}>
 					{(image, index) => {
-						console.log(image)
 						return (
 							<div
 								class="relative aspect-[29/34] w-full"

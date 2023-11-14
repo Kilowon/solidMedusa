@@ -57,10 +57,6 @@ export default function FooterNav() {
 		return match
 	}
 
-	createEffect(() => {
-		console.log('Primary Data', primaryData.data?.data?.title)
-	})
-
 	return (
 		<div class="max-w-[1440px] w-full mx-auto  flex flex-col  gap-y-8 pt-16 pb-8 z-1">
 			<Show when={primaryData.isSuccess}>

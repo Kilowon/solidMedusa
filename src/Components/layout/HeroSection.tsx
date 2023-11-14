@@ -10,16 +10,6 @@ import { view, setView } from '~/state'
 export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
-	createEffect(() => {
-		console.log('HERO SECTION - view', view())
-	})
-	createEffect(() => {
-		console.log('HERO SECTION - success', heroData.isSuccess)
-	})
-	createEffect(() => {
-		console.log('HERO SECTION - length', filteredSlides().length > 0)
-	})
-
 	const heroData = createQuery(() => ({
 		queryKey: ['hero_data'],
 		queryFn: async function () {
@@ -96,13 +86,8 @@ export function HeroSection() {
 		return filtered
 	}
 
-	createEffect(() => {
-		console.log('FILTERED SLIDES', filteredSlides())
-		console.log('HERO INFOR', heroData?.data?.data?.Hero_infor)
-	})
-
 	return (
-		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view()}>
+		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}>
 			<section
 				class={clsx(
 					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial flex-col lg:flex-row ',

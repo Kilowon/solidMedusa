@@ -117,7 +117,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					' max-w-99svw xl:my-20 lg:mb-auto lg:mt-auto  justify-center mx-2 relative py-5  sm:py-10',
+					' max-w-99svw justify-center mx-2 relative',
 					props.item?.component_variant === 'default' && 'flex  flex-col items-center ',
 					props.item?.component_variant === 'right' && 'flex  flex-col items-center ',
 					props.item?.component_variant === 'three' && 'flex   items-center ',

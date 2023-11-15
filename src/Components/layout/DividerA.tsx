@@ -221,7 +221,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 														loading="lazy"
 														alt={item.item?.title}
 														role="img"
-														class=" object-fill grayscale-100 contrast-50 sm:min-w-70px sm:max-w-70px mx-5
+														class=" object-fill grayscale-100 contrast-50 sm:min-w-50px sm:max-w-50px mx-5
 
 																		"
 													/>
@@ -375,7 +375,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 			<Show when={size() < 620}>
 				<div
 					class={clsx(
-						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  my-10 w-full',
+						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  my-6 w-full',
 						props.item.background_colors === 'normal_1' && 'bg-normal_1',
 						props.item.background_colors === 'normal_2' && 'bg-normal_2',
 						props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -395,9 +395,9 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 					<div
 						class={clsx(
 							'flex  items-center ',
-							props.item.component_variant === 'center' && 'flex-col py-5 sm:py-10',
-							props.item.component_variant === 'default' && 'flex-col py-5 sm:py-10',
-							props.item.component_variant === 'left' && 'flex-col py-5 sm:py-10'
+							props.item.component_variant === 'center' && 'flex-col pt-5 ',
+							props.item.component_variant === 'default' && 'flex-col pt-5',
+							props.item.component_variant === 'left' && 'flex-col pt-5 '
 						)}
 					>
 						<div class="flex flex-col justify-center items-center">
@@ -437,9 +437,9 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 						<ul
 							class={clsx(
 								'',
-								props.item?.component_variant === 'center' && 'flex flex-col py-10 space-y-2 ',
-								props.item?.component_variant === 'default' && 'flex flex-col py-10 space-y-2',
-								props.item?.component_variant === 'left' && 'flex flex-col py-10space-y-2'
+								props.item?.component_variant === 'center' && 'flex flex-col py-2 space-y-2 ',
+								props.item?.component_variant === 'default' && 'flex flex-col py-2 space-y-2',
+								props.item?.component_variant === 'left' && 'flex flex-col py-2 space-y-2'
 							)}
 						>
 							<For each={props.item.icons}>

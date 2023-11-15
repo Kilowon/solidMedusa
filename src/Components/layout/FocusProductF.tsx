@@ -210,7 +210,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 													</div>
 													<h1
 														class={clsx(
-															'tracking-tighter text-text_2   font-700 z-2  text-start whitespace-break-spaces mb-8',
+															'tracking-tighter text-text_2   font-700 z-2  text-start text-balance whitespace-break-spaces mb-8',
 															props.item.text_size === 'text-xs' && 'text-xs',
 															props.item.text_size === 'text-sm' && 'text-sm',
 															props.item.text_size === 'text-base' && 'text-base',

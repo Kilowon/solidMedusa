@@ -136,9 +136,9 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 			<section
 				class={clsx(
 					'  max-w-100svw  flex flex-col lg:flex-row justify-center px-2 ',
-					props.item.component_variant === 'left' && 'flex-row-reverse py-5 sm:py-10  items-center',
-					props.item.component_variant === 'default' && 'py-5 sm:py-10  items-center',
-					props.item.component_variant === 'center' && ' py-5 sm:py-10  items-center lg:items-end mb-15',
+					props.item.component_variant === 'left' && 'flex-row-reverse py-5 xl:py-10  items-center',
+					props.item.component_variant === 'default' && 'py-5 xl:py-10  items-center',
+					props.item.component_variant === 'center' && ' py-5 xl:py-10  items-center lg:items-end mb-15',
 					props.item.background_colors_c === 'normal_1' && 'bg-normal_1',
 					props.item.background_colors_c === 'normal_2' && 'bg-normal_2',
 					props.item.background_colors_c === 'normal_3' && 'bg-normal_3',
@@ -611,7 +611,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 
 							<div
 								class={clsx(
-									'max-w-600px max-h-600px min-h-600px   flex items-center justify-center overflow-hidden rounded-2 relative ',
+									'max-w-600px max-h-600px min-h-600px flex justify-center overflow-hidden rounded-2 relative ',
 									props.item.background_colors === 'normal_1' && 'bg-normal_1',
 									props.item.background_colors === 'normal_2' && 'bg-normal_2',
 									props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -819,7 +819,6 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 								<div class={clsx('text-text_2 z-10 flex flex-col items-center ')}>
 									<div>
 										<div class={clsx('flex ')}>
-										
 											<ul class={clsx('grid grid-cols-1 gap-y-2')}>
 												<For each={props.item.icons}>
 													{(item: any, index) => {
@@ -864,7 +863,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																		/>
 																	</Show>
 																</div>
-																
+
 																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-4  ">
 																	<Show when={item.item?.title}>
 																		<div class="font-700 text-text_3 text-xs tracking-tighter ">{item.item.title}</div>

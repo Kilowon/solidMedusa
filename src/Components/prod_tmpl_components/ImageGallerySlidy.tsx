@@ -1,7 +1,5 @@
 import { createSignal, createEffect, Show } from 'solid-js'
 import { Slidy } from '@slidy/solid'
-import { fade } from '@slidy/animation'
-import { linear } from '@slidy/easing'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
 import { Transition } from 'solid-transition-group'
@@ -60,14 +58,14 @@ export default function ImageGallerySlidy(props: {
 	createEffect(() => {
 		setTimeout(() => {
 			setCurrentSlide(slides())
-		}, 250)
+		}, 50)
 	})
 
 	return (
 		<Transition
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-					duration: 150
+					duration: 50
 				})
 				a.finished.then(done)
 			}}

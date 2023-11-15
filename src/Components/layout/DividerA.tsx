@@ -248,7 +248,7 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 			<Show when={size() <= 1300 && size() > 620}>
 				<div
 					class={clsx(
-						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  my-10 w-full',
+						'flex justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current  xl:my-10 w-full',
 						props.item.background_colors === 'normal_1' && 'bg-normal_1',
 						props.item.background_colors === 'normal_2' && 'bg-normal_2',
 						props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -481,7 +481,6 @@ export default function DividerA(props: { item: FeaturedProps['item'] }) {
 																"
 														/>
 													</Show>
-													
 												</div>{' '}
 												<div class="flex flex-col justify-start items-start max-w-70 space-y-0.5 ml-2">
 													<Show when={item.item?.title}>

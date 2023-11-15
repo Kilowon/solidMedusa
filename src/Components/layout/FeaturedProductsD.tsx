@@ -117,7 +117,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 		<Show when={true}>
 			<div
 				class={clsx(
-					' max-w-99svw sm:my-20 lg:mb-auto lg:mt-auto  justify-center mx-2 relative py-5  sm:py-10',
+					' max-w-99svw xl:my-20 lg:mb-auto lg:mt-auto  justify-center mx-2 relative py-5  sm:py-10',
 					props.item?.component_variant === 'default' && 'flex  flex-col items-center ',
 					props.item?.component_variant === 'right' && 'flex  flex-col items-center ',
 					props.item?.component_variant === 'three' && 'flex   items-center ',
@@ -225,7 +225,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 									<Show when={props.item?.component_variant === 'default' || props.item?.component_variant === 'right'}>
 										<div
 											class={clsx(
-												'max-w-600px max-h-600px min-h-363px min-w-363px flex  lg:hidden items-center justify-center overflow-hidden rounded-2 relative ',
+												'max-w-600px max-h-600px min-h-363px min-w-363px flex  lg:hidden  justify-center overflow-hidden rounded-2 relative ',
 												props.item.background_colors === 'normal_1' && 'bg-normal_1',
 												props.item.background_colors === 'normal_2' && 'bg-normal_2',
 												props.item.background_colors === 'normal_3' && 'bg-normal_3',
@@ -573,7 +573,6 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 															<Show when={item.item?.title}>
 																<div class="font-700 text-text_3 text-xs tracking-tighter w-100% ">{item.item.title}</div>
 															</Show>
-
 														</div>
 													</div>
 												</li>

@@ -158,14 +158,14 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 				<Show when={getWindowSize().width > 1023}>
 					<div
 						class={clsx(
-							'flex  items-center ',
-							props.item.component_variant === 'center' && 'justify-center',
+							'flex  ',
+							props.item.component_variant === 'center' && 'justify-center items-end',
 							props.item.component_variant === 'default' &&
 								getWindowSize().width > 1300 &&
-								'justify-between flex-row xl:min-w-360',
+								'justify-between flex-row xl:min-w-360 items-center',
 							props.item.component_variant === 'left' &&
 								getWindowSize().width > 1300 &&
-								'justify-between flex-row-reverse xl:min-w-360'
+								'justify-between flex-row-reverse xl:min-w-360 items-center'
 						)}
 					>
 						<div class="flex flex-col ">
@@ -252,7 +252,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 											<ul
 												class={clsx(
 													'',
-													props.item?.component_variant === 'center' && 'flex flex-col space-y-15',
+													props.item?.component_variant === 'center' && 'flex flex-col space-y-10 h-136',
 													props.item?.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 													props.item?.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 												)}
@@ -266,7 +266,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 														return (
 															<li
 																class={clsx(
-																	'flex items-start justify-start rounded-1 p-2',
+																	'flex items-center justify-center rounded-1 p-2',
 																	props.item.background_colors_b === 'normal_1' && 'bg-normal_1 border border-text_2/50',
 																	props.item.background_colors_b === 'normal_2' && 'bg-normal_2 border border-text_2/50',
 																	props.item.background_colors_b === 'normal_3' && 'bg-normal_3 border border-text_2/50',
@@ -285,7 +285,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 															>
 																<div
 																	class={clsx(
-																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current min-h-18 h-full'
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-40px fill-current min-h-18 h-full'
 																	)}
 																>
 																	<Show when={item.item?.image}>
@@ -294,19 +294,19 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px mx-2
+																			class=" object-fill grayscale-100 contrast-50 min-w-40px max-w-40px mx-2
 
 																		"
 																		/>
 																	</Show>
 																</div>
-																<div class="border-1 border-r-text_2/50 h-full w-1 ml-2"></div>
+																<div class="border-1 border-r-text_2/50 h-20 w-1 ml-2"></div>
 																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2 px-2">
 																	<Show when={item.item?.title}>
 																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
 																	</Show>
 																	<Show when={item.item?.sub_title}>
-																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter text-balance ">{item.item.sub_title}</div>
 																	</Show>
 																</div>
 															</li>
@@ -319,7 +319,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 													'flex items-end ',
 													props.item.component_variant === 'left' && 'justify-start',
 													props.item.component_variant === 'default' && 'justify-end',
-													props.item.component_variant === 'center' && 'justify-end'
+													props.item.component_variant === 'center' && 'justify-end pr-4'
 												)}
 											>
 												<div
@@ -460,7 +460,7 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 											<ul
 												class={clsx(
 													'',
-													props.item.component_variant === 'center' && 'flex flex-col space-y-15',
+													props.item.component_variant === 'center' && 'flex flex-col space-y-15 pl-5 h-136',
 													props.item.component_variant === 'default' && 'grid grid-cols-2 gap-x-6 gap-y-8',
 													props.item.component_variant === 'left' && 'grid grid-cols-2 gap-x-6 gap-y-8'
 												)}
@@ -472,10 +472,10 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 														}
 
 														return (
-															<li class="flex items-start justify-start">
+															<li class="flex items-center justify-center">
 																<div
 																	class={clsx(
-																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-50px fill-current',
+																		' flex  justify-center items-center  rounded-0.5 overflow-hidden min-w-40px fill-current',
 																		props.item.background_colors_b === 'normal_1' && 'bg-normal_1',
 																		props.item.background_colors_b === 'normal_2' && 'bg-normal_2',
 																		props.item.background_colors_b === 'normal_3' && 'bg-normal_3',
@@ -498,16 +498,17 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 																			loading="lazy"
 																			alt={item.item?.title}
 																			role="img"
-																			class=" object-fill grayscale-100 contrast-50 min-w-50px max-w-50px"
+																			class=" object-fill grayscale-100 contrast-50 min-w-40px max-w-40px"
 																		/>
 																	</Show>
 																</div>
+																<div class="border-1 border-r-black h-20 w-3 ml-2"></div>
 																<div class="flex flex-col justify-start items-start min-w-40% space-y-2 ml-2">
 																	<Show when={item.item?.title}>
 																		<div class="font-700 text-text_3 text-sm tracking-tighter ">{item.item.title}</div>
 																	</Show>
 																	<Show when={item.item?.sub_title}>
-																		<div class="font-500 text-text_3 text-xs tracking-tighter ">{item.item.sub_title}</div>
+																		<div class="font-500 text-text_3 text-xs tracking-tighter text-balance ">{item.item.sub_title}</div>
 																	</Show>
 																</div>
 															</li>

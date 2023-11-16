@@ -146,7 +146,7 @@ export default function Root() {
 					content={'summary_large_image'}
 				/>
 				<Link
-					rel="icon"
+					rel="favicon"
 					href={import.meta.env.VITE_STORE_FAVICON}
 				/>
 				<Link
@@ -162,7 +162,7 @@ export default function Root() {
 					href="https://fonts.gstatic.com"
 					crossorigin="anonymous"
 				/>
-		{/* 		<PlausibleScript /> */}
+				{/* 		<PlausibleScript /> */}
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

@@ -14,6 +14,7 @@ import SignUp from '~/Components/account_components/SignUp'
 import SignIn from '~/Components/account_components/SignIn'
 import TabNav from '~/Components/account_components/TabNav'
 import { setAccountStatus } from '~/state'
+import { Spinner } from '~/Components/checkout_components/Spinner'
 
 type PaymentForm = {
 	emailDelayFake: string
@@ -63,7 +64,7 @@ export default function Account() {
 			const customer = await medusa?.auth?.getSession()
 			return customer
 		},
-		retry: 1
+		retry: 0
 	}))
 
 	const currentCustomerSignOut = createQuery(() => ({
@@ -199,7 +200,14 @@ export default function Account() {
 			<Navigation />
 			<div class="bg-normal_1 min-h-[100svh]">
 				<div class="flex flex-col lg:flex-row lg:w-full sm:mt-20 lg:mt-0">
-					<Suspense>
+					<Suspense
+						fallback={
+							<div class="w-100vw h-100vh flex flex-col  items-center justify-center">
+								<div class="animate-pulse pb-2">Loading Account</div>
+								<Spinner />
+							</div>
+						}
+					>
 						<Show when={!currentCustomer.isSuccess}>
 							<div
 								class={clsx(

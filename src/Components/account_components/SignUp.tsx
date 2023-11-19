@@ -144,7 +144,7 @@ export default function SignUp(props: SideProps) {
 										{...props}
 										value={field.value}
 										type="email"
-										label="Email"
+										label="Email (sign up)"
 										placeholder="example@email.com"
 									/>
 								)}

@@ -12,7 +12,7 @@ import { currencyFormat } from '~/lib/helpers/currency'
 import { fetchProduct } from '~/Services/medusaAPI'
 import { ProductVariant } from '~/types/models'
 import { setCartDrawer, setOpenCart } from '~/state'
-
+import { Spinner } from '~/Components/checkout_components/Spinner'
 interface CartCoreProps {
 	variant?: 'primary' | 'checkout' | 'panel' | 'mobile-checkout' | 'mobile-panel'
 	cart?: any
@@ -56,7 +56,14 @@ export default function CartCore(props: CartCoreProps) {
 	})
 
 	return (
-		<Suspense>
+		<Suspense
+			fallback={
+				<div class="w-100vw h-100vh flex flex-col  items-center justify-center">
+					<div class="animate-pulse pb-2">Loading Cart</div>
+					<Spinner />
+				</div>
+			}
+		>
 			<Show when={isServer === false && queryCart?.data?.cart?.items && sortedItems()}>
 				<div class=" text-sm text-text_3 z-50 ">
 					<Show when={queryCart?.data?.cart?.items?.length > 0}>

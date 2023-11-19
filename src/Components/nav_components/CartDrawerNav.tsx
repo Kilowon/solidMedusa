@@ -1,6 +1,7 @@
 import { createEffect, createSignal, lazy, ErrorBoundary, Show, onMount } from 'solid-js'
 import { useGlobalContext } from '~/Context/Providers'
 import { isServer } from 'solid-js/web'
+import { Spinner } from '~/Components/checkout_components/Spinner'
 
 const CartCore = lazy(() => import('../Core/CartCore'))
 
@@ -51,7 +52,12 @@ export default function CartDrawerNav(props: {
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
-					<Show when={!isServer && props.cartDrawer().cart === 'active'}>
+					<Show when={!isServer && props.cartDrawer().cart === 'active'} fallback={
+							<div class="w-100vw h-100vh flex flex-col  items-center justify-center">
+								<div class="animate-pulse pb-2">Loading Account</div>
+								<Spinner />
+							</div>
+						}>
 						<CartCore
 							variant="mobile-panel"
 							setCartDrawer={props.setCartDrawer}

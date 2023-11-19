@@ -67,7 +67,7 @@ export default function Home() {
 
 	return (
 		<div
-			class="bg-normal_1"
+			class="bg-normal_1 "
 			style={
 				import.meta.env.VITE_DRAFT_SITE === 'false'
 					? {
@@ -123,8 +123,9 @@ export default function Home() {
 			}
 		>
 			<Navigation />
-
-			<Outlet />
+			<div class="min-h-100vh">
+				<Outlet />
+			</div>
 			<Suspense>
 				<Show when={primaryData.isSuccess && heroData.isSuccess}>
 					<div class="min-h-50">

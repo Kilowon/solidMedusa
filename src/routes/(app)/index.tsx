@@ -1,4 +1,5 @@
 import { HeroSection } from '~/Components/layout/HeroSection'
+import { HeroFast } from '~/Components/layout/HeroFast'
 import { lazy, Suspense, createSignal, createEffect, Show, For, onMount } from 'solid-js'
 import { createQuery } from '@tanstack/solid-query'
 import { createVisibilityObserver } from '@solid-primitives/intersection-observer'
@@ -91,7 +92,8 @@ export default function App() {
 	return (
 		<div class="min-h-300vh">
 			<Suspense>
-				<HeroSection />
+				{/* <HeroSection /> */}
+				<HeroFast />
 
 				<div class="pb-10"></div>
 

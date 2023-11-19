@@ -7,6 +7,7 @@ import ProductPreview from '~/Components/nav_components/ProductPreview'
 import { createQuery } from '@tanstack/solid-query'
 import { Transition } from 'solid-transition-group'
 import clsx from 'clsx'
+import { Spinner } from '~/Components/checkout_components/Spinner'
 
 export default function Categories() {
 	const params = useParams()
@@ -170,7 +171,7 @@ export default function Categories() {
 												!queryCategoryProducts.isFetching && 'hidden'
 											)}
 										>
-											Loading...
+											<Spinner />
 										</div>
 									}
 								>

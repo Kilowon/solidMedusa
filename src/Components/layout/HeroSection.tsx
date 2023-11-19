@@ -6,6 +6,7 @@ import { useGlobalContext } from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
 import { view, setView } from '~/state'
+import { Spinner } from '../checkout_components/Spinner'
 
 export function HeroSection() {
 	const { medusa } = useGlobalContext()
@@ -87,7 +88,7 @@ export function HeroSection() {
 	}
 
 	return (
-		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}>
+		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}  fallback={<div class="w-100vw h-100vh flex items-center justify-center"><Spinner /></div>}>
 			<section
 				class={clsx(
 					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial lg:justify-center flex-col lg:flex-row ',

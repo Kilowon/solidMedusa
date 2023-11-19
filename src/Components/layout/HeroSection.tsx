@@ -90,7 +90,7 @@ export function HeroSection() {
 		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}>
 			<section
 				class={clsx(
-					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial flex-col lg:flex-row ',
+					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial lg:justify-center flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
@@ -176,7 +176,7 @@ export function HeroSection() {
 				</header>
 
 				<A
-					class="  flex flex-col items-center justify-center lg:justify-start  lg:h-auto"
+					class="  flex flex-col items-center justify-center   lg:h-auto"
 					href={filteredSlides()?.[currentIndex()]?.item?.image_href || '/store/Store'}
 				>
 					<div

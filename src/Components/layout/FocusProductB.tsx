@@ -192,7 +192,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 												</div>
 												<h1
 													class={clsx(
-														'tracking-tighter text-text_2   font-700 z-2  text-start ',
+														'tracking-tighter text-text_2 text-balance  font-700 z-2  text-start ',
 														props.item.text_size === 'text-xs' && 'text-xs',
 														props.item.text_size === 'text-sm' && 'text-sm',
 														props.item.text_size === 'text-base' && 'text-base',
@@ -214,17 +214,17 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 									</div>
 									<div class="flex flex-col items-center space-y-2 absolute bottom--15">
 										<Show when={props.item.call_to_action}>
-											<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
+											<div class="flex items-center hover:underline text-xs  bg-accent_6 text-accenttext_1 p-1.5  rounded-1 ">
 												<A
 													href={props.item?.action_url || '/store/Store'}
-													class="text- z-2 tracking-tight"
+													class=" z-2 tracking-tight"
 												>
 													{props.item.call_to_action}
 												</A>
 											</div>
 										</Show>
 										<Show when={props.item.price}>
-											<div class="font-500 text-text_3 tracking-tighter  ">{props.item.price}</div>
+											<div class="font-500 text-sm text-text_3 tracking-tighter  ">{props.item.price}</div>
 										</Show>
 									</div>
 									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
@@ -291,7 +291,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 
 											<h1
 												class={clsx(
-													'tracking-tighter text-text_2   font-700 z-2  text-start pl-1',
+													'tracking-tighter text-text_2 text-balance   font-700 z-2  text-start pl-1',
 													props.item.text_size_b === 'text-xs' && 'text-xs',
 													props.item.text_size_b === 'text-sm' && 'text-sm',
 													props.item.text_size_b === 'text-base' && 'text-base',
@@ -313,10 +313,10 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 								</div>
 								<div class="flex flex-col items-center justify-center space-y-2 sm:w-40% sm:absolute sm:right-0 sm:top-0">
 									<Show when={props.item.price_2}>
-										<div class="font-500 text-text_3  tracking-tighter  ">{props.item.price_2}</div>
+										<div class="font-500 text-text_3 text-sm  tracking-tighter  ">{props.item.price_2}</div>
 									</Show>
 									<Show when={props.item.call_to_action_2}>
-										<div class="flex items-center hover:underline text-xs   bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
+										<div class="flex items-center hover:underline text-xs   bg-accent_6 text-accenttext_1 p-1.5  rounded-1 ">
 											<A
 												href={props.item?.action_url_2 || '/store/Store'}
 												class=" z-2 tracking-tight "
@@ -376,7 +376,7 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 												<Show when={props.item.title_3}>
 													<h1
 														class={clsx(
-															'tracking-tighter text-text_2   font-700 z-2  text-start ',
+															'tracking-tighter text-balance text-text_2   font-700 z-2  text-start ',
 															props.item.text_size_c === 'text-xs' && 'text-xs',
 															props.item.text_size_c === 'text-sm' && 'text-sm',
 															props.item.text_size_c === 'text-base' && 'text-base',
@@ -400,9 +400,9 @@ export default function FocusProductB(props: { item: FeaturedProps['item'] }) {
 									<div class="flex flex-col items-center justify-center space-y-2 mb-2 lg:mb-auto"></div>
 								</div>
 								<div class="flex  items-center space-x-2 absolute bottom-0">
-									<div class="font-500 text-text_3  tracking-tighter  ">{props.item.price_3}</div>
+									<div class="font-500 text-text_3  tracking-tighter text-sm  ">{props.item.price_3}</div>
 									<Show when={props.item.call_to_action_3}>
-										<div class="flex items-center hover:underline text-xs md:text-sm lg:text-base bg-accent_6 text-accenttext_1 p-2  rounded-1 ">
+										<div class="flex items-center hover:underline text-xs  bg-accent_6 text-accenttext_1 p-1.5  rounded-1 ">
 											<A
 												href={props.item?.action_url_3 || '/store/Store'}
 												class="text- z-2 tracking-tight"

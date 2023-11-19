@@ -88,10 +88,17 @@ export function HeroSection() {
 	}
 
 	return (
-		<Show when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}  fallback={<div class="w-100vw h-100vh flex items-center justify-center"><Spinner /></div>}>
+		<Show
+			when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}
+			fallback={
+				<div class="w-100vw h-100vh flex items-center justify-center">
+					<Spinner />
+				</div>
+			}
+		>
 			<section
 				class={clsx(
-					'min-h-80svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial lg:justify-center flex-col lg:flex-row ',
+					'min-h-90svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial lg:justify-center flex-col lg:flex-row ',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					filteredSlides()?.[currentIndex()]?.item?.bg_color === 'normal_3' && 'bg-normal_3',

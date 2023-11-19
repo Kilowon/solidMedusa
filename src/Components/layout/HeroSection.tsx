@@ -11,7 +11,7 @@ export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
-		queryKey: ['hero_data'],
+		queryKey: ['hero_data2'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero?fields=*.item.*.*.*`, {
@@ -27,8 +27,8 @@ export function HeroSection() {
 		},
 
 		retry: 0,
-		enabled: false,
-		deferStream: true
+		enabled: true,
+		deferStream: false
 	}))
 
 	const [currentIndex, setCurrentIndex] = createSignal(0)
@@ -227,35 +227,3 @@ export function HeroSection() {
 		</Show>
 	)
 }
-
-const Image = (props: ComponentProps<'img'>) => {
-	const [src] = createResource(
-		() => props.src,
-		async url => URL.createObjectURL(await (await fetch(url)).blob())
-	)
-	return (
-		<img
-			{...props}
-			src={src()}
-		/>
-	)
-}
-
-const ImagePlaceHolder = (props: any) => (
-	<div
-		classList={{
-			[`flex items-center justify-center bg-normal_1 rounded sm:w-96`]: true,
-			[props.class]: props.class
-		}}
-	>
-		<svg
-			class={`w-10 h-10 text-gray-200 dark:text-gray-600`}
-			aria-hidden="true"
-			xmlns="http://www.w3.org/2000/svg"
-			fill="currentColor"
-			viewBox="0 0 20 18"
-		>
-			<path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-		</svg>
-	</div>
-)

@@ -38,7 +38,7 @@ export function HeroFast() {
 		<Show
 			when={heroData.isSuccess && heroData?.data?.data?.show_hero && view()}
 			fallback={
-				<div class="w-100vw h-100vh flex items-center justify-center">
+				<div class="w-95vw h-50vh flex items-center justify-center">
 					<Spinner />
 				</div>
 			}

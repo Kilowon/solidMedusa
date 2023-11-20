@@ -167,7 +167,7 @@ export default function Categories() {
 										<div
 											class={clsx(
 												'',
-												queryCategoryProducts.isFetching && 'w-100vw h-100vh flex items-center justify-center',
+												queryCategoryProducts.isFetching && ' h-40vh flex items-center justify-center',
 												!queryCategoryProducts.isFetching && 'hidden'
 											)}
 										>

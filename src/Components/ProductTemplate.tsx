@@ -119,8 +119,11 @@ export default function ProductTemplate(props: {
 						queryProduct?.data?.products[0]?.variants[0]?.original_price !== null) ||
 					0
 				}
-
-				fallback={<div class="w-100vw h-100vh flex items-center justify-center"><Spinner /></div>}
+				fallback={
+					<div class="w-100vw h-50vh flex items-center justify-center">
+						<Spinner />
+					</div>
+				}
 			>
 				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
 					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-65vh md:min-h-auto">

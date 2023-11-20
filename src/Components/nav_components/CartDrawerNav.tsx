@@ -52,12 +52,7 @@ export default function CartDrawerNav(props: {
 						props.cartDrawer().cart === 'active' ? '' : 'translate-x-full'
 					}`}
 				>
-					<Show when={!isServer && props.cartDrawer().cart === 'active'} fallback={
-							<div class="w-100vw h-100vh flex flex-col  items-center justify-center">
-								<div class="animate-pulse pb-2">Loading Account</div>
-								<Spinner />
-							</div>
-						}>
+					<Show when={!isServer && props.cartDrawer().cart === 'active'}>
 						<CartCore
 							variant="mobile-panel"
 							setCartDrawer={props.setCartDrawer}

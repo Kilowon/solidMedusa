@@ -1,11 +1,11 @@
-import { Show } from 'solid-js'
+import { Show, createEffect, onMount } from 'solid-js'
 import { A } from 'solid-start'
 import { isServer } from 'solid-js/web'
 import { getWindowSize } from '@solid-primitives/resize-observer'
 import {} from '~/Context/Providers'
 import { createQuery } from '@tanstack/solid-query'
 import clsx from 'clsx'
-import { view } from '~/state'
+import { view, setView } from '~/state'
 import { Spinner } from '../checkout_components/Spinner'
 
 export function HeroFast() {
@@ -30,9 +30,13 @@ export function HeroFast() {
 		deferStream: false
 	}))
 
+	onMount(() => {
+		setView(getWindowSize().width !== undefined)
+	})
+
 	return (
 		<Show
-			when={heroData.isSuccess && heroData?.data?.data?.show_hero}
+			when={heroData.isSuccess && heroData?.data?.data?.show_hero && view()}
 			fallback={
 				<div class="w-100vw h-100vh flex items-center justify-center">
 					<Spinner />
@@ -41,7 +45,7 @@ export function HeroFast() {
 		>
 			<section
 				class={clsx(
-					'min-h-90svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial lg:justify-center flex-col lg:flex-row ',
+					'min-h-90svh xl:min-h-95vh lg:mb-auto lg:mt-auto w-full flex items-center lg:items-initial justify-center flex-col lg:flex-row ',
 					heroData?.data?.data?.Hero_infor[0]?.item?.bg_color === 'normal_1' && 'bg-normal_1',
 					heroData?.data?.data?.Hero_infor[0]?.item?.bg_color === 'normal_2' && 'bg-normal_2',
 					heroData?.data?.data?.Hero_infor[0]?.item?.bg_color === 'normal_3' && 'bg-normal_3',
@@ -117,24 +121,24 @@ export function HeroFast() {
 					<div
 						class={clsx(
 							'',
-							isServer && 'min-w-[1210px] h-[765px]',
+							isServer && '',
+							getWindowSize().width <= 600 && ' max-w-[375px]',
 							getWindowSize().width > 1023 && ' max-w-[1210px] max-h-[765px]',
-							getWindowSize().width <= 1023 && ' max-w-[1210px] max-h-[765px]',
-							getWindowSize().width <= 600 && ' max-w-[375px]'
+							getWindowSize().width <= 1023 && ' max-w-[1210px] max-h-[765px]'
 						)}
 					>
 						<img
 							src={clsx(
 								'',
+								getWindowSize().width <= 1023 &&
+									`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
+										heroData?.data?.data?.Hero_infor[0]?.item?.mobile_image?.id
+									}?key=hero-small`,
 								isServer && '',
 								getWindowSize().width > 1023 &&
 									`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
 										heroData?.data?.data?.Hero_infor[0]?.item?.image?.id
-									}?key=hero-large`,
-								getWindowSize().width <= 1023 &&
-									`${import.meta.env.VITE_DIRECTUS_URL}/assets/${
-										heroData?.data?.data?.Hero_infor[0]?.item?.mobile_image?.id
-									}?key=hero-small`
+									}?key=hero-large`
 							)}
 							width={1210}
 							height={765}

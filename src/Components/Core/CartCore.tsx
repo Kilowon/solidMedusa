@@ -58,7 +58,7 @@ export default function CartCore(props: CartCoreProps) {
 	return (
 		<Suspense
 			fallback={
-				<div class="w-100vw h-50vh flex flex-col items-center justify-center">
+				<div class=" h-10vh flex flex-col items-center justify-center">
 					<div class="animate-pulse pb-2">Loading Cart</div>
 					<Spinner />
 				</div>

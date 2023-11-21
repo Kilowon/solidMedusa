@@ -12,7 +12,7 @@ export function HeroSection() {
 	const { medusa } = useGlobalContext()
 
 	const heroData = createQuery(() => ({
-		queryKey: ['hero_data2'],
+		queryKey: ['hero_data'],
 		queryFn: async function () {
 			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero?fields=*.item.*.*.*`, {
@@ -28,7 +28,7 @@ export function HeroSection() {
 		},
 
 		retry: 0,
-		enabled: true,
+		enabled: false,
 		deferStream: false
 	}))
 
@@ -91,7 +91,7 @@ export function HeroSection() {
 		<Show
 			when={heroData.isSuccess && filteredSlides().length > 0 && view() && heroData?.data?.data?.show_hero}
 			fallback={
-				<div class="w-100vw h-100vh flex items-center justify-center">
+				<div class="w-100vw h-50vh flex items-center justify-center">
 					<Spinner />
 				</div>
 			}

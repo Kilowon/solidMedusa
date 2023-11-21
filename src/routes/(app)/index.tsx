@@ -47,22 +47,26 @@ export default function App() {
 		}
 	})
 
-	const primaryData = createQuery(() => ({
-		queryKey: ['primary_data'],
+	const heroData = createQuery(() => ({
+		queryKey: ['hero_data'],
 		queryFn: async function () {
-			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
+			const bearerToken = import.meta.env.VITE_BEARER_TOKEN
+			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/main_hero?fields=*.item.*.*.*`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Accept: 'application/json'
+					Accept: 'application/json',
+					Authorization: `Bearer ${bearerToken}`
 				}
 			})
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
+
 		retry: 0,
-		enabled: false
+		enabled: false,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	const featuredData = createQuery(() => ({
@@ -92,8 +96,12 @@ export default function App() {
 	return (
 		<div class="min-h-300vh">
 			<Suspense>
-				{/* <HeroSection /> */}
-				<HeroFast />
+				{/* <Show when={heroData.isSuccess && heroData?.data?.data?.show_hero && heroData?.data?.data?.slides_active}> */}
+				<HeroSection />
+				{/* </Show>
+				<Show when={heroData.isSuccess && heroData?.data?.data?.show_hero && !heroData?.data?.data?.slides_active}>
+					<HeroFast />
+				</Show> */}
 
 				<div class="pb-10"></div>
 

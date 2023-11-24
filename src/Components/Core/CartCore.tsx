@@ -534,7 +534,16 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										>
 											{currencyFormat(Number(variant.calculated_price), props.cart?.region)}
 										</span>
-										<span class="text-xs text-accenttext_1 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px] ">
+										<span
+											class={clsx(
+												'text-xs text-accenttext_1 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px]',
+												props.variant === 'primary' && 'hidden',
+												props.variant === 'checkout' && 'hidden',
+												props.variant === 'panel' && '',
+												props.variant === 'mobile-checkout' && 'hidden',
+												props.variant === 'mobile-panel' && ''
+											)}
+										>
 											sale
 										</span>
 									</div>

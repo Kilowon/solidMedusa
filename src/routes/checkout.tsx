@@ -394,7 +394,7 @@ export default function CheckoutPage() {
 						</Show>
 					</TransitionGroup>
 				</div>
-				<div class="hidden lg:flex lg:items-center lg:w-[433px]  mx-auto ">
+				<div class="hidden lg:flex lg:items-center lg:w-[433px]  mx-auto  ">
 					<CartCore variant="checkout" />
 				</div>
 			</div>

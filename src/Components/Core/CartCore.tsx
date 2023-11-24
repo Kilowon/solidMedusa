@@ -536,12 +536,12 @@ export function ItemPrice(props: { cart: any; item: any; variant: CartCoreProps[
 										</span>
 										<span
 											class={clsx(
-												'text-xs text-accenttext_1 font-500 bg-accent_3 rounded-sm flex justify-center items-center uppercase min-w-10 max-w-[40px]',
+												'text-xs text-accenttext_1 font-500 bg-accent_3 rounded-sm  justify-center items-center uppercase min-w-10 max-w-[40px]',
 												props.variant === 'primary' && 'hidden',
 												props.variant === 'checkout' && 'hidden',
-												props.variant === 'panel' && '',
+												props.variant === 'panel' && ' flex',
 												props.variant === 'mobile-checkout' && 'hidden',
-												props.variant === 'mobile-panel' && ''
+												props.variant === 'mobile-panel' && ' flex'
 											)}
 										>
 											sale

@@ -239,7 +239,7 @@ export default function CartCore(props: CartCoreProps) {
 														</div>
 													</div>
 												</div>{' '}
-												<hr class="border-text_5/70 my-2 mx-6" />
+												<hr class="border-text_2/30 my-2 mx-6" />
 											</li>
 										</Show>
 									)}

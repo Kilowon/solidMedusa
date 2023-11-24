@@ -179,9 +179,9 @@ export default function CartCore(props: CartCoreProps) {
 																class={clsx(
 																	'',
 																	props.variant === 'primary' && '',
-																	props.variant === 'checkout' && 'grid grid-cols-2',
+																	props.variant === 'checkout' && 'flex flex-col-reverse',
 																	props.variant === 'panel' && '',
-																	props.variant === 'mobile-checkout' && 'grid grid-cols-2',
+																	props.variant === 'mobile-checkout' && 'flex flex-col-reverse',
 																	props.variant === 'mobile-panel' && ''
 																)}
 															>
@@ -441,7 +441,10 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				tabindex="0"
 			>
 				<div
-					class={clsx('i-mdi-minus-circle w-4 h-4 text-text_3', props.item.quantity === props.item.variant && 'text-normal_2')}
+					class={clsx(
+						'i-mdi-minus-circle w-4 h-4 text-text_3',
+						props.item.quantity === props.item.variant && 'text-normal_2'
+					)}
 					onclick={e => {
 						e.stopPropagation()
 						handleQuanity(props.item.quantity - 1)

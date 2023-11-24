@@ -129,7 +129,7 @@ export default function CartCore(props: CartCoreProps) {
 														class={clsx(
 															'flex ',
 															props.variant === 'primary' && 'lg:flex lg:justify-between',
-															props.variant === 'checkout' && '',
+															props.variant === 'checkout' && 'min-w-75',
 															props.variant === 'panel' && '',
 															props.variant === 'mobile-checkout' && '',
 															props.variant === 'mobile-panel' && ''

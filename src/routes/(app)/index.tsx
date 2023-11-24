@@ -96,12 +96,12 @@ export default function App() {
 	return (
 		<div class="min-h-300vh">
 			<Suspense>
-				{/* <Show when={heroData.isSuccess && heroData?.data?.data?.show_hero && heroData?.data?.data?.slides_active}> */}
-				<HeroSection />
-				{/* </Show>
+				<Show when={heroData.isSuccess && heroData?.data?.data?.show_hero && heroData?.data?.data?.slides_active}>
+					<HeroSection />
+				</Show>
 				<Show when={heroData.isSuccess && heroData?.data?.data?.show_hero && !heroData?.data?.data?.slides_active}>
 					<HeroFast />
-				</Show> */}
+				</Show>
 
 				<div class="pb-10"></div>
 

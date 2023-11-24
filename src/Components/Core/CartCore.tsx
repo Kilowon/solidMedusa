@@ -101,14 +101,14 @@ export default function CartCore(props: CartCoreProps) {
 														props.variant === 'mobile-panel' && 'grid-cols-[70px_1fr]'
 													)}
 												>
-													<div class="flex flex-col items-center min-h-30">
+													<div class="flex flex-col justify-between ">
 														<Thumbnail
 															thumbnail={item.thumbnail}
 															variant="default_cart"
 														/>
 														<div
 															class={clsx(
-																'',
+																'py-2',
 																props.variant === 'primary' && '',
 																props.variant === 'checkout' && 'hidden',
 																props.variant === 'panel' && '',
@@ -127,7 +127,7 @@ export default function CartCore(props: CartCoreProps) {
 													</div>
 													<div
 														class={clsx(
-															'grid grid-cols-1 md:grid-cols-2 ',
+															'flex ',
 															props.variant === 'primary' && 'lg:flex lg:justify-between',
 															props.variant === 'checkout' && '',
 															props.variant === 'panel' && '',
@@ -135,11 +135,11 @@ export default function CartCore(props: CartCoreProps) {
 															props.variant === 'mobile-panel' && ''
 														)}
 													>
-														<div class="flex items-start justify-between">
+														<div class="flex items-start justify-between w-75%">
 															<div>
 																<div
 																	class={clsx(
-																		'font-500 line-clamp-2 text-ellipsis',
+																		'font-500 line-clamp-2 text-ellipsis pb-1',
 																		props.variant === 'primary' && 'md:text-lg',
 																		props.variant === 'checkout' && 'text-xs min-w-40',
 																		props.variant === 'panel' && 'text-xs',
@@ -199,7 +199,7 @@ export default function CartCore(props: CartCoreProps) {
 																		Qty: {item?.quantity}
 																	</span>
 																</div>
-																<div class="flex items-center justify-end ">
+																<div class="flex items-center justify-end font-500 ">
 																	<ItemPrice
 																		item={item}
 																		cart={queryCart?.data?.cart}
@@ -239,7 +239,7 @@ export default function CartCore(props: CartCoreProps) {
 														</div>
 													</div>
 												</div>{' '}
-												<hr class="border-text_5 my-2 mx-6" />
+												<hr class="border-text_5/70 my-2 mx-6" />
 											</li>
 										</Show>
 									)}
@@ -429,7 +429,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<div
-				class="flex items-center justify-center w-5 h-5 bg-normal_1"
+				class="flex items-center justify-center  bg-normal_1"
 				onKeyDown={e => {
 					e.stopPropagation()
 					if (e.key === 'Enter') {
@@ -441,7 +441,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				tabindex="0"
 			>
 				<div
-					class={clsx('i-mdi-minus-circle text-text_3', props.item.quantity === props.item.variant && 'text-normal_2')}
+					class={clsx('i-mdi-minus-circle w-4 h-4 text-text_3', props.item.quantity === props.item.variant && 'text-normal_2')}
 					onclick={e => {
 						e.stopPropagation()
 						handleQuanity(props.item.quantity - 1)
@@ -450,7 +450,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 			</div>
 			<span class="flex items-center justify-center text-sm text-text_3 font-500">{props.item?.quantity}</span>
 			<div
-				class="flex items-center justify-center w-5 bg-normal_1"
+				class="flex items-center justify-center  bg-normal_1"
 				onKeyDown={e => {
 					e.stopPropagation()
 					if (e.key === 'Enter') {
@@ -462,7 +462,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 				tabindex="0"
 			>
 				<div
-					class="i-mdi-plus-circle text-text_3"
+					class="i-mdi-plus-circle w-4 h-4 text-text_3"
 					onClick={e => {
 						e.stopPropagation()
 						handleQuanity(props.item.quantity + 1)

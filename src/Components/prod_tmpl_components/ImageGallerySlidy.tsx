@@ -1,4 +1,4 @@
-import { createSignal, createEffect, Show } from 'solid-js'
+import { createSignal, createEffect, Show, createMemo } from 'solid-js'
 import { Slidy } from '@slidy/solid'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
@@ -41,13 +41,13 @@ export default function ImageGallerySlidy(props: {
 		}
 	})
 	// These two createEffects are to prevent the Slidy component from being rendered on every page change (which causes a bug when looping through the slides)
-	createEffect(() => {
+	createMemo(() => {
 		if (location() !== useLocation().pathname) {
 			setLocation(useLocation().pathname)
 		}
 	})
 
-	createEffect(() => {
+	createMemo(() => {
 		const gallery = document.querySelector('#gallery')
 		if (location() !== useLocation().pathname) {
 			gallery?.remove()
@@ -55,7 +55,7 @@ export default function ImageGallerySlidy(props: {
 	})
 
 	// And this effect prevents Images loading before the DOM is ready prevents error
-	createEffect(() => {
+	createMemo(() => {
 		setTimeout(() => {
 			setCurrentSlide(slides())
 		}, 50)

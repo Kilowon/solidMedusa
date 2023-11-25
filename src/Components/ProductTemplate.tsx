@@ -125,8 +125,8 @@ export default function ProductTemplate(props: {
 					</div>
 				}
 			>
-				<div class="sm:mt-12 lg:flex lg:content-container lg:mt-20 ">
-					<div class="md:flex md:flex-col md:gap-y-8 md:w-full min-h-65vh md:min-h-auto">
+				<div class="sm:mt-12 lg:flex lg:content-container  ">
+					<div>
 						<ErrorBoundary>
 							<ImageGallerySlidy
 								images={queryProduct?.data?.products[0]?.images}
@@ -137,7 +137,7 @@ export default function ProductTemplate(props: {
 					</div>
 
 					<div class="">
-						<div class="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
+						<div class="  lg:max-w-[500px] ">
 							<div>
 								<ProductActions
 									productInfo={queryProduct?.data?.products[0]}

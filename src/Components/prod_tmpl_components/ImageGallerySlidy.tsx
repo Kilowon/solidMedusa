@@ -98,14 +98,16 @@ export default function ImageGallerySlidy(props: {
 						<Slidy
 							slides={currentSlide()}
 							thumbnail={false}
-							clamp={1}
+							clamp={0}
 							loop={true}
+							axis="x"
 							// @ts-ignore
 							background={false}
 							progress={false}
 							counter={false}
-							sensity={5}
-							gravity={0.75}
+							sensity={1.5}
+							indent={1}
+							gravity={1.2}
 							snap="center"
 						/>
 					</div>

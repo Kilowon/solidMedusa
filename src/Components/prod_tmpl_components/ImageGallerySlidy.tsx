@@ -41,13 +41,13 @@ export default function ImageGallerySlidy(props: {
 		}
 	})
 	// These two createEffects are to prevent the Slidy component from being rendered on every page change (which causes a bug when looping through the slides)
-	createMemo(() => {
+	createEffect(() => {
 		if (location() !== useLocation().pathname) {
 			setLocation(useLocation().pathname)
 		}
 	})
 
-	createMemo(() => {
+	createEffect(() => {
 		const gallery = document.querySelector('#gallery')
 		if (location() !== useLocation().pathname) {
 			gallery?.remove()
@@ -55,7 +55,7 @@ export default function ImageGallerySlidy(props: {
 	})
 
 	// And this effect prevents Images loading before the DOM is ready prevents error
-	createMemo(() => {
+	createEffect(() => {
 		setTimeout(() => {
 			setCurrentSlide(slides())
 		}, 50)
@@ -77,10 +77,10 @@ export default function ImageGallerySlidy(props: {
 			}}
 		>
 			<Show when={location() === useLocation().pathname && currentSlide().length > 0}>
-				<div class="md:flex md:items-start md:relative bg-transparent">
+				<div>
 					<div
 						id="gallery"
-						class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
+						class="h-[65svh] lg:h-[85svh] "
 						style={{
 							'--slidy-slide-radius': '3px',
 							'--slidy-slide-height': '93%',

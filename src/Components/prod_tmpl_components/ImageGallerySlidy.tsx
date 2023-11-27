@@ -1,4 +1,4 @@
-import { createSignal, createEffect, Show, createMemo } from 'solid-js'
+import { createSignal, createEffect, Show } from 'solid-js'
 import { Slidy } from '@slidy/solid'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
@@ -22,7 +22,7 @@ export default function ImageGallerySlidy(props: {
 				alt: `Product image ${index + 1}`,
 				src: image.url
 			}))
-			const numSlidesToAdd = Math.max(0, 1 - newSlides.length)
+			const numSlidesToAdd = Math.max(0, 3 - newSlides.length)
 			const firstSlide = newSlides[0]
 			for (let i = 0; i < numSlidesToAdd; i++) {
 				newSlides.push(firstSlide)
@@ -76,48 +76,11 @@ export default function ImageGallerySlidy(props: {
 				a.finished.then(done)
 			}}
 		>
-			<Show when={location() === useLocation().pathname && currentSlide().length === 1}>
-				<div>
+			<Show when={location() === useLocation().pathname && currentSlide().length > 0}>
+				<div class="md:flex md:items-start md:relative bg-transparent">
 					<div
 						id="gallery"
-						class="h-[65svh] lg:h-[85svh] "
-						style={{
-							'--slidy-slide-radius': '3px',
-							'--slidy-slide-height': '93%',
-							'--slidy-progress-thumb-color': '#263C59',
-							'--slidy-progress-track-color': '#e3e3e3',
-							'--slidy-height': '100%',
-							'--slidy-slide-bg-color': 'transparent',
-							'--slidy-slide-object-fit': 'contain',
-							'--slidy-arrow-bg': '#ff',
-							'--slidy-arrow-icon-color': '#263C59',
-
-							'--slidy-arrow-size': '0rem'
-						}}
-					>
-						<Slidy
-							slides={currentSlide()}
-							thumbnail={false}
-							clamp={0}
-							loop={false}
-							axis="x"
-							// @ts-ignore
-							background={false}
-							progress={false}
-							counter={false}
-							sensity={1.5}
-							indent={1}
-							gravity={1.2}
-							snap="center"
-						/>
-					</div>
-				</div>
-			</Show>
-			<Show when={location() === useLocation().pathname && currentSlide().length > 1}>
-				<div>
-					<div
-						id="gallery"
-						class="h-[65svh] lg:h-[85svh] "
+						class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
 						style={{
 							'--slidy-slide-radius': '3px',
 							'--slidy-slide-height': '93%',
@@ -135,16 +98,14 @@ export default function ImageGallerySlidy(props: {
 						<Slidy
 							slides={currentSlide()}
 							thumbnail={false}
-							clamp={0}
+							clamp={1}
 							loop={true}
-							axis="x"
 							// @ts-ignore
 							background={false}
 							progress={false}
 							counter={false}
-							sensity={1.5}
-							indent={1}
-							gravity={1.2}
+							sensity={5}
+							gravity={0.75}
 							snap="center"
 						/>
 					</div>

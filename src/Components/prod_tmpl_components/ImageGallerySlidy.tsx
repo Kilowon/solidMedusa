@@ -3,6 +3,7 @@ import { Slidy } from '@slidy/solid'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
 import { Transition } from 'solid-transition-group'
+import { Spinner } from '../checkout_components/Spinner'
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
@@ -12,6 +13,8 @@ export default function ImageGallerySlidy(props: {
 	const [slides, setSlides] = createSignal<any[]>([])
 	const [currentSlide, setCurrentSlide] = createSignal<any[]>([])
 	const [location, setLocation] = createSignal(useLocation().pathname)
+	const [view, setView] = createSignal(false)
+
 	// Slidy has a bug where it shutters the image when you have less than 3 slides so this is a workaround that just adds the first slide to the end of the array until there are 3 slides if there are less than 3 slides provided or if no images are provided we throw in a placeholder image
 	createEffect(() => {
 		if (props.images && props.images?.length > 0) {
@@ -61,56 +64,76 @@ export default function ImageGallerySlidy(props: {
 		}, 50)
 	})
 
-	return (
-		<Transition
-			onEnter={(el, done) => {
-				const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-					duration: 50
-				})
-				a.finished.then(done)
-			}}
-			onExit={(el, done) => {
-				const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-					duration: 0
-				})
-				a.finished.then(done)
-			}}
-		>
-			<Show when={location() === useLocation().pathname && currentSlide().length > 0}>
-				<div class="md:flex md:items-start md:relative bg-transparent">
-					<div
-						id="gallery"
-						class="h-[65svh]  lg:flex lg:h-[90svh] lg:mx-8"
-						style={{
-							'--slidy-slide-radius': '3px',
-							'--slidy-slide-height': '93%',
-							'--slidy-progress-thumb-color': '#263C59',
-							'--slidy-progress-track-color': '#e3e3e3',
-							'--slidy-height': '100%',
-							'--slidy-slide-bg-color': 'transparent',
-							'--slidy-slide-object-fit': 'contain',
-							'--slidy-arrow-bg': '#ff',
-							'--slidy-arrow-icon-color': '#263C59',
+	createEffect(() => {
+		if (currentSlide().length > 0) {
+			setTimeout(() => {
+				setView(true)
+			}, 250)
+		}
+	})
 
-							'--slidy-arrow-size': '2.5rem'
-						}}
-					>
-						<Slidy
-							slides={currentSlide()}
-							thumbnail={false}
-							clamp={1}
-							loop={true}
-							// @ts-ignore
-							background={false}
-							progress={false}
-							counter={false}
-							sensity={5}
-							gravity={0.75}
-							snap="center"
-						/>
+	return (
+		<div>
+			<div class="hidden">
+				<img src={`${currentSlide()?.[0]?.src}`} />
+			</div>
+			<Transition
+				onEnter={(el, done) => {
+					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+						duration: 50
+					})
+					a.finished.then(done)
+				}}
+				onExit={(el, done) => {
+					const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+						duration: 0
+					})
+					a.finished.then(done)
+				}}
+			>
+				<Show
+					when={location() === useLocation().pathname && currentSlide().length > 0}
+					fallback={
+						<div class="min-w-900px min-h-900px flex pt-70 justify-center">
+							<Spinner />
+						</div>
+					}
+				>
+					<div>
+						<div
+							id="gallery"
+							class="h-[65svh]  lg:flex lg:h-[90svh] lg:min-w-700px lg:max-w-800px lg:mx-8"
+							style={{
+								'--slidy-slide-radius': '3px',
+								'--slidy-slide-height': '93%',
+								'--slidy-progress-thumb-color': '#263C59',
+								'--slidy-progress-track-color': '#e3e3e3',
+								'--slidy-height': '100%',
+								'--slidy-slide-bg-color': 'transparent',
+								'--slidy-slide-object-fit': 'contain',
+								'--slidy-arrow-bg': '#ff',
+								'--slidy-arrow-icon-color': '#263C59',
+
+								'--slidy-arrow-size': '2.5rem'
+							}}
+						>
+							<Slidy
+								slides={currentSlide() || []}
+								thumbnail={false}
+								clamp={1}
+								loop={true}
+								// @ts-ignore
+								background={false}
+								progress={false}
+								counter={false}
+								sensity={5}
+								gravity={0.75}
+								snap="center"
+							/>
+						</div>
 					</div>
-				</div>
-			</Show>
-		</Transition>
+				</Show>
+			</Transition>
+		</div>
 	)
 }

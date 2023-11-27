@@ -92,7 +92,7 @@ export default function ImageGallerySlidy(props: {
 				}}
 			>
 				<Show
-					when={location() === useLocation().pathname && currentSlide().length > 0}
+					when={location() === useLocation().pathname && currentSlide().length > 0 && view()}
 					fallback={
 						<div class="min-w-900px min-h-900px flex pt-70 justify-center">
 							<Spinner />

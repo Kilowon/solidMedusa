@@ -121,7 +121,7 @@ export default function ProductActions(props: {
 		<TransitionGroup
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0.1 }, { opacity: 1 }], {
-					duration: 150
+					duration: 200
 				})
 				a.finished.then(done)
 			}}

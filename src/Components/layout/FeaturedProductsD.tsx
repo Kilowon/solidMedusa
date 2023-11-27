@@ -588,7 +588,7 @@ export default function FocusProductsD(props: { item: FeaturedProps['item'] }) {
 								<div class="text-text_2 z-10 flex items-center space-y-3 lg:space-y-12 ">
 									<div>
 										<div class="flex  ">
-											<ul class={clsx('grid grid-cols-2  gap-x-6 gap-y-3.75 min-w-70')}>
+											<ul class={clsx('grid grid-cols-2  gap-x-6 gap-y-3.75 min-w-70 pb-5')}>
 												<For each={props.item.items}>
 													{(item: any) => {
 														return (

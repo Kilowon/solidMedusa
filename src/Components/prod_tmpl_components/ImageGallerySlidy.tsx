@@ -59,9 +59,11 @@ export default function ImageGallerySlidy(props: {
 
 	// And this effect prevents Images loading before the DOM is ready prevents error
 	createEffect(() => {
-		setTimeout(() => {
-			setCurrentSlide(slides())
-		}, 50)
+		if (!(slides()?.[0]?.src === currentSlide()?.[0]?.src)) {
+			setTimeout(() => {
+				setCurrentSlide(slides())
+			}, 150)
+		}
 	})
 
 	createEffect(() => {
@@ -72,8 +74,13 @@ export default function ImageGallerySlidy(props: {
 		}
 	})
 
+	createEffect(() => {
+		console.log('IMAGES', !(slides()?.[0]?.src === currentSlide()?.[0]?.src))
+	})
+
 	return (
 		<div>
+			{/* this is a preloader to prevent the slider issues with initial load */}
 			<div class="hidden">
 				<img src={`${currentSlide()?.[0]?.src}`} />
 			</div>

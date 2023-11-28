@@ -74,10 +74,6 @@ export default function ImageGallerySlidy(props: {
 		}
 	})
 
-	createEffect(() => {
-		console.log('IMAGES', !(slides()?.[0]?.src === currentSlide()?.[0]?.src))
-	})
-
 	return (
 		<div>
 			{/* this is a preloader to prevent the slider issues with initial load */}
@@ -100,11 +96,7 @@ export default function ImageGallerySlidy(props: {
 			>
 				<Show
 					when={location() === useLocation().pathname && currentSlide().length > 0 && view()}
-					fallback={
-						<div class="min-w-864px min-h-900px flex pt-70 justify-center">
-							<Spinner />
-						</div>
-					}
+					fallback={<div class="min-w-864px min-h-900px flex pt-70 justify-center"></div>}
 				>
 					<div>
 						<div

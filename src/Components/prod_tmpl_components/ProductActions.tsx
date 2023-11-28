@@ -205,28 +205,27 @@ export default function ProductActions(props: {
 									</A>
 								</div>
 							</Show>
-							<h1 class=" md:text-2xl font-semibold tracking-tight text-balance">{props.productInfo?.title}</h1>
+							<h1 class=" md:text-2xl font-500 tracking-tighter text-balance">{props.productInfo?.title}</h1>
 						</div>
-						<div>
-							{/* <Show when={currentVariant()?.original_price}> */}
-							{currentVariant()?.original_price === currentVariant()?.calculated_price ? (
+						<div class="lg:mt-2.5">
+							<Show when={currentVariant()?.original_price === currentVariant()?.calculated_price}>
 								<div class="space-x-2">
-									<span class="text-xl font-semibold ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+									<span class="text-xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
-							) : (
+							</Show>
+							<Show when={currentVariant()?.original_price !== currentVariant()?.calculated_price}>
 								<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
-									<span class="text-xl line-through font-semibold">
+									<span class="text-sm line-through font-500">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
-									<span class="text-xl text-accent_3 font-semibold ">
+									<span class="text-xl text-accent_3 font-500 ">
 										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
 									</span>
-									<span class="text-xs text-accenttext_1 font-semibold bg-accent_3 rounded-lg flex justify-center uppercase w-15 ">
-										on sale
+									<span class="text-xs text-accenttext_1 font-500 bg-accent_3 rounded-0.5 flex justify-center uppercase w-10 ">
+										sale
 									</span>
 								</div>
-							)}
-							{/* </Show> */}
+							</Show>
 						</div>
 					</div>
 

@@ -3,7 +3,6 @@ import { Slidy } from '@slidy/solid'
 import '@slidy/solid/dist/slidy.css'
 import { useLocation } from '@solidjs/router'
 import { Transition } from 'solid-transition-group'
-import { Spinner } from '../checkout_components/Spinner'
 
 export default function ImageGallerySlidy(props: {
 	images: { url: string; id: string }[] | undefined
@@ -94,11 +93,7 @@ export default function ImageGallerySlidy(props: {
 			>
 				<Show
 					when={location() === useLocation().pathname && currentSlide().length > 0 && view()}
-					fallback={
-						<div class="min-w-864px min-h-900px flex pt-70 justify-center">
-							<Spinner />
-						</div>
-					}
+					fallback={<div class="min-w-864px min-h-900px flex pt-70 justify-center"></div>}
 				>
 					<div>
 						<div

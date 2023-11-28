@@ -52,7 +52,6 @@ export default function CartCore(props: CartCoreProps) {
 		const sorted = [...queryCart?.data?.cart?.items].sort((a: any, b: any) => {
 			return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 		})
-
 		setSortedItems(sorted)
 	})
 

@@ -59,11 +59,9 @@ export default function ImageGallerySlidy(props: {
 
 	// And this effect prevents Images loading before the DOM is ready prevents error
 	createEffect(() => {
-		if (!(slides()?.[0]?.src === currentSlide()?.[0]?.src)) {
-			setTimeout(() => {
-				setCurrentSlide(slides())
-			}, 150)
-		}
+		setTimeout(() => {
+			setCurrentSlide(slides())
+		}, 150)
 	})
 
 	createEffect(() => {
@@ -96,7 +94,11 @@ export default function ImageGallerySlidy(props: {
 			>
 				<Show
 					when={location() === useLocation().pathname && currentSlide().length > 0 && view()}
-					fallback={<div class="min-w-864px min-h-900px flex pt-70 justify-center"></div>}
+					fallback={
+						<div class="min-w-864px min-h-900px flex pt-70 justify-center">
+							<Spinner />
+						</div>
+					}
 				>
 					<div>
 						<div

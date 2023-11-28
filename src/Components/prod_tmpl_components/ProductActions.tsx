@@ -199,18 +199,18 @@ export default function ProductActions(props: {
 
 									<A
 										href={'#ratings'}
-										class="text-text_2 underline cursor-pointer"
+										class="text-text_2 text-sm underline cursor-pointer"
 									>
 										{draftReviewData.data?.data?.total_reviews} reviews
 									</A>
 								</div>
 							</Show>
-							<h1 class=" md:text-2xl font-500 tracking-tighter text-balance">{props.productInfo?.title}</h1>
+							<h1 class=" md:text-2xl font-500 tracking-tight text-balance">{props.productInfo?.title}</h1>
 						</div>
 						<div class="lg:mt-2.5">
 							<Show when={currentVariant()?.original_price === currentVariant()?.calculated_price}>
 								<div class="space-x-2">
-									<span class="text-xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+									<span class="text-2xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
 							</Show>
 							<Show when={currentVariant()?.original_price !== currentVariant()?.calculated_price}>
@@ -218,7 +218,7 @@ export default function ProductActions(props: {
 									<span class="text-sm line-through font-500">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
-									<span class="text-xl text-accent_3 font-500 ">
+									<span class="text-2xl text-accent_3 font-500 ">
 										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
 									</span>
 									<span class="text-xs text-accenttext_1 font-500 bg-accent_3 rounded-0.5 flex justify-center uppercase w-10 ">
@@ -309,7 +309,7 @@ export function OptionSelect({ option, current, updateOptions, title }: OptionSe
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<h4 class="text-sm md:text-base font-500 text-text_2">Select {title}</h4>
+				<h4 class="text-sm font-500 text-text_2">Select {title}:</h4>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{value => {
@@ -403,7 +403,7 @@ export function OptionSelectViable({ option, current, updateOptions, title, prod
 	return (
 		<Show when={option.values.length > 0}>
 			<div class="flex flex-col gap-y-1">
-				<h4 class="text-xs md:text-sm font-500 text-text_2 tracking-tight">Select {title}:</h4>
+				<h4 class="text-sm font-500 text-text_2 tracking-tight">Select {title}:</h4>
 				<div class="flex space-x-1">
 					<For each={filteredOptions}>
 						{v => {

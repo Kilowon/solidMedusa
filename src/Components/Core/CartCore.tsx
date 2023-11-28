@@ -1,4 +1,4 @@
-import { For, Show, createSignal, createEffect, Suspense } from 'solid-js'
+import { For, Show, createSignal, createEffect, createMemo, Suspense } from 'solid-js'
 import { A } from 'solid-start'
 import clsx from 'clsx'
 import { useGlobalContext } from '~/Context/Providers'
@@ -45,13 +45,14 @@ export default function CartCore(props: CartCoreProps) {
 	const { queryCartRefetch } = useGlobalContext()
 	const { deleteItem } = useStore()
 
-	const [sortedItems, setSortedItems] = createSignal(null)
+	const [sortedItems, setSortedItems] = createSignal<any>(null)
 
-	createEffect(() => {
+	createMemo(() => {
 		if (!queryCart?.data?.cart?.items) return
-		const sorted = queryCart?.data?.cart?.items?.sort((a: any, b: any) => {
-			return a.created_at > b.created_at ? -1 : 1
+		const sorted = [...queryCart?.data?.cart?.items].sort((a: any, b: any) => {
+			return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 		})
+
 		setSortedItems(sorted)
 	})
 

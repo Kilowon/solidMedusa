@@ -217,7 +217,7 @@ export default function CartCore(props: CartCoreProps) {
 																)}
 															>
 																<div
-																	class="flex items-center gap-x-1 rounded p-1 bg-normal_1"
+																	class="flex items-center gap-x-1 rounded p-1 bg-transparent"
 																	onClick={e => {
 																		e.stopPropagation()
 																		deleteItem(item?.id)
@@ -429,7 +429,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 	return (
 		<div class="grid grid-cols-3 gap-x-2">
 			<div
-				class="flex items-center justify-center  bg-normal_1"
+				class="flex items-center justify-center  bg-transparent"
 				onKeyDown={e => {
 					e.stopPropagation()
 					if (e.key === 'Enter') {
@@ -453,7 +453,7 @@ export function ItemQuantity(props: { cart: any; item: any; variant: CartCorePro
 			</div>
 			<span class="flex items-center justify-center text-sm text-text_3 font-500">{props.item?.quantity}</span>
 			<div
-				class="flex items-center justify-center  bg-normal_1"
+				class="flex items-center justify-center  bg-transparent"
 				onKeyDown={e => {
 					e.stopPropagation()
 					if (e.key === 'Enter') {

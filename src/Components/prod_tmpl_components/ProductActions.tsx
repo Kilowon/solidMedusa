@@ -147,11 +147,12 @@ export default function ProductActions(props: {
 					gutter={8}
 					containerClassName=""
 					containerStyle={{
+						'margin-top': '2rem',
 						'z-index': 200
 					}}
 					toastOptions={{
 						className: '',
-						duration: 1500,
+						duration: 2000,
 						style: {
 							background: '#363636',
 							color: '#fff'

@@ -210,7 +210,7 @@ export default function ProductActions(props: {
 						<div class="lg:mt-2.5">
 							<Show when={currentVariant()?.original_price === currentVariant()?.calculated_price}>
 								<div class="space-x-2">
-									<span class="text-2xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
+									<span class="md:text-2xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
 							</Show>
 							<Show when={currentVariant()?.original_price !== currentVariant()?.calculated_price}>
@@ -218,7 +218,7 @@ export default function ProductActions(props: {
 									<span class="text-sm line-through font-500">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
 									</span>
-									<span class="text-2xl text-accent_3 font-500 ">
+									<span class="md:text-2xl text-accent_3 font-500 ">
 										{currencyFormat(Number(currentVariant()?.calculated_price), 'US')}
 									</span>
 									<span class="text-xs text-accenttext_1 font-500 bg-accent_3 rounded-0.5 flex justify-center uppercase w-10 ">

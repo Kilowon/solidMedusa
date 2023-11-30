@@ -268,6 +268,7 @@ export default function ProductActions(props: {
 					</Show>
 					<div>
 						<button
+							id={'buy_button'}
 							onClick={() => {
 								addToCart()
 								notify()
@@ -288,7 +289,7 @@ export default function ProductActions(props: {
 						</button>
 					</div>
 
-					<div>
+					<div class="max-w-100">
 						<ProductInformationTabs
 							productInfo={props.productInfo}
 							rating={reviewData.data?.data}

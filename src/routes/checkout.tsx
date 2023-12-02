@@ -10,7 +10,7 @@ import {
 	setValues
 } from '@modular-forms/solid'
 
-import { createEffect, Show, createSignal, Accessor, For, onMount } from 'solid-js'
+import { createEffect, Show, createSignal, Accessor, For } from 'solid-js'
 import { FormFooter } from '~/Components/checkout_components/FormFooter'
 import { FormHeader } from '~/Components/checkout_components/FormHeader'
 import { TextInput } from '~/Components/checkout_components/TextInput'
@@ -23,7 +23,6 @@ import { A } from 'solid-start'
 import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
 import CartCore from '~/Components/Core/CartCore'
-import Payment from '~/Components/checkout_components/Payment'
 import StripePayment from '~/Components/checkout_components/StripePayment'
 import Express from '~/Components/checkout_components/Express'
 import { TransitionGroup } from 'solid-transition-group'

@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements, useElements, useStripe } from './stripe_components/Elements'
 import { PaymentElement } from './stripe_components/PaymentElements'
 import { currencyFormat } from '~/lib/helpers/currency'
+import { Spinner } from './Spinner'
 
 export default function StripePayment() {
 	const { medusa } = useGlobalContext()
@@ -33,7 +34,11 @@ export default function StripePayment() {
 				paymentSessionStripe.isSuccess &&
 				paymentSessionStripe?.data?.cart?.shipping_methods[0] != null
 			}
-			fallback={<div>Loading stripe</div>}
+			fallback={
+				<div class="flex w-full h-full justify-center pt-20">
+					<Spinner />
+				</div>
+			}
 		>
 			<Elements
 				stripe={stripe()}

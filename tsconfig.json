@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"forceConsistentCasingInFileNames": false,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"target": "ESNext",

@@ -1,18 +1,14 @@
 import { Show, createSignal, onMount, Suspense } from 'solid-js'
+import { useNavigate } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
 import { loadStripe } from '@stripe/stripe-js'
 import type { PaymentRequestPaymentMethodEvent } from '@stripe/stripe-js'
 import { Transition } from 'solid-transition-group'
-import {
-	Elements,
-	useElements,
-	useStripe,
-	LinkAuthenticationElement,
-	PaymentElement,
-	PaymentRequestButton
-} from 'solid-stripe'
-import { useNavigate } from 'solid-start'
+import { Elements, useElements, useStripe } from './stripe_components/Elements'
+import { LinkAuthenticationElement } from './stripe_components/LinkAuthenticationElement'
+import { PaymentElement } from './stripe_components/PaymentElements'
+import { PaymentRequestButton } from './stripe_components/PaymentRequestButton'
 import { currencyFormat } from '~/lib/helpers/currency'
 import { loadScript } from '@paypal/paypal-js'
 import { createEffect } from 'solid-js'

@@ -24,6 +24,7 @@ import { Cart } from '~/types/types'
 import { createQuery } from '@tanstack/solid-query'
 import CartCore from '~/Components/Core/CartCore'
 import Payment from '~/Components/checkout_components/Payment'
+import StripePayment from '~/Components/checkout_components/StripePayment'
 import Express from '~/Components/checkout_components/Express'
 import { TransitionGroup } from 'solid-transition-group'
 
@@ -390,7 +391,7 @@ export default function CheckoutPage() {
 							/>
 						</Show>
 						<Show when={showForm()?.payment === 'active'}>
-							<Payment />
+							<StripePayment />
 						</Show>
 					</TransitionGroup>
 				</div>
@@ -1269,7 +1270,7 @@ export function Carrier(props: CarrierProps) {
 							carrier: 'hidden',
 							payment: 'active'
 						})
-					}, 500)
+					}, 800)
 				}
 			}
 

@@ -1,4 +1,4 @@
-import { Show, createSignal, onMount, createEffect } from 'solid-js'
+import { Show, createSignal, createEffect } from 'solid-js'
 import { useNavigate } from 'solid-start'
 import { createQuery } from '@tanstack/solid-query'
 import { useGlobalContext } from '~/Context/Providers'
@@ -35,7 +35,7 @@ export default function StripePayment() {
 				paymentSessionStripe?.data?.cart?.shipping_methods[0] != null
 			}
 			fallback={
-				<div class="flex w-full h-full justify-center pt-20">
+				<div class="flex flex-col w-full h-full items-center pt-20">
 					<Spinner />
 				</div>
 			}
@@ -60,9 +60,6 @@ export function CheckoutForm(props: { clientSecret: string }) {
 	const stripe = useStripe()
 	const elements = useElements()
 	const navigate = useNavigate()
-	let paypalButtons: any
-	let paypalButtonRef: HTMLElement
-	const [paypalLoaded, setPaypalLoaded] = createSignal(false)
 
 	const paymentSessionAuthorize = createQuery(() => ({
 		queryKey: ['cart'],
@@ -114,7 +111,16 @@ export function CheckoutForm(props: { clientSecret: string }) {
 			</header>
 			<Show when={true}>
 				<form onSubmit={handleSubmit}>
-					<PaymentElement />
+					<PaymentElement
+						options={{
+							layout: {
+								type: 'accordion',
+								defaultCollapsed: true,
+								radios: true,
+								spacedAccordionItems: true
+							}
+						}}
+					/>
 
 					<button class="my-5 bg-accent_5 w-full min-h-42px rounded-0.5 text-accenttext_1 font-500">
 						Pay - {currencyFormat(queryCart?.data?.cart?.total, 'USD')}

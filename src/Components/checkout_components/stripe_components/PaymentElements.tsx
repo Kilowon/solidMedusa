@@ -6,11 +6,10 @@ import { createStripeElement } from './primitives/createStripeElement'
 
 export type PaymentElementProps = ElementProps<'payment', StripePaymentElementChangeEvent & { error: undefined }>
 
-export const PaymentElement: Component<PaymentElementProps> = props => {
+export const PaymentElement: Component<PaymentElementProps & { options?: object }> = props => {
 	const [wrapper, setWrapper] = createWrapper()
 
-	createStripeElement(wrapper, 'payment', {}, (type, event) => props[type]?.(event))
-
+	createStripeElement(wrapper, 'payment', props.options || {}, (type, event) => props[type]?.(event))
 	;(PaymentElement as any).__elementType = 'payment'
 
 	return <div ref={setWrapper} />

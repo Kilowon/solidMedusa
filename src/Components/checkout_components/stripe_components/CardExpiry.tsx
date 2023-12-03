@@ -1,4 +1,4 @@
-import type { StripeCardExpiryElementChangeEvent, StripeCardExpiryElementOptions } from '@stripe/stripe-js'
+import type { StripeCardExpiryElementChangeEvent, StripeCardExpiryElementOptions } from '
 import type { Component } from 'solid-js'
 import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from './primitives/createWrapper'

@@ -60,47 +60,51 @@ export default function FooterNav() {
 	return (
 		<div class="max-w-[1440px] w-full mx-auto  flex flex-col  gap-y-8 pt-16 pb-8 z-1">
 			<Show when={primaryData.isSuccess}>
-				<div class=" flex-col sm:flex-row sm:items-center space-y-10  pl-5">
+				<div class=" flex sm:flex-row sm:items-center   pl-5">
 					<A
 						href="/"
-						class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-bold uppercase no-underline hover:underline"
+						class="text-sm  md:text-xl xl:text-3xl text-gray-5 font-700 uppercase no-underline hover:underline"
 					>
 						{primaryData.data?.data?.title}
 					</A>
-					<div class="space-y-5 sm:space-y-auto sm:space-x-5 flex flex-col sm:flex-row">
+				</div>
+				<div class=" flex  justify-evenly  sm:justify-inherit sm:flex-row sm:items-center   pl-5">
+					<div class="space-y-5 sm:space-y-auto sm:space-x-5 flex flex-col sm:flex-row pr-5">
 						<A
 							href="/info/about"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							{primaryData.data?.data?.contact_title}
 						</A>{' '}
 						<A
 							href="/info/faq"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							{primaryData.data?.data?.faq_title}
 						</A>
 						<A
 							href="/info/tos"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							{primaryData.data?.data?.tos_title}
 						</A>
+					</div>
+					<div class="space-y-5 sm:space-y-auto sm:space-x-5 flex flex-col sm:flex-row pr-5">
 						<A
 							href="/info/return"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							{primaryData.data?.data?.return_title}
 						</A>
 						<A
 							href="/info/refund"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							{primaryData.data?.data?.refund_title}
 						</A>
 						<A
 							href="/account"
-							class="text-sm md:text-base text-gray-5 font-bold uppercase no-underline hover:underline"
+							class="text-xs md:text-sm text-gray-5 font-400 uppercase no-underline hover:underline"
 						>
 							Account
 						</A>
@@ -116,13 +120,13 @@ export default function FooterNav() {
 									<div class="flex flex-col space-y-8 ">
 										<div class="flex items-start">
 											<Show when={rootCategories()}>
-												<ol class="flex flex-wrap">
+												<ol class="flex flex-wrap justify-evenly">
 													<For each={rootCategories()}>
 														{(parentCategory: any) => {
 															if (parentCategory.category_children?.length > 0) {
 																return (
 																	<li class="whitespace-nowrap space-y-4 mr-6 mb-6">
-																		<div class="text-sm text-text_2 text-lg font-500 capitalize">
+																		<div class="text-xs text-text_2 font-500 capitalize">
 																			<A href={`/categories/${parentCategory.handle}`}>{parentCategory.name}</A>
 																		</div>
 																		<div class="space-y-2">
@@ -130,7 +134,7 @@ export default function FooterNav() {
 																				{(category: any) => {
 																					if (category.parent_category?.id === parentCategory.id) {
 																						return (
-																							<div class="text-text_3 text-sm capitalize">
+																							<div class="text-text_3 text-xs capitalize">
 																								<A href={`/categories/${category.handle}`}>{category.name}</A>
 																							</div>
 																						)
@@ -145,7 +149,7 @@ export default function FooterNav() {
 													</For>
 
 													<li class="flex flex-col whitespace-nowrap ">
-														<div class="text-sm text-text_2 font-500 space-y-3">
+														<div class="text-xs text-text_2 font-500 space-y-3">
 															<For each={rootCategories()}>
 																{(collection: any) => {
 																	if (collection.category_children?.length === 0) {

@@ -1,7 +1,7 @@
 import { updateLineItem } from '~/Services/medusaAPI'
 import Medusa from '@medusajs/medusa-js'
 import { Cart, ProductVariant } from '~/types/types'
-import { createContext, useContext, createMemo, createSignal, createEffect } from 'solid-js'
+import { createContext, useContext, createMemo, createSignal, createEffect, onMount } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { Product } from '~/types/models'
 import { Accessor } from 'solid-js'
@@ -147,32 +147,17 @@ export function StoreProvider(props: {
 		return product()?.variants.find(v => v.id === variantId)
 	}, [options(), variantRecord(), product()?.variants])
 
-	// if product only has one variant, then select it
-	createEffect(() => {
-		if (props.product?.variants.length === 1) {
-			setOptions(variantRecord()[product()!.variants[0].id])
-		}
-	}, [props.product?.variants, variantRecord])
-
-	/* const disabled = createMemo(() => {
-		return !variant
-	}, [variant()])
-
-	// memoized function to get the price of the current variant
-	const formattedPrice = createMemo(() => {
-		if (variant() && props.cart?.region) {
-			return currencyFormat(Number(variant), props.cart.region.id)
-		} else if (props.cart?.region) {
-			return findCheapestPrice(props.product?.variants || [], props.cart.region)
-		} else {
-			// if no variant is selected, or we couldn't find a price for the region/currency
-			return 'N/A'
-		}
-	}, [variant, props.product?.variants, props.cart]) */
-
 	function canBuy(variant: ProductVariant) {
 		return variant.inventory_quantity > 0 || variant.allow_backorder === true
 	}
+
+	//Preselect the first variant on page load
+
+	createEffect(() => {
+		if (props.product?.variants.length != null) {
+			setOptions(variantRecord()[product()!.variants[0].id])
+		}
+	})
 
 	createEffect(() => {
 		if (variant()) {

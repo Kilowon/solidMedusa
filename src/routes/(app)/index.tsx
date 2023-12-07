@@ -84,7 +84,9 @@ export default function App() {
 		},
 		cacheTime: 15 * 60 * 1000,
 		retry: 0,
-		enabled: activeObserver()
+		enabled: true,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	onMount(() => {

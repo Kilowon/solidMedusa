@@ -79,7 +79,7 @@ export function MetaTags() {
 import { openCart, openMenu, cartDrawer, menuDrawer } from '~/state'
 
 const queryClient = new QueryClient()
-
+//
 export default function Root() {
 	return (
 		<Html

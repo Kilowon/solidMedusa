@@ -162,7 +162,7 @@ export default function Root() {
 					href="https://fonts.gstatic.com"
 					crossorigin="anonymous"
 				/>
-				{/* 	<PlausibleScript /> */}
+				<PlausibleScript />
 			</Head>
 			<Body class="font-poppins">
 				<ErrorBoundary

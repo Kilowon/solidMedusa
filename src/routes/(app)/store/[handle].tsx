@@ -1,5 +1,5 @@
 import { useGlobalContext } from '~/Context/Providers'
-import { Show, For, createSignal, createEffect } from 'solid-js'
+import { Show, For, createSignal, createEffect, onMount } from 'solid-js'
 import 'solid-slider/slider.css'
 import { createQuery } from '@tanstack/solid-query'
 import ProductPreview from '~/Components/nav_components/ProductPreview'
@@ -32,7 +32,6 @@ export default function Store() {
 	const queryAllProducts = createQuery(() => ({
 		queryKey: ['all-products'],
 		queryFn: async function () {
-			if (!queryCart?.data?.cart?.id) return
 			const product = await medusa?.products?.list({
 				is_giftcard: false,
 				cart_id: queryCart?.data?.cart?.id,
@@ -41,15 +40,10 @@ export default function Store() {
 			})
 			return product
 		},
+		enabled: !!queryCart?.data?.cart?.id,
 		deferStream: true,
 		refetchOnWindowFocus: false
 	}))
-
-	createEffect(() => {
-		if (!queryAllProducts?.data?.products[0]?.handle) {
-			queryAllProducts.refetch()
-		}
-	})
 
 	return (
 		<main class="min-h-[100vh]">

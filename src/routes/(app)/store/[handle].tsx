@@ -24,9 +24,9 @@ export default function Store() {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
-		retry: 0,
-		enabled: false
+		enabled: false,
+		deferStream: false,
+		refetchOnWindowFocus: false
 	}))
 
 	const queryAllProducts = createQuery(() => ({
@@ -41,8 +41,8 @@ export default function Store() {
 			})
 			return product
 		},
-		cacheTime: 15 * 60 * 1000
-		//staleTime: 15 * 60 * 1000
+		deferStream: true,
+		refetchOnWindowFocus: false
 	}))
 
 	createEffect(() => {

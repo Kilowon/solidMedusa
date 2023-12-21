@@ -17,8 +17,6 @@ export default function Products() {
 	const [twitterTitle, setTwitterTitle] = createSignal('')
 	const [twitterDescription, setTwitterDescription] = createSignal('')
 
-	//TODO: Popping after redirect to another product page or from catagory page and randomly on refresh
-
 	const queryProduct = createQuery(() => ({
 		queryKey: ['Product-Page-Provider', params.handle],
 		queryFn: async function () {
@@ -50,21 +48,7 @@ export default function Products() {
 		}
 	}) */
 
-	createEffect(() => {
-		if (queryProduct?.data?.products.length === 0) {
-			navigate('/404')
-		}
-	})
-
-	createEffect(() => {
-		if (queryProduct?.data?.products[0]?.variants[0]?.original_price === null || 0) {
-			queryProduct.refetch()
-		}
-	})
-
-	//TODO: need to SSR this data for cards to work
-
-	/* 	const primaryData = createQuery(() => ({
+	const primaryData = createQuery(() => ({
 		queryKey: ['primary_data'],
 		queryFn: async function () {
 			const response = await fetch(`${import.meta.env.VITE_DIRECTUS_URL}/items/Primary`, {
@@ -77,8 +61,7 @@ export default function Products() {
 			const data = await response.json()
 			return data
 		},
-		cacheTime: 15 * 60 * 1000,
-		retry: 0,
+		deferStream: false,
 		enabled: false
 	}))
 
@@ -98,21 +81,9 @@ export default function Products() {
 			const data = await response.json()
 			return data
 		},
-		retry: 0,
-		enabled: false
-	})) */
-
-	createEffect(() => {
-		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
-			queryProduct.refetch()
-		}
-	})
-
-	/* createEffect(() => {
-		if (queryProduct.isSuccess) {
-			socialData.refetch()
-		}
-	})
+		deferStream: true,
+		enabled: queryProduct.isSuccess
+	}))
 
 	createEffect(() => {
 		if (socialData.isSuccess) {
@@ -120,7 +91,7 @@ export default function Products() {
 			setTwitterTitle(socialData?.data?.data?.twitter_title)
 			setTwitterDescription(socialData?.data?.data?.twitter_description)
 		}
-	}) */
+	})
 
 	return (
 		<div>
@@ -137,7 +108,7 @@ export default function Products() {
 				name="image"
 				content={queryProduct?.data?.products[0]?.thumbnail || ''}
 			/>
-			{/* <Meta
+			<Meta
 				name="twitter:title"
 				content={socialData?.data?.data?.twitter_title || queryProduct?.data?.products[0]?.title || ''}
 			/>
@@ -168,7 +139,7 @@ export default function Products() {
 			<Meta
 				name="twitter:card"
 				content={'summary_large_image'}
-			/> */}
+			/>
 			<Show when={queryCart?.data?.cart?.id !== undefined}>
 				<main class="min-h-[100vh]">
 					<StoreProvider product={queryProduct?.data?.products[0]}>

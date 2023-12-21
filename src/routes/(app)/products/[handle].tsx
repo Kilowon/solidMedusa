@@ -22,7 +22,7 @@ export default function Products() {
 		queryFn: async function () {
 			const product = await medusa?.products.list({
 				handle: params.handle,
-				cart_id: queryCart.data?.cart.id
+				currency_code: 'USD'
 			})
 			return product
 		},

@@ -25,6 +25,7 @@ import { getWindowSize } from '@solid-primitives/resize-observer'
 
 function PlausibleScript() {
 	onMount(() => {
+		if (import.meta.env.VITE_DRAFT_SITE === 'true') return
 		const script = document.createElement('script')
 		script.defer = true
 		script.dataset.domain = import.meta.env.VITE_PLAUSIBLE_DOMAIN

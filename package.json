@@ -2,8 +2,9 @@
 	"name": "solidMedusa",
 	"scripts": {
 		"dev": "solid-start dev --host localhost -p 8000",
+		"dev-start": "solid-start start --host localhost -p 8000",
 		"build": "solid-start build",
-		"start": "solid-start start --host localhost -p 8000"
+		"start": "solid-start start"
 	},
 	"type": "module",
 	"devDependencies": {

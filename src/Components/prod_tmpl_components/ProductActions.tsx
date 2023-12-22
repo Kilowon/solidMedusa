@@ -13,7 +13,14 @@ interface CurrentVariant {
 	id: string
 	original_price?: string
 	calculated_price?: string
+	prices: Price[]
 }
+
+interface Price {
+	amount: number // or string, depending on your use case
+	// add other properties of price here if needed
+}
+
 type OptionSelectProps = {
 	option: any
 	current: any
@@ -111,17 +118,11 @@ export default function ProductActions(props: {
 		deferStream: true
 	}))
 
-	/* 	createEffect(() => {
-		if (queryProduct.isSuccess && !reviewData.isSuccess) {
-			reviewData.refetch()
-		}
-	})
- */
 	return (
 		<TransitionGroup
 			onEnter={(el, done) => {
 				const a = el.animate([{ opacity: 0.1 }, { opacity: 1 }], {
-					duration: 200
+					duration: 0
 				})
 				a.finished.then(done)
 			}}
@@ -134,7 +135,7 @@ export default function ProductActions(props: {
 		>
 			<Show
 				when={
-					currentVariant() !== null &&
+					currentVariant()?.id != null &&
 					(props.productInfo?.options.length === 1 || props.productInfo?.options.length > 1) &&
 					((reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false') ||
 						(draftReviewData.isSuccess &&
@@ -208,12 +209,29 @@ export default function ProductActions(props: {
 							<h1 class=" md:text-2xl font-500 tracking-tight text-balance">{props.productInfo?.title}</h1>
 						</div>
 						<div class="lg:mt-2.5">
-							<Show when={currentVariant()?.original_price === currentVariant()?.calculated_price}>
+							<Show when={currentVariant() && !!currentVariant()?.prices?.[0]}>
+								<div class="space-x-2">
+									<span class="md:text-2xl font-500 ">
+										{currencyFormat(Number(currentVariant()?.prices?.[0]?.amount), 'US')}
+									</span>
+								</div>
+							</Show>
+							<Show
+								when={
+									currentVariant()?.original_price === currentVariant()?.calculated_price &&
+									currentVariant()?.original_price != null
+								}
+							>
 								<div class="space-x-2">
 									<span class="md:text-2xl font-500 ">{currencyFormat(Number(currentVariant()?.original_price), 'US')}</span>
 								</div>
 							</Show>
-							<Show when={currentVariant()?.original_price !== currentVariant()?.calculated_price}>
+							<Show
+								when={
+									currentVariant()?.original_price !== currentVariant()?.calculated_price &&
+									currentVariant()?.original_price != null
+								}
+							>
 								<div class="flex flex-col justify-center items-center lg:flex-row lg:space-x-2">
 									<span class="text-sm line-through font-500">
 										{currencyFormat(Number(currentVariant()?.original_price), 'US')}
@@ -281,8 +299,11 @@ export default function ProductActions(props: {
 								isProductPurchasable() === 'out-of-stock' && 'text-accenttext_1 bg-text_4 border-text_3'
 							)}
 						>
-							{isProductPurchasable() === 'valid'
+							{isProductPurchasable() === 'valid' && currentVariant()?.original_price != null
 								? `Add to cart - ${currencyFormat(Number(currentVariant()?.calculated_price), 'US')}`
+								: ''}
+							{isProductPurchasable() === 'valid' && currentVariant() && !!currentVariant()?.prices?.[0]
+								? `Add to cart - ${currencyFormat(Number(currentVariant()?.prices?.[0]?.amount), 'US')}`
 								: ''}
 							{isProductPurchasable() === 'invalid' ? 'Select Options' : ''}
 							{isProductPurchasable() === 'out-of-stock' ? 'Out of Stock' : ''}

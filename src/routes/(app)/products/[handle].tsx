@@ -23,27 +23,28 @@ export default function Products() {
 			const product = await medusa?.products.list({
 				handle: params.handle,
 				currency_code: 'USD'
+				//cart_id: queryCart.data?.cart.id || ''
 			})
 			return product
 		},
-		enabled: queryCart.data?.cart.id !== undefined,
-		deferStream: true
+		enabled: true,
+		deferStream: false
 	}))
 
 	onMount(() => {
-		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
+		/* if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			queryProduct.refetch()
-		}
+		} */
 		if (queryProduct?.data?.products.length === 0) {
 			navigate('/404')
 		}
 	})
 
-	/* 	//This prevents a race condition where the product is not loaded before the page is rendered
-	createEffect(() => {
-		if (queryProduct?.data?.products[0]?.handle === params.handle) {
+	//This prevents a race condition where the product is not loaded before the page is rendered
+	/* 	createEffect(() => {
+		if (queryProduct?.data?.products[0]?.handle !== params.handle) {
 			setTimeout(() => {
-				setCurrentParams(params.handle)
+				queryProduct.refetch()
 			}, 50)
 		}
 	}) */

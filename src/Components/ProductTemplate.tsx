@@ -10,6 +10,7 @@ import { ErrorBoundary } from 'solid-start'
 import { useParams } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { Spinner } from './checkout_components/Spinner'
+import { isServer } from 'solid-js/web'
 
 export default function ProductTemplate(props: {
 	updateOptions: any
@@ -25,15 +26,18 @@ export default function ProductTemplate(props: {
 	const [complete, setComplete] = createSignal(false)
 
 	const queryProduct = createQuery(() => ({
-		queryKey: ['Product-Page-Template', params.handle],
+		queryKey: ['Product-Page-Provider', params.handle],
 		queryFn: async function () {
 			const product = await medusa?.products.list({
 				handle: params.handle,
-				cart_id: queryCart.data?.cart.id
+				currency_code: 'USD'
 			})
+			if (!product) {
+				throw new Error('Product is undefined')
+			}
 			return product
 		},
-		enabled: queryCart.data?.cart.id !== undefined,
+		enabled: true,
 		deferStream: true,
 		refetchOnWindowFocus: false
 	}))
@@ -68,10 +72,13 @@ export default function ProductTemplate(props: {
 				}
 			})
 			const data = await response.json()
+			if (!data) {
+				throw new Error('Data is undefined')
+			}
 			return data
 		},
 		retry: 0,
-		enabled: queryProduct.isSuccess,
+		enabled: !isServer && queryProduct.isSuccess,
 		deferStream: true
 	}))
 
@@ -89,24 +96,21 @@ export default function ProductTemplate(props: {
 				}
 			)
 			const data = await response.json()
+			if (!data) {
+				throw new Error('Data is undefined')
+			}
 			return data
 		},
 		retry: 0,
-		enabled: queryProduct.isSuccess,
+		enabled: !isServer && queryProduct.isSuccess,
 		deferStream: true
 	}))
 
 	createEffect(() => {
-		if (queryProduct.isSuccess) {
+		if (queryProduct.isSuccess && !isServer) {
 			setTimeout(() => {
 				setComplete(true)
-			}, 500)
-		}
-	})
-
-	createEffect(() => {
-		if (queryProduct?.data?.products[0]?.variants[0]?.original_price === null || 0) {
-			queryProduct.refetch()
+			}, 10)
 		}
 	})
 
@@ -116,7 +120,7 @@ export default function ProductTemplate(props: {
 				when={
 					(queryProduct.isSuccess &&
 						queryCart.data?.cart.id !== undefined &&
-						queryProduct?.data?.products[0]?.variants[0]?.original_price !== null) ||
+						queryProduct?.data?.products[0]?.variants[0]?.prices[0]?.amount !== null) ||
 					0
 				}
 				fallback={
@@ -171,6 +175,7 @@ export default function ProductTemplate(props: {
 
 				<Show
 					when={
+						!isServer &&
 						draftReviewData.isSuccess &&
 						(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true') &&
 						queryProduct.isSuccess &&

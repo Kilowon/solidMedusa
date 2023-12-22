@@ -3,7 +3,7 @@
 	"scripts": {
 		"dev": "solid-start dev --host localhost -p 8000",
 		"build": "solid-start build",
-		"start": "solid-start start"
+		"start": "solid-start start --host localhost -p 8000"
 	},
 	"type": "module",
 	"devDependencies": {

@@ -60,14 +60,14 @@ export default function ImageGallerySlidy(props: {
 	createEffect(() => {
 		setTimeout(() => {
 			setCurrentSlide(slides())
-		}, 150)
+		}, 50)
 	})
 
 	createEffect(() => {
 		if (currentSlide().length > 0) {
 			setTimeout(() => {
 				setView(true)
-			}, 250)
+			}, 150)
 		}
 	})
 
@@ -80,7 +80,7 @@ export default function ImageGallerySlidy(props: {
 			<Transition
 				onEnter={(el, done) => {
 					const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-						duration: 250
+						duration: 50
 					})
 					a.finished.then(done)
 				}}

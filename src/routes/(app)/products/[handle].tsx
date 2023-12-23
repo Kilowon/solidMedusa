@@ -67,7 +67,7 @@ export default function Products() {
 	}))
 
 	const socialData = createQuery(() => ({
-		queryKey: ['social_card_data', params.handle],
+		queryKey: ['display_container_data', params.handle],
 		queryFn: async function () {
 			const response = await fetch(
 				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${queryProduct?.data?.products[0]?.id}?fields=*.item.*.*.*`,
@@ -82,7 +82,7 @@ export default function Products() {
 			const data = await response.json()
 			return data
 		},
-		deferStream: true,
+		deferStream: false,
 		enabled: queryProduct.isSuccess
 	}))
 

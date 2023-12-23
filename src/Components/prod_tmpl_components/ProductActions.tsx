@@ -134,13 +134,7 @@ export default function ProductActions(props: {
 			}}
 		>
 			<Show
-				when={
-					currentVariant()?.id != null &&
-					(props.productInfo?.options.length === 1 || props.productInfo?.options.length > 1) &&
-					((reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false') ||
-						(draftReviewData.isSuccess &&
-							(import.meta.env.VITE_DRAFT_SITE === 'true' || import.meta.env.VITE_DEMO_SITE === 'true')))
-				}
+				when={currentVariant()?.id != null && props.productInfo?.options.length >= 1}
 				keyed
 			>
 				<Toaster
@@ -163,7 +157,7 @@ export default function ProductActions(props: {
 
 				<div class="flex flex-col space-y-4  mx-2">
 					<div class="flex justify-between w-full lg:flex-col items-start text-text_2 bg-transparent">
-						<div class="lg:space-y-2">
+						<div class="lg:space-y-2 min-h-10">
 							<Show
 								when={
 									reviewData.isSuccess && reviewData.data?.data?.overall_rating && import.meta.env.VITE_DRAFT_SITE === 'false'

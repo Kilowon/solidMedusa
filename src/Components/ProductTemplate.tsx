@@ -1,16 +1,15 @@
-import ImageGallerySlidy from '~/Components/prod_tmpl_components/ImageGallerySlidy'
+import FastImageGallery from './prod_tmpl_components/FastImageGallery'
 import ProductActions from '~/Components/prod_tmpl_components/ProductActions'
-import { JSX, Show, createEffect, createSignal } from 'solid-js'
-import { Product } from '~/types/models'
+import { JSX, Show, createEffect, createSignal, onMount } from 'solid-js'
 import { ReviewsDisplay } from './prod_tmpl_components/ProductActions'
 import { createQuery } from '@tanstack/solid-query'
 import DisplayContainer from './layout/DisplayContainer'
 import PreFooter from './layout/PreFooter'
-import { ErrorBoundary } from 'solid-start'
-import { useParams } from 'solid-start'
+import { useParams, Link } from 'solid-start'
 import { useGlobalContext } from '~/Context/Providers'
 import { Spinner } from './checkout_components/Spinner'
 import { isServer } from 'solid-js/web'
+import clsx from 'clsx'
 
 export default function ProductTemplate(props: {
 	updateOptions: any
@@ -38,7 +37,7 @@ export default function ProductTemplate(props: {
 			return product
 		},
 		enabled: true,
-		deferStream: true,
+		deferStream: false,
 		refetchOnWindowFocus: false
 	}))
 
@@ -83,7 +82,7 @@ export default function ProductTemplate(props: {
 	}))
 
 	const displayContainerData = createQuery(() => ({
-		queryKey: ['display_container_data', queryProduct?.data?.products[0]?.title],
+		queryKey: ['display_container_data', params.handle],
 		queryFn: async function () {
 			const response = await fetch(
 				`${import.meta.env.VITE_DIRECTUS_URL}/items/product/${queryProduct?.data?.products[0]?.id}?fields=*.item.*.*.*`,
@@ -102,7 +101,7 @@ export default function ProductTemplate(props: {
 			return data
 		},
 		retry: 0,
-		enabled: !isServer && queryProduct.isSuccess,
+		enabled: false,
 		deferStream: true
 	}))
 
@@ -110,34 +109,33 @@ export default function ProductTemplate(props: {
 		if (queryProduct.isSuccess && !isServer) {
 			setTimeout(() => {
 				setComplete(true)
-			}, 10)
+			}, 0)
 		}
 	})
 
 	return (
 		<main>
 			<Show
-				when={
-					(queryProduct.isSuccess &&
-						queryCart.data?.cart.id !== undefined &&
-						queryProduct?.data?.products[0]?.variants[0]?.prices[0]?.amount !== null) ||
-					0
-				}
+				when={queryProduct.isSuccess && complete()}
 				fallback={
-					<div class="w-100vw h-50vh flex items-center justify-center">
+					<div class={clsx('w-100vw h-50vh flex items-center justify-center')}>
 						<Spinner />
 					</div>
 				}
 			>
+				<Link
+					rel="preload"
+					as="image"
+					href={`${queryProduct?.data?.products[0]?.images[0]?.url}`}
+				/>
+
 				<div class="sm:mt-12 lg:flex lg:content-container  ">
 					<div>
-						<ErrorBoundary>
-							<ImageGallerySlidy
-								images={queryProduct?.data?.products[0]?.images}
-								productInfo={queryProduct?.data?.products[0]}
-								params={params?.handle}
-							/>
-						</ErrorBoundary>
+						<FastImageGallery
+							images={queryProduct?.data?.products[0]?.images}
+							productInfo={queryProduct?.data?.products[0]}
+							params={params?.handle}
+						/>
 					</div>
 
 					<div class="">

@@ -154,13 +154,13 @@ export default function FocusProductE(props: { item: FeaturedProps['item'] }) {
 					<div
 						class={clsx(
 							' flex justify-between items-center ',
-							props.item.component_variant === 'left' && 'lg:flex-row-reverse',
+
 							props.item.component_variant === 'left' &&
 								getWindowSize().width > 1300 &&
 								'lg:flex-row-reverse xl:min-w-360 xl:max-w-360',
 							props.item.component_variant === 'default' &&
 								getWindowSize().width > 1300 &&
-								'lg:flex-row-reverse xl:min-w-360 xl:max-w-360'
+								'lg:flex-row xl:min-w-360 xl:max-w-360'
 						)}
 					>
 						<div class="lg:flex flex-col">

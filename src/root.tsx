@@ -27,7 +27,7 @@ function PlausibleScript() {
 	onMount(() => {
 		if (import.meta.env.VITE_DRAFT_SITE === 'true') return
 		const script = document.createElement('script')
-		script.defer = true
+		script.async = true
 		script.dataset.domain = import.meta.env.VITE_PLAUSIBLE_DOMAIN
 		script.src = import.meta.env.VITE_PLAUSIBLE_SCRIPT_SRC
 		document.head.appendChild(script)
@@ -145,6 +145,11 @@ export default function Root() {
 				<Meta
 					name="twitter:card"
 					content={'summary_large_image'}
+				/>
+				<Link
+					rel="preload"
+					as="image"
+					href={import.meta.env.VITE_STORE_FAVICON}
 				/>
 				<Link
 					rel="favicon"
